@@ -1,0 +1,6 @@
+{
+  "name": "Kinetic Glyph Studio",
+  "description": "10 kinetic icons rendered across 7 distinct visual styles with semantic spring animations and procedural Web Audio foley.",
+  "requestFramePermissions": [],
+  "majorCapabilities": ["MAJOR_CAPABILITY_SERVER_SIDE_GEMINI_API"]
+}

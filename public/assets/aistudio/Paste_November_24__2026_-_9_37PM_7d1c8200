@@ -1,0 +1,783 @@
+In a single html 
+ <!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>15 Core Icons × 10 Styles (150 Animated & Sound-Enabled Icons)</title>
+  <style>
+    :root {
+      --bg: #ffffff;
+      --surface: #f8fafc;
+      --border: #e2e8f0;
+      --text: #0f172a;
+      --muted: #64748b;
+      --icon-color: #111827;
+      --accent: #0f172a;
+      --accent-text: #ffffff;
+    }
+    [data-theme="gray"] {
+      --bg: #f1f5f9;
+      --surface: #ffffff;
+      --border: #cbd5e1;
+    }
+    [data-theme="dark"] {
+      --bg: #09090b;
+      --surface: #18181b;
+      --border: #27272a;
+      --text: #fafafa;
+      --muted: #a1a1aa;
+      --icon-color: #f4f4f5;
+      --accent: #fafafa;
+      --accent-text: #09090b;
+    }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      padding: 32px 24px 64px;
+      font-family: -apple-system, BlinkMacSystemFont, "Inter", "Segoe UI", sans-serif;
+      background: var(--bg);
+      color: var(--text);
+      transition: background 0.2s ease, color 0.2s ease;
+    }
+    .container { max-width: 1240px; margin: 0 auto; }
+    header {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-between;
+      align-items: center;
+      gap: 14px;
+      margin-bottom: 22px;
+    }
+    h1 {
+      font-size: 20px;
+      font-weight: 600;
+      margin: 0 0 4px;
+      letter-spacing: -0.02em;
+    }
+    .subtitle {
+      font-size: 13px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .toolbar {
+      display: flex;
+      flex-wrap: wrap;
+      gap: 8px;
+      align-items: center;
+    }
+    .search-input {
+      padding: 7px 12px;
+      font-size: 12px;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      width: 170px;
+      outline: none;
+    }
+    .search-input:focus { border-color: var(--text); }
+    .btn-group {
+      display: inline-flex;
+      border: 1px solid var(--border);
+      border-radius: 10px;
+      background: var(--surface);
+      padding: 3px;
+      gap: 2px;
+    }
+    .btn {
+      padding: 6px 10px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 7px;
+      border: none;
+      background: transparent;
+      color: var(--muted);
+      cursor: pointer;
+      transition: all 0.15s ease;
+    }
+    .btn.active {
+      background: var(--accent);
+      color: var(--accent-text);
+    }
+    .sound-pill {
+      display: inline-flex;
+      align-items: center;
+      gap: 7px;
+      padding: 7px 12px;
+      font-size: 12px;
+      font-weight: 500;
+      border-radius: 10px;
+      border: 1px solid var(--border);
+      background: var(--surface);
+      color: var(--text);
+      cursor: pointer;
+    }
+    .dot {
+      width: 8px;
+      height: 8px;
+      border-radius: 50%;
+      background: #f59e0b;
+    }
+    .dot.ready { background: #10b981; }
+    .dot.muted { background: #94a3b8; }
+    .showcase {
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(290px, 1fr));
+      gap: 18px;
+    }
+    .panel {
+      background: var(--surface);
+      border: 1px solid var(--border);
+      border-radius: 16px;
+      padding: 16px 18px;
+    }
+    .panel-header { margin-bottom: 12px; }
+    .panel-title {
+      font-size: 12px;
+      font-weight: 600;
+      text-transform: uppercase;
+      letter-spacing: 0.06em;
+      margin: 0 0 2px;
+    }
+    .panel-rule {
+      font-size: 11px;
+      color: var(--muted);
+      margin: 0;
+    }
+    .icon-grid {
+      display: grid;
+      grid-template-columns: repeat(5, 1fr);
+      gap: 8px;
+    }
+    .icon-btn {
+      aspect-ratio: 1;
+      display: grid;
+      place-items: center;
+      border: 1px solid transparent;
+      border-radius: 11px;
+      background: transparent;
+      color: var(--icon-color);
+      cursor: pointer;
+      padding: 0;
+      transition: background 0.15s ease, border-color 0.15s ease;
+    }
+    .icon-btn:hover {
+      background: var(--bg);
+      border-color: var(--border);
+    }
+    .icon-btn.hidden { display: none; }
+    .icon-btn svg {
+      width: 26px;
+      height: 26px;
+      overflow: visible;
+      pointer-events: none;
+    }
+    .icon-btn svg [data-part] {
+      transform-box: fill-box;
+      transform-origin: center;
+      will-change: transform, opacity;
+    }
+    .toast {
+      position: fixed;
+      bottom: 24px;
+      left: 50%;
+      transform: translateX(-50%) translateY(16px);
+      background: #0f172a;
+      color: #fff;
+      font-size: 13px;
+      padding: 8px 14px;
+      border-radius: 999px;
+      opacity: 0;
+      pointer-events: none;
+      transition: opacity 0.2s ease, transform 0.2s ease;
+    }
+    .toast.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+  </style>
+</head>
+<body>
+<svg style="position:absolute;width:0;height:0;overflow:hidden" aria-hidden="true">
+  <defs id="master-defs">
+    <!-- Glass -->
+    <linearGradient id="g-dark" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#4b5563" /><stop offset="100%" stop-color="#111827" />
+    </linearGradient>
+    <linearGradient id="g-mid" x1="0" y1="0" x2="0.4" y2="1">
+      <stop offset="0%" stop-color="#9ca3af" stop-opacity="0.9" /><stop offset="100%" stop-color="#374151" stop-opacity="0.95" />
+    </linearGradient>
+    <linearGradient id="g-frost" x1="0.1" y1="0" x2="0.9" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.92" /><stop offset="100%" stop-color="#cbd5e1" stop-opacity="0.65" />
+    </linearGradient>
+    <linearGradient id="g-rim" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0%" stop-color="#ffffff" stop-opacity="0.95" /><stop offset="100%" stop-color="#94a3b8" stop-opacity="0.45" />
+    </linearGradient>
+    <!-- Hardware -->
+    <linearGradient id="hw-light" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#f4f4f5" /><stop offset="100%" stop-color="#d4d4d8" />
+    </linearGradient>
+    <linearGradient id="hw-mid" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#a1a1aa" /><stop offset="100%" stop-color="#71717a" />
+    </linearGradient>
+    <linearGradient id="hw-dark" x1="0" y1="0" x2="0.2" y2="1">
+      <stop offset="0%" stop-color="#3f3f46" /><stop offset="100%" stop-color="#18181b" />
+    </linearGradient>
+    <linearGradient id="hw-accent" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0%" stop-color="#ff6b35" /><stop offset="100%" stop-color="#ea3800" />
+    </linearGradient>
+  </defs>
+</svg>
+<div class="container">
+  <header>
+    <div>
+      <h1>15 Core UI Icons × 10 Styles (150 Icons)</h1>
+      <p class="subtitle">Outline, Solid, Duotone, Glass + Isometric, Dot-Matrix, CAD, Stencil, Hardware, Pixel</p>
+    </div>
+    <div class="toolbar">
+      <input class="search-input" id="search" type="search" placeholder="Search icons (e.g. lock, zap)..." oninput="render()" />
+      <button class="sound-pill" onclick="toggleSound()">
+        <span class="dot" id="soundDot"></span>
+        <span id="soundLabel">Click to Enable Sound</span>
+      </button>
+      <div class="btn-group">
+        <button class="btn active" id="viewStyle" onclick="setView('style')">By Style</button>
+        <button class="btn" id="viewIcon" onclick="setView('icon')">Compare Icon</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn active" id="modePlay" onclick="setMode('play')">Play</button>
+        <button class="btn" id="modeCopy" onclick="setMode('copy')">Copy SVG</button>
+      </div>
+      <div class="btn-group">
+        <button class="btn active" onclick="setTheme('light', this)">Light</button>
+        <button class="btn" onclick="setTheme('gray', this)">Gray</button>
+        <button class="btn" onclick="setTheme('dark', this)">Dark</button>
+      </div>
+    </div>
+  </header>
+  <main class="showcase" id="showcase"></main>
+</div>
+<div class="toast" id="toast">Copied standalone SVG</div>
+<script>
+// ============================================================================
+// 1. PROCEDURAL WEB AUDIO FOLEY (15 bespoke sounds)
+// ============================================================================
+let audioCtx = null, masterGain = null, noiseBuffer = null;
+let soundEnabled = true, clickMode = "play", viewMode = "style";
+function initAudio() {
+  if (!audioCtx) {
+    const AC = window.AudioContext || window.webkitAudioContext;
+    audioCtx = new AC();
+    const comp = audioCtx.createDynamicsCompressor();
+    comp.threshold.value = -14; comp.ratio.value = 6;
+    masterGain = audioCtx.createGain();
+    masterGain.gain.value = 0.72;
+    masterGain.connect(comp); comp.connect(audioCtx.destination);
+    noiseBuffer = audioCtx.createBuffer(1, audioCtx.sampleRate, audioCtx.sampleRate);
+    const d = noiseBuffer.getChannelData(0);
+    for (let i = 0; i < d.length; i++) d[i] = Math.random() * 2 - 1;
+  }
+  if (audioCtx.state === "suspended") audioCtx.resume().then(updateSoundUI);
+  else updateSoundUI();
+}
+function updateSoundUI() {
+  const dot = document.getElementById("soundDot"), label = document.getElementById("soundLabel");
+  if (!soundEnabled) { dot.className = "dot muted"; label.textContent = "Sound Muted"; }
+  else if (audioCtx && audioCtx.state === "running") { dot.className = "dot ready"; label.textContent = "Sound Active"; }
+  else { dot.className = "dot"; label.textContent = "Click to Enable Sound"; }
+}
+function toggleSound() {
+  if (!audioCtx || audioCtx.state === "suspended") { soundEnabled = true; initAudio(); return; }
+  soundEnabled = !soundEnabled; updateSoundUI();
+}
+window.addEventListener("pointerdown", () => {
+  if (soundEnabled && (!audioCtx || audioCtx.state === "suspended")) initAudio();
+}, { passive: true });
+function tone(dest, type, f1, f2, t, dur, peak, atk = 0.004) {
+  const o = audioCtx.createOscillator(), g = audioCtx.createGain();
+  o.type = type; o.frequency.setValueAtTime(f1, t);
+  if (f2 !== f1) o.frequency.exponentialRampToValueAtTime(Math.max(20, f2), t + dur);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(peak, t + atk);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  o.connect(g); g.connect(dest); o.start(t); o.stop(t + dur + 0.02);
+}
+function noise(dest, type, f1, f2, q, t, dur, peak, atk = 0.004) {
+  const s = audioCtx.createBufferSource(), f = audioCtx.createBiquadFilter(), g = audioCtx.createGain();
+  s.buffer = noiseBuffer; f.type = type; f.Q.value = q; f.frequency.setValueAtTime(f1, t);
+  if (f2 !== f1) f.frequency.exponentialRampToValueAtTime(Math.max(40, f2), t + dur);
+  g.gain.setValueAtTime(0.0001, t);
+  g.gain.linearRampToValueAtTime(peak, t + atk);
+  g.gain.exponentialRampToValueAtTime(0.0001, t + dur);
+  s.connect(f); f.connect(g); g.connect(dest); s.start(t); s.stop(t + dur + 0.02);
+}
+const SOUND_FX = {
+  home(d, t) { tone(d,"sine",190,110,t,0.06,0.2); tone(d,"sine",523.25,523.25,t+0.04,0.18,0.08); },
+  search(d, t) { noise(d,"bandpass",600,2200,3.2,t,0.09,0.12); tone(d,"sine",880,1320,t+0.02,0.07,0.08); },
+  user(d, t) { tone(d,"sine",440,587,t,0.08,0.11); tone(d,"sine",587,660,t+0.06,0.11,0.08); },
+  settings(d, t) {
+    for (let i = 0; i < 3; i++) {
+      noise(d,"bandpass",2800,2200,5,t+i*0.04,0.015,0.22,0.001);
+      tone(d,"triangle",420,180,t+i*0.04,0.02,0.09,0.001);
+    }
+  },
+  bell(d, t) {
+    tone(d,"sine",987.77,987.77,t,0.34,0.13);
+    tone(d,"sine",1975.5,1975.5,t,0.22,0.06);
+    tone(d,"sine",2740,2740,t,0.14,0.03);
+  },
+  mail(d, t) { noise(d,"bandpass",1800,4400,1.7,t,0.07,0.18); tone(d,"sine",660,880,t+0.04,0.09,0.06); },
+  heart(d, t) { tone(d,"sine",95,48,t,0.09,0.28); tone(d,"sine",115,52,t+0.11,0.1,0.24); },
+  star(d, t) { tone(d,"sine",1046.5,1046.5,t,0.16,0.09); tone(d,"sine",1568,1568,t+0.04,0.18,0.08); tone(d,"sine",2093,2093,t+0.08,0.2,0.06); },
+  lock(d, t) {
+    noise(d,"bandpass",2500,1800,4.5,t,0.022,0.28,0.001);
+    tone(d,"triangle",360,120,t,0.035,0.15,0.001);
+    noise(d,"bandpass",3600,2600,5,t+0.055,0.024,0.28,0.001);
+  },
+  trash(d, t) { noise(d,"bandpass",900,3200,1.5,t,0.08,0.18); tone(d,"triangle",260,120,t+0.04,0.09,0.14); },
+  calendar(d, t) { noise(d,"bandpass",2000,4800,1.8,t,0.06,0.18); tone(d,"sine",520,380,t+0.03,0.05,0.08); },
+  camera(d, t) {
+    noise(d,"highpass",2400,1800,1,t,0.016,0.3,0.001);
+    tone(d,"sine",1400,420,t,0.02,0.12,0.001);
+    noise(d,"bandpass",3100,2200,3.5,t+0.045,0.02,0.26,0.001);
+  },
+  folder(d, t) { noise(d,"bandpass",1400,3400,1.6,t,0.07,0.17); tone(d,"triangle",320,440,t+0.02,0.06,0.07); },
+  bookmark(d, t) { noise(d,"bandpass",2600,4200,2.5,t,0.035,0.16); tone(d,"sine",784,1046,t+0.02,0.12,0.08); },
+  zap(d, t) { noise(d,"bandpass",1200,5200,1.2,t,0.06,0.22,0.001); tone(d,"sawtooth",340,75,t,0.09,0.11,0.001); }
+};
+function triggerSound(name, btn) {
+  if (!soundEnabled || !audioCtx || audioCtx.state !== "running") return;
+  const fn = SOUND_FX[name]; if (!fn) return;
+  const r = btn.getBoundingClientRect();
+  const pan = audioCtx.createStereoPanner();
+  pan.pan.value = Math.max(-0.8, Math.min(0.8, ((r.left + r.width / 2) / window.innerWidth) * 2 - 1));
+  pan.connect(masterGain);
+  fn(pan, audioCtx.currentTime);
+}
+// ============================================================================
+// 2. DAMPED SPRING PHYSICS ENGINE
+// ============================================================================
+const activeSprings = new Set();
+let rafId = null, prevTime = performance.now();
+function animatePart(el, props, cfg = {}) {
+  const { stiffness = 360, damping = 15, holdMs = 95 } = cfg;
+  if (!el) return;
+  if (el._springState) activeSprings.delete(el._springState);
+  const channels = Object.keys(props), state = { el, stiffness, damping, channels: {} };
+  channels.forEach((k) => {
+    const def = k === "sx" || k === "sy" || k === "op" ? 1 : 0;
+    state.channels[k] = { value: def, target: props[k], velocity: 0, rest: def };
+  });
+  el._springState = state; activeSprings.add(state);
+  clearTimeout(el._releaseTimer);
+  el._releaseTimer = setTimeout(() => {
+    channels.forEach((k) => { state.channels[k].target = state.channels[k].rest; });
+  }, holdMs);
+  if (!rafId) { prevTime = performance.now(); rafId = requestAnimationFrame(stepSprings); }
+}
+function stepSprings(now) {
+  const dt = Math.min(0.032, (now - prevTime) / 1000 || 0.016);
+  prevTime = now;
+  for (const s of activeSprings) {
+    let settled = true;
+    for (const k in s.channels) {
+      const c = s.channels[k];
+      const f = -s.stiffness * (c.value - c.target) - s.damping * c.velocity;
+      c.velocity += f * dt; c.value += c.velocity * dt;
+      if (Math.abs(c.value - c.rest) > 0.002 || Math.abs(c.velocity) > 0.01 || Math.abs(c.target - c.rest) > 0.001) settled = false;
+    }
+    const ch = s.channels;
+    s.el.style.transform = `translate(${(ch.tx?ch.tx.value:0).toFixed(3)}px, ${(ch.ty?ch.ty.value:0).toFixed(3)}px) rotate(${(ch.rot?ch.rot.value:0).toFixed(2)}deg) scale(${(ch.sx?ch.sx.value:1).toFixed(3)}, ${(ch.sy?ch.sy.value:1).toFixed(3)})`;
+    if (ch.op) s.el.style.opacity = Math.max(0.15, Math.min(1, ch.op.value)).toFixed(3);
+    if (settled) { s.el.style.transform = ""; if (ch.op) s.el.style.opacity = ""; activeSprings.delete(s); }
+  }
+  rafId = activeSprings.size > 0 ? requestAnimationFrame(stepSprings) : null;
+}
+const CHOREO = {
+  home(s) { animatePart(s.querySelector('[data-part="roof"]'), { ty: -2.0 }, { stiffness: 400, damping: 14 }); animatePart(s.querySelector('[data-part="door"]'), { sy: 0.85, ty: 0.6 }); },
+  search(s) { animatePart(s.querySelector('[data-part="lens"]'), { sx: 1.12, sy: 1.12, rot: -10 }, { stiffness: 360, damping: 13 }); },
+  user(s) { animatePart(s.querySelector('[data-part="head"]'), { ty: -1.8 }); animatePart(s.querySelector('[data-part="body"]'), { ty: -0.7 }); },
+  settings(s) { animatePart(s.querySelector('[data-part="gear"]'), { rot: 45 }, { stiffness: 250, damping: 14, holdMs: 130 }); },
+  bell(s) { animatePart(s.querySelector('[data-part="bell"]'), { rot: -15 }, { stiffness: 320, damping: 10, holdMs: 120 }); animatePart(s.querySelector('[data-part="clapper"]'), { tx: 2.2 }, { stiffness: 280, damping: 9, holdMs: 130 }); },
+  mail(s) { animatePart(s.querySelector('[data-part="flap"]'), { ty: -1.6, sy: 0.72 }, { stiffness: 420, damping: 14 }); },
+  heart(s) { animatePart(s.querySelector('[data-part="heart"]'), { sx: 1.2, sy: 1.2 }, { stiffness: 440, damping: 12, holdMs: 105 }); },
+  star(s) { animatePart(s.querySelector('[data-part="star"]'), { sx: 1.16, sy: 1.16, rot: 22 }, { stiffness: 360, damping: 12 }); },
+  lock(s) { animatePart(s.querySelector('[data-part="shackle"]'), { ty: -2.5 }, { stiffness: 450, damping: 14 }); animatePart(s.querySelector('[data-part="body"]'), { ty: 0.8 }); },
+  trash(s) { animatePart(s.querySelector('[data-part="lid"]'), { ty: -2.2, rot: -14 }, { stiffness: 380, damping: 13 }); },
+  calendar(s) { animatePart(s.querySelector('[data-part="rings"]'), { ty: -1.8 }); animatePart(s.querySelector('[data-part="page"]'), { rot: -5, ty: -0.8 }); },
+  camera(s) { animatePart(s.querySelector('[data-part="lens"]'), { sx: 0.78, sy: 0.78 }, { stiffness: 520, damping: 16, holdMs: 75 }); animatePart(s.querySelector('[data-part="body"]'), { ty: -1 }); },
+  folder(s) { animatePart(s.querySelector('[data-part="flap"]'), { ty: -1.8, sx: 1.05 }, { stiffness: 380, damping: 14 }); },
+  bookmark(s) { animatePart(s.querySelector('[data-part="ribbon"]'), { ty: 2.0, sy: 1.08 }, { stiffness: 400, damping: 13 }); },
+  zap(s) { animatePart(s.querySelector('[data-part="bolt"]'), { ty: -2.0, sx: 1.15, sy: 1.15, rot: -6 }, { stiffness: 460, damping: 13 }); }
+};
+// ============================================================================
+// 3. GEOMETRY & GRID HELPERS
+// ============================================================================
+function isoPt(cx, cy, u, v, w) {
+  return [+(cx + (u - v) * 0.866).toFixed(2), +(cy + (u + v) * 0.5 - w).toFixed(2)];
+}
+function isoPoly(cx, cy, pts, fill, stroke = 'stroke="#18181b" stroke-width="0.4" stroke-linejoin="round"') {
+  return `<polygon points="${pts.map(([u,v,w]) => isoPt(cx,cy,u,v,w).join(",")).join(" ")}" fill="${fill}" ${stroke}/>`;
+}
+function isoBox(cx, cy, u0, v0, w0, du, dv, dw, sh = ["#fafafa","#d4d4d8","#3f3f46"]) {
+  const u1 = u0+du, v1 = v0+dv, w1 = w0+dw;
+  return isoPoly(cx,cy,[[u0,v1,w0],[u1,v1,w0],[u1,v1,w1],[u0,v1,w1]],sh[1])
+       + isoPoly(cx,cy,[[u1,v0,w0],[u1,v1,w0],[u1,v1,w1],[u1,v0,w1]],sh[2])
+       + isoPoly(cx,cy,[[u0,v0,w1],[u1,v0,w1],[u1,v1,w1],[u0,v1,w1]],sh[0]);
+}
+function gearPts(cx, cy, n, r1, r2) {
+  const pts = [], st = (Math.PI * 2) / n;
+  for (let i = 0; i < n; i++) {
+    const a = i * st;
+    [[-0.17, r2], [-0.1, r1], [0.1, r1], [0.17, r2]].forEach(([off, r]) => {
+      pts.push([+(cx + Math.cos(a + off * st) * r).toFixed(2), +(cy + Math.sin(a + off * st) * r).toFixed(2)].join(","));
+    });
+  }
+  return pts.join(" ");
+}
+function starPts(cx, cy, n, r1, r2) {
+  const pts = [];
+  for (let i = 0; i < n * 2; i++) {
+    const a = -Math.PI / 2 + (i * Math.PI) / n, r = i % 2 === 0 ? r1 : r2;
+    pts.push([+(cx + Math.cos(a) * r).toFixed(2), +(cy + Math.sin(a) * r).toFixed(2)].join(","));
+  }
+  return pts.join(" ");
+}
+function dots(layers) {
+  const rad = { "1": 0.38, "2": 0.64, "3": 0.88 }, op = { "1": 0.32, "2": 0.68, "3": 1 };
+  return layers.map(([part, str]) => {
+    let out = "";
+    str.split("|").forEach((row, r) => {
+      for (let c = 0; c < row.length; c++) {
+        const ch = row[c];
+        if (rad[ch]) out += `<circle cx="${2+c*2}" cy="${2+r*2}" r="${rad[ch]}" opacity="${op[ch]}"/>`;
+      }
+    });
+    return `<g ${part?`data-part="${part}"`:""} fill="currentColor">${out}</g>`;
+  }).join("");
+}
+function px(layers) {
+  const inner = layers.map(([part, str]) => {
+    let out = "";
+    str.split("|").forEach((row, y) => {
+      let x = 0;
+      while (x < row.length) {
+        const ch = row[x];
+        if (ch === "#" || ch === "+") {
+          let w = 1; while (x + w < row.length && row[x + w] === ch) w++;
+          out += `<rect x="${x}" y="${y}" width="${w}" height="1"${ch==="+"?' opacity="0.36"':""}/>`;
+          x += w;
+        } else x++;
+      }
+    });
+    return `<g ${part?`data-part="${part}"`:""} fill="currentColor" shape-rendering="crispEdges">${out}</g>`;
+  }).join("");
+  return `<g transform="scale(1.5)">${inner}</g>`;
+}
+const K = 'fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+const D = 'fill="currentColor" fill-opacity="0.2" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+const GF = 'fill="url(#g-frost)" stroke="url(#g-rim)" stroke-width="0.6"';
+const CM = 'fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round" stroke-linejoin="round"';
+const CD = 'fill="none" stroke="currentColor" stroke-width="0.7" stroke-dasharray="1.3 1.3" stroke-linecap="round" opacity="0.65"';
+const CA = 'fill="none" stroke="currentColor" stroke-width="0.55" stroke-dasharray="2.5 1 0.6 1" opacity="0.45"';
+const HL = 'fill="url(#hw-light)" stroke="#52525b" stroke-width="0.45"';
+const HM = 'fill="url(#hw-mid)" stroke="#3f3f46" stroke-width="0.45"';
+const HD = 'fill="url(#hw-dark)" stroke="#09090b" stroke-width="0.45"';
+const HA = 'fill="url(#hw-accent)"';
+const STYLES = [
+  { id: "outline", label: "Outline", rule: "Uniform 1.75px rounded monoline" },
+  { id: "solid", label: "Solid", rule: "Optical silhouettes + evenodd cutouts" },
+  { id: "duotone", label: "Duotone", rule: "Foreground contour + 20% tonal plane" },
+  { id: "glass", label: "Glass", rule: "Frosted translucent acrylic layers + rim" },
+  { id: "isometric", label: "Isometric (30°)", rule: "Axonometric 30° projection + studio shading" },
+  { id: "dotmatrix", label: "Dot-Matrix", rule: "Pure 11×11 grid, 3 quantized dot weights" },
+  { id: "cad", label: "Technical CAD", rule: "0.95px drafting + dashed hidden internals" },
+  { id: "stencil", label: "Swiss Stencil", rule: "Laser-cut physical bridges; zero islands" },
+  { id: "hardware", label: "Tactile Hardware", rule: "Matte aluminum/ABS + 1 orange signal LED" },
+  { id: "pixel", label: "Pixel-Art (16×16)", rule: "Hand-aliased 16×16 integer bitmap" }
+];
+const GEAR_P = gearPts(12, 12, 8, 9.2, 6.8);
+const STAR_P = starPts(12, 12, 5, 9.2, 4.2);
+// ============================================================================
+// 4. 15 ESSENTIAL ICONS × 10 STYLES (150 ICONS)
+// ============================================================================
+const ICONS = [
+  {
+    name: "home",
+    outline: `<path d="M5 10V20H19V10" ${K}/><path data-part="roof" d="M3 10.5L12 3L21 10.5" ${K}/><path data-part="door" d="M10 20V14.5H14V20" ${K}/>`,
+    solid: `<path fill="currentColor" fill-rule="evenodd" d="M12 3L3 10.5H5V20.5H19V10.5H21L12 3ZM10 14.5H14V20.5H10V14.5Z"/>`,
+    duotone: `<path d="M5 10V20H19V10L12 3Z" ${D}/><path data-part="roof" d="M3 10.5L12 3L21 10.5" ${K}/><path data-part="door" d="M10 20V14.5H14V20" ${K}/>`,
+    glass: `<rect x="5" y="9" width="14" height="11" rx="1.2" fill="url(#g-dark)"/><path data-part="roof" d="M2.5 10.8L12 2.8L21.5 10.8H19V11.5H5V10.8Z" ${GF}/><rect data-part="door" x="10" y="14" width="4" height="6" rx="0.5" fill="url(#g-mid)"/>`,
+    isometric: `${isoBox(12,17,-4.5,-4.5,0,9,9,6.5)}<g data-part="roof">${isoPoly(12,17,[[-5,-5,6.5],[0,-5,10.5],[0,5,10.5],[-5,5,6.5]],"#fafafa")}${isoPoly(12,17,[[0,-5,10.5],[5,-5,6.5],[5,5,6.5],[0,5,10.5]],"#71717a")}</g><g data-part="door">${isoPoly(12,17,[[-1.4,4.55,0],[1.4,4.55,0],[1.4,4.55,3.8],[-1.4,4.55,3.8]],"#18181b")}</g>`,
+    dotmatrix: dots([["roof",".....3.....|....3.3....|...3...3...|..3.....3..|.3.......3.|...........|...........|...........|...........|...........|..........."],["","...........|...........|...........|...........|...........|..3.....3..|..3.....3..|..3.222.3..|..3.2.2.3..|..333.333..|..........."]]),
+    cad: `<line x1="12" y1="1.5" x2="12" y2="22" ${CA}/><rect x="5" y="10" width="14" height="10" ${CM}/><rect x="6.5" y="11" width="11" height="8" ${CD}/><path data-part="roof" d="M3 10.5L12 3L21 10.5" ${CM}/><rect data-part="door" x="10" y="14.5" width="4" height="5.5" ${CM}/>`,
+    stencil: `<g fill="currentColor"><path data-part="roof" d="M3 10.5L11.2 3.6V6.2L4.6 11.7Z"/><path data-part="roof" d="M21 10.5L12.8 3.6V6.2L19.4 11.7Z"/><path d="M5 11.8H8.8V20H5Z"/><path d="M15.2 11.8H19V20H15.2Z"/><rect data-part="door" x="10.2" y="14.5" width="3.6" height="5.5" rx="0.4"/></g>`,
+    hardware: `<rect x="5" y="9" width="14" height="11" rx="1" ${HL}/><path data-part="roof" d="M2.5 10.8L12 2.8L21.5 10.8H18.5L12 5.3L5.5 10.8Z" ${HD}/><g data-part="door"><rect x="10" y="14.2" width="4" height="5.8" rx="0.4" ${HM}/><circle cx="12.8" cy="17.2" r="0.55" ${HA}/></g>`,
+    pixel: px([["roof","       ##       |      ####      |     ##++##     |    ##++++##    |   ##++++++##   |  ##++++++++##  | ##++++++++++## |                |                |                |                |                |                |                |                |                "],["","                |                |                |                |                |                |                |  ############  |  #++++++++++#  |  #++++++++++#  |  #++++##++++#  |  #++++##++++#  |  #++++##++++#  |  #####++#####  |                |                "]])
+  },
+  {
+    name: "search",
+    outline: `<g data-part="lens" ${K}><circle cx="10.5" cy="10.5" r="6.5"/><line x1="15.3" y1="15.3" x2="20.5" y2="20.5"/></g>`,
+    solid: `<g data-part="lens" fill="currentColor"><path fill-rule="evenodd" d="M10.5 3.5A7 7 0 1 0 10.5 17.5A7 7 0 1 0 10.5 3.5ZM10.5 6.2A4.3 4.3 0 1 0 10.5 14.8A4.3 4.3 0 1 0 10.5 6.2Z"/><path d="M14.7 16.5L16.5 14.7L21.2 19.4A1.2 1.2 0 0 1 19.4 21.2Z"/></g>`,
+    duotone: `<g data-part="lens"><circle cx="10.5" cy="10.5" r="6.5" ${D}/><line x1="15.3" y1="15.3" x2="20.5" y2="20.5" ${K}/></g>`,
+    glass: `<g data-part="lens"><path d="M14.5 16.3L16.3 14.5L21 19.2A1.3 1.3 0 0 1 19.2 21Z" fill="url(#g-dark)"/><circle cx="10.5" cy="10.5" r="6.8" ${GF}/><circle cx="10.5" cy="10.5" r="4" fill="url(#g-mid)" opacity="0.45"/></g>`,
+    isometric: `<g data-part="lens">${isoBox(15.5,16.5,0,0,0,5,1.6,1.6,["#71717a","#3f3f46","#18181b"])}<g transform="translate(10,10.5) scale(1,0.7) rotate(-30)"><circle cx="0" cy="1.6" r="6.5" fill="none" stroke="#3f3f46" stroke-width="2"/><circle cx="0" cy="0" r="6.5" fill="rgba(244,244,245,0.55)" stroke="#fafafa" stroke-width="1.8"/></g></g>`,
+    dotmatrix: dots([["lens","..23332....|.3.....3...|3.......3..|3.......3..|3.......3..|.3.....3...|..233323...|........3..|.........3.|..........3|..........."]]),
+    cad: `<g data-part="lens"><line x1="10.5" y1="2" x2="10.5" y2="19" ${CA}/><line x1="2" y1="10.5" x2="19" y2="10.5" ${CA}/><circle cx="10.5" cy="10.5" r="6.5" ${CM}/><circle cx="10.5" cy="10.5" r="4.8" ${CD}/><line x1="15.3" y1="15.3" x2="20.5" y2="20.5" ${CM}/></g>`,
+    stencil: `<g data-part="lens" fill="currentColor"><path d="M5.4 5.4A7.2 7.2 0 0 1 15.6 5.4L14.2 6.8A5.2 5.2 0 0 0 6.8 6.8Z"/><path d="M5.4 15.6A7.2 7.2 0 0 1 4.1 6.9L5.8 7.9A5.2 5.2 0 0 0 6.8 14.2Z"/><path d="M16.9 6.9A7.2 7.2 0 0 1 6.9 16.9L7.9 15.2A5.2 5.2 0 0 0 15.2 7.9Z"/><path d="M16 14.6L21 19.6A1 1 0 0 1 19.6 21L14.6 16Z"/></g>`,
+    hardware: `<g data-part="lens"><path d="M14.5 16.3L16.3 14.5L21 19.2A1.3 1.3 0 0 1 19.2 21Z" ${HD}/><circle cx="10.5" cy="10.5" r="6.8" ${HL}/><circle cx="10.5" cy="10.5" r="4.3" ${HM}/><circle cx="8.5" cy="8.5" r="0.8" ${HA}/></g>`,
+    pixel: px([["lens","    ######      |  ##++++++##    | ##+        +##  | #+          +#  |#+            +#|#+            +#|#+            +#| #+          +#  | ##+        +##  |  ##++++++###   |    ######  ##   |            ##  |             ## |              ##|                |                "]])
+  },
+  {
+    name: "user",
+    outline: `<circle data-part="head" cx="12" cy="7.5" r="3.5" ${K}/><path data-part="body" d="M4.5 20.5C4.5 16.2 7.8 13.5 12 13.5C16.2 13.5 19.5 16.2 19.5 20.5" ${K}/>`,
+    solid: `<circle data-part="head" cx="12" cy="7.5" r="3.8" fill="currentColor"/><path data-part="body" fill="currentColor" d="M4.2 20.5C4.2 16 7.7 13.2 12 13.2C16.3 13.2 19.8 16 19.8 20.5Z"/>`,
+    duotone: `<circle data-part="head" cx="12" cy="7.5" r="3.5" ${D}/><path data-part="body" d="M4.5 20.5C4.5 16.2 7.8 13.5 12 13.5C16.2 13.5 19.5 16.2 19.5 20.5Z" ${D}/>`,
+    glass: `<path data-part="body" d="M4.2 20.5C4.2 15.8 7.7 13 12 13C16.3 13 19.8 15.8 19.8 20.5Z" fill="url(#g-dark)"/><circle data-part="head" cx="12" cy="7.5" r="4" ${GF}/>`,
+    isometric: `<g data-part="body">${isoBox(12,19,-5,-2.5,0,10,5,4.2,["#e4e4e7","#a1a1aa","#3f3f46"])}</g><g data-part="head">${isoBox(12,13,-2.5,-2.5,0,5,5,5,["#fafafa","#d4d4d8","#52525b"])}</g>`,
+    dotmatrix: dots([["head","....333....|...3...3...|...3...3...|....333....|...........|...........|...........|...........|...........|...........|..........."],["body","...........|...........|...........|...........|...........|...23332...|..3.....3..|.3.......3.|.3.......3.|.333333333.|..........."]]),
+    cad: `<line x1="12" y1="2" x2="12" y2="22" ${CA}/><circle data-part="head" cx="12" cy="7.5" r="3.5" ${CM}/><circle cx="12" cy="7.5" r="1.5" ${CD}/><path data-part="body" d="M4.5 20.5C4.5 16.2 7.8 13.5 12 13.5C16.2 13.5 19.5 16.2 19.5 20.5" ${CM}/><line x1="4.5" y1="20.5" x2="19.5" y2="20.5" ${CD}/>`,
+    stencil: `<circle data-part="head" cx="12" cy="7.5" r="3.6" fill="currentColor"/><g data-part="body" fill="currentColor"><path d="M4.5 20.5C4.5 16.8 7.2 14.1 10.9 13.5V20.5Z"/><path d="M19.5 20.5C19.5 16.8 16.8 14.1 13.1 13.5V20.5Z"/></g>`,
+    hardware: `<path data-part="body" d="M4.2 20.5C4.2 16 7.7 13.2 12 13.2C16.3 13.2 19.8 16 19.8 20.5Z" ${HD}/><circle data-part="head" cx="12" cy="7.5" r="3.8" ${HL}/><circle cx="15.2" cy="17" r="0.8" ${HA}/>`,
+    pixel: px([["head","     ######     |    #++++++#    |    #++++++#    |    #++++++#    |    #++++++#    |     ######     |                |                |                |                |                |                |                |                |                |                "],["body","                |                |                |                |                |                |                |   ##########   |  #++++++++++#  | #++++++++++++# | #++++++++++++# | #++++++++++++# | ############## |                |                |                "]])
+  },
+  {
+    name: "settings",
+    outline: `<g data-part="gear" ${K}><polygon points="${GEAR_P}"/><circle cx="12" cy="12" r="2.8"/></g>`,
+    solid: `<path data-part="gear" fill="currentColor" fill-rule="evenodd" d="M${GEAR_P.replace(/ /g,"L")}ZM12 9.2A2.8 2.8 0 1 0 12 14.8A2.8 2.8 0 1 0 12 9.2Z"/>`,
+    duotone: `<g data-part="gear"><polygon points="${GEAR_P}" ${D}/><circle cx="12" cy="12" r="2.8" fill="none" stroke="currentColor" stroke-width="1.75"/></g>`,
+    glass: `<g data-part="gear"><polygon points="${GEAR_P}" ${GF}/><circle cx="12" cy="12" r="3.2" fill="url(#g-dark)"/></g>`,
+    isometric: `<g data-part="gear" transform="translate(12,12.5) scale(1,0.62) rotate(-25)"><polygon points="${gearPts(0,2,8,9.2,6.8)}" fill="#3f3f46" stroke="#18181b" stroke-width="0.6"/><polygon points="${gearPts(0,0,8,9.2,6.8)}" fill="#f4f4f5" stroke="#18181b" stroke-width="0.6"/><circle cx="0" cy="0" r="3" fill="#18181b"/></g>`,
+    dotmatrix: dots([["gear",".....3.....|..3.3.3.3..|.3.......3.|..2.....2..|3.........3|.2...3...2.|3.........3|..2.....2..|.3.......3.|..3.3.3.3..|.....3....."]]),
+    cad: `<g data-part="gear"><line x1="2" y1="12" x2="22" y2="12" ${CA}/><line x1="12" y1="2" x2="12" y2="22" ${CA}/><polygon points="${GEAR_P}" ${CM}/><circle cx="12" cy="12" r="6.8" ${CD}/><circle cx="12" cy="12" r="2.8" ${CM}/></g>`,
+    stencil: `<g data-part="gear" fill="currentColor"><path d="M5.5 7.5A8 8 0 0 1 18.5 7.5L16.5 9.2A5.2 5.2 0 0 0 7.5 9.2Z"/><path d="M18.5 16.5A8 8 0 0 1 5.5 16.5L7.5 14.8A5.2 5.2 0 0 0 16.5 14.8Z"/><circle cx="12" cy="3.3" r="1.2"/><circle cx="12" cy="20.7" r="1.2"/><circle cx="3.3" cy="12" r="1.2"/><circle cx="20.7" cy="12" r="1.2"/><circle cx="12" cy="12" r="2.2"/></g>`,
+    hardware: `<g data-part="gear"><polygon points="${GEAR_P}" ${HL}/><circle cx="12" cy="12" r="3.4" ${HD}/><circle cx="12" cy="12" r="1.3" ${HA}/></g>`,
+    pixel: px([["gear","      ####      |  ##  ####  ##  | ####+####+#### |  ############  | ##++######++## |####+      +####|####        ####|####        ####|####+      +####| ##++######++## |  ############  | ####+####+#### |  ##  ####  ##  |      ####      |                |                "]])
+  },
+  {
+    name: "bell",
+    outline: `<g data-part="bell" ${K}><path d="M6.5 15V10A5.5 5.5 0 0 1 17.5 10V15L19.5 17.5H4.5Z"/><path d="M12 3V4.5"/></g><path data-part="clapper" d="M10 18.5A2.1 2.1 0 0 0 14 18.5" ${K}/>`,
+    solid: `<path data-part="bell" fill="currentColor" d="M12 2.8A1 1 0 0 1 13 3.8V4.6A6 6 0 0 1 18 10.5V14.8L19.8 17A0.8 0.8 0 0 1 19.2 18.3H4.8A0.8 0.8 0 0 1 4.2 17L6 14.8V10.5A6 6 0 0 1 11 4.6V3.8A1 1 0 0 1 12 2.8Z"/><path data-part="clapper" fill="currentColor" d="M10 19.2A2.1 2.1 0 0 0 14 19.2Z"/>`,
+    duotone: `<g data-part="bell"><path d="M6.5 15V10A5.5 5.5 0 0 1 17.5 10V15L19.5 17.5H4.5Z" ${D}/><path d="M12 3V4.5" ${K}/></g><path data-part="clapper" d="M10 18.5A2.1 2.1 0 0 0 14 18.5" ${K}/>`,
+    glass: `<path data-part="clapper" d="M10 18A2.2 2.2 0 0 0 14 18Z" fill="url(#g-dark)"/><g data-part="bell"><circle cx="12" cy="3.8" r="1" fill="url(#g-dark)"/><path d="M6.3 15V10A5.7 5.7 0 0 1 17.7 10V15L19.8 17.8H4.2Z" ${GF}/></g>`,
+    isometric: `<g data-part="bell">${isoBox(12,17,-4.5,-4.5,0,9,9,2,["#fafafa","#a1a1aa","#27272a"])}${isoBox(12,15,-3,-3,0,6,6,6.5,["#ffffff","#d4d4d8","#3f3f46"])}</g><circle data-part="clapper" cx="12" cy="19.5" r="1.4" fill="#18181b"/>`,
+    dotmatrix: dots([["bell",".....3.....|....333....|...3...3...|..3.....3..|..3.....3..|..3.....3..|..3.....3..|.3.......3.|.333333333.|...........|..........."],["clapper","...........|...........|...........|...........|...........|...........|...........|...........|...........|....333....|..........."]]),
+    cad: `<line x1="12" y1="1.5" x2="12" y2="22" ${CA}/><g data-part="bell"><path d="M6.5 15V10A5.5 5.5 0 0 1 17.5 10V15L19.5 17.5H4.5Z" ${CM}/><path d="M8.5 15V10A3.5 3.5 0 0 1 15.5 10V15" ${CD}/><line x1="12" y1="2.8" x2="12" y2="4.5" ${CM}/></g><circle data-part="clapper" cx="12" cy="19" r="1.4" ${CM}/>`,
+    stencil: `<g data-part="bell" fill="currentColor"><path d="M11 4.8V14.8H6V10A5.5 5.5 0 0 1 11 4.8Z"/><path d="M13 4.8A5.5 5.5 0 0 1 18 10V14.8H13Z"/><rect x="4.3" y="16.2" width="15.4" height="1.6" rx="0.8"/></g><rect data-part="clapper" x="10.4" y="18.8" width="3.2" height="1.8" rx="0.9" fill="currentColor"/>`,
+    hardware: `<path data-part="clapper" d="M10 18A2.2 2.2 0 0 0 14 18Z" ${HA}/><g data-part="bell"><rect x="11.2" y="2.8" width="1.6" height="2" rx="0.6" ${HD}/><path d="M6.3 15V10A5.7 5.7 0 0 1 17.7 10V15L19.8 17.8H4.2Z" ${HL}/></g>`,
+    pixel: px([["bell","       ##       |      ####      |     #++++#     |    #++++++#    |    #++++++#    |    #++++++#    |    #++++++#    |    #++++++#    |   #++++++++#   |  ############  |  ############  |                |                |                |                |                "],["clapper","                |                |                |                |                |                |                |                |                |                |                |      ####      |       ##       |                |                |                "]])
+  },
+  {
+    name: "mail",
+    outline: `<rect x="3" y="5.5" width="18" height="13" rx="2" ${K}/><path data-part="flap" d="M3.5 6.5L12 13L20.5 6.5" ${K}/>`,
+    solid: `<path fill="currentColor" d="M3 8.2L12 14.3L21 8.2V16.5A2 2 0 0 1 19 18.5H5A2 2 0 0 1 3 16.5Z"/><path data-part="flap" fill="currentColor" d="M5 5.5H19A2 2 0 0 1 20.8 6.8L12 12.7L3.2 6.8A2 2 0 0 1 5 5.5Z"/>`,
+    duotone: `<rect x="3" y="5.5" width="18" height="13" rx="2" ${D}/><path data-part="flap" d="M3.5 6.5L12 13L20.5 6.5" ${K}/>`,
+    glass: `<rect x="3" y="5.5" width="18" height="13" rx="2" fill="url(#g-dark)"/><path data-part="flap" d="M3.3 6.6A1.8 1.8 0 0 1 5 5.5H19A1.8 1.8 0 0 1 20.7 6.6L12 13Z" ${GF}/>`,
+    isometric: `${isoBox(12,15,-6,-4,0,12,8,1.8,["#fafafa","#a1a1aa","#27272a"])}<g data-part="flap">${isoPoly(12,15,[[-6,-4,1.9],[6,-4,1.9],[0,1,2.2]],"#e4e4e7")}</g>`,
+    dotmatrix: dots([["","...........|...........|.333333333.|.3.......3.|.3.......3.|.3.......3.|.3.......3.|.3.......3.|.333333333.|...........|..........."],["flap","...........|...........|...........|..2.....2..|...2...2...|....2.2....|.....3.....|...........|...........|...........|..........."]]),
+    cad: `<line x1="12" y1="3" x2="12" y2="21" ${CA}/><rect x="3" y="5.5" width="18" height="13" rx="1.5" ${CM}/><path data-part="flap" d="M3.5 6.5L12 13L20.5 6.5" ${CM}/><path d="M3.5 17.5L9.5 12M20.5 17.5L14.5 12" ${CD}/>`,
+    stencil: `<g fill="currentColor"><path d="M3 8.8L10.8 14V18.5H5A2 2 0 0 1 3 16.5Z"/><path d="M21 8.8V16.5A2 2 0 0 1 19 18.5H13.2V14Z"/><path data-part="flap" d="M5 5.5H19L12 12.2Z"/></g>`,
+    hardware: `<rect x="3" y="5.5" width="18" height="13" rx="2" ${HD}/><path data-part="flap" d="M3.3 6.6A1.8 1.8 0 0 1 5 5.5H19A1.8 1.8 0 0 1 20.7 6.6L12 13Z" ${HL}/><circle cx="12" cy="12.8" r="0.9" ${HA}/>`,
+    pixel: px([["","                |                |                | ############## | #            # | #            # | #            # | #            # | #            # | #            # | #            # | #            # | ############## |                |                |                "],["flap","                |                |                |                |  #          #  |   ##      ##   |     ##  ##     |       ##       |                |                |                |                |                |                |                |                "]])
+  },
+  {
+    name: "heart",
+    outline: `<path data-part="heart" d="M12 20.2C12 20.2 3.5 14.5 3.5 9.2A4.5 4.5 0 0 1 12 6.8A4.5 4.5 0 0 1 20.5 9.2C20.5 14.5 12 20.2 12 20.2Z" ${K}/>`,
+    solid: `<path data-part="heart" fill="currentColor" d="M12 20.5C12 20.5 3.2 14.7 3.2 9.2A4.8 4.8 0 0 1 12 6.5A4.8 4.8 0 0 1 20.8 9.2C20.8 14.7 12 20.5 12 20.5Z"/>`,
+    duotone: `<path data-part="heart" d="M12 20.2C12 20.2 3.5 14.5 3.5 9.2A4.5 4.5 0 0 1 12 6.8A4.5 4.5 0 0 1 20.5 9.2C20.5 14.5 12 20.2 12 20.2Z" ${D}/>`,
+    glass: `<g data-part="heart"><path d="M12 20.2C12 20.2 3.5 14.5 3.5 9.2A4.5 4.5 0 0 1 12 6.8A4.5 4.5 0 0 1 20.5 9.2C20.5 14.5 12 20.2 12 20.2Z" ${GF}/><circle cx="8" cy="8.5" r="2.2" fill="url(#g-mid)" opacity="0.35"/></g>`,
+    isometric: `<g data-part="heart">${isoPoly(12,13.5,[[-6,-2,3],[0,-5,3],[0,-1,3],[-5,2,3]],"#fafafa")}${isoPoly(12,13.5,[[0,-1,3],[4,-4,3],[6,1,3],[-1,6,3]],"#e4e4e7")}${isoPoly(12,13.5,[[-5,2,3],[-1,6,3],[-1,6,0],[-5,2,0]],"#a1a1aa")}${isoPoly(12,13.5,[[-1,6,3],[6,1,3],[6,1,0],[-1,6,0]],"#3f3f46")}</g>`,
+    dotmatrix: dots([["heart","...........|..33...33..|.3..3.3..3.|3....3....3|3.........3|.3.......3.|..3.....3..|...3...3...|....3.3....|.....3.....|..........."]]),
+    cad: `<g data-part="heart"><line x1="12" y1="3" x2="12" y2="21.5" ${CA}/><circle cx="8" cy="9.2" r="4.5" ${CD}/><circle cx="16" cy="9.2" r="4.5" ${CD}/><path d="M12 20.2C12 20.2 3.5 14.5 3.5 9.2A4.5 4.5 0 0 1 12 6.8A4.5 4.5 0 0 1 20.5 9.2C20.5 14.5 12 20.2 12 20.2Z" ${CM}/></g>`,
+    stencil: `<g data-part="heart" fill="currentColor"><path d="M11.2 6.5V19.6C11.2 19.6 3.3 14.2 3.3 9.2A4.5 4.5 0 0 1 11.2 6.5Z"/><path d="M12.8 6.5A4.5 4.5 0 0 1 20.7 9.2C20.7 14.2 12.8 19.6 12.8 19.6Z"/></g>`,
+    hardware: `<g data-part="heart"><path d="M12 20.2C12 20.2 3.5 14.5 3.5 9.2A4.5 4.5 0 0 1 12 6.8A4.5 4.5 0 0 1 20.5 9.2C20.5 14.5 12 20.2 12 20.2Z" ${HL}/><circle cx="8.2" cy="8.5" r="1.2" ${HA}/></g>`,
+    pixel: px([["heart","                |   ###    ###   |  #+++#  #+++#  | #+++++##+++++# | #++++++++++++# | #++++++++++++# | #++++++++++++# |  #++++++++++#  |   #++++++++#   |    #++++++#    |     #++++#     |      #++#      |       ##       |                |                |                "]])
+  },
+  {
+    name: "star",
+    outline: `<polygon data-part="star" points="${STAR_P}" ${K}/>`,
+    solid: `<polygon data-part="star" points="${STAR_P}" fill="currentColor" stroke="currentColor" stroke-width="1" stroke-linejoin="round"/>`,
+    duotone: `<polygon data-part="star" points="${STAR_P}" ${D}/>`,
+    glass: `<g data-part="star"><polygon points="${STAR_P}" ${GF}/><polygon points="${starPts(12,12,5,5,2.2)}" fill="url(#g-mid)" opacity="0.45"/></g>`,
+    isometric: `<g data-part="star"><polygon points="12,3 12,11.5 14.5,8.6" fill="#fafafa"/><polygon points="12,3 12,11.5 9.5,8.6" fill="#d4d4d8"/><polygon points="20.7,9.2 12,11.5 14.5,8.6" fill="#e4e4e7"/><polygon points="20.7,9.2 12,11.5 16,13.3" fill="#52525b"/><polygon points="17.4,19.4 12,11.5 16,13.3" fill="#27272a"/><polygon points="17.4,19.4 12,11.5 12,16.2" fill="#3f3f46"/><polygon points="6.6,19.4 12,11.5 12,16.2" fill="#71717a"/><polygon points="6.6,19.4 12,11.5 8,13.3" fill="#a1a1aa"/><polygon points="3.3,9.2 12,11.5 8,13.3" fill="#d4d4d8"/><polygon points="3.3,9.2 12,11.5 9.5,8.6" fill="#fafafa"/></g>`,
+    dotmatrix: dots([["star",".....3.....|....3.3....|3333...3333|.3.......3.|..3..2..3..|...3...3...|..3..3..3..|.3..3.3..3.|3..3...3..3|...........|..........."]]),
+    cad: `<g data-part="star"><circle cx="12" cy="12" r="9.2" ${CD}/><circle cx="12" cy="12" r="4.2" ${CD}/><polygon points="${STAR_P}" ${CM}/></g>`,
+    stencil: `<g data-part="star" fill="currentColor"><polygon points="12 2.8 14.1 8.5 12 10.6 9.9 8.5"/><polygon points="21 9.2 15.6 12.8 13.6 11.4 15.2 9.2"/><polygon points="17.5 19.6 12.5 15.8 13.4 13.6 15.8 14.2"/><polygon points="6.5 19.6 8.2 14.2 10.6 13.6 11.5 15.8"/><polygon points="3 9.2 8.8 9.2 10.4 11.4 8.4 12.8"/></g>`,
+    hardware: `<g data-part="star"><polygon points="${STAR_P}" ${HL}/><circle cx="12" cy="12" r="1.4" ${HA}/></g>`,
+    pixel: px([["star","       ##       |       ##       |      #++#      |      #++#      | ############## |  #++++++++++#  |   #++++++++#   |    #++++++#    |    #++++++#    |   #+++##+++#   |   #++#  #++#   |  #++#    #++#  |  ##        ##  |                |                |                "]])
+  },
+  {
+    name: "lock",
+    outline: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${K}/><g data-part="body" ${K}><rect x="5" y="10.5" width="14" height="10" rx="2"/><circle cx="12" cy="15.5" r="1"/></g>`,
+    solid: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${K}/><path data-part="body" fill="currentColor" fill-rule="evenodd" d="M7 10.5H17A2 2 0 0 1 19 12.5V18.5A2 2 0 0 1 17 20.5H7A2 2 0 0 1 5 18.5V12.5A2 2 0 0 1 7 10.5ZM12 13.8A1.4 1.4 0 0 0 10.6 15.2A1.4 1.4 0 0 0 11.3 16.4V17.6H12.7V16.4A1.4 1.4 0 0 0 13.4 15.2A1.4 1.4 0 0 0 12 13.8Z"/>`,
+    duotone: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${K}/><g data-part="body"><rect x="5" y="10.5" width="14" height="10" rx="2" ${D}/><circle cx="12" cy="15.5" r="1.2" fill="currentColor"/></g>`,
+    glass: `<path data-part="shackle" d="M7.5 11V7.5A4.5 4.5 0 0 1 16.5 7.5V11" fill="none" stroke="url(#g-dark)" stroke-width="2" stroke-linecap="round"/><g data-part="body"><rect x="5" y="10.5" width="14" height="10" rx="2.2" ${GF}/><circle cx="12" cy="15.5" r="1.3" fill="url(#g-dark)"/></g>`,
+    isometric: `<g data-part="shackle"><path d="M9 11V7A3 3 0 0 1 15 7V11" fill="none" stroke="#52525b" stroke-width="1.8" stroke-linecap="round"/></g><g data-part="body">${isoBox(12,18,-4.5,-2.5,0,9,5,7,["#fafafa","#d4d4d8","#3f3f46"])}${isoPoly(12,18,[[-0.7,2.55,2],[0.7,2.55,2],[0.7,2.55,4.2],[-0.7,2.55,4.2]],"#18181b")}</g>`,
+    dotmatrix: dots([["shackle","....333....|...3...3...|...3...3...|...3...3...|...........|...........|...........|...........|...........|...........|..........."],["body","...........|...........|...........|...........|..3333333..|..3.....3..|..3..3..3..|..3..2..3..|..3.....3..|..3333333..|..........."]]),
+    cad: `<line x1="12" y1="2" x2="12" y2="22" ${CA}/><path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${CM}/><g data-part="body"><rect x="5" y="10.5" width="14" height="10" rx="1.6" ${CM}/><rect x="6.5" y="12" width="11" height="7" rx="0.8" ${CD}/><circle cx="12" cy="15.5" r="1.2" ${CM}/></g>`,
+    stencil: `<g data-part="shackle" fill="currentColor"><path d="M7 10V7.5A5 5 0 0 1 11.2 2.6V4.5A3.1 3.1 0 0 0 8.9 7.5V10Z"/><path d="M17 10V7.5A5 5 0 0 0 12.8 2.6V4.5A3.1 3.1 0 0 1 15.1 7.5V10Z"/></g><g data-part="body" fill="currentColor"><path d="M7 11H11.2V14.2A1.4 1.4 0 0 0 11.2 16.8V20.5H7A2 2 0 0 1 5 18.5V13A2 2 0 0 1 7 11Z"/><path d="M12.8 11H17A2 2 0 0 1 19 13V18.5A2 2 0 0 1 17 20.5H12.8V16.8A1.4 1.4 0 0 0 12.8 14.2Z"/></g>`,
+    hardware: `<path data-part="shackle" d="M7.5 11V7.5A4.5 4.5 0 0 1 16.5 7.5V11" fill="none" stroke="#71717a" stroke-width="2" stroke-linecap="round"/><g data-part="body"><rect x="5" y="10.5" width="14" height="10" rx="2.2" ${HD}/><circle cx="12" cy="15.5" r="1.4" ${HA}/></g>`,
+    pixel: px([["shackle","                |     ######     |    #      #    |    #      #    |    #      #    |    #      #    |                |                |                |                |                |                |                |                |                |                "],["body","                |                |                |                |                |                |   ##########   |   #++++++++#   |   #+++##+++#   |   #+++##+++#   |   #++++++++#   |   #++++++++#   |   ##########   |                |                |                "]])
+  },
+  {
+    name: "trash",
+    outline: `<path data-part="lid" d="M4 7H20M9.5 7V4.5H14.5V7" ${K}/><path d="M6 7L7 19.2A1.5 1.5 0 0 0 8.5 20.5H15.5A1.5 1.5 0 0 0 17 19.2L18 7M10 11V17M14 11V17" ${K}/>`,
+    solid: `<path data-part="lid" fill="currentColor" d="M9 4.5A1 1 0 0 1 10 3.5H14A1 1 0 0 1 15 4.5V6H20A0.8 0.8 0 0 1 20 7.6H4A0.8 0.8 0 0 1 4 6H9Z"/><path fill="currentColor" fill-rule="evenodd" d="M6.2 8.5H17.8L16.9 19.3A1.5 1.5 0 0 1 15.4 20.7H8.6A1.5 1.5 0 0 1 7.1 19.3ZM9.4 11.2V17.3H10.9V11.2ZM13.1 11.2V17.3H14.6V11.2Z"/>`,
+    duotone: `<path data-part="lid" d="M4 7H20M9.5 7V4.5H14.5V7" ${K}/><path d="M6 7L7 19.2A1.5 1.5 0 0 0 8.5 20.5H15.5A1.5 1.5 0 0 0 17 19.2L18 7Z" ${D}/><path d="M10 11V17M14 11V17" ${K}/>`,
+    glass: `<path d="M6.2 8H17.8L16.9 19.3A1.5 1.5 0 0 1 15.4 20.7H8.6A1.5 1.5 0 0 1 7.1 19.3Z" ${GF}/><rect x="9.5" y="11" width="1.4" height="6.5" rx="0.7" fill="url(#g-mid)"/><rect x="13.1" y="11" width="1.4" height="6.5" rx="0.7" fill="url(#g-mid)"/><path data-part="lid" d="M9 4.5H15V6.2H20V7.8H4V6.2H9Z" fill="url(#g-dark)"/>`,
+    isometric: `${isoBox(12,18,-4,-3.5,0,8,7,8.5,["#3f3f46","#d4d4d8","#52525b"])}<g data-part="lid">${isoBox(12,18,-4.5,-4,8.6,9,8,1.2,["#fafafa","#a1a1aa","#27272a"])}${isoBox(12,18,-1.5,-1,9.8,3,2,1.2,["#e4e4e7","#71717a","#18181b"])}</g>`,
+    dotmatrix: dots([["lid","....333....|.333333333.|...........|...........|...........|...........|...........|...........|...........|...........|..........."],["","...........|...........|..3.....3..|..3.2.2.3..|..3.2.2.3..|..3.2.2.3..|..3.2.2.3..|..3.2.2.3..|..3.....3..|...33333...|..........."]]),
+    cad: `<line x1="12" y1="2" x2="12" y2="22" ${CA}/><path data-part="lid" d="M4 7H20M9.5 7V4.5H14.5V7" ${CM}/><path d="M6 7L7 19.2A1.5 1.5 0 0 0 8.5 20.5H15.5A1.5 1.5 0 0 0 17 19.2L18 7" ${CM}/><path d="M10 10.5V17.5M14 10.5V17.5" ${CD}/>`,
+    stencil: `<path data-part="lid" fill="currentColor" d="M9.5 4.2H14.5V5.8H19.5V7.3H4.5V5.8H9.5Z"/><g fill="currentColor"><path d="M6.2 8.5H8.8L9.5 20.5H7.2Z"/><path d="M11 8.5H13V20.5H11Z"/><path d="M15.2 8.5H17.8L16.8 20.5H14.5Z"/></g>`,
+    hardware: `<path d="M6.2 8H17.8L16.9 19.3A1.5 1.5 0 0 1 15.4 20.7H8.6A1.5 1.5 0 0 1 7.1 19.3Z" ${HL}/><rect x="9.5" y="11" width="1.4" height="6.5" rx="0.7" ${HM}/><rect x="13.1" y="11" width="1.4" height="6.5" rx="0.7" ${HM}/><g data-part="lid"><path d="M9 4.5H15V6.2H20V7.8H4V6.2H9Z" ${HD}/><rect x="11" y="4.8" width="2" height="1" rx="0.3" ${HA}/></g>`,
+    pixel: px([["lid","      ####      |  ############  |                |                |                |                |                |                |                |                |                |                |                |                |                |                "],["","                |                |   ##########   |   #++++++++#   |   #+#+##+#+#   |   #+#+##+#+#   |   #+#+##+#+#   |   #+#+##+#+#   |   #+#+##+#+#   |   #+#+##+#+#   |   #++++++++#   |   ##########   |                |                |                |                "]])
+  },
+  {
+    name: "calendar",
+    outline: `<g data-part="rings" ${K}><line x1="8" y1="3" x2="8" y2="6.5"/><line x1="16" y1="3" x2="16" y2="6.5"/></g><g data-part="page" ${K}><rect x="3.5" y="5" width="17" height="16" rx="2"/><line x1="3.5" y1="9.5" x2="20.5" y2="9.5"/></g>`,
+    solid: `<g data-part="rings" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="6.5"/><line x1="16" y1="3" x2="16" y2="6.5"/></g><path data-part="page" fill="currentColor" fill-rule="evenodd" d="M5.5 5H18.5A2 2 0 0 1 20.5 7V21A2 2 0 0 1 18.5 21H5.5A2 2 0 0 1 3.5 19V7A2 2 0 0 1 5.5 5ZM5.2 10V19H18.8V10Z"/><rect x="7.5" y="12.5" width="2.5" height="2.5" rx="0.5" fill="currentColor"/>`,
+    duotone: `<g data-part="rings" ${K}><line x1="8" y1="3" x2="8" y2="6.5"/><line x1="16" y1="3" x2="16" y2="6.5"/></g><g data-part="page"><path d="M5.5 5H18.5A2 2 0 0 1 20.5 7V9.5H3.5V7A2 2 0 0 1 5.5 5Z" ${D}/><rect x="3.5" y="5" width="17" height="16" rx="2" ${K}/><line x1="3.5" y1="9.5" x2="20.5" y2="9.5" ${K}/></g>`,
+    glass: `<g data-part="rings" stroke="url(#g-dark)" stroke-width="2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="6.2"/><line x1="16" y1="3" x2="16" y2="6.2"/></g><g data-part="page"><rect x="3.5" y="5" width="17" height="16" rx="2.2" ${GF}/><path d="M5.5 5H18.5A2 2 0 0 1 20.5 7V9.5H3.5V7A2 2 0 0 1 5.5 5Z" fill="url(#g-dark)"/></g>`,
+    isometric: `<g data-part="page">${isoBox(12,15.5,-5.5,-5.5,0,11,11,2.2,["#fafafa","#d4d4d8","#3f3f46"])}${isoPoly(12,15.5,[[-5.5,-5.5,2.25],[5.5,-5.5,2.25],[5.5,-2,2.25],[-5.5,-2,2.25]],"#27272a")}</g><g data-part="rings" stroke="#18181b" stroke-width="1.3" stroke-linecap="round"><line x1="9" y1="9" x2="9" y2="11"/><line x1="15" y1="6" x2="15" y2="8"/></g>`,
+    dotmatrix: dots([["rings","...3...3...|...........|...........|...........|...........|...........|...........|...........|...........|...........|..........."],["page","...........|.333333333.|.3.......3.|.333333333.|.3.......3.|.3.2.2.2.3.|.3.......3.|.3.2.2.2.3.|.3.......3.|.333333333.|..........."]]),
+    cad: `<g data-part="rings" ${CM}><line x1="8" y1="2.8" x2="8" y2="6.5"/><line x1="16" y1="2.8" x2="16" y2="6.5"/></g><g data-part="page"><rect x="3.5" y="5" width="17" height="16" rx="1.6" ${CM}/><line x1="3.5" y1="9.5" x2="20.5" y2="9.5" ${CM}/><line x1="9" y1="12" x2="9" y2="19" ${CD}/><line x1="15" y1="12" x2="15" y2="19" ${CD}/><line x1="6" y1="15.5" x2="18" y2="15.5" ${CD}/></g>`,
+    stencil: `<g data-part="rings" fill="currentColor"><rect x="7.2" y="2.8" width="1.6" height="3" rx="0.6"/><rect x="15.2" y="2.8" width="1.6" height="3" rx="0.6"/></g><g data-part="page" fill="currentColor"><path d="M5.5 5H18.5A2 2 0 0 1 20.5 7V9H3.5V7A2 2 0 0 1 5.5 5Z"/><path d="M3.5 10.6H5.5V19H11.2V21H5.5A2 2 0 0 1 3.5 19Z"/><path d="M18.5 10.6H20.5V19A2 2 0 0 1 18.5 21H12.8V19H18.5Z"/></g>`,
+    hardware: `<g data-part="rings" stroke="#71717a" stroke-width="2" stroke-linecap="round"><line x1="8" y1="3" x2="8" y2="6"/><line x1="16" y1="3" x2="16" y2="6"/></g><g data-part="page"><rect x="3.5" y="5" width="17" height="16" rx="2.2" ${HL}/><path d="M5.5 5H18.5A2 2 0 0 1 20.5 7V9.5H3.5V7A2 2 0 0 1 5.5 5Z" ${HD}/><rect x="7.2" y="12.2" width="3" height="3" rx="0.6" ${HA}/></g>`,
+    pixel: px([["rings","    ##    ##    |    ##    ##    |                |                |                |                |                |                |                |                |                |                |                |                |                |                "],["page","                |  ############  |  ############  |  ############  |  #          #  |  # ++ ++ ++ #  |  #          #  |  # ++ ++ ++ #  |  #          #  |  # ++ ++ ++ #  |  #          #  |  ############  |                |                |                |                "]])
+  },
+  {
+    name: "camera",
+    outline: `<path data-part="body" d="M3.5 8A2 2 0 0 1 5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z" ${K}/><circle data-part="lens" cx="12" cy="13" r="3.5" ${K}/>`,
+    solid: `<path fill="currentColor" fill-rule="evenodd" d="M5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18V8A2 2 0 0 1 5.5 6ZM12 9A4 4 0 1 0 12 17A4 4 0 1 0 12 9Z"/><circle data-part="lens" cx="12" cy="13" r="2.1" fill="currentColor"/>`,
+    duotone: `<path data-part="body" d="M3.5 8A2 2 0 0 1 5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z" ${D}/><circle data-part="lens" cx="12" cy="13" r="3.5" ${D}/>`,
+    glass: `<rect x="5" y="4" width="3.5" height="2" rx="0.6" fill="url(#g-dark)"/><path data-part="body" d="M3.5 8A2 2 0 0 1 5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z" ${GF}/><g data-part="lens"><circle cx="12" cy="13" r="4" fill="url(#g-mid)"/><circle cx="12" cy="13" r="2" fill="url(#g-dark)"/></g>`,
+    isometric: `<g data-part="body">${isoBox(12,17,-5.5,-2.5,0,11,5,7,["#fafafa","#d4d4d8","#3f3f46"])}${isoBox(12,17,-2,-1.5,7,4,3,1.5,["#e4e4e7","#a1a1aa","#27272a"])}</g><g data-part="lens">${isoBox(12,17,-2.2,2.5,1.2,4.4,2.2,4.4,["#71717a","#3f3f46","#18181b"])}</g>`,
+    dotmatrix: dots([["body","....333....|..33...33..|.3.......3.|.3.......3.|.3.......3.|.3.......3.|.3.......3.|.3.......3.|.333333333.|...........|..........."],["lens","...........|...........|...........|...........|....232....|....3.3....|....232....|...........|...........|...........|..........."]]),
+    cad: `<line x1="12" y1="2" x2="12" y2="21.5" ${CA}/><line x1="2" y1="13" x2="22" y2="13" ${CA}/><path data-part="body" d="M3.5 8A2 2 0 0 1 5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z" ${CM}/><g data-part="lens"><circle cx="12" cy="13" r="4.5" ${CD}/><circle cx="12" cy="13" r="3" ${CM}/><circle cx="17.2" cy="8.8" r="0.8" ${CM}/></g>`,
+    stencil: `<g fill="currentColor"><path d="M5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V12.2H16.6A4.7 4.7 0 0 0 7.4 12.2H3.5V8A2 2 0 0 1 5.5 6Z"/><path d="M3.5 13.8H7.4A4.7 4.7 0 0 0 16.6 13.8H20.5V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z"/><circle data-part="lens" cx="12" cy="13" r="2.7"/></g>`,
+    hardware: `<g data-part="body"><path d="M3.5 8A2 2 0 0 1 5.5 6H8L9.5 4H14.5L16 6H18.5A2 2 0 0 1 20.5 8V18A2 2 0 0 1 18.5 20H5.5A2 2 0 0 1 3.5 18Z" ${HL}/><circle cx="17.3" cy="8.5" r="0.9" ${HA}/></g><g data-part="lens"><circle cx="12" cy="13" r="4.2" ${HD}/><circle cx="12" cy="13" r="2" ${HM}/></g>`,
+    pixel: px([["body","                |                |     ######     |    #++++++#    |  ############  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  ############  |                |                |                "],["lens","                |                |                |                |                |                |      ####      |     #    #     |     # ## #     |     #    #     |      ####      |                |                |                |                |                "]])
+  },
+  {
+    name: "folder",
+    outline: `<path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${K}/><path data-part="flap" d="M3 10.5H21" ${K}/>`,
+    solid: `<path fill="currentColor" d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V9.4H3Z"/><path data-part="flap" fill="currentColor" d="M3 10.8H21V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z"/>`,
+    duotone: `<path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${K}/><path data-part="flap" d="M3 10.5H21V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${D}/>`,
+    glass: `<path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" fill="url(#g-dark)"/><path data-part="flap" d="M3 10H21V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${GF}/>`,
+    isometric: `${isoBox(12,17,-5.5,-3,0,5,3,9,["#fafafa","#a1a1aa","#27272a"])}${isoBox(12,17,-5.5,-3,0,11,3,7.5,["#e4e4e7","#71717a","#27272a"])}<g data-part="flap">${isoBox(12,17,-5.5,0.2,0,11,3,7.2,["#ffffff","#d4d4d8","#3f3f46"])}</g>`,
+    dotmatrix: dots([["","...........|...........|.3333......|.3...33333.|.3.......3.|...........|...........|...........|...........|...........|..........."],["flap","...........|...........|...........|...........|...........|.333333333.|.3.......3.|.3.......3.|.333333333.|...........|..........."]]),
+    cad: `<path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${CM}/><g data-part="flap"><line x1="3" y1="10.5" x2="21" y2="10.5" ${CM}/><rect x="5" y="12.2" width="14" height="6" rx="0.5" ${CD}/></g>`,
+    stencil: `<g fill="currentColor"><path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V9.6H3Z"/><path data-part="flap" d="M3 11.2H11.2V20H5A2 2 0 0 1 3 18Z"/><path data-part="flap" d="M12.8 11.2H21V18A2 2 0 0 1 19 20H12.8Z"/></g>`,
+    hardware: `<path d="M3 6.5A2 2 0 0 1 5 4.5H9.5L11.5 7H19A2 2 0 0 1 21 9V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${HD}/><g data-part="flap"><path d="M3 10.2H21V18A2 2 0 0 1 19 20H5A2 2 0 0 1 3 18Z" ${HL}/><rect x="5.5" y="12" width="3.5" height="1.2" rx="0.5" ${HA}/></g>`,
+    pixel: px([["","                |                |  #####         |  #   ######### |  #           # |                |                |                |                |                |                |                |                |                |                |                "],["flap","                |                |                |                |                |  ############  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  #++++++++++#  |  ############  |                |                |                "]])
+  },
+  {
+    name: "bookmark",
+    outline: `<path data-part="ribbon" d="M6 4.5A1.5 1.5 0 0 1 7.5 3H16.5A1.5 1.5 0 0 1 18 4.5V21L12 16.5L6 21Z" ${K}/>`,
+    solid: `<path data-part="ribbon" fill="currentColor" d="M6 4.5A1.5 1.5 0 0 1 7.5 3H16.5A1.5 1.5 0 0 1 18 4.5V21L12 16.5L6 21Z"/>`,
+    duotone: `<path data-part="ribbon" d="M6 4.5A1.5 1.5 0 0 1 7.5 3H16.5A1.5 1.5 0 0 1 18 4.5V21L12 16.5L6 21Z" ${D}/>`,
+    glass: `<path d="M8.5 3H16.5A2 2 0 0 1 18.5 5V19.5L13 15.5V3Z" fill="url(#g-dark)"/><path data-part="ribbon" d="M5.5 5A2 2 0 0 1 7.5 3H14.5A2 2 0 0 1 16.5 5V21L11 16.8L5.5 21Z" ${GF}/>`,
+    isometric: `<g data-part="ribbon">${isoBox(12,17,-3.5,-5,0,7,10,1.5,["#fafafa","#a1a1aa","#3f3f46"])}${isoPoly(12,17,[[-3.5,5,1.5],[0,2,1.5],[3.5,5,1.5],[3.5,5,0],[0,2,0],[-3.5,5,0]],"#27272a")}</g>`,
+    dotmatrix: dots([["ribbon","...........|..3333333..|..3.....3..|..3.....3..|..3.....3..|..3.....3..|..3..3..3..|..3.3.3.3..|..33...33..|..3.....3..|..........."]]),
+    cad: `<g data-part="ribbon"><line x1="12" y1="1.5" x2="12" y2="22" ${CA}/><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3H16.5A1.5 1.5 0 0 1 18 4.5V21L12 16.5L6 21Z" ${CM}/><line x1="6" y1="7" x2="18" y2="7" ${CD}/></g>`,
+    stencil: `<g data-part="ribbon" fill="currentColor"><path d="M7.5 3H11.2V15.8L6 20.5V4.5A1.5 1.5 0 0 1 7.5 3Z"/><path d="M12.8 3H16.5A1.5 1.5 0 0 1 18 4.5V20.5L12.8 15.8Z"/></g>`,
+    hardware: `<g data-part="ribbon"><path d="M6 4.5A1.5 1.5 0 0 1 7.5 3H16.5A1.5 1.5 0 0 1 18 4.5V21L12 16.5L6 21Z" ${HL}/><rect x="6" y="3" width="12" height="3.2" rx="1" ${HA}/></g>`,
+    pixel: px([["ribbon","                |   ##########   |   #++++++++#   |   #++++++++#   |   #++++++++#   |   #++++++++#   |   #++++++++#   |   #++++++++#   |   #++++++++#   |   #+++##+++#   |   #++#  #++#   |   #+#    #+#   |   ##      ##   |                |                |                "]])
+  },
+  {
+    name: "zap",
+    outline: `<polygon data-part="bolt" points="13 2.5 5 13.5 12 13.5 11 21.5 19 10.5 12 10.5" ${K}/>`,
+    solid: `<polygon data-part="bolt" points="13 2.2 4.8 13.8 11.6 13.8 10.8 21.8 19.2 10.2 12.4 10.2" fill="currentColor" stroke="currentColor" stroke-width="0.9" stroke-linejoin="round"/>`,
+    duotone: `<polygon data-part="bolt" points="13 2.5 5 13.5 12 13.5 11 21.5 19 10.5 12 10.5" ${D}/>`,
+    glass: `<g data-part="bolt"><polygon points="13.5 2.5 5.2 13.5 12.2 13.5 14 7.5" fill="url(#g-dark)"/><polygon points="11.5 10.5 19 10.5 10.8 21.5 9.2 15.5" ${GF}/></g>`,
+    isometric: `<g data-part="bolt"><polygon points="13.5 2.5 5.5 13.5 11.5 13.5 13.5 2.5" fill="#fafafa" stroke="#18181b" stroke-width="0.4"/><polygon points="13.5 2.5 11.5 13.5 19 10.5 13 10.5" fill="#d4d4d8" stroke="#18181b" stroke-width="0.4"/><polygon points="11.5 13.5 10.8 21.5 19 10.5" fill="#3f3f46" stroke="#18181b" stroke-width="0.4"/></g>`,
+    dotmatrix: dots([["bolt","......3....|.....33....|....3.3....|...3..3....|..3...3....|.333333333.|....3...3..|....3..3...|....3.3....|....33.....|..........."]]),
+    cad: `<g data-part="bolt"><line x1="12" y1="1.5" x2="12" y2="22.5" ${CA}/><polygon points="13 2.5 5 13.5 12 13.5 11 21.5 19 10.5 12 10.5" ${CM}/><line x1="12" y1="10.5" x2="12" y2="13.5" ${CD}/></g>`,
+    stencil: `<g data-part="bolt" fill="currentColor"><polygon points="13.4 2.3 5 13.3 11.8 13.3 12.5 10.6 10 10.6"/><polygon points="10.6 21.7 19 10.7 12.2 10.7 11.5 13.4 14 13.4"/></g>`,
+    hardware: `<g data-part="bolt"><polygon points="13 2.5 5 13.5 12 13.5 11 21.5 19 10.5 12 10.5" ${HA}/></g>`,
+    pixel: px([["bolt","         ##     |        ###     |       ####     |      ##+##     |     ##++##     |    ##+++##     |   ##++++##     |  ############  |     ++++###    |     ##+++##    |     ##++##     |     ##+##      |     ####       |     ###        |     ##         |                "]])
+  }
+];
+// ============================================================================
+// 5. RENDER ENGINE (By Style OR Compare Icon) + SEARCH + COPY
+// ============================================================================
+const showcase = document.getElementById("showcase");
+const toast = document.getElementById("toast");
+let toastTimer;
+function triggerIcon(name, btn, svg) {
+  if (CHOREO[name]) CHOREO[name](svg);
+  triggerSound(name, btn);
+}
+function makeButton(icon, style) {
+  const btn = document.createElement("button");
+  btn.className = "icon-btn";
+  btn.title = `${icon.name} — ${style.label}`;
+  btn.setAttribute("aria-label", `${icon.name} ${style.label}`);
+  btn.innerHTML = `<svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg">${icon[style.id]}</svg>`;
+  const svg = btn.querySelector("svg");
+  btn.addEventListener("pointerenter", () => {
+    if (clickMode === "play") triggerIcon(icon.name, btn, svg);
+  });
+  btn.addEventListener("click", () => {
+    initAudio();
+    if (clickMode === "copy") copyStandaloneSvg(svg, style.id);
+    else triggerIcon(icon.name, btn, svg);
+  });
+  return btn;
+}
+function render() {
+  const q = document.getElementById("search").value.trim().toLowerCase();
+  const filtered = ICONS.filter((ic) => ic.name.includes(q));
+  showcase.innerHTML = "";
+  if (viewMode === "style") {
+    STYLES.forEach((style) => {
+      const panel = document.createElement("section");
+      panel.className = "panel";
+      panel.innerHTML = `<div class="panel-header"><h2 class="panel-title">${style.label}</h2><p class="panel-rule">${style.rule}</p></div><div class="icon-grid"></div>`;
+      const grid = panel.querySelector(".icon-grid");
+      filtered.forEach((icon) => grid.appendChild(makeButton(icon, style)));
+      showcase.appendChild(panel);
+    });
+  } else {
+    filtered.forEach((icon) => {
+      const panel = document.createElement("section");
+      panel.className = "panel";
+      panel.innerHTML = `<div class="panel-header"><h2 class="panel-title">${icon.name}</h2><p class="panel-rule">All 10 styles side-by-side</p></div><div class="icon-grid"></div>`;
+      const grid = panel.querySelector(".icon-grid");
+      STYLES.forEach((style) => grid.appendChild(makeButton(icon, style)));
+      showcase.appendChild(panel);
+    });
+  }
+}
+function copyStandaloneSvg(svgEl, styleId) {
+  const clone = svgEl.cloneNode(true);
+  clone.querySelectorAll("[data-part]").forEach((el) => el.removeAttribute("style"));
+  let inner = clone.innerHTML.trim();
+  if (styleId === "glass" || styleId === "hardware") {
+    inner = document.getElementById("master-defs").outerHTML + "\n" + inner;
+  }
+  const code = `<svg viewBox="0 0 24 24" width="24" height="24" xmlns="http://www.w3.org/2000/svg">\n${inner}\n</svg>`;
+  navigator.clipboard.writeText(code).then(() => {
+    toast.classList.add("show");
+    clearTimeout(toastTimer);
+    toastTimer = setTimeout(() => toast.classList.remove("show"), 1500);
+  });
+}
+function setView(mode) {
+  viewMode = mode;
+  document.getElementById("viewStyle").classList.toggle("active", mode === "style");
+  document.getElementById("viewIcon").classList.toggle("active", mode === "icon");
+  render();
+}
+function setMode(mode) {
+  clickMode = mode;
+  document.getElementById("modePlay").classList.toggle("active", mode === "play");
+  document.getElementById("modeCopy").classList.toggle("active", mode === "copy");
+}
+function setTheme(theme, el) {
+  document.documentElement.setAttribute("data-theme", theme);
+  el.parentElement.querySelectorAll(".btn").forEach((b) => b.classList.remove("active"));
+  el.classList.add("active");
+}
+render();
+</script>
+</body>
+</html>
