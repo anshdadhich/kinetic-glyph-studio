@@ -310,6 +310,10 @@ export default function LandingPage() {
       ? "dark"
       : "light"
   );
+  const [glassSwapped, setGlassSwapped] = useState<boolean>(() =>
+    (typeof document !== "undefined" && document.documentElement.dataset.glass === "swapped") ||
+    (typeof window !== "undefined" && window.localStorage.getItem("wiggle-glass-swap") === "1")
+  );
   const heroIcons = useMemo(() => ICONS.slice(0, 16), []);
   const sampleIcons = useMemo(() => ICONS.slice(0, 40), []);
   const styles = useMemo(() => STYLES, []);
@@ -318,6 +322,12 @@ export default function LandingPage() {
   useEffect(() => {
     initAudio();
   }, []);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-glass", glassSwapped ? "swapped" : "normal");
+    window.localStorage.setItem("wiggle-glass-swap", glassSwapped ? "1" : "0");
+  }, [glassSwapped]);
+
   useEffect(() => {
     const root = document.documentElement;
     root.setAttribute("data-theme", theme);
@@ -354,6 +364,9 @@ export default function LandingPage() {
           </a>
           <nav className="wig-nav" aria-label="Site">
             <a className="wig-nav-link" href="/icons">Library</a>
+            <button type="button" className="wig-theme" onClick={() => setGlassSwapped((v) => !v)} aria-label="Swap the two glass layers" title="Swap glass layers">
+              <Icon name="layers" size={16} animate sound bare />
+            </button>
             <button type="button" className="wig-theme" onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))} aria-label="Toggle light and dark theme">
               <Icon name={theme === "light" ? "moon" : "sun"} size={16} animate sound bare />
             </button>

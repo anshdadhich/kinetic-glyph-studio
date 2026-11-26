@@ -100,9 +100,15 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
   const [toast, setToast] = useState<string | null>(null);
   const [armed, setArmed] = useState(() => getAudioStatus() === "ready");
   const [audioStatus, setAudioStatus] = useState(getAudioStatus());
+  const [glassSwapped, setGlassSwapped] = useState<boolean>(() =>
+    typeof window !== "undefined" && window.localStorage.getItem("wiggle-glass-swap") === "1"
+  );
   const timer = useRef<number | null>(null);
 
   useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
+  useEffect(() => {
+    document.documentElement.setAttribute("data-glass", glassSwapped ? "swapped" : "normal");
+  }, [glassSwapped]);
   useEffect(() => {
     initAudio();
   }, []);
@@ -170,6 +176,16 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
           >
             <Icon name="volume" size={15} animate sound bare />
             {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
+          </button>
+          <button
+            type="button"
+            className="lib-sound"
+            onClick={() => setGlassSwapped((v) => !v)}
+            aria-pressed={glassSwapped}
+            title="Swap glass layers"
+          >
+            <Icon name="layers" size={15} animate sound bare />
+            Swap glass
           </button>
         </div>
 
