@@ -1,16 +1,16 @@
 /* Wiggle Icons landing page - quiet, narrow-column, monoline aesthetic */
 .wig-root {
-  --ink: var(--gz-text-1);
-  --muted: var(--gz-text-2);
-  --faint: var(--gz-text-3);
-  --rule: var(--gz-line-faint);
-  --page: var(--gz-page);
-  --tile: var(--gz-shell);
+  --ink: #0a0a0a;
+  --muted: #737373;
+  --faint: #a3a3a3;
+  --rule: #d4d4d4;
+  --page: #ffffff;
+  --tile: #f5f5f7;
   min-height: 100vh;
-  background: var(--gz-page);
-  color: var(--gz-text-1);
-  font: var(--gz-type-body);
-  letter-spacing: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 500 15px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: -0.03em;
   overflow-x: clip;
 }
 .wig-root * { box-sizing: border-box; }
@@ -23,7 +23,7 @@
 /* Fixed top bar + strip */
 .wig-launch {
   z-index: 11; color: #fff; background: #161617; text-decoration: none;
-  height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center; gap: 10px;
+  height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center;
   position: fixed; inset: 0 0 auto; white-space: nowrap; font-size: 13px;
 }
 .wig-launch strong { color: #fff; font-weight: 600; }
@@ -49,10 +49,10 @@
 .wig-blur > div:nth-child(7) { backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(#0000 88%, #000 100%); mask-image: linear-gradient(#0000 88%, #000 100%); }
 
 /* Narrow editorial column */
-.wig-main { width: min(576px, 100% - 32px); margin-inline: auto; padding: var(--gz-space-10) 0 var(--gz-space-8); }
-.wig-header { justify-content: space-between; align-items: center; gap: var(--gz-space-2); display: flex; }
-.wig-brand { align-items: center; gap: var(--gz-space-2); font-weight: 500; display: inline-flex; text-decoration: none; }
-.wig-brand-mark { border-radius: var(--gz-radius-tag); background: var(--gz-ink); color: var(--gz-text-inverse); width: 24px; height: 24px; display: grid; place-items: center; }
+.wig-main { width: min(576px, 100% - 32px); margin-inline: auto; padding: 136px 0 112px; }
+.wig-header { justify-content: space-between; align-items: center; gap: 12px; display: flex; }
+.wig-brand { align-items: center; gap: 8px; font-weight: 600; display: inline-flex; text-decoration: none; }
+.wig-brand-mark { border-radius: 10px; background: #000; width: 24px; height: 24px; display: grid; place-items: center; }
 .wig-brand-mark svg { width: 20px; height: 20px; }
 .wig-nav { align-items: center; gap: 20px; display: inline-flex; }
 .wig-nav-link, .wig-sound { color: var(--faint); text-decoration: none; transition: color .14s; }
@@ -84,12 +84,12 @@
 .wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 28px; display: flex; }
 .wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
 .wig-capsule:active { transform: scale(.97); }
-.wig-capsule-buy { color: var(--gz-text-inverse); background: var(--gz-ink-80); padding: 0 20px; }
-.wig-capsule-buy > span { color: var(--gz-text-inverse); }
-.wig-capsule-buy:hover { background: var(--gz-ink); }
-.wig-capsule-price { color: var(--gz-text-inverse); background: var(--gz-field); border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
-.wig-capsule-quiet { background: var(--gz-hover); padding: 0 20px; }
-.wig-capsule-quiet:hover { background: var(--gz-pressed); }
+.wig-capsule-buy { color: #fff; background: #111; padding: 6px 6px 6px 20px; }
+.wig-capsule-buy > span { color: #fff; }
+.wig-capsule-buy:hover { background: #000; }
+.wig-capsule-price { color: #fff; background: #2e2e2e; border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
+.wig-capsule-quiet { background: #0000000f; padding: 0 20px; }
+.wig-capsule-quiet:hover { background: #00000017; }
 @keyframes wig-cta-nudge {
   0% { transform: translateX(0); }
   40% { transform: translateX(4px); }
@@ -133,9 +133,9 @@
 
 /* Sponsor wall (mirrors builders cards) */
 .wig-sponsors { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; display: grid; }
-.wig-sponsor { box-sizing: border-box; background: var(--gz-shell); border: var(--gz-line-width) solid var(--gz-line-faint); border-radius: var(--gz-radius-shell); min-height: 96px; width: 100%; color: inherit; text-decoration: none; flex-direction: column; justify-content: center; gap: 8px; padding: var(--gz-space-3); display: flex; transition: background-color var(--gz-dur-state) var(--gz-ease-out); }
-button.wig-sponsor { background: var(--gz-shell); }
-button.wig-sponsor:hover { background: var(--gz-hover); }
+.wig-sponsor { box-sizing: border-box; background: var(--tile); border-radius: 18px; min-height: 96px; width: 100%; color: inherit; text-decoration: none; flex-direction: column; justify-content: space-between; gap: 10px; padding: 14px; display: flex; transition: background-color .16s; }
+button.wig-sponsor { border: 1px dashed var(--rule); background: transparent; }
+button.wig-sponsor:hover { background: var(--tile); }
 .wig-sponsor-empty { align-items: center; justify-content: center; gap: 3px; text-align: center; }
 .wig-sponsor-plus { color: var(--faint); font-size: 20px; line-height: 1; }
 .wig-sponsor-plus svg { transition: transform .18s cubic-bezier(.3,.7,.4,1); }
@@ -199,7 +199,7 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
 
 /* Footer */
-.wig-footer { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); color: var(--muted); margin-top: var(--gz-space-8); min-height: 96px; display: flex; align-items: center; justify-content: center; }
+.wig-footer { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); color: var(--muted); margin-top: 112px; min-height: 240px; display: flex; align-items: center; justify-content: center; }
 .wig-footer a { color: var(--ink); text-decoration: none; }
 .wig-footer a:hover { color: var(--muted); }
 .wig-footer-top { gap: 36px; display: grid; }

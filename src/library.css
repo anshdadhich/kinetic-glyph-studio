@@ -1,11 +1,11 @@
 /* Icon library - quiet sidebar + dense tile grid, matching the reference library UI */
 .lib-root {
-  --ink: var(--gz-text-1);
-  --muted: var(--gz-text-2);
-  --faint: var(--gz-text-3);
-  --rule: var(--gz-line-faint);
-  --page: var(--gz-page);
-  --tile: var(--gz-shell);
+  --ink: #0a0a0a;
+  --muted: #737373;
+  --faint: #a3a3a3;
+  --rule: #d4d4d4;
+  --page: #ffffff;
+  --tile: #f5f5f7;
   --icon-size: 32px;
   box-sizing: border-box;
   display: grid;

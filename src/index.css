@@ -254,6 +254,20 @@ html {
   .kg-spinner { animation: none; }
 }
 
+/* Dark mode for landing, library and docs surfaces */
+[data-theme="dark"] .wig-root,
+[data-theme="dark"] .lib-root,
+[data-theme="dark"] .docs {
+  --ink: #fafafa;
+  --muted: #a1a1aa;
+  --faint: #71717a;
+  --rule: #3f3f46;
+  --page: #09090b;
+  --tile: #18181b;
+}
+[data-theme="dark"] .wig-capsule-buy { background: #fafafa; color: #09090b; }
+[data-theme="dark"] .wig-capsule-buy > span { color: #09090b; }
+[data-theme="dark"] .wig-capsule-price { background: #3f3f46; color: #fafafa; }
 [data-theme="dark"] .wig-launch { background: #18181b; }
 
 /* Interchange the two shaded glass layers */

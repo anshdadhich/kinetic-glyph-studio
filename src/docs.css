@@ -1,16 +1,16 @@
 /* Docs - matching the reference docs layout and typography */
 .docs {
-  --ink: var(--gz-text-1);
-  --muted: var(--gz-text-2);
-  --faint: var(--gz-text-3);
-  --rule: var(--gz-line-faint);
-  --page: var(--gz-page);
-  --tile: var(--gz-shell);
+  --ink: #0a0a0a;
+  --muted: #737373;
+  --faint: #a3a3a3;
+  --rule: #d4d4d4;
+  --page: #ffffff;
+  --tile: #f5f5f7;
   min-height: 100vh;
-  background: var(--gz-page);
-  color: var(--gz-text-1);
-  font: var(--gz-type-body);
-  letter-spacing: 0;
+  background: var(--page);
+  color: var(--ink);
+  font: 500 15px/1.45 Inter, -apple-system, system-ui, sans-serif;
+  letter-spacing: -0.03em;
 }
 .docs * { box-sizing: border-box; }
 .docs :is(h1, h2, h3, p, li, td, th, pre, code, button, a, span) { font-size: inherit; }
