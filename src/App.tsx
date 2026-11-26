@@ -125,6 +125,18 @@ const SHORT_STYLE_LABELS: Record<StyleId, string> = {
 };
 
 export default function App() {
+  if (
+    typeof window !== "undefined" &&
+    window.location.pathname.replace(/\/$/, "") === "/icons"
+  ) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+        <SvgDefs />
+        <LibraryUI />
+      </div>
+    );
+  }
+
   const [viewMode, setViewMode] = useState<ViewMode>("style");
   const [clickMode, setClickMode] = useState<ClickMode>("play");
   const [theme, setTheme] = useState<ThemeMode>("light");

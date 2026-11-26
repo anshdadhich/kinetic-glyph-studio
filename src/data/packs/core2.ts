@@ -112,7 +112,7 @@ export const CORE2_ICONS: IconDef[] = [
     svgs: {
       outline: `<g data-part="arrows" data-pivot="12 12" ${K}><path d="M19.5 10A7.8 7.8 0 0 0 6.2 6.8L4.5 8.5"/><polyline points="4.5 4.8 4.5 8.5 8.2 8.5"/><path d="M4.5 14A7.8 7.8 0 0 0 17.8 17.2L19.5 15.5"/><polyline points="19.5 19.2 19.5 15.5 15.8 15.5"/></g>`,
       solid: `<g data-part="arrows" data-pivot="12 12" fill="currentColor"><path d="M12 3.8A8.2 8.2 0 0 0 5.4 7.2L3.8 5.6V10.4H8.6L6.9 8.7A6.1 6.1 0 0 1 17.7 10.2A1 1 0 1 0 19.6 9.6A8.2 8.2 0 0 0 12 3.8Z"/><path d="M12 20.2A8.2 8.2 0 0 0 18.6 16.8L20.2 18.4V13.6H15.4L17.1 15.3A6.1 6.1 0 0 1 6.3 13.8A1 1 0 1 0 4.4 14.4A8.2 8.2 0 0 0 12 20.2Z"/></g>`,
-      duotone: `<circle cx="12" cy="12" r="8" ${D}/><g data-part="arrows" data-pivot="12 12" ${DK}><path d="M18.6 9.8A7 7 0 0 0 6.5 7.4L5 8.8"/><polyline points="5 5.4 5 8.8 8.4 8.8"/><path d="M5.4 14.2A7 7 0 0 0 17.5 16.6L19 15.2"/><polyline points="19 18.6 19 15.2 15.6 15.2"/></g>`,
+      duotone: `<g data-part="arrows" data-pivot="12 12" ${D}><path d="M12 3.8A8.2 8.2 0 0 0 5.4 7.2L3.8 5.6V10.4H8.6L6.9 8.7A6.1 6.1 0 0 1 17.7 10.2A1 1 0 1 0 19.6 9.6A8.2 8.2 0 0 0 12 3.8Z"/><path d="M12 20.2A8.2 8.2 0 0 0 18.6 16.8L20.2 18.4V13.6H15.4L17.1 15.3A6.1 6.1 0 0 1 6.3 13.8A1 1 0 1 0 4.4 14.4A8.2 8.2 0 0 0 12 20.2Z"/></g>`,
       glass: glassCompose(
         `<circle cx="11" cy="11" r="7.5" ${GBS}/>`,
         `<circle data-part="arrows" data-pivot="12 12" cx="12" cy="12" r="8.2"/>`,

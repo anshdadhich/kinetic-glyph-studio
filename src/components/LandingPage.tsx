@@ -353,7 +353,7 @@ export default function LandingPage() {
             wiggle icons
           </a>
           <nav className="wig-nav" aria-label="Site">
-            <a className="wig-nav-link" href="#library">Library</a>
+            <a className="wig-nav-link" href="/icons">Library</a>
             <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
               {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
               Sound {audioStatus === "muted" ? "off" : "on"}
@@ -385,14 +385,14 @@ export default function LandingPage() {
             no dependencies on the icons themselves.
           </p>
           <p>
-            Try all 240 free in the <a href="#library">library</a>, or{" "}
+            Try all 240 free in the <a href="/icons">library</a>, or{" "}
             <a className="wig-offer" href="#sponsors"><strong>claim a sponsor slot</strong> $30</a>{" "}
             to put your name on the wall.
           </p>
         </div>
 
         <div className="wig-actions">
-          <a className="wig-capsule wig-capsule-buy" href="#library">
+          <a className="wig-capsule wig-capsule-buy" href="/icons">
             <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
           </a>
           <a className="wig-capsule wig-capsule-quiet" href="#sponsors">
@@ -417,7 +417,7 @@ export default function LandingPage() {
             <h2>Icons</h2>
             <span className="wig-sampler-meta">
               <span className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</span>
-              <a href="#library">View all {ICONS.length} →</a>
+              <a href="/icons">View all {ICONS.length} →</a>
             </span>
           </div>
           <div className="wig-panels">
@@ -500,7 +500,7 @@ export default function LandingPage() {
                 <li><Check size={20} /><span>Every animation and sound</span></li>
                 <li><Check size={20} /><span>Copy any SVG you like</span></li>
               </ul>
-              <a className="wig-capsule wig-capsule-quiet" href="#library" style={{ marginTop: 20 }}>Open the library</a>
+              <a className="wig-capsule wig-capsule-quiet" href="/icons" style={{ marginTop: 20 }}>Open the library</a>
             </div>
             <div className="wig-plan wig-plan-featured">
               <p className="wig-plan-name">Sponsor slot</p>
@@ -541,14 +541,14 @@ export default function LandingPage() {
                 <p className="wig-footer-title">Explore</p>
                 <ul>
                   <li><a href="#sampler">Icons</a></li>
-                  <li><a href="#library">Library</a></li>
+                  <li><a href="/icons">Library</a></li>
                   <li><a href="#sponsors">Sponsors</a></li>
                 </ul>
               </div>
               <div className="wig-footer-group">
                 <p className="wig-footer-title">Styles</p>
                 <ul>
-                  {STYLES.map((s) => <li key={s.id}><a href="#library">{s.label}</a></li>)}
+                  {STYLES.map((s) => <li key={s.id}><a href="/icons">{s.label}</a></li>)}
                 </ul>
               </div>
               <div className="wig-footer-group">
