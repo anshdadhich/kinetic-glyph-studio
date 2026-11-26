@@ -357,10 +357,6 @@ export default function App() {
 
       <LandingPage />
 
-      <div id="library">
-        <LibraryUI />
-      </div>
-
       {false && (
       <main className="mx-auto max-w-[1200px] px-6 py-8 space-y-6">
         {/* Editorial Intro + Workspace Controls */}

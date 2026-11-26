@@ -125,9 +125,13 @@
 
 /* Sponsor wall (mirrors builders cards) */
 .wig-sponsors { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; display: grid; }
-.wig-sponsor { box-sizing: border-box; background: var(--tile); border-radius: 22px; min-height: 148px; width: 100%; color: inherit; text-decoration: none; flex-direction: column; justify-content: space-between; gap: 16px; padding: 20px; display: flex; transition: background-color .16s; }
+.wig-sponsor { box-sizing: border-box; background: var(--tile); border-radius: 18px; min-height: 96px; width: 100%; color: inherit; text-decoration: none; flex-direction: column; justify-content: space-between; gap: 10px; padding: 14px; display: flex; transition: background-color .16s; }
 button.wig-sponsor { border: 1px dashed var(--rule); background: transparent; }
 button.wig-sponsor:hover { background: var(--tile); }
+.wig-sponsor-empty { align-items: center; justify-content: center; gap: 3px; text-align: center; }
+.wig-sponsor-plus { color: var(--faint); font-size: 20px; line-height: 1; }
+.wig-sponsor-slot { font-size: 12px; font-weight: 500; }
+.wig-sponsor-price { color: var(--faint); font-size: 11px; }
 a.wig-sponsor:hover { background: #efeff2; }
 .wig-sponsor-head { align-items: center; gap: 12px; display: flex; }
 .wig-sponsor-icon { background: var(--page); border-radius: 12px; width: 44px; height: 44px; place-items: center; display: grid; font-size: 20px; }
@@ -136,7 +140,7 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-sponsor-names span { color: var(--muted); }
 .wig-sponsor-note { color: var(--muted); line-height: 1.5; }
 .wig-empty-icon { color: var(--faint); font-size: 22px; line-height: 1; }
-.wig-wall-status { color: var(--faint); margin-top: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.wig-wall-status { color: var(--faint); margin-top: 12px; display: flex; align-items: center; justify-content: center; font-size: 13px; }
 .wig-reset { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
 .wig-reset:hover { color: var(--ink); }
 

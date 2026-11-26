@@ -24,19 +24,6 @@ function useGlyph(icon: IconDef, style: StyleId) {
   );
 }
 
-function StaticGlyph({ icon, style }: { icon: IconDef; style: StyleId }) {
-  const markup = useGlyph(icon, style);
-  return (
-    <svg
-      className="wig-glyph"
-      viewBox="0 0 24 24"
-      xmlns="http://www.w3.org/2000/svg"
-      aria-hidden="true"
-      dangerouslySetInnerHTML={{ __html: markup }}
-    />
-  );
-}
-
 interface IconButtonProps {
   icon: IconDef;
   style: StyleId;
@@ -260,15 +247,10 @@ function SponsorWall() {
               </div>
             )
           ) : (
-            <button key={i} type="button" className="wig-sponsor" onClick={() => setSlot(i)}>
-              <div className="wig-sponsor-head">
-                <span className="wig-sponsor-icon wig-empty-icon" aria-hidden="true">+</span>
-                <span className="wig-sponsor-names">
-                  <strong>Your logo here</strong>
-                  <span>Slot {i + 1} · ${PRICE}</span>
-                </span>
-              </div>
-              <p className="wig-sponsor-note">Click to claim this block for ${PRICE}.</p>
+            <button key={i} type="button" className="wig-sponsor wig-sponsor-empty" onClick={() => setSlot(i)}>
+              <span className="wig-sponsor-plus" aria-hidden="true">+</span>
+              <span className="wig-sponsor-slot">Slot {i + 1}</span>
+              <span className="wig-sponsor-price">${PRICE}</span>
             </button>
           )
         )}
@@ -316,8 +298,6 @@ export default function LandingPage() {
   const [audioStatus, setAudioStatus] = useState<AudioStatus>(() => getAudioStatus());
   const heroIcons = useMemo(() => ICONS.slice(0, 16), []);
   const sampleIcons = useMemo(() => ICONS.slice(0, 40), []);
-  const mosaicIcons = useMemo(() => ICONS.slice(40, 96), []);
-  const showcase = useMemo(() => ICONS.slice(96, 112), []);
   const styles = useMemo(() => STYLES, []);
 
   useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
@@ -429,57 +409,6 @@ export default function LandingPage() {
                 <p className="wig-panel-name">{style.label}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        <section className="wig-section" aria-labelledby="what-title">
-          <h2 id="what-title">What you get</h2>
-          <p className="wig-section-lead">A tiny library with an unreasonable amount of attention to detail.</p>
-          <div className="wig-features" style={{ marginTop: 24 }}>
-            <div className="wig-feature">
-              <div className="wig-feature-art">
-                <div className="wig-mosaic">
-                  {mosaicIcons.map((icon, i) => (
-                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[i % STYLES.length].id} /></span>
-                  ))}
-                </div>
-              </div>
-              <h3>{ICONS.length} icons</h3>
-              <p>Everyday objects, interface, nature, travel and more, all on a 24px grid.</p>
-            </div>
-            <div className="wig-feature">
-              <div className="wig-feature-art">
-                <div className="wig-mosaic">
-                  {showcase.map((icon, i) => (
-                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 2) % STYLES.length].id} /></span>
-                  ))}
-                </div>
-              </div>
-              <h3>{STYLES.length} styles</h3>
-              <p>Outline, solid, duotone, glass, stencil, hardware and 3D relief.</p>
-            </div>
-            <div className="wig-feature">
-              <div className="wig-feature-art">
-                <div className="wig-mosaic">
-                  {ICONS.slice(112, 152).map((icon, i) => (
-                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 1) % STYLES.length].id} /></span>
-                  ))}
-                </div>
-              </div>
-              <h3>A motion for each one</h3>
-              <p>A bell swings, a rocket lifts off, a heart thumps. Spring physics, never a stock wiggle.</p>
-            </div>
-            <div className="wig-feature">
-              <div className="wig-feature-art">
-                <div className="wig-mosaic">
-                  {ICONS.slice(152, 192).map((icon, i) => (
-                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 3) % STYLES.length].id} /></span>
-                  ))}
-                </div>
-              </div>
-              <h3>Procedural sound</h3>
-              <p>Short synth voices built on the fly. No audio files, no downloads, no subscriptions.</p>
-            </div>
           </div>
         </section>
 
