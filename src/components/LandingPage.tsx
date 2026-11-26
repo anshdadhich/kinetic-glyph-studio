@@ -56,12 +56,16 @@ const IconButton = memo(function IconButton({
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const markup = useGlyph(icon, style);
 
+  const animate = useCallback(() => {
+    triggerChoreography(icon.name, svgRef.current);
+  }, [icon.name]);
+
   const play = useCallback(() => {
     initAudio();
-    triggerChoreography(icon.name, svgRef.current);
+    animate();
     triggerSound(icon.name, btnRef.current);
     onArm();
-  }, [icon.name, onArm]);
+  }, [icon.name, animate, onArm]);
 
   return (
     <button
@@ -69,7 +73,8 @@ const IconButton = memo(function IconButton({
       type="button"
       onClick={play}
       onPointerEnter={() => {
-        if (armed) play();
+        animate();
+        if (armed) triggerSound(icon.name, btnRef.current);
       }}
       aria-label={`Play ${icon.label}, ${icon.soundSummary}`}
       title={`${icon.label} — ${icon.soundSummary}`}
@@ -314,9 +319,12 @@ export default function LandingPage() {
   const sampleIcons = useMemo(() => ICONS.slice(0, 40), []);
   const mosaicIcons = useMemo(() => ICONS.slice(40, 96), []);
   const showcase = useMemo(() => ICONS.slice(96, 112), []);
-  const styles = useMemo(() => STYLES.slice(0, 4), []);
+  const styles = useMemo(() => STYLES, []);
 
   useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
+  useEffect(() => {
+    if (audioStatus === "ready") setArmed(true);
+  }, [audioStatus]);
 
   const arm = useCallback(() => setArmed(true), []);
 
@@ -394,7 +402,7 @@ export default function LandingPage() {
         <section className="wig-sampler" id="sampler" aria-label="Sampler">
           <div className="wig-sampler-head">
             <h2>Sampler</h2>
-            <p className="wig-now">{sampleIcons.length} of {ICONS.length}</p>
+            <p className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</p>
           </div>
           <div className="wig-panels">
             {styles.map((style) => (
@@ -532,7 +540,7 @@ export default function LandingPage() {
               <div className="wig-footer-group">
                 <p className="wig-footer-title">Styles</p>
                 <ul>
-                  {STYLES.slice(0, 4).map((s) => <li key={s.id}><a href="#library">{s.label}</a></li>)}
+                  {STYLES.map((s) => <li key={s.id}><a href="#library">{s.label}</a></li>)}
                 </ul>
               </div>
               <div className="wig-footer-group">
