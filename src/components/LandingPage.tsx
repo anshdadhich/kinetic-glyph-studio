@@ -457,7 +457,20 @@ export default function LandingPage() {
           <div className="wig-faq" style={{ marginTop: 24 }}>
             {FAQ.map(([q, a]) => (
               <details className="wig-faq-item" key={q}>
-                <summary>{q}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} animate sound bare /></span></summary>
+                <summary
+                  onClick={(e) => {
+                    initAudio();
+                    triggerSound("plus", null);
+                    const svg = e.currentTarget.querySelector(".wig-faq-mark svg");
+                    if (svg) {
+                      svg.classList.remove("faq-pop");
+                      void (svg as SVGElement).getBoundingClientRect();
+                      svg.classList.add("faq-pop");
+                    }
+                  }}
+                >
+                  {q}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
+                </summary>
                 <p>{a}</p>
               </details>
             ))}

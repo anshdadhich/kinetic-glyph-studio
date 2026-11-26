@@ -176,10 +176,16 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-faq-item summary::-webkit-details-marker { display: none; }
 .wig-faq-mark { width: 14px; height: 14px; color: var(--muted); flex: none; display: grid; place-items: center; transition: transform .24s; }
 .wig-faq-item[open] .wig-faq-mark { transform: rotate(45deg); }
+@keyframes wig-faq-pop {
+  0% { transform: scale(1); }
+  45% { transform: scale(1.5) rotate(45deg); }
+  100% { transform: scale(1); }
+}
+.wig-faq-mark svg.faq-pop { animation: wig-faq-pop 360ms cubic-bezier(.3,.7,.4,1); }
 .wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
 
 /* Footer */
-.wig-footer { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); color: var(--muted); margin-top: 112px; }
+.wig-footer { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); color: var(--muted); margin-top: 112px; min-height: 240px; display: flex; align-items: center; justify-content: center; }
 .wig-footer a { color: var(--ink); text-decoration: none; }
 .wig-footer a:hover { color: var(--muted); }
 .wig-footer-top { gap: 36px; display: grid; }
@@ -187,7 +193,7 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-footer-groups { grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 28px 24px; display: grid; }
 .wig-footer-title { color: var(--ink); margin: 0 0 10px; font-weight: 600; }
 .wig-footer-group ul { gap: 6px; margin: 0; padding: 0; list-style: none; display: grid; }
-.wig-footer-bottom { color: var(--faint); flex-wrap: wrap; justify-content: center; gap: 6px 24px; margin-top: 40px; display: flex; }
+.wig-footer-bottom { color: var(--faint); flex-wrap: wrap; justify-content: center; gap: 6px 24px; margin-top: 0; display: flex; }
 
 /* Demo checkout sheet */
 .wig-sheet-backdrop { z-index: 50; position: fixed; inset: 0; background: #00000038; }
