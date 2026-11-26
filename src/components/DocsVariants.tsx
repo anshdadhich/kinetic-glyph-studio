@@ -2,6 +2,7 @@ import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "
 import { ICONS, STYLES, IconDef, StyleId } from "../data/icons";
 import { copyText } from "../clipboard";
 import { standaloneSvg } from "./LibraryUI";
+import { Heart } from "./Icon";
 import { initAudio, triggerSound } from "../audio/foley";
 import { triggerChoreography } from "../physics/spring";
 import "../docs.css";
@@ -96,7 +97,7 @@ export default function DocsVariants() {
     []
   );
   const code = useMemo(
-    () => STYLES.map((s) => `<Heart variant="${s.id}" />`).join("\n"),
+    () => STYLES.map((s) => `<Heart variant="${s.id}" animate sound />`).join("\n"),
     []
   );
 
@@ -193,6 +194,17 @@ export default function DocsVariants() {
               <div className="doc-code">
                 <pre><code>{code}</code></pre>
                 <button type="button" className="doc-copy" onClick={() => copyCode(code)}>Copy</button>
+              </div>
+
+              <h2>Live component</h2>
+              <p>These are our real <code>Heart</code> components, not pasted SVG strings. Hover to play, click to replay.</p>
+              <div className="doc-demo">
+                {STYLES.map((s) => (
+                  <div className="doc-demo-row" key={s.id}>
+                    <span className="doc-demo-label">{s.id}</span>
+                    <Heart variant={s.id} size={28} animate sound />
+                  </div>
+                ))}
               </div>
 
               <h2>Switching</h2>
