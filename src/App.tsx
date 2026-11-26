@@ -162,10 +162,12 @@ export default function App() {
       }
     };
     window.addEventListener("pointerdown", unlockOnPointer, { passive: true });
+    window.addEventListener("keydown", unlockOnPointer);
     return () => {
       unsub();
       unsubMode();
       window.removeEventListener("pointerdown", unlockOnPointer);
+      window.removeEventListener("keydown", unlockOnPointer);
     };
   }, []);
 
