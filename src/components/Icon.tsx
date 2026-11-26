@@ -51,7 +51,8 @@ export function Icon({
       height={size}
       xmlns="http://www.w3.org/2000/svg"
       className={`icon-svg ${className ?? ""}`}
-      style={style}
+      style={{ overflow: "visible", pointerEvents: "visiblePainted", ...style }}
+      onPointerEnter={play}
       aria-hidden="true"
     >
       {needsDefs && <defs dangerouslySetInnerHTML={{ __html: getMasterDefsInner(false).trim() }} />}
@@ -66,8 +67,8 @@ export function Icon({
       ref={btnRef}
       type="button"
       onClick={play}
-      onPointerEnter={play}
-      className="inline-grid place-items-center cursor-pointer"
+      style={{ pointerEvents: "none" }}
+      className="inline-grid place-items-center"
       aria-label={`${icon.label} in ${variant} style`}
     >
       {svg}

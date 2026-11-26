@@ -1,0 +1,130 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <title>Heart, solid</title>
+  <style>
+    :root { color-scheme: light; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      background: #ffffff;
+      color: #0a0a0a;
+      font: 500 15px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      letter-spacing: -0.02em;
+    }
+    .card { width: min(420px, calc(100% - 32px)); }
+    h1 { font-size: 28px; font-weight: 600; margin: 0; letter-spacing: -0.04em; }
+    .lead { color: #737373; margin-top: 8px; }
+    .stage {
+      margin-top: 28px;
+      min-height: 240px;
+      border-radius: 24px;
+      background: #f5f5f7;
+      display: grid;
+      place-items: center;
+    }
+    #icon {
+      border: 0;
+      padding: 0;
+      background: none;
+      cursor: pointer;
+      line-height: 0;
+      pointer-events: none;
+    }
+    #icon svg {
+      width: 96px;
+      height: 96px;
+      overflow: visible;
+      pointer-events: visiblePainted;
+      transform-origin: 50% 50%;
+    }
+    #icon.beat svg { animation: beat 460ms cubic-bezier(.3,.7,.4,1); }
+    @keyframes beat {
+      0% { transform: scale(1); }
+      18% { transform: scale(1.18); }
+      38% { transform: scale(0.96); }
+      56% { transform: scale(1.10); }
+      100% { transform: scale(1); }
+    }
+    pre {
+      margin: 20px 0 0;
+      padding: 16px;
+      border-radius: 14px;
+      background: #f5f5f7;
+      font: 13px ui-monospace, Menlo, monospace;
+      overflow-x: auto;
+    }
+    .note { color: #a3a3a3; font-size: 12px; margin-top: 12px; }
+    a { color: #737373; font-size: 13px; }
+  </style>
+</head>
+<body>
+  <main class="card">
+    <h1>Heart, solid</h1>
+    <p class="lead">One icon, one motion, one sound. Hover to play, click to replay.</p>
+
+    <div class="stage">
+      <button id="icon" type="button" aria-label="Play heart animation and sound">
+        <svg viewBox="0 0 24 24" xmlns="http://www.w3.org/2000/svg" fill="currentColor" aria-hidden="true">
+          <path data-part="heart" data-pivot="12 12" d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z" />
+        </svg>
+      </button>
+    </div>
+
+    <pre>&lt;Heart variant="solid" animate sound /&gt;</pre>
+    <p class="note">Click once to unlock audio in your browser, then hover works too.</p>
+    <a href="/">Back to Wiggle Icons</a>
+  </main>
+
+  <script>
+    let ctx = null;
+
+    function ensureAudio() {
+      if (!ctx) {
+        var AudioCtor = window.AudioContext || window.webkitAudioContext;
+        if (!AudioCtor) return null;
+        ctx = new AudioCtor();
+      }
+      if (ctx.state === "suspended") ctx.resume();
+      return ctx;
+    }
+
+    function thump(f1, f2, start, duration, peak) {
+      var osc = ctx.createOscillator();
+      var gain = ctx.createGain();
+      osc.type = "sine";
+      osc.frequency.setValueAtTime(f1, start);
+      osc.frequency.exponentialRampToValueAtTime(f2, start + duration);
+      gain.gain.setValueAtTime(0.0001, start);
+      gain.gain.exponentialRampToValueAtTime(peak, start + 0.008);
+      gain.gain.exponentialRampToValueAtTime(0.0001, start + duration);
+      osc.connect(gain);
+      gain.connect(ctx.destination);
+      osc.start(start);
+      osc.stop(start + duration + 0.02);
+    }
+
+    function play() {
+      var audio = ensureAudio();
+      var icon = document.getElementById("icon");
+      icon.classList.remove("beat");
+      void icon.offsetWidth;
+      icon.classList.add("beat");
+      if (!audio || audio.state !== "running") return;
+      var t = audio.currentTime;
+      thump(110, 55, t, 0.13, 0.42);
+      thump(92, 48, t + 0.17, 0.16, 0.34);
+    }
+
+    document.getElementById("icon").addEventListener("click", play);
+    document.getElementById("icon").addEventListener("pointerenter", function () {
+      if (ctx && ctx.state === "running") play();
+    });
+  </script>
+</body>
+</html>
