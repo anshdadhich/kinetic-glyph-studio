@@ -23,7 +23,7 @@
 /* Fixed top bar + strip */
 .wig-launch {
   z-index: 11; color: #fff; background: #161617; text-decoration: none;
-  height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center;
+  height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center; gap: 10px;
   position: fixed; inset: 0 0 auto; white-space: nowrap; font-size: 13px;
 }
 .wig-launch strong { color: #fff; font-weight: 600; }
@@ -84,7 +84,7 @@
 .wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 28px; display: flex; }
 .wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
 .wig-capsule:active { transform: scale(.97); }
-.wig-capsule-buy { color: var(--gz-text-inverse); background: var(--gz-ink-80); padding: 6px 6px 6px 20px; }
+.wig-capsule-buy { color: var(--gz-text-inverse); background: var(--gz-ink-80); padding: 0 20px; }
 .wig-capsule-buy > span { color: var(--gz-text-inverse); }
 .wig-capsule-buy:hover { background: var(--gz-ink); }
 .wig-capsule-price { color: var(--gz-text-inverse); background: var(--gz-field); border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }

@@ -341,9 +341,9 @@ export default function LandingPage() {
   return (
     <div id="top" className="wig-root">
       <a className="wig-launch" href="#sponsors">
-        <span className="wig-launch-full">Sponsor wall · ten blocks at $30 each · </span>
+        <span className="wig-launch-full">Sponsor wall, ten blocks at $30 each.</span>
         <strong>Put your name on it</strong>
-        <span className="wig-launch-go" aria-hidden="true">→</span>
+        <Icon name="forward" size={14} animate sound bare />
       </a>
       <main className="wig-main">
         <header className="wig-header">
@@ -397,7 +397,7 @@ export default function LandingPage() {
 
         <div className="wig-actions">
           <a className="wig-capsule wig-capsule-buy" href="/icons">
-            <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
+            Explore the library
           </a>
           <a
             className="wig-capsule wig-capsule-quiet"
