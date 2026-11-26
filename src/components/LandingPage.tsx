@@ -345,11 +345,6 @@ export default function LandingPage() {
         <strong>Put your name on it</strong>
         <span className="wig-launch-go" aria-hidden="true">→</span>
       </a>
-      <div className="wig-band" aria-hidden="true" />
-      <div className="wig-blur" aria-hidden="true">
-        <div /><div /><div /><div /><div /><div /><div />
-      </div>
-
       <main className="wig-main">
         <header className="wig-header">
           <a href="#top" className="wig-brand" aria-label="Wiggle icons, back to top">
