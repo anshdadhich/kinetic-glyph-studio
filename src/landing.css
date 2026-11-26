@@ -1,16 +1,16 @@
 /* Wiggle Icons landing page - quiet, narrow-column, monoline aesthetic */
 .wig-root {
-  --ink: #0a0a0a;
-  --muted: #737373;
-  --faint: #a3a3a3;
-  --rule: #d4d4d4;
-  --page: #ffffff;
-  --tile: #f5f5f7;
+  --ink: var(--gz-text-1);
+  --muted: var(--gz-text-2);
+  --faint: var(--gz-text-3);
+  --rule: var(--gz-line-faint);
+  --page: var(--gz-page);
+  --tile: var(--gz-shell);
   min-height: 100vh;
-  background: var(--page);
-  color: var(--ink);
-  font: 500 15px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  letter-spacing: -0.03em;
+  background: var(--gz-page);
+  color: var(--gz-text-1);
+  font: var(--gz-type-body);
+  letter-spacing: 0;
   overflow-x: clip;
 }
 .wig-root * { box-sizing: border-box; }
@@ -84,12 +84,12 @@
 .wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 28px; display: flex; }
 .wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
 .wig-capsule:active { transform: scale(.97); }
-.wig-capsule-buy { color: #fff; background: #111; padding: 6px 6px 6px 20px; }
-.wig-capsule-buy > span { color: #fff; }
-.wig-capsule-buy:hover { background: #000; }
-.wig-capsule-price { color: #fff; background: #2e2e2e; border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
-.wig-capsule-quiet { background: #0000000f; padding: 0 20px; }
-.wig-capsule-quiet:hover { background: #00000017; }
+.wig-capsule-buy { color: var(--gz-text-inverse); background: var(--gz-ink-80); padding: 6px 6px 6px 20px; }
+.wig-capsule-buy > span { color: var(--gz-text-inverse); }
+.wig-capsule-buy:hover { background: var(--gz-ink); }
+.wig-capsule-price { color: var(--gz-text-inverse); background: var(--gz-field); border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
+.wig-capsule-quiet { background: var(--gz-hover); padding: 0 20px; }
+.wig-capsule-quiet:hover { background: var(--gz-pressed); }
 @keyframes wig-cta-nudge {
   0% { transform: translateX(0); }
   40% { transform: translateX(4px); }
