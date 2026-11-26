@@ -71,21 +71,47 @@ const DemoGlyph = memo(function DemoGlyph({ icon, variant, onCopied }: DemoGlyph
 });
 
 const RAIL: Array<{ label: string; href: string; open?: boolean; pages: Array<[string, string, boolean?]> }> = [
-  { label: "Begin", href: "/", pages: [["Overview", "/"], ["Library", "/icons"]] },
-  { label: "Build with", href: "/icons", pages: [["Icon library", "/icons"], ["Copy SVG", "/icons"]] },
+  { label: "Start here", href: "/", pages: [["Home", "/"], ["Icon library", "/icons"]] },
   {
-    label: "Look",
+    label: "Our icons",
+    href: "/icons",
+    pages: [
+      ["240 icons", "/icons"],
+      ["12 categories", "/icons"],
+      ["Try every icon", "/icons"],
+    ],
+  },
+  {
+    label: "Variants",
     href: "/docs/variants",
     open: true,
     pages: [
-      ["Styles", "/docs/variants", true],
-      ["All icons", "/icons"],
-      ["Sponsors", "/#sponsors"],
+      ["All seven styles", "/docs/variants", true],
+      ["Glass", "/docs/variants"],
+      ["Hardware", "/docs/variants"],
+      ["Relief", "/docs/variants"],
+      ["Stencil", "/docs/variants"],
     ],
   },
-  { label: "Motion and sound", href: "/icons", pages: [["Try every icon", "/icons"], ["Sound", "/icons"]] },
-  { label: "Tools", href: "/icons", pages: [["Copy any SVG", "/icons"]] },
-  { label: "About", href: "/", pages: [["Home", "/"], ["Pricing", "/#pricing"]] },
+  {
+    label: "Motion and sound",
+    href: "/icons",
+    pages: [
+      ["Spring animations", "/icons"],
+      ["Procedural foley", "/icons"],
+      ["Enable sound", "/icons"],
+    ],
+  },
+  {
+    label: "Use in your project",
+    href: "/icons",
+    pages: [
+      ["Copy any SVG", "/icons"],
+      ["React component", "/docs/variants"],
+      ["Icon props", "/docs/variants"],
+    ],
+  },
+  { label: "Community", href: "/", pages: [["Sponsor wall", "/#sponsors"], ["Pricing", "/#pricing"]] },
 ];
 
 export default function DocsVariants() {
@@ -127,9 +153,9 @@ export default function DocsVariants() {
           wiggle icons
         </a>
         <nav className="docs-top" aria-label="Site">
-          <a href="/icons">Library</a>
+          <a href="/icons">Icons</a>
           <a href="/docs/variants" aria-current="true">Docs</a>
-          <a href="/#pricing">Pricing</a>
+          <a href="/#sponsors">Sponsors</a>
         </nav>
       </header>
 
@@ -155,8 +181,14 @@ export default function DocsVariants() {
 
         <main className="docs-main" id="content">
           <article>
-            <h1 className="doc-title">Styles</h1>
-            <p className="doc-lead">Outline, solid, duotone, glass, stencil, hardware and relief.</p>
+            <h1 className="doc-title">Seven styles</h1>
+            <p className="doc-lead">Every one of our 240 icons is drawn seven ways. Hover to play its motion and sound. Click to copy its SVG.</p>
+            <p className="doc-lead" style={{ marginTop: 16 }}>
+              <strong style={{ color: "var(--ink)" }}>{ICONS.length} icons</strong> times{" "}
+              <strong style={{ color: "var(--ink)" }}>{STYLES.length} styles</strong> equals{" "}
+              {ICONS.length * STYLES.length} hand-tuned SVGs, each with a spring animation and a
+              procedural voice.
+            </p>
             <div className="doc-body">
               <div className="doc-demo">
                 {STYLES.map((style) => (
@@ -196,8 +228,8 @@ export default function DocsVariants() {
                 <button type="button" className="doc-copy" onClick={() => copyCode(code)}>Copy</button>
               </div>
 
-              <h2>Live component</h2>
-              <p>These are our real <code>Heart</code> components, not pasted SVG strings. Hover to play, click to replay.</p>
+              <h2>Our React component</h2>
+              <p>These are real <code>Heart</code> components from our library. Pass a variant, turn on motion and sound, and the icon handles the rest.</p>
               <div className="doc-demo">
                 {STYLES.map((s) => (
                   <div className="doc-demo-row" key={s.id}>
@@ -207,9 +239,9 @@ export default function DocsVariants() {
                 ))}
               </div>
 
-              <h2>Switching</h2>
+              <h2>Switching variants</h2>
               <p>
-                Changing <code>variant</code> redraws the icon on the spot. A common pattern is
+                Changing <code>variant</code> redraws the icon in place. A common pattern is
                 outline at rest and solid when active:
               </p>
               <div className="doc-code">
@@ -223,14 +255,14 @@ export default function DocsVariants() {
                 </button>
               </div>
               <p>
-                Every icon here includes all seven variants. Click any glyph above to copy the
-                standalone SVG of that variant, including its motion parts.
+                Every icon in our library ships with all seven variants. Click any glyph above to
+                copy the standalone SVG of that variant, including its named motion parts.
               </p>
             </div>
 
             <nav className="doc-pager" aria-label="More docs">
-              <a className="doc-pager-back" href="/">Home</a>
-              <a className="doc-pager-next" href="/icons">Icon library →</a>
+              <a className="doc-pager-back" href="/">Back to site</a>
+              <a className="doc-pager-next" href="/icons">Browse all icons →</a>
             </nav>
           </article>
         </main>
