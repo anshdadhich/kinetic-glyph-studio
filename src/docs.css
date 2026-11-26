@@ -86,6 +86,11 @@
   .rail-pages { flex-wrap: wrap; gap: 2px 16px; padding: 0; display: flex; }
   .rail-pages li:last-child { margin-bottom: 0; }
 }
+@media (max-width: 560px) {
+  .docs-header { padding-top: 24px; }
+  .docs-frame { padding-top: 24px; padding-bottom: 64px; }
+  .doc-title { font-size: 32px; }
+}
 @media (prefers-reduced-motion: reduce) {
   .docs-top a, .rail-head, .rail-icon, .rail-pages a, .doc-copy, .doc-demo-icon, .doc-pager-back { transition: none; }
 }

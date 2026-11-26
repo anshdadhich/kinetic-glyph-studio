@@ -108,6 +108,7 @@ const RAIL: Array<{ label: string; href: string; open?: boolean; pages: Array<[s
     pages: [
       ["Copy any SVG", "/icons"],
       ["React component", "/docs/variants"],
+      ["Component test", "/test.html"],
       ["Icon props", "/docs/variants"],
     ],
   },
@@ -209,14 +210,13 @@ export default function DocsVariants() {
               <div className="doc-table-wrap">
                 <table className="doc-table">
                   <thead>
-                    <tr><th>Variant</th><th>Looks like</th><th>Moves like</th></tr>
+                    <tr><th>Variant</th><th>Looks like</th></tr>
                   </thead>
                   <tbody>
                     {STYLES.map((s) => (
                       <tr key={s.id}>
                         <td><code>{s.id}</code></td>
                         <td>{LOOKS[s.id]}</td>
-                        <td>{s.id === "glass" || s.id === "relief" ? "solid" : "outline"}</td>
                       </tr>
                     ))}
                   </tbody>
