@@ -1,0 +1,214 @@
+/* Wiggle Icons landing page — quiet, narrow-column, monoline aesthetic */
+.wig-root {
+  --ink: #0a0a0a;
+  --muted: #737373;
+  --faint: #a3a3a3;
+  --rule: #d4d4d4;
+  --page: #ffffff;
+  --tile: #f5f5f7;
+  min-height: 100vh;
+  background: var(--page);
+  color: var(--ink);
+  font: 500 15px/1.45 Inter, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+  letter-spacing: -0.03em;
+  overflow-x: clip;
+}
+.wig-root * { box-sizing: border-box; }
+.wig-root h1, .wig-root h2, .wig-root h3, .wig-root p { font-size: inherit; margin: 0; }
+.wig-root button, .wig-root input { font: inherit; letter-spacing: inherit; color: inherit; }
+.wig-root button { cursor: pointer; background: none; border: 0; padding: 0; }
+.wig-root a { color: inherit; }
+.wig-root :where(button, a, input):focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; border-radius: 6px; }
+
+/* Fixed top bar + strip */
+.wig-launch {
+  z-index: 11; color: #ffffffb8; background: #161617; text-decoration: none;
+  height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center;
+  position: fixed; inset: 0 0 auto; white-space: nowrap; font-size: 13px;
+}
+.wig-launch strong { color: #fff; font-weight: 600; }
+.wig-launch-dot { color: #ffffff59; margin: 0 10px; }
+.wig-launch-go { margin-left: 10px; }
+.wig-launch-go span { display: inline-block; margin-left: 5px; transition: transform .16s; }
+.wig-launch:hover .wig-launch-go span { transform: translate(3px); }
+.wig-band {
+  z-index: 10; height: 10px; position: fixed; inset: 44px 0 auto;
+  background: repeating-linear-gradient(-45deg, #d9d9d9 0 7px, #ededed 7px 14px);
+}
+
+/* Progressive bottom blur */
+.wig-blur { z-index: 5; pointer-events: none; height: 64px; position: fixed; inset: auto 0 0; }
+.wig-blur > div { position: absolute; inset: 0; }
+.wig-blur > div:nth-child(1) { backdrop-filter: blur(.25px); -webkit-mask-image: linear-gradient(#0000 0%, #000 12% 26%, #0000 40%); mask-image: linear-gradient(#0000 0%, #000 12% 26%, #0000 40%); }
+.wig-blur > div:nth-child(2) { backdrop-filter: blur(.5px); -webkit-mask-image: linear-gradient(#0000 12%, #000 26% 42%, #0000 56%); mask-image: linear-gradient(#0000 12%, #000 26% 42%, #0000 56%); }
+.wig-blur > div:nth-child(3) { backdrop-filter: blur(1px); -webkit-mask-image: linear-gradient(#0000 26%, #000 42% 58%, #0000 72%); mask-image: linear-gradient(#0000 26%, #000 42% 58%, #0000 72%); }
+.wig-blur > div:nth-child(4) { backdrop-filter: blur(2px); -webkit-mask-image: linear-gradient(#0000 42%, #000 58% 74%, #0000 88%); mask-image: linear-gradient(#0000 42%, #000 58% 74%, #0000 88%); }
+.wig-blur > div:nth-child(5) { backdrop-filter: blur(4px); -webkit-mask-image: linear-gradient(#0000 58%, #000 74% 88%, #0000 100%); mask-image: linear-gradient(#0000 58%, #000 74% 88%, #0000 100%); }
+.wig-blur > div:nth-child(6) { backdrop-filter: blur(8px); -webkit-mask-image: linear-gradient(#0000 74%, #000 88% 100%, #0000 100%); mask-image: linear-gradient(#0000 74%, #000 88% 100%, #0000 100%); }
+.wig-blur > div:nth-child(7) { backdrop-filter: blur(16px); -webkit-mask-image: linear-gradient(#0000 88%, #000 100%); mask-image: linear-gradient(#0000 88%, #000 100%); }
+
+/* Narrow editorial column */
+.wig-main { width: min(576px, 100% - 32px); margin-inline: auto; padding: 136px 0 112px; }
+.wig-header { justify-content: space-between; align-items: center; gap: 12px; display: flex; }
+.wig-brand { align-items: center; gap: 8px; font-weight: 600; display: inline-flex; text-decoration: none; }
+.wig-brand-mark { border-radius: 10px; background: #000; width: 24px; height: 24px; display: grid; place-items: center; }
+.wig-brand-mark svg { width: 20px; height: 20px; }
+.wig-nav { align-items: center; gap: 20px; display: inline-flex; }
+.wig-nav-link, .wig-sound { color: var(--faint); text-decoration: none; transition: color .14s; }
+.wig-nav-link:hover, .wig-sound:hover { color: var(--ink); }
+.wig-sound { display: inline-flex; align-items: center; gap: 6px; }
+.wig-sound svg { width: 16px; height: 16px; }
+
+/* Hero icon rows */
+.wig-hero-icons { grid-template-columns: repeat(16, minmax(0, 1fr)); margin: 24px -4px 0; padding: 0; list-style: none; display: grid; }
+.wig-icon { cursor: pointer; width: 100%; height: 40px; color: var(--ink); display: grid; place-items: center; padding: 0; border-radius: 10px; }
+.wig-icon:hover { background: var(--tile); }
+.wig-icon:focus-visible { outline-offset: -3px; }
+.wig-icon .wig-glyph { pointer-events: none; width: 22px; height: 22px; display: block; overflow: visible; }
+.wig-hero-icons .wig-icon { height: 40px; }
+.wig-hero-icons .wig-icon .wig-glyph { width: 26px; height: 26px; }
+.wig-hint { color: var(--faint); margin-top: 6px; display: grid; font-size: 13px; }
+.wig-hint span { display: inline-flex; align-items: center; gap: 7px; }
+
+/* Copy + actions */
+.wig-copy { color: var(--muted); margin-top: 20px; max-width: 512px; line-height: 1.625; }
+.wig-copy p + p { margin-top: 14px; }
+.wig-lead { color: var(--ink); font-weight: 500; }
+.wig-copy a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
+.wig-copy a:hover { text-decoration-color: var(--ink); }
+.wig-offer { background: var(--tile); border-radius: 7px; padding: 0 7px; text-decoration: none !important; }
+.wig-offer:hover { background: #e9e9ec; }
+.wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 24px; display: flex; }
+.wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
+.wig-capsule:active { transform: scale(.97); }
+.wig-capsule-buy { color: #fff; background: #111; padding: 6px 6px 6px 20px; }
+.wig-capsule-buy:hover { background: #000; }
+.wig-capsule-price { color: #fff; background: #2e2e2e; border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
+.wig-capsule-quiet { background: #0000000f; padding: 0 20px; }
+.wig-capsule-quiet:hover { background: #00000017; }
+.wig-guarantee { color: var(--muted); margin-top: 12px; font-size: 13px; }
+
+/* Sampler (wide section) */
+.wig-sampler { --wide: min(1280px, calc(100vw - 64px)); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 88px; }
+.wig-sampler-head { justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 10px; display: flex; }
+.wig-sampler-head h2 { font-weight: 600; }
+.wig-now { color: var(--faint); white-space: nowrap; }
+.wig-panels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; display: grid; }
+.wig-panel { min-width: 0; }
+.wig-panel-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; display: grid; }
+.wig-panel-name { color: var(--faint); text-align: center; margin-top: 10px; font-size: 13px; }
+
+/* Sections */
+.wig-section { margin-top: 96px; }
+.wig-section > h2 { margin-bottom: 16px; font-weight: 600; }
+.wig-section-lead { max-width: 560px; color: var(--muted); line-height: 1.6; }
+.wig-features { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 12px; display: grid; }
+.wig-feature { background: var(--tile); border-radius: 22px; padding: 20px; }
+.wig-feature-art { height: 152px; display: grid; place-items: center; position: relative; overflow: hidden; }
+.wig-feature h3 { margin-top: 16px; font-weight: 600; }
+.wig-feature p { color: var(--muted); margin-top: 4px; line-height: 1.55; }
+.wig-mosaic { grid-template-columns: repeat(8, 20px); gap: 10px 8px; display: grid; }
+.wig-mosaic span { width: 20px; height: 20px; display: grid; place-items: center; }
+.wig-mosaic svg { width: 20px; height: 20px; display: block; }
+
+/* Sponsor wall (mirrors builders cards) */
+.wig-sponsors { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 10px; margin: 0; padding: 0; list-style: none; display: grid; }
+.wig-sponsor { box-sizing: border-box; background: var(--tile); border-radius: 22px; min-height: 148px; width: 100%; color: inherit; text-decoration: none; flex-direction: column; justify-content: space-between; gap: 16px; padding: 20px; display: flex; transition: background-color .16s; }
+button.wig-sponsor { border: 1px dashed var(--rule); background: transparent; }
+button.wig-sponsor:hover { background: var(--tile); }
+a.wig-sponsor:hover { background: #efeff2; }
+.wig-sponsor-head { align-items: center; gap: 12px; display: flex; }
+.wig-sponsor-icon { background: var(--page); border-radius: 12px; width: 44px; height: 44px; place-items: center; display: grid; font-size: 20px; }
+.wig-sponsor-names { line-height: 1.35; display: grid; }
+.wig-sponsor-names strong { font-weight: 500; overflow: hidden; text-overflow: ellipsis; white-space: nowrap; }
+.wig-sponsor-names span { color: var(--muted); }
+.wig-sponsor-note { color: var(--muted); line-height: 1.5; }
+.wig-empty-icon { color: var(--faint); font-size: 22px; line-height: 1; }
+.wig-wall-status { color: var(--faint); margin-top: 12px; display: flex; align-items: center; justify-content: space-between; font-size: 13px; }
+.wig-reset { color: var(--faint); text-decoration: underline; text-underline-offset: 2px; }
+.wig-reset:hover { color: var(--ink); }
+
+/* Pricing-style sponsor card */
+.wig-pricing { width: min(960px, 100vw - 32px); margin-left: 50%; translate: -50% 0; }
+.wig-pricing > h2 { margin-bottom: 10px; font-weight: 600; }
+.wig-plans { grid-auto-columns: minmax(0, 1fr); grid-auto-flow: column; column-gap: 12px; margin-top: 32px; display: grid; }
+.wig-plan { background: var(--tile); border-radius: 24px; padding: 24px; }
+.wig-plan-featured { background: #111; color: #fff; }
+.wig-plan-name { font-weight: 600; }
+.wig-plan-who { color: var(--muted); margin-top: 4px; }
+.wig-plan-featured .wig-plan-who { color: #ffffff99; }
+.wig-plan-price { display: flex; align-items: baseline; gap: 8px; margin-top: 18px; }
+.wig-plan-now { font-size: 40px; font-weight: 600; letter-spacing: -.05em; line-height: 1; }
+.wig-plan-terms { color: var(--muted); font-size: 13px; }
+.wig-plan-featured .wig-plan-terms { color: #ffffff99; }
+.wig-included { gap: 0; margin: 18px 0 0; padding: 0; list-style: none; display: grid; }
+.wig-included li { align-items: flex-start; gap: 10px; padding: 4px 0; line-height: 22px; display: flex; }
+.wig-included svg { flex: none; width: 20px; height: 20px; margin-top: 1px; }
+
+/* FAQ */
+.wig-faq { gap: 8px; display: grid; }
+.wig-faq-item { background: var(--tile); border-radius: 18px; }
+.wig-faq-item summary { cursor: pointer; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 20px; font-weight: 500; list-style: none; display: flex; }
+.wig-faq-item summary::-webkit-details-marker { display: none; }
+.wig-faq-mark { width: 12px; height: 12px; color: var(--muted); flex: none; position: relative; }
+.wig-faq-mark::before, .wig-faq-mark::after { content: ""; background: currentColor; border-radius: 1px; width: 12px; height: 1.5px; margin-top: -.75px; transition: transform .24s; position: absolute; top: 50%; left: 0; }
+.wig-faq-mark::after { transform: rotate(90deg); }
+.wig-faq-item[open] .wig-faq-mark::after { transform: rotate(0); }
+.wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
+
+/* Footer */
+.wig-footer { color: var(--muted); margin-top: 112px; }
+.wig-footer a { color: var(--ink); text-decoration: none; }
+.wig-footer a:hover { color: var(--muted); }
+.wig-footer-top { gap: 36px; display: grid; }
+.wig-footer-brand { justify-items: start; gap: 10px; display: grid; }
+.wig-footer-groups { grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 28px 24px; display: grid; }
+.wig-footer-title { color: var(--ink); margin: 0 0 10px; font-weight: 600; }
+.wig-footer-group ul { gap: 6px; margin: 0; padding: 0; list-style: none; display: grid; }
+.wig-footer-bottom { color: var(--faint); flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; margin-top: 40px; display: flex; }
+
+/* Demo checkout sheet */
+.wig-sheet-backdrop { z-index: 50; position: fixed; inset: 0; background: #00000038; }
+.wig-sheet { z-index: 51; background: var(--page); border-radius: 24px; width: min(520px, 100vw - 32px); position: fixed; bottom: 16px; left: 50%; transform: translateX(-50%); box-shadow: 0 12px 40px #00000024, 0 0 0 1px #0000000d; padding: 24px; }
+.wig-sheet-close { background: var(--tile); width: 32px; height: 32px; color: var(--muted); border-radius: 999px; place-items: center; position: absolute; top: 12px; right: 12px; }
+.wig-sheet-close:hover { color: var(--ink); }
+.wig-field { display: grid; gap: 6px; }
+.wig-field label { color: var(--muted); font-size: 12px; }
+.wig-field input { box-sizing: border-box; background: var(--page); width: 100%; min-height: 44px; border-radius: 999px; box-shadow: inset 0 0 0 1px var(--rule); outline: none; padding: 0 16px; }
+.wig-field input:focus-visible { box-shadow: inset 0 0 0 2px var(--ink); }
+.wig-spinner { animation: wig-spin .7s linear infinite; }
+@keyframes wig-spin { to { transform: rotate(360deg); } }
+
+@media (min-width: 861px) {
+  .wig-email { grid-template-columns: minmax(0, 1fr) minmax(0, 420px); align-items: center; column-gap: 40px; display: grid; }
+}
+@media (max-width: 1180px) and (min-width: 761px) {
+  .wig-panels { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 32px 48px; }
+}
+@media (max-width: 860px) {
+  .wig-pricing { width: auto; margin-left: 0; translate: none; }
+  .wig-plans { grid-auto-flow: row; grid-auto-columns: auto; row-gap: 28px; }
+}
+@media (max-width: 760px) {
+  .wig-sampler { --wide: calc(100vw - 32px); }
+  .wig-panels { overscroll-behavior-x: contain; scroll-snap-type: x mandatory; scrollbar-width: none; gap: 32px; margin-inline: -16px; padding-inline: 16px; display: flex; overflow-x: auto; }
+  .wig-panel { scroll-snap-align: center; flex: none; width: 100%; }
+}
+@media (max-width: 560px) {
+  .wig-main { padding-top: 80px; }
+  .wig-launch-full { display: none; }
+  .wig-hero-icons { grid-template-columns: repeat(10, minmax(0, 1fr)); margin: 20px -2px 0; }
+  .wig-hero-icons li:nth-child(n + 11) { display: none; }
+  .wig-hero-icons .wig-icon { height: 36px; }
+  .wig-hero-icons .wig-icon .wig-glyph { width: 24px; height: 24px; }
+  .wig-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); }
+  .wig-icon { height: 44px; }
+  .wig-section { margin-top: 64px; }
+  .wig-features { grid-template-columns: minmax(0, 1fr); }
+  .wig-mosaic { grid-template-columns: repeat(6, 20px); }
+  .wig-sponsors { grid-template-columns: minmax(0, 1fr); }
+  .wig-footer-groups { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (prefers-reduced-motion: reduce) {
+  .wig-capsule, .wig-capsule:active, .wig-spinner { transition: none; animation: none; }
+}

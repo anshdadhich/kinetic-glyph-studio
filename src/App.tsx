@@ -240,7 +240,7 @@ export default function App() {
       <SvgDefs />
 
       {/* Top Bar Contract: 3 zones (wordmark — clean nav links — 1 primary action) */}
-      <header className="border-b border-[var(--border)] bg-[var(--bg)]">
+      <header className="hidden">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-8 px-6 py-4">
           <a
             href="#top"

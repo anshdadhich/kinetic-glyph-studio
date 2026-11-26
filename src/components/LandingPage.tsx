@@ -1,69 +1,94 @@
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { ArrowRight, Check, Code2, Palette, Sparkles, Volume2, X, Zap } from "lucide-react";
+import { Check, Volume2, VolumeX } from "lucide-react";
 import { ICONS, STYLES, IconDef, StyleId } from "../data/icons";
-import { initAudio, triggerSound } from "../audio/foley";
+import {
+  AudioStatus,
+  getAudioStatus,
+  initAudio,
+  subscribeAudioStatus,
+  toggleSound,
+  triggerSound,
+} from "../audio/foley";
 import { triggerChoreography } from "../physics/spring";
+import "../landing.css";
 
 /* ------------------------------------------------------------------ */
-/* Animated sample tile — click to play motion + procedural sound      */
+/* Glyphs                                                              */
 /* ------------------------------------------------------------------ */
 
-const SampleIcon = memo(function SampleIcon({
-  icon,
-  style,
-  large = false,
-}: {
-  icon: IconDef;
-  style: StyleId;
-  large?: boolean;
-}) {
-  const btnRef = useRef<HTMLButtonElement | null>(null);
-  const svgRef = useRef<SVGSVGElement | null>(null);
+function useGlyph(icon: IconDef, style: StyleId) {
   const gid = useId().replace(/:/g, "");
-  const markup = useMemo(
+  return useMemo(
     () => icon.svgs[style].replace(/__GID__/g, gid),
     [icon, style, gid]
   );
+}
+
+function StaticGlyph({ icon, style }: { icon: IconDef; style: StyleId }) {
+  const markup = useGlyph(icon, style);
+  return (
+    <svg
+      className="wig-glyph"
+      viewBox="0 0 24 24"
+      xmlns="http://www.w3.org/2000/svg"
+      aria-hidden="true"
+      dangerouslySetInnerHTML={{ __html: markup }}
+    />
+  );
+}
+
+interface IconButtonProps {
+  icon: IconDef;
+  style: StyleId;
+  armed: boolean;
+  onArm: () => void;
+  className?: string;
+}
+
+const IconButton = memo(function IconButton({
+  icon,
+  style,
+  armed,
+  onArm,
+  className = "",
+}: IconButtonProps) {
+  const svgRef = useRef<SVGSVGElement | null>(null);
+  const btnRef = useRef<HTMLButtonElement | null>(null);
+  const markup = useGlyph(icon, style);
 
   const play = useCallback(() => {
     initAudio();
     triggerChoreography(icon.name, svgRef.current);
     triggerSound(icon.name, btnRef.current);
-  }, [icon.name]);
+    onArm();
+  }, [icon.name, onArm]);
 
   return (
     <button
       ref={btnRef}
       type="button"
       onClick={play}
-      aria-label={`Play ${icon.label} in ${style} style`}
-      title={`${icon.label} — click to move and hear it`}
-      className={`group flex flex-col items-center justify-center gap-2 rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] text-[var(--icon-color)] cursor-pointer transition-all duration-200 hover:-translate-y-0.5 hover:border-[var(--text)] hover:shadow-[0_12px_30px_-18px_rgba(15,23,42,0.55)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text)] ${
-        large ? "min-h-[300px] p-10 sm:min-h-[340px]" : "aspect-square p-3"
-      }`}
+      onPointerEnter={() => {
+        if (armed) play();
+      }}
+      aria-label={`Play ${icon.label}, ${icon.soundSummary}`}
+      title={`${icon.label} — ${icon.soundSummary}`}
+      className={`wig-icon ${className}`}
     >
       <svg
         ref={svgRef}
+        className="wig-glyph"
         viewBox="0 0 24 24"
         xmlns="http://www.w3.org/2000/svg"
-        className={`icon-svg pointer-events-none overflow-visible ${large ? "h-32 w-32 sm:h-40 sm:w-40" : "h-8 w-8 sm:h-10 sm:w-10"}`}
+        aria-hidden="true"
         dangerouslySetInnerHTML={{ __html: markup }}
       />
-      {large && (
-        <div className="mt-4 text-center">
-          <p className="font-display text-xl font-semibold">{icon.label}</p>
-          <p className="mt-1 max-w-xs text-sm text-[var(--muted)]">{icon.motionSummary}</p>
-          <p className="mt-2 inline-flex items-center gap-1.5 rounded-full bg-[var(--surface)] px-3 py-1 text-xs text-[var(--muted)]">
-            <Volume2 className="h-3 w-3" aria-hidden="true" /> {icon.soundSummary}
-          </p>
-        </div>
-      )}
     </button>
   );
 });
 
 /* ------------------------------------------------------------------ */
-/* Sponsors — 10 slots at $30 each, demo checkout                      */
+/* Sponsors — ten $30 slots with a demo checkout                       */
 /* ------------------------------------------------------------------ */
 
 interface Sponsor {
@@ -73,280 +98,199 @@ interface Sponsor {
   emoji: string;
 }
 
-const SLOT_COUNT = 10;
-const SLOT_PRICE = 30;
-const STORAGE_KEY = "wiggle-icons-sponsors-v1";
-const EMPTY_FORM: Sponsor = { name: "", url: "", tagline: "", emoji: "✦" };
+const SLOTS = 10;
+const PRICE = 30;
+const STORE = "wiggle-icons-sponsors-v1";
+const BLANK: Sponsor = { name: "", url: "", tagline: "", emoji: "✦" };
 
-function readSponsors(): (Sponsor | null)[] {
+function loadSponsors(): (Sponsor | null)[] {
   try {
-    const raw = window.localStorage.getItem(STORAGE_KEY);
-    if (!raw) return Array(SLOT_COUNT).fill(null);
-    const parsed = JSON.parse(raw) as (Sponsor | null)[];
-    return Array.from({ length: SLOT_COUNT }, (_, i) => parsed[i] ?? null);
+    const raw = window.localStorage.getItem(STORE);
+    const parsed = raw ? (JSON.parse(raw) as (Sponsor | null)[]) : [];
+    return Array.from({ length: SLOTS }, (_, i) => parsed[i] ?? null);
   } catch {
-    return Array(SLOT_COUNT).fill(null);
+    return Array(SLOTS).fill(null);
   }
 }
 
-function SponsorSection() {
-  const [sponsors, setSponsors] = useState<(Sponsor | null)[]>(readSponsors);
-  const [activeSlot, setActiveSlot] = useState<number | null>(null);
-  const [form, setForm] = useState<Sponsor>(EMPTY_FORM);
+function SponsorCheckout({
+  slot,
+  onClose,
+  onPaid,
+}: {
+  slot: number;
+  onClose: () => void;
+  onPaid: (entry: Sponsor) => void;
+}) {
+  const [form, setForm] = useState<Sponsor>(BLANK);
   const [phase, setPhase] = useState<"form" | "processing" | "done">("form");
 
   useEffect(() => {
-    try {
-      window.localStorage.setItem(STORAGE_KEY, JSON.stringify(sponsors));
-    } catch {
-      /* storage may be unavailable; the demo still works in memory */
-    }
-  }, [sponsors]);
-
-  useEffect(() => {
-    if (activeSlot === null) return;
     const onKey = (e: KeyboardEvent) => {
-      if (e.key === "Escape") setActiveSlot(null);
+      if (e.key === "Escape" && phase !== "processing") onClose();
     };
     window.addEventListener("keydown", onKey);
     return () => window.removeEventListener("keydown", onKey);
-  }, [activeSlot]);
-
-  const openSlot = (index: number) => {
-    setActiveSlot(index);
-    setForm(EMPTY_FORM);
-    setPhase("form");
-  };
-
-  const closeModal = () => {
-    if (phase === "processing") return;
-    setActiveSlot(null);
-  };
+  }, [onClose, phase]);
 
   const pay = () => {
-    if (!form.name.trim() || activeSlot === null) return;
-    const slot = activeSlot;
+    if (!form.name.trim()) return;
     setPhase("processing");
+    const entry: Sponsor = {
+      name: form.name.trim().slice(0, 40),
+      url: form.url.trim(),
+      tagline: form.tagline.trim().slice(0, 80),
+      emoji: form.emoji.trim().slice(0, 4) || "✦",
+    };
     window.setTimeout(() => {
-      const entry: Sponsor = {
-        name: form.name.trim().slice(0, 40),
-        url: form.url.trim(),
-        tagline: form.tagline.trim().slice(0, 80),
-        emoji: form.emoji.trim().slice(0, 4) || "✦",
-      };
-      setSponsors((prev) => {
-        const next = [...prev];
-        next[slot] = entry;
-        return next;
-      });
+      onPaid(entry);
       setPhase("done");
-      window.setTimeout(() => {
-        setActiveSlot(null);
-        setPhase("form");
-      }, 1300);
+      window.setTimeout(onClose, 1300);
     }, 900);
   };
+
+  return (
+    <>
+      <div className="wig-sheet-backdrop" onMouseDown={onClose} />
+      <div className="wig-sheet" role="dialog" aria-modal="true" aria-label={`Claim sponsor slot ${slot + 1}`}>
+        <button type="button" className="wig-sheet-close" onClick={onClose} aria-label="Close checkout">
+          <span aria-hidden="true">✕</span>
+        </button>
+        {phase === "done" ? (
+          <div style={{ textAlign: "center", padding: "24px 0" }}>
+            <div className="wig-sponsor-icon" style={{ margin: "0 auto 16px", background: "#111", color: "#fff" }}>
+              <Check size={20} />
+            </div>
+            <h2 style={{ fontWeight: 600 }}>You’re on the wall.</h2>
+            <p style={{ color: "var(--muted)", marginTop: 8 }}>Slot {slot + 1} is yours. Thanks for supporting Wiggle Icons.</p>
+          </div>
+        ) : (
+          <>
+            <p style={{ color: "var(--faint)", fontSize: 12 }}>SPONSOR SLOT {slot + 1}</p>
+            <h2 style={{ fontWeight: 600, fontSize: 24, marginTop: 4 }}>Claim for ${PRICE}</h2>
+            <div style={{ display: "grid", gap: 12, marginTop: 20 }}>
+              <div className="wig-field">
+                <label htmlFor="wig-name">Name or brand</label>
+                <input id="wig-name" autoFocus value={form.name} onChange={(e) => setForm({ ...form, name: e.target.value })} placeholder="Acme Studio" />
+              </div>
+              <div className="wig-field">
+                <label htmlFor="wig-url">Website (optional)</label>
+                <input id="wig-url" value={form.url} onChange={(e) => setForm({ ...form, url: e.target.value })} placeholder="https://example.com" />
+              </div>
+              <div className="wig-field">
+                <label htmlFor="wig-note">One-line note (optional)</label>
+                <input id="wig-note" value={form.tagline} onChange={(e) => setForm({ ...form, tagline: e.target.value })} placeholder="We make tiny things feel alive." />
+              </div>
+              <div className="wig-field" style={{ maxWidth: 96 }}>
+                <label htmlFor="wig-emoji">Emoji</label>
+                <input id="wig-emoji" value={form.emoji} maxLength={4} onChange={(e) => setForm({ ...form, emoji: e.target.value })} style={{ textAlign: "center" }} />
+              </div>
+            </div>
+            <div style={{ background: "var(--tile)", borderRadius: 14, padding: 14, marginTop: 18, display: "flex", justifyContent: "space-between" }}>
+              <span style={{ color: "var(--muted)" }}>Sponsor slot · lifetime</span>
+              <strong>${PRICE}.00</strong>
+            </div>
+            <p style={{ color: "var(--faint)", fontSize: 12, marginTop: 8 }}>
+              Demo checkout — no real charge. Your details are saved in this browser only.
+            </p>
+            <button
+              type="button"
+              onClick={pay}
+              disabled={!form.name.trim() || phase === "processing"}
+              className="wig-capsule wig-capsule-buy"
+              style={{ width: "100%", justifyContent: "center", marginTop: 16, opacity: !form.name.trim() || phase === "processing" ? 0.5 : 1 }}
+            >
+              {phase === "processing" ? (
+                <><span className="wig-spinner" style={{ width: 15, height: 15, borderRadius: "50%", border: "2px solid currentColor", borderTopColor: "transparent" }} /> Processing…</>
+              ) : (
+                <>Pay ${PRICE} <span aria-hidden="true">→</span></>
+              )}
+            </button>
+          </>
+        )}
+      </div>
+    </>
+  );
+}
+
+function SponsorWall() {
+  const [sponsors, setSponsors] = useState<(Sponsor | null)[]>(loadSponsors);
+  const [slot, setSlot] = useState<number | null>(null);
+
+  useEffect(() => {
+    try {
+      window.localStorage.setItem(STORE, JSON.stringify(sponsors));
+    } catch {
+      /* in-memory fallback */
+    }
+  }, [sponsors]);
 
   const claimed = sponsors.filter(Boolean).length;
 
   return (
-    <div className="space-y-8">
-      <div className="flex flex-col gap-4 sm:flex-row sm:items-end sm:justify-between">
-        <div className="max-w-2xl space-y-3">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-            Sponsor wall
-          </p>
-          <h2 className="font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Put your name in front of icon people.
-          </h2>
-          <p className="text-sm leading-relaxed text-[var(--muted)]">
-            Ten slots, ${SLOT_PRICE} each, yours for life. Claim an empty block, add your
-            name and link, and it appears right here.
-          </p>
-        </div>
-        <div className="flex items-center gap-3">
-          <span className="rounded-full border border-[var(--border)] bg-[var(--surface)] px-3 py-1.5 text-xs font-medium text-[var(--muted)]">
-            {claimed} / {SLOT_COUNT} claimed
-          </span>
-          {claimed > 0 && (
-            <button
-              type="button"
-              onClick={() => setSponsors(Array(SLOT_COUNT).fill(null))}
-              className="text-xs text-[var(--muted)] underline underline-offset-4 cursor-pointer hover:text-[var(--text)]"
-            >
-              Reset demo
-            </button>
-          )}
-        </div>
-      </div>
-
-      <div className="grid grid-cols-2 gap-3 sm:grid-cols-3 lg:grid-cols-5">
-        {sponsors.map((sponsor, index) =>
-          sponsor ? (
-            <div
-              key={index}
-              className="kg-sponsor-card flex min-h-[150px] flex-col justify-between rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-4"
-            >
-              <div className="flex items-start justify-between">
-                <span className="text-2xl" aria-hidden="true">{sponsor.emoji}</span>
-                <span className="rounded-full bg-[var(--surface)] px-2 py-0.5 text-[9px] font-semibold uppercase tracking-wider text-[var(--muted)]">
-                  Sponsor
+    <>
+      <div className="wig-sponsors">
+        {sponsors.map((s, i) =>
+          s ? (
+            s.url ? (
+              <a key={i} className="wig-sponsor" href={s.url} target="_blank" rel="noreferrer">
+                <div className="wig-sponsor-head">
+                  <span className="wig-sponsor-icon" aria-hidden="true">{s.emoji}</span>
+                  <span className="wig-sponsor-names">
+                    <strong>{s.name}</strong>
+                    <span>Sponsor · slot {i + 1}</span>
+                  </span>
+                </div>
+                <p className="wig-sponsor-note">{s.tagline || "Supporting independent icon craft."}</p>
+              </a>
+            ) : (
+              <div key={i} className="wig-sponsor">
+                <div className="wig-sponsor-head">
+                  <span className="wig-sponsor-icon" aria-hidden="true">{s.emoji}</span>
+                  <span className="wig-sponsor-names">
+                    <strong>{s.name}</strong>
+                    <span>Sponsor · slot {i + 1}</span>
+                  </span>
+                </div>
+                <p className="wig-sponsor-note">{s.tagline || "Supporting independent icon craft."}</p>
+              </div>
+            )
+          ) : (
+            <button key={i} type="button" className="wig-sponsor" onClick={() => setSlot(i)}>
+              <div className="wig-sponsor-head">
+                <span className="wig-sponsor-icon wig-empty-icon" aria-hidden="true">+</span>
+                <span className="wig-sponsor-names">
+                  <strong>Your logo here</strong>
+                  <span>Slot {i + 1} · ${PRICE}</span>
                 </span>
               </div>
-              <div className="mt-4 min-w-0">
-                {sponsor.url ? (
-                  <a
-                    href={sponsor.url}
-                    target="_blank"
-                    rel="noreferrer"
-                    className="block truncate font-display text-sm font-semibold text-[var(--text)] underline decoration-transparent underline-offset-4 hover:decoration-current"
-                  >
-                    {sponsor.name}
-                  </a>
-                ) : (
-                  <p className="truncate font-display text-sm font-semibold">{sponsor.name}</p>
-                )}
-                <p className="mt-0.5 line-clamp-2 text-[11px] text-[var(--muted)]">
-                  {sponsor.tagline || "Supporting independent icon craft."}
-                </p>
-              </div>
-            </div>
-          ) : (
-            <button
-              key={index}
-              type="button"
-              onClick={() => openSlot(index)}
-              className="group flex min-h-[150px] flex-col items-center justify-center gap-2 rounded-2xl border border-dashed border-[var(--border)] bg-[var(--surface)] p-4 text-center cursor-pointer transition-all hover:-translate-y-0.5 hover:border-[var(--text)] hover:bg-[var(--surface-elevated)] focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text)]"
-            >
-              <span className="flex h-9 w-9 items-center justify-center rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] text-lg text-[var(--muted)] transition-colors group-hover:border-[var(--text)] group-hover:text-[var(--text)]">
-                +
-              </span>
-              <span className="text-xs font-semibold">Slot {index + 1}</span>
-              <span className="text-[11px] text-[var(--muted)]">Your logo here · ${SLOT_PRICE}</span>
+              <p className="wig-sponsor-note">Click to claim this block for ${PRICE}.</p>
             </button>
           )
         )}
       </div>
-
-      {activeSlot !== null && (
-        <div
-          className="kg-modal-backdrop fixed inset-0 z-50 flex items-center justify-center p-4"
-          onMouseDown={(e) => {
-            if (e.target === e.currentTarget) closeModal();
-          }}
-        >
-          <div
-            role="dialog"
-            aria-modal="true"
-            aria-labelledby="sponsor-dialog-title"
-            className="w-full max-w-md rounded-3xl border border-[var(--border)] bg-[var(--bg)] p-6 shadow-2xl"
-          >
-            {phase === "done" ? (
-              <div className="flex flex-col items-center gap-3 py-8 text-center">
-                <span className="flex h-12 w-12 items-center justify-center rounded-full bg-[var(--accent)] text-[var(--accent-text)]">
-                  <Check className="h-6 w-6" aria-hidden="true" />
-                </span>
-                <h3 id="sponsor-dialog-title" className="font-display text-xl font-bold">
-                  You’re on the wall!
-                </h3>
-                <p className="text-sm text-[var(--muted)]">
-                  Slot {activeSlot + 1} is now yours. Thanks for supporting Wiggle Icons.
-                </p>
-              </div>
-            ) : (
-              <>
-                <div className="flex items-start justify-between gap-4">
-                  <div>
-                    <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-                      Sponsor slot {activeSlot + 1}
-                    </p>
-                    <h3 id="sponsor-dialog-title" className="mt-1 font-display text-2xl font-bold">
-                      Claim for ${SLOT_PRICE}
-                    </h3>
-                  </div>
-                  <button
-                    type="button"
-                    onClick={closeModal}
-                    aria-label="Close sponsor checkout"
-                    className="rounded-lg p-1.5 text-[var(--muted)] cursor-pointer hover:bg-[var(--surface)] hover:text-[var(--text)]"
-                  >
-                    <X className="h-5 w-5" />
-                  </button>
-                </div>
-
-                <div className="mt-5 space-y-3">
-                  <label className="block text-xs font-medium">
-                    Name or brand
-                    <input
-                      autoFocus
-                      value={form.name}
-                      onChange={(e) => setForm({ ...form, name: e.target.value })}
-                      placeholder="Acme Studio"
-                      className="mt-1 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--text)] outline-none focus:border-[var(--text)]"
-                    />
-                  </label>
-                  <label className="block text-xs font-medium">
-                    Website <span className="font-normal text-[var(--muted)]">(optional)</span>
-                    <input
-                      value={form.url}
-                      onChange={(e) => setForm({ ...form, url: e.target.value })}
-                      placeholder="https://example.com"
-                      className="mt-1 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--text)] outline-none focus:border-[var(--text)]"
-                    />
-                  </label>
-                  <label className="block text-xs font-medium">
-                    One-line note <span className="font-normal text-[var(--muted)]">(optional)</span>
-                    <input
-                      value={form.tagline}
-                      onChange={(e) => setForm({ ...form, tagline: e.target.value })}
-                      placeholder="We make tiny things feel alive."
-                      className="mt-1 w-full rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-sm text-[var(--text)] outline-none focus:border-[var(--text)]"
-                    />
-                  </label>
-                  <label className="block text-xs font-medium">
-                    Emoji or initial
-                    <input
-                      value={form.emoji}
-                      onChange={(e) => setForm({ ...form, emoji: e.target.value })}
-                      maxLength={4}
-                      className="mt-1 w-20 rounded-xl border border-[var(--border)] bg-[var(--surface)] px-3 py-2.5 text-center text-sm outline-none focus:border-[var(--text)]"
-                    />
-                  </label>
-                </div>
-
-                <div className="mt-5 rounded-xl border border-[var(--border)] bg-[var(--surface)] p-3 text-xs">
-                  <div className="flex items-center justify-between">
-                    <span className="text-[var(--muted)]">Sponsor slot · lifetime</span>
-                    <span className="font-semibold">${SLOT_PRICE}.00</span>
-                  </div>
-                  <p className="mt-2 text-[11px] text-[var(--muted)]">
-                    Demo checkout — no real charge is made. Details are saved in this browser only.
-                  </p>
-                </div>
-
-                <button
-                  type="button"
-                  onClick={pay}
-                  disabled={!form.name.trim() || phase === "processing"}
-                  className="mt-5 flex w-full items-center justify-center gap-2 rounded-xl bg-[var(--accent)] px-4 py-3 text-sm font-semibold text-[var(--accent-text)] cursor-pointer transition-opacity hover:opacity-90 disabled:cursor-not-allowed disabled:opacity-50"
-                >
-                  {phase === "processing" ? (
-                    <>
-                      <span className="kg-spinner h-4 w-4 rounded-full border-2 border-current border-t-transparent" aria-hidden="true" />
-                      Processing demo payment…
-                    </>
-                  ) : (
-                    <>
-                      Pay ${SLOT_PRICE} <ArrowRight className="h-4 w-4" aria-hidden="true" />
-                    </>
-                  )}
-                </button>
-              </>
-            )}
-          </div>
-        </div>
+      <div className="wig-wall-status">
+        <span>{claimed} of {SLOTS} slots claimed · ${PRICE} each</span>
+        {claimed > 0 && (
+          <button type="button" className="wig-reset" onClick={() => setSponsors(Array(SLOTS).fill(null))}>
+            Reset demo
+          </button>
+        )}
+      </div>
+      {slot !== null && (
+        <SponsorCheckout
+          slot={slot}
+          onClose={() => setSlot(null)}
+          onPaid={(entry) =>
+            setSponsors((prev) => {
+              const next = [...prev];
+              next[slot] = entry;
+              return next;
+            })
+          }
+        />
       )}
-    </div>
+    </>
   );
 }
 
@@ -354,208 +298,258 @@ function SponsorSection() {
 /* Landing page                                                        */
 /* ------------------------------------------------------------------ */
 
-const FEATURES = [
-  {
-    icon: Sparkles,
-    title: "Motion with meaning",
-    body: "A bell swings with lag, a heart thumps twice, a flag ripples. Every icon moves like the thing it shows.",
-  },
-  {
-    icon: Volume2,
-    title: "Procedural sound",
-    body: "Short synth foley generated in the browser. No samples, no downloads — just a tiny voice for every icon.",
-  },
-  {
-    icon: Palette,
-    title: "Seven distinct styles",
-    body: "Outline, Solid, Duotone, Glass, Stencil, Hardware and 3D Relief. One drawing, seven personalities.",
-  },
-  {
-    icon: Code2,
-    title: "Ready to lift",
-    body: "Clean inline SVGs with named parts, so you can copy one and wire up your own interaction.",
-  },
-  {
-    icon: Zap,
-    title: "Spring physics",
-    body: "Transitions settle naturally instead of snapping. Reduced-motion preferences are respected.",
-  },
-  {
-    icon: Check,
-    title: "Free to explore",
-    body: "Browse every icon, flip between styles, and click anything to see and hear what it does.",
-  },
+const FAQ = [
+  ["Is this a subscription?", "No. Browse the library for free, and a sponsor slot is a one-time $30 placement."],
+  ["What do I get as a sponsor?", "Your name, link and one-line note live on this page in a permanent 10-slot wall."],
+  ["Can I change my details later?", "Yes. Clear the demo wall with Reset demo and claim the same slot again with new details."],
+  ["How many icons are there?", "240 icons, each in seven styles: outline, solid, duotone, glass, stencil, hardware and relief."],
+  ["Do the icons really make sound?", "Every icon has its own procedural Web Audio foley, generated in the browser — no sample files."],
+  ["Does reduced motion work?", "Yes. All choreography respects prefers-reduced-motion."],
 ];
 
 export default function LandingPage() {
-  const heroIcon = useMemo(
-    () => ICONS.find((ic) => ic.name === "guitar") ?? ICONS[0],
-    []
-  );
-  const showcaseIcon = useMemo(
-    () => ICONS.find((ic) => ic.name === "bicycle") ?? ICONS[1] ?? ICONS[0],
-    []
-  );
-  const sampler = useMemo(() => ICONS.slice(0, 40), []);
+  const [armed, setArmed] = useState(false);
+  const [audioStatus, setAudioStatus] = useState<AudioStatus>(() => getAudioStatus());
+  const heroIcons = useMemo(() => ICONS.slice(0, 16), []);
+  const sampleIcons = useMemo(() => ICONS.slice(0, 40), []);
+  const mosaicIcons = useMemo(() => ICONS.slice(40, 96), []);
+  const showcase = useMemo(() => ICONS.slice(96, 112), []);
+  const styles = useMemo(() => STYLES.slice(0, 4), []);
+
+  useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
+
+  const arm = useCallback(() => setArmed(true), []);
 
   return (
-    <>
-      <div id="top" className="kg-announce">
-        <span className="kg-announce-dot" aria-hidden="true" />
-        240 icons · 7 styles · every one moves and sounds
-        <a href="#library" className="ml-1 underline underline-offset-4">
-          Explore free
-        </a>
+    <div id="top" className="wig-root">
+      <a className="wig-launch" href="#sponsors">
+        <span className="wig-launch-full">Sponsor wall · ten blocks at $30 each · </span>
+        <strong>Put your name on it</strong>
+        <span className="wig-launch-go" aria-hidden="true">→</span>
+      </a>
+      <div className="wig-band" aria-hidden="true" />
+      <div className="wig-blur" aria-hidden="true">
+        <div /><div /><div /><div /><div /><div /><div />
       </div>
 
-      {/* Hero */}
-      <section className="kg-hero relative overflow-hidden border-b border-[var(--border)]">
-        <div className="kg-hero-glow" aria-hidden="true" />
-        <div className="relative mx-auto grid max-w-[1200px] gap-10 px-6 py-14 lg:grid-cols-[1fr_1fr] lg:items-center lg:py-20">
-          <div className="space-y-6">
-            <span className="inline-flex items-center gap-2 rounded-full border border-[var(--border)] bg-[var(--surface-elevated)] px-3 py-1 text-xs font-medium text-[var(--muted)]">
-              <Sparkles className="h-3.5 w-3.5" aria-hidden="true" />
-              Kinetic icon library
+      <main className="wig-main">
+        <header className="wig-header">
+          <a href="#top" className="wig-brand" aria-label="Wiggle icons, back to top">
+            <span className="wig-brand-mark" aria-hidden="true">
+              <svg viewBox="0 0 24 24" fill="currentColor">
+                <path d="M9 18c1.3 1 4.7 1 6 0M6.6 15.6c1-1 1.1-2.2 1.2-4.2.1-2.5 1.5-4.4 4.2-4.4s4.1 1.9 4.2 4.4c.1 2 .2 3.2 1.2 4.2.6.6.2 1.6-.7 1.7-1.7.2-4.5.2-6.2.2s-4.5 0-6.2-.2c-.9-.1-1.3-1.1-.7-1.7Z" />
+              </svg>
             </span>
-            <h1 className="font-display text-4xl font-bold leading-[1.05] tracking-tight text-balance sm:text-6xl">
-              Icons that <span className="kg-gradient-text">wiggle</span>. And make a sound.
-            </h1>
-            <p className="max-w-xl text-base leading-relaxed text-[var(--muted)] sm:text-lg">
-              240 hand-built pictograms in seven visual styles. Each one has its own spring
-              animation and its own little synthesized voice. Click an icon and it comes alive.
-            </p>
-            <div className="flex flex-wrap items-center gap-3">
-              <a
-                href="#library"
-                className="inline-flex items-center gap-2 rounded-xl bg-[var(--accent)] px-5 py-3 text-sm font-semibold text-[var(--accent-text)] transition-opacity hover:opacity-90"
-              >
-                Explore the library <ArrowRight className="h-4 w-4" aria-hidden="true" />
-              </a>
-              <a
-                href="#sponsors"
-                className="inline-flex items-center gap-2 rounded-xl border border-[var(--border)] bg-[var(--surface-elevated)] px-5 py-3 text-sm font-semibold transition-colors hover:border-[var(--text)]"
-              >
-                Become a sponsor
-              </a>
-            </div>
-            <p className="text-xs text-[var(--muted)]">
-              No account, no install. Sound switches on with your first click.
-            </p>
-          </div>
+            wiggle icons
+          </a>
+          <nav className="wig-nav" aria-label="Site">
+            <a className="wig-nav-link" href="#library">Library</a>
+            <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
+              {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
+              Sound {audioStatus === "muted" ? "off" : "on"}
+            </button>
+          </nav>
+        </header>
 
-          <div className="kg-hero-stage">
-            <SampleIcon icon={heroIcon} style="glass" large />
-          </div>
-        </div>
-      </section>
-
-      {/* Sampler */}
-      <section id="sampler" className="mx-auto max-w-[1200px] px-6 py-16">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-              Sampler
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-              {sampler.length} icons, {sampler.length * STYLES.length} variants.
-            </h2>
-          </div>
-          <p className="max-w-sm text-sm text-[var(--muted)]">
-            Click any icon to see its motion and hear its sound. They are real inline SVGs —
-            nothing is pre-recorded.
-          </p>
-        </div>
-        <div className="mt-8 grid grid-cols-4 gap-2.5 sm:grid-cols-6 lg:grid-cols-8">
-          {sampler.map((icon, i) => (
-            <SampleIcon key={icon.name} icon={icon} style={STYLES[i % STYLES.length].id} />
+        <ul className="wig-hero-icons" aria-label="A few of the icons">
+          {heroIcons.map((icon, i) => (
+            <li key={icon.name}>
+              <IconButton icon={icon} style={STYLES[i % STYLES.length].id} armed={armed} onArm={arm} />
+            </li>
           ))}
-        </div>
-      </section>
+        </ul>
+        <p className="wig-hint">
+          <span>{armed ? "Now just hover over any icon — each one sounds different" : "Click an icon to turn on its sound"}</span>
+        </p>
 
-      {/* What you get */}
-      <section id="what-you-get" className="border-y border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-[1200px] px-6 py-16">
-          <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-            What you get
+        <div className="wig-copy">
+          <p>
+            <strong className="wig-lead">Make your app feel alive. 240 animated SVG icons in seven styles.</strong>{" "}
+            Each one moves and sounds like the thing it shows. A bell swings and its clapper lags
+            behind, a heart thumps twice, a gift lid pops and lands. Every motion runs on spring
+            physics, and every sound is generated in the browser.
           </p>
-          <h2 className="mt-2 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-            Small details, big difference.
-          </h2>
-          <div className="mt-8 grid gap-4 sm:grid-cols-2 lg:grid-cols-3">
-            {FEATURES.map((f) => {
-              const Icon = f.icon;
-              return (
-                <div
-                  key={f.title}
-                  className="rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-5"
-                >
-                  <span className="flex h-9 w-9 items-center justify-center rounded-xl bg-[var(--surface)] text-[var(--text)]">
-                    <Icon className="h-4 w-4" aria-hidden="true" />
-                  </span>
-                  <h3 className="mt-4 font-display text-base font-semibold">{f.title}</h3>
-                  <p className="mt-1.5 text-sm leading-relaxed text-[var(--muted)]">{f.body}</p>
+          <p>
+            <strong className="wig-lead">Built for tinkerers.</strong> Clean inline SVGs with named
+            moving parts, so you can copy any icon and wire up your own interaction. React-ready,
+            no dependencies on the icons themselves.
+          </p>
+          <p>
+            Try all 240 free in the <a href="#library">library</a>, or{" "}
+            <a className="wig-offer" href="#sponsors"><strong>claim a sponsor slot</strong> $30</a>{" "}
+            to put your name on the wall.
+          </p>
+        </div>
+
+        <div className="wig-actions">
+          <a className="wig-capsule wig-capsule-buy" href="#library">
+            <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
+          </a>
+          <a className="wig-capsule wig-capsule-quiet" href="#sponsors">
+            Become a sponsor <span aria-hidden="true">→</span>
+          </a>
+        </div>
+        <p className="wig-guarantee">No account. No install. Sound switches on with your first click.</p>
+
+        <section className="wig-sampler" id="sampler" aria-label="Sampler">
+          <div className="wig-sampler-head">
+            <h2>Sampler</h2>
+            <p className="wig-now">{sampleIcons.length} of {ICONS.length}</p>
+          </div>
+          <div className="wig-panels">
+            {styles.map((style) => (
+              <div className="wig-panel" key={style.id}>
+                <ul className="wig-panel-grid">
+                  {sampleIcons.map((icon) => (
+                    <li key={icon.name}>
+                      <IconButton icon={icon} style={style.id} armed={armed} onArm={arm} />
+                    </li>
+                  ))}
+                </ul>
+                <p className="wig-panel-name">{style.label}</p>
+              </div>
+            ))}
+          </div>
+        </section>
+
+        <section className="wig-section" aria-labelledby="what-title">
+          <h2 id="what-title">What you get</h2>
+          <p className="wig-section-lead">A tiny library with an unreasonable amount of attention to detail.</p>
+          <div className="wig-features" style={{ marginTop: 24 }}>
+            <div className="wig-feature">
+              <div className="wig-feature-art">
+                <div className="wig-mosaic">
+                  {mosaicIcons.map((icon, i) => (
+                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[i % STYLES.length].id} /></span>
+                  ))}
                 </div>
-              );
-            })}
-          </div>
-        </div>
-      </section>
-
-      {/* Style comparison */}
-      <section id="styles" className="mx-auto max-w-[1200px] px-6 py-16">
-        <div className="flex flex-col gap-3 sm:flex-row sm:items-end sm:justify-between">
-          <div>
-            <p className="text-xs font-semibold uppercase tracking-[0.18em] text-[var(--muted)]">
-              One icon, seven personalities
-            </p>
-            <h2 className="mt-2 font-display text-3xl font-bold tracking-tight sm:text-4xl">
-              Pick the style that fits.
-            </h2>
-          </div>
-          <p className="max-w-sm text-sm text-[var(--muted)]">
-            The {showcaseIcon.label.toLowerCase()} below is the same drawing in every style —
-            outline, solid, duotone, glass, stencil, hardware and relief.
-          </p>
-        </div>
-        <div className="mt-8 grid grid-cols-2 gap-3 sm:grid-cols-4 lg:grid-cols-7">
-          {STYLES.map((style) => (
-            <div
-              key={style.id}
-              className="flex flex-col items-center gap-3 rounded-2xl border border-[var(--border)] bg-[var(--surface-elevated)] p-4"
-            >
-              <SampleIcon icon={showcaseIcon} style={style.id} />
-              <span className="text-center text-xs font-semibold">{style.label}</span>
-              <span className="text-center text-[10px] leading-tight text-[var(--muted)]">
-                {style.rule}
-              </span>
+              </div>
+              <h3>{ICONS.length} icons</h3>
+              <p>Everyday objects, interface, nature, travel and more, all on a 24px grid.</p>
             </div>
-          ))}
-        </div>
-      </section>
-
-      {/* Sponsors */}
-      <section id="sponsors" className="border-t border-[var(--border)] bg-[var(--surface)]">
-        <div className="mx-auto max-w-[1200px] px-6 py-16">
-          <SponsorSection />
-        </div>
-      </section>
-
-      {/* Footer */}
-      <footer className="border-t border-[var(--border)]">
-        <div className="mx-auto flex max-w-[1200px] flex-col gap-4 px-6 py-10 sm:flex-row sm:items-center sm:justify-between">
-          <div>
-            <p className="font-display text-lg font-bold">wiggle icons</p>
-            <p className="mt-1 text-xs text-[var(--muted)]">
-              240 icons that move and make a sound. Made with spring physics and web audio.
-            </p>
+            <div className="wig-feature">
+              <div className="wig-feature-art">
+                <div className="wig-mosaic">
+                  {showcase.map((icon, i) => (
+                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 2) % STYLES.length].id} /></span>
+                  ))}
+                </div>
+              </div>
+              <h3>{STYLES.length} styles</h3>
+              <p>Outline, solid, duotone, glass, stencil, hardware and 3D relief.</p>
+            </div>
+            <div className="wig-feature">
+              <div className="wig-feature-art">
+                <div className="wig-mosaic">
+                  {ICONS.slice(112, 152).map((icon, i) => (
+                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 1) % STYLES.length].id} /></span>
+                  ))}
+                </div>
+              </div>
+              <h3>A motion for each one</h3>
+              <p>A bell swings, a rocket lifts off, a heart thumps. Spring physics, never a stock wiggle.</p>
+            </div>
+            <div className="wig-feature">
+              <div className="wig-feature-art">
+                <div className="wig-mosaic">
+                  {ICONS.slice(152, 192).map((icon, i) => (
+                    <span key={icon.name}><StaticGlyph icon={icon} style={STYLES[(i + 3) % STYLES.length].id} /></span>
+                  ))}
+                </div>
+              </div>
+              <h3>Procedural sound</h3>
+              <p>Short synth voices built on the fly. No audio files, no downloads, no subscriptions.</p>
+            </div>
           </div>
-          <div className="flex flex-wrap gap-5 text-xs font-medium text-[var(--muted)]">
-            <a href="#library" className="hover:text-[var(--text)]">Library</a>
-            <a href="#styles" className="hover:text-[var(--text)]">Styles</a>
-            <a href="#sponsors" className="hover:text-[var(--text)]">Sponsors</a>
+        </section>
+
+        <section className="wig-section" id="sponsors" aria-labelledby="sponsor-title">
+          <h2 id="sponsor-title">Sponsors</h2>
+          <p className="wig-section-lead">Ten blocks. $30 each. Your name, link and note, right here for good.</p>
+          <div style={{ marginTop: 24 }}>
+            <SponsorWall />
           </div>
-        </div>
-      </footer>
-    </>
+        </section>
+
+        <section className="wig-section wig-pricing" id="pricing" aria-labelledby="pricing-title">
+          <h2 id="pricing-title">One wall, ten places.</h2>
+          <p className="wig-section-lead">A one-time placement. No subscription, no renewal, no fine print.</p>
+          <div className="wig-plans">
+            <div className="wig-plan">
+              <p className="wig-plan-name">Just looking</p>
+              <p className="wig-plan-who">Free, forever</p>
+              <div className="wig-plan-price"><span className="wig-plan-now">$0</span></div>
+              <ul className="wig-included">
+                <li><Check size={20} /><span>All 240 icons in every style</span></li>
+                <li><Check size={20} /><span>Every animation and sound</span></li>
+                <li><Check size={20} /><span>Copy any SVG you like</span></li>
+              </ul>
+              <a className="wig-capsule wig-capsule-quiet" href="#library" style={{ marginTop: 20 }}>Open the library</a>
+            </div>
+            <div className="wig-plan wig-plan-featured">
+              <p className="wig-plan-name">Sponsor slot</p>
+              <p className="wig-plan-who">One block on the wall</p>
+              <div className="wig-plan-price"><span className="wig-plan-now">$30</span><span className="wig-plan-terms">one time</span></div>
+              <ul className="wig-included">
+                <li><Check size={20} /><span>Your name and link on this page</span></li>
+                <li><Check size={20} /><span>One-line note for your product</span></li>
+                <li><Check size={20} /><span>Yours for life, no renewal</span></li>
+              </ul>
+              <a className="wig-capsule wig-capsule-buy" href="#sponsors" style={{ marginTop: 20 }}>
+                <span>Claim a slot</span><span className="wig-capsule-price">$30</span>
+              </a>
+            </div>
+          </div>
+        </section>
+
+        <section className="wig-section" aria-labelledby="faq-title">
+          <h2 id="faq-title">Questions</h2>
+          <div className="wig-faq" style={{ marginTop: 24 }}>
+            {FAQ.map(([q, a]) => (
+              <details className="wig-faq-item" key={q}>
+                <summary>{q}<span className="wig-faq-mark" aria-hidden="true" /></summary>
+                <p>{a}</p>
+              </details>
+            ))}
+          </div>
+        </section>
+
+        <footer className="wig-footer">
+          <div className="wig-footer-top">
+            <div className="wig-footer-brand">
+              <a href="#top" className="wig-brand">wiggle icons</a>
+              <p>240 icons that move and make a sound, drawn one at a time.</p>
+            </div>
+            <div className="wig-footer-groups">
+              <div className="wig-footer-group">
+                <p className="wig-footer-title">Explore</p>
+                <ul>
+                  <li><a href="#sampler">Sampler</a></li>
+                  <li><a href="#library">Library</a></li>
+                  <li><a href="#sponsors">Sponsors</a></li>
+                </ul>
+              </div>
+              <div className="wig-footer-group">
+                <p className="wig-footer-title">Styles</p>
+                <ul>
+                  {STYLES.slice(0, 4).map((s) => <li key={s.id}><a href="#library">{s.label}</a></li>)}
+                </ul>
+              </div>
+              <div className="wig-footer-group">
+                <p className="wig-footer-title">More</p>
+                <ul>
+                  <li><a href="#pricing">Pricing</a></li>
+                  <li><a href="#faq-title">Questions</a></li>
+                </ul>
+              </div>
+            </div>
+          </div>
+          <div className="wig-footer-bottom">
+            <span>© 2026 Wiggle Icons</span>
+            <span>Built with spring physics and Web Audio.</span>
+          </div>
+        </footer>
+      </main>
+    </div>
   );
 }
