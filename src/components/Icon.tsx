@@ -10,17 +10,19 @@ export interface IconProps {
   size?: number;
   animate?: boolean;
   sound?: boolean;
+  bare?: boolean;
   className?: string;
   style?: CSSProperties;
 }
 
-/** Render any icon in any of the seven variants, with optional motion and sound. */
+/** Render any icon in any of the eight variants, with optional motion and sound. */
 export function Icon({
   name = "heart",
   variant = "outline",
   size = 24,
   animate = false,
   sound = false,
+  bare = false,
   className,
   style,
 }: IconProps) {
@@ -36,6 +38,7 @@ export function Icon({
     [icon, variant, gid]
   );
   const needsDefs = variant === "glass" || variant === "hardware";
+  const interactive = animate || sound;
 
   const play = useCallback(() => {
     initAudio();
@@ -52,7 +55,8 @@ export function Icon({
       xmlns="http://www.w3.org/2000/svg"
       className={`icon-svg ${className ?? ""}`}
       style={{ overflow: "visible", pointerEvents: "visiblePainted", ...style }}
-      onPointerEnter={play}
+      onPointerEnter={interactive ? play : undefined}
+      onClick={interactive && bare ? play : undefined}
       aria-hidden="true"
     >
       {needsDefs && <defs dangerouslySetInnerHTML={{ __html: getMasterDefsInner(false).trim() }} />}
@@ -60,7 +64,7 @@ export function Icon({
     </svg>
   );
 
-  if (!animate && !sound) return svg;
+  if (!interactive || bare) return svg;
 
   return (
     <button

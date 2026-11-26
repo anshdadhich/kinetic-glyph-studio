@@ -76,7 +76,7 @@ export const STYLES: StyleDef[] = [
   {
     id: "blueprint",
     label: "Blueprint",
-    rule: "Dashed drafting lines on a dot grid with corner registration marks",
+    rule: "Open dashed drafting lines, no fill or decoration",
   },
 ];
 
@@ -201,7 +201,7 @@ export function blueprintFromOutline(outline: string): string {
     .replace(/\sstroke-width="[^"]*"/g, "")
     .replace(/\sstroke-dasharray="[^"]*"/g, "")
     .replace(/\sopacity="[^"]*"/g, "");
-  return `<defs><pattern id="__GID__-bp" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.36" fill="currentColor" opacity="0.3"/></pattern></defs><rect x="0.8" y="0.8" width="22.4" height="22.4" rx="2" fill="url(#__GID__-bp)" opacity="0.55"/><g fill="none" stroke="currentColor" stroke-width="0.95" stroke-dasharray="2.1 1.5" stroke-linecap="round" stroke-linejoin="round">${inner}</g><path d="M2.8 5V2.8H5M19 2.8H21.2V5M21.2 19V21.2H19M5 21.2H2.8V19" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.65"/>`;
+  return `<g fill="none" stroke="currentColor" stroke-width="1.05" stroke-dasharray="2.4 1.7" stroke-linecap="round" stroke-linejoin="round">${inner}</g>`;
 }
 
 /** Resolve a variant, generating Blueprint on the fly when an icon has no stored copy. */

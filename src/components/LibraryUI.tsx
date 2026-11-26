@@ -168,7 +168,7 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
             onClick={toggleSound}
             aria-pressed={audioStatus === "ready"}
           >
-            <Icon name="volume" size={15} />
+            <Icon name="volume" size={15} animate sound bare />
             {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
           </button>
         </div>

@@ -145,12 +145,12 @@ function SponsorCheckout({
       <div className="wig-sheet-backdrop" onMouseDown={onClose} />
       <div className="wig-sheet" role="dialog" aria-modal="true" aria-label={`Claim sponsor slot ${slot + 1}`}>
         <button type="button" className="wig-sheet-close" onClick={onClose} aria-label="Close checkout">
-          <Icon name="close" size={14} />
+          <Icon name="close" size={14} animate sound bare />
         </button>
         {phase === "done" ? (
           <div style={{ textAlign: "center", padding: "24px 0" }}>
             <div className="wig-sponsor-icon" style={{ margin: "0 auto 16px", background: "#111", color: "#fff" }}>
-              <Icon name="check" size={20} />
+              <Icon name="check" size={20} animate sound bare />
             </div>
             <h2 style={{ fontWeight: 600 }}>You’re on the wall.</h2>
             <p style={{ color: "var(--muted)", marginTop: 8 }}>Slot {slot + 1} is yours. Thanks for supporting Wiggle Icons.</p>
@@ -247,8 +247,17 @@ function SponsorWall() {
               </div>
             )
           ) : (
-            <button key={i} type="button" className="wig-sponsor wig-sponsor-empty" onClick={() => setSlot(i)}>
-              <span className="wig-sponsor-plus" aria-hidden="true"><Icon name="plus" size={18} /></span>
+            <button
+              key={i}
+              type="button"
+              className="wig-sponsor wig-sponsor-empty"
+              onPointerEnter={() => {
+                initAudio();
+                triggerSound("plus", null);
+              }}
+              onClick={() => setSlot(i)}
+            >
+              <span className="wig-sponsor-plus" aria-hidden="true"><Icon name="plus" size={18} animate sound bare /></span>
               <span className="wig-sponsor-slot">Slot {i + 1}</span>
               <span className="wig-sponsor-price">${PRICE}</span>
             </button>
@@ -335,7 +344,7 @@ export default function LandingPage() {
           <nav className="wig-nav" aria-label="Site">
             <a className="wig-nav-link" href="/icons">Library</a>
             <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
-              <Icon name="volume" size={16} />
+              <Icon name="volume" size={16} animate sound bare />
               {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
             </button>
           </nav>
@@ -355,7 +364,7 @@ export default function LandingPage() {
         <div className="wig-copy">
           <p>
             <strong className="wig-lead">240 icons, 8 styles. Each one moves and sounds like the thing it shows.</strong>{" "}
-            A bell swings, a heart thumps twice, a gift lid pops. Spring motion and synth sound, made in the browser.
+            Spring motion, synth sound.
           </p>
           <p>
             <strong className="wig-lead">Clean inline SVGs with named parts.</strong> Copy an icon and wire up your own interaction. React-ready.
@@ -414,9 +423,9 @@ export default function LandingPage() {
               <p className="wig-plan-who">Free, forever</p>
               <div className="wig-plan-price"><span className="wig-plan-now">$0</span></div>
               <ul className="wig-included">
-                <li><Icon name="check" size={20} /><span>All 240 icons in every style</span></li>
-                <li><Icon name="check" size={20} /><span>Every animation and sound</span></li>
-                <li><Icon name="check" size={20} /><span>Copy any SVG you like</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>All 240 icons in every style</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>Every animation and sound</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>Copy any SVG you like</span></li>
               </ul>
               <a className="wig-capsule wig-capsule-quiet" href="/icons" style={{ marginTop: 20 }}>Open the library</a>
             </div>
@@ -425,9 +434,9 @@ export default function LandingPage() {
               <p className="wig-plan-who">One block on the wall</p>
               <div className="wig-plan-price"><span className="wig-plan-now">$30</span><span className="wig-plan-terms">one time</span></div>
               <ul className="wig-included">
-                <li><Icon name="check" size={20} /><span>Your name and link on this page</span></li>
-                <li><Icon name="check" size={20} /><span>One-line note for your product</span></li>
-                <li><Icon name="check" size={20} /><span>Yours for life, no renewal</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>Your name and link on this page</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>One-line note for your product</span></li>
+                <li><Icon name="check" size={20} animate sound bare /><span>Yours for life, no renewal</span></li>
               </ul>
               <a className="wig-capsule wig-capsule-buy" href="#sponsors" style={{ marginTop: 20 }}>
                 <span>Claim a slot</span><span className="wig-capsule-price">$30</span>

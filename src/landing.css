@@ -91,7 +91,7 @@
 .wig-guarantee { color: var(--muted); margin-top: 12px; font-size: 13px; }
 
 /* Sponsor wall placed directly under the hero */
-.wig-sponsor-strip { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--rule); }
+.wig-sponsor-strip { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 56px; padding-top: 8px; }
 .wig-sponsor-strip .wig-sponsors { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 .wig-sponsor-strip .wig-sponsor { min-height: 132px; }
 .wig-sponsor-strip-head { display: flex; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px; }
@@ -130,6 +130,8 @@ button.wig-sponsor { border: 1px dashed var(--rule); background: transparent; }
 button.wig-sponsor:hover { background: var(--tile); }
 .wig-sponsor-empty { align-items: center; justify-content: center; gap: 3px; text-align: center; }
 .wig-sponsor-plus { color: var(--faint); font-size: 20px; line-height: 1; }
+.wig-sponsor-plus svg { transition: transform .18s cubic-bezier(.3,.7,.4,1); }
+.wig-sponsor-empty:hover .wig-sponsor-plus svg { transform: scale(1.25) rotate(90deg); }
 .wig-sponsor-slot { font-size: 12px; font-weight: 500; }
 .wig-sponsor-price { color: var(--faint); font-size: 11px; }
 a.wig-sponsor:hover { background: #efeff2; }

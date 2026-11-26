@@ -15,7 +15,7 @@ const LOOKS: Record<StyleId, string> = {
   stencil: "Flat laser-cut shapes with bridges",
   hardware: "Brushed metal and matte ABS with an orange accent",
   relief: "A raised face with an offset architectural shadow",
-  blueprint: "Dashed drafting lines on a dot grid with corner marks",
+  blueprint: "Open dashed drafting lines with no fill",
 };
 
 const DEMO_NAMES = ["camera", "home", "rocket", "umbrella"];
