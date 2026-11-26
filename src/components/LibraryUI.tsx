@@ -94,7 +94,7 @@ const LibTile = memo(function LibTile({ icon, style, onCopied }: TileProps) {
   );
 });
 
-export default function LibraryUI() {
+export default function LibraryUI({ showFooter = false }: { showFooter?: boolean }) {
   const [style, setStyle] = useState<StyleId>("duotone");
   const [category, setCategory] = useState<string>("All");
   const [query, setQuery] = useState("");
@@ -292,6 +292,17 @@ export default function LibraryUI() {
           </p>
         )}
       </main>
+
+      {showFooter && (
+        <footer className="lib-footer">
+          <span>© 2026 Wiggle Icons</span>
+          <span>Built with spring physics and Web Audio.</span>
+          <span>
+            <a href="/">Home</a>
+            <a href="/#sponsors">Sponsors</a>
+          </span>
+        </footer>
+      )}
 
       {toast && <div className="lib-toast" role="status">{toast}</div>}
     </div>

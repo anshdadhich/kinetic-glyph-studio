@@ -132,7 +132,7 @@ export default function App() {
     return (
       <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
         <SvgDefs />
-        <LibraryUI />
+        <LibraryUI showFooter />
       </div>
     );
   }

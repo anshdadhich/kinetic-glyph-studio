@@ -108,7 +108,7 @@ export const CORE2_ICONS: IconDef[] = [
     label: "Refresh",
     category: "Core UI",
     motionSummary: "Twin curved sync arrows spin a full 360° loop around center pivot",
-    soundSummary: "Spring-wound rotary release whoosh + sync chime",
+    soundSummary: "Four quarter-turn swishes forming one full rotary cycle",
     svgs: {
       outline: `<g data-part="arrows" data-pivot="12 12" ${K}><path d="M19.5 10A7.8 7.8 0 0 0 6.2 6.8L4.5 8.5"/><polyline points="4.5 4.8 4.5 8.5 8.2 8.5"/><path d="M4.5 14A7.8 7.8 0 0 0 17.8 17.2L19.5 15.5"/><polyline points="19.5 19.2 19.5 15.5 15.8 15.5"/></g>`,
       solid: `<g data-part="arrows" data-pivot="12 12" fill="currentColor"><path d="M12 3.8A8.2 8.2 0 0 0 5.4 7.2L3.8 5.6V10.4H8.6L6.9 8.7A6.1 6.1 0 0 1 17.7 10.2A1 1 0 1 0 19.6 9.6A8.2 8.2 0 0 0 12 3.8Z"/><path d="M12 20.2A8.2 8.2 0 0 0 18.6 16.8L20.2 18.4V13.6H15.4L17.1 15.3A6.1 6.1 0 0 1 6.3 13.8A1 1 0 1 0 4.4 14.4A8.2 8.2 0 0 0 12 20.2Z"/></g>`,
@@ -119,7 +119,7 @@ export const CORE2_ICONS: IconDef[] = [
         `<g ${GF}><circle cx="12" cy="12" r="8.2"/></g><g data-part="arrows" data-pivot="12 12" ${GBS}><path d="M16.6 10A5 5 0 0 0 8.2 8.4"/><polyline points="7.6 6.4 7.8 9 10.4 8.8"/><path d="M7.4 14A5 5 0 0 0 15.8 15.6"/><polyline points="16.4 17.6 16.2 15 13.6 15.2"/></g>`
       ),
       stencil: `<g data-part="arrows" data-pivot="12 12" fill="currentColor"><path d="M4.6 9.5L4.6 4.8L8.8 6.4L7.4 7.7A6.2 6.2 0 0 1 17.8 9.8L15.9 10.4A4.2 4.2 0 0 0 8.8 9.2L9.8 10.2Z"/><path d="M19.4 14.5L19.4 19.2L15.2 17.6L16.6 16.3A6.2 6.2 0 0 1 6.2 14.2L8.1 13.6A4.2 4.2 0 0 0 15.2 14.8L14.2 13.8Z"/></g>`,
-      hardware: `<circle cx="12" cy="12" r="9" ${HD}/><g data-part="arrows" data-pivot="12 12"><path d="M17.5 10.2A5.8 5.8 0 0 0 7.2 8.1" fill="none" stroke="#e4e4e7" stroke-width="1.8" stroke-linecap="round"/><polygon points="5.6 9.4 6.2 6 9.2 7.4" ${HA}/><path d="M6.5 13.8A5.8 5.8 0 0 0 16.8 15.9" fill="none" stroke="#e4e4e7" stroke-width="1.8" stroke-linecap="round"/><polygon points="18.4 14.6 17.8 18 14.8 16.6" ${HA}/></g>`,
+      hardware: `<circle cx="12" cy="12" r="9" ${HD}/><g data-part="arrows" data-pivot="12 12"><path d="M12 3.8A8.2 8.2 0 0 0 5.4 7.2L3.8 5.6V10.4H8.6L6.9 8.7A6.1 6.1 0 0 1 17.7 10.2A1 1 0 1 0 19.6 9.6A8.2 8.2 0 0 0 12 3.8Z" fill="url(#hw-light)" stroke="#3f3f46" stroke-width="0.45"/><path d="M12 20.2A8.2 8.2 0 0 0 18.6 16.8L20.2 18.4V13.6H15.4L17.1 15.3A6.1 6.1 0 0 1 6.3 13.8A1 1 0 1 0 4.4 14.4A8.2 8.2 0 0 0 12 20.2Z" fill="url(#hw-accent)" stroke="#3f3f46" stroke-width="0.45"/></g>`,
       relief: `<g data-part="arrows" data-pivot="12 12"><g transform="translate(1.3,1.3)" ${RS_LINE}><path d="M19 10A7.4 7.4 0 0 0 6.4 7L4.8 8.5"/><polyline points="4.8 5 4.8 8.5 8.3 8.5"/><path d="M5 14A7.4 7.4 0 0 0 17.6 17L19.2 15.5"/><polyline points="19.2 19 19.2 15.5 15.7 15.5"/></g><g ${RF_LINE}><path d="M19 10A7.4 7.4 0 0 0 6.4 7L4.8 8.5"/><polyline points="4.8 5 4.8 8.5 8.3 8.5"/><path d="M5 14A7.4 7.4 0 0 0 17.6 17L19.2 15.5"/><polyline points="19.2 19 19.2 15.5 15.7 15.5"/></g></g>`,
     },
   },

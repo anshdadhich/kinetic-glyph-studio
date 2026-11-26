@@ -403,11 +403,7 @@ export default function LandingPage() {
 
         <section id="sponsors" className="wig-sponsor-strip" aria-labelledby="sponsor-title">
           <div className="wig-sponsor-strip-head">
-            <div>
-              <p className="wig-eyebrow">Sponsor wall</p>
-              <h2 id="sponsor-title">10 blocks · $30 each</h2>
-            </div>
-            <p>Your name, link and one line, right here under the intro.</p>
+            <h2 id="sponsor-title">Sponsors</h2>
           </div>
           <SponsorWall />
         </section>
@@ -531,38 +527,8 @@ export default function LandingPage() {
         </section>
 
         <footer className="wig-footer">
-          <div className="wig-footer-top">
-            <div className="wig-footer-brand">
-              <a href="#top" className="wig-brand">wiggle icons</a>
-              <p>240 icons that move and make a sound, drawn one at a time.</p>
-            </div>
-            <div className="wig-footer-groups">
-              <div className="wig-footer-group">
-                <p className="wig-footer-title">Explore</p>
-                <ul>
-                  <li><a href="#sampler">Icons</a></li>
-                  <li><a href="/icons">Library</a></li>
-                  <li><a href="#sponsors">Sponsors</a></li>
-                </ul>
-              </div>
-              <div className="wig-footer-group">
-                <p className="wig-footer-title">Styles</p>
-                <ul>
-                  {STYLES.map((s) => <li key={s.id}><a href="/icons">{s.label}</a></li>)}
-                </ul>
-              </div>
-              <div className="wig-footer-group">
-                <p className="wig-footer-title">More</p>
-                <ul>
-                  <li><a href="#pricing">Pricing</a></li>
-                  <li><a href="#faq-title">Questions</a></li>
-                </ul>
-              </div>
-            </div>
-          </div>
           <div className="wig-footer-bottom">
             <span>© 2026 Wiggle Icons</span>
-            <span>Built with spring physics and Web Audio.</span>
           </div>
         </footer>
       </main>

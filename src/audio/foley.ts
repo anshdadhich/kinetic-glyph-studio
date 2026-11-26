@@ -921,9 +921,16 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "triangle", 740, 440, t + 0.045, 0.075, 0.08, 0.002);
   },
   refresh(d, t) {
-    // Smooth circular whoosh + crisp reset chime
-    noise(d, "bandpass", 520, 2200, 1.8, t, 0.16, 0.14, 0.015);
-    tone(d, "sine", 587.33, 880, t + 0.08, 0.12, 0.09, 0.003);
+    // Four quarter-turn swishes make one full cycle, with a soft detent on each quarter.
+    const quarter = [0, 0.11, 0.22, 0.33];
+    quarter.forEach((off, i) => {
+      const rising = i % 2 === 0;
+      noise(d, "bandpass", rising ? 620 : 1800, rising ? 1900 : 680, 1.7, t + off, 0.085, 0.12, 0.01);
+      noise(d, "highpass", 2800, 1700, 2.4, t + off + 0.02, 0.03, 0.05, 0.004);
+      tone(d, "sine", rising ? 180 : 260, rising ? 260 : 180, t + off, 0.05, 0.06, 0.006);
+    });
+    // Tail returns to the opening pitch so the loop has no jump.
+    tone(d, "triangle", 392, 392, t + 0.44, 0.1, 0.045, 0.02);
   },
   share(d, t) {
     // Outbound node broadcast triad

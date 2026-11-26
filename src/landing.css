@@ -94,10 +94,8 @@
 .wig-sponsor-strip { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--rule); }
 .wig-sponsor-strip .wig-sponsors { grid-template-columns: repeat(5, minmax(0, 1fr)); gap: 10px; }
 .wig-sponsor-strip .wig-sponsor { min-height: 132px; }
-.wig-sponsor-strip-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
-.wig-sponsor-strip-head h2 { font-weight: 600; font-size: 20px; margin-top: 4px; }
-.wig-sponsor-strip-head > p { color: var(--muted); font-size: 13px; max-width: 220px; text-align: right; }
-.wig-eyebrow { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
+.wig-sponsor-strip-head { display: flex; align-items: center; justify-content: center; text-align: center; margin-bottom: 20px; }
+.wig-sponsor-strip-head h2 { font-weight: 600; font-size: 24px; }
 
 /* Sampler (wide section) */
 .wig-sampler { --wide: min(1280px, calc(100vw - 64px)); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 88px; }

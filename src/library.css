@@ -80,6 +80,10 @@
 .lib-icon:active { transform: scale(.96); }
 .lib-icon svg { width: var(--icon-size); height: var(--icon-size); display: block; overflow: visible; pointer-events: none; }
 .lib-toast { z-index: 20; color: #fff; background: #111; border-radius: 999px; padding: 10px 18px; font-size: 13px; position: fixed; bottom: 24px; left: 50%; transform: translateX(-50%); box-shadow: 0 8px 28px #00000033; }
+.lib-footer { grid-column: 1 / -1; color: var(--faint); border-top: 1px solid var(--rule); margin-top: 48px; padding: 24px 0 8px; display: flex; flex-wrap: wrap; align-items: center; justify-content: space-between; gap: 12px; font-size: 13px; }
+.lib-footer a { color: var(--muted); text-decoration: none; margin-left: 16px; }
+.lib-footer a:first-child { margin-left: 0; }
+.lib-footer a:hover { color: var(--ink); }
 
 @media (max-width: 760px) {
   .lib-root { grid-template-columns: minmax(0, 1fr); gap: 0; padding-inline: 16px; }
