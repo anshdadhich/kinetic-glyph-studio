@@ -59,6 +59,8 @@
 .wig-nav-link:hover, .wig-sound:hover { color: var(--ink); }
 .wig-sound { display: inline-flex; align-items: center; gap: 6px; }
 .wig-sound svg { width: 16px; height: 16px; }
+.wig-theme { color: var(--faint); display: inline-flex; align-items: center; transition: color .14s; }
+.wig-theme:hover { color: var(--ink); }
 
 /* Hero icon rows */
 .wig-hero-icons { grid-template-columns: repeat(16, minmax(0, 1fr)); margin: 24px -4px 0; padding: 0; list-style: none; display: grid; }

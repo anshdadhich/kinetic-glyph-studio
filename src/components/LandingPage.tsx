@@ -305,6 +305,11 @@ const FAQ = [
 export default function LandingPage() {
   const [armed, setArmed] = useState(false);
   const [audioStatus, setAudioStatus] = useState<AudioStatus>(() => getAudioStatus());
+  const [theme, setTheme] = useState<"light" | "dark">(() =>
+    typeof document !== "undefined" && document.documentElement.dataset.theme === "dark"
+      ? "dark"
+      : "light"
+  );
   const heroIcons = useMemo(() => ICONS.slice(0, 16), []);
   const sampleIcons = useMemo(() => ICONS.slice(0, 40), []);
   const styles = useMemo(() => STYLES, []);
@@ -313,6 +318,12 @@ export default function LandingPage() {
   useEffect(() => {
     initAudio();
   }, []);
+  useEffect(() => {
+    const root = document.documentElement;
+    root.setAttribute("data-theme", theme);
+    if (theme === "dark") root.classList.add("dark");
+    else root.classList.remove("dark");
+  }, [theme]);
   useEffect(() => {
     if (audioStatus === "ready") setArmed(true);
   }, [audioStatus]);
@@ -343,6 +354,9 @@ export default function LandingPage() {
           </a>
           <nav className="wig-nav" aria-label="Site">
             <a className="wig-nav-link" href="/icons">Library</a>
+            <button type="button" className="wig-theme" onClick={() => setTheme((t) => (t === "light" ? "dark" : "light"))} aria-label="Toggle light and dark theme">
+              <Icon name={theme === "light" ? "moon" : "sun"} size={16} animate sound bare />
+            </button>
             <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
               <Icon name="volume" size={16} animate sound bare />
               {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}

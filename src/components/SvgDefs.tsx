@@ -1,10 +1,10 @@
-export function getMasterDefsInner(isDark = false): string {
-  const back1 = isDark ? "#68686d" : "#5b5b5e";
-  const back2 = isDark ? "#222226" : "#161617";
-  const frost1 = isDark ? "rgba(244, 244, 246, 0.56)" : "rgba(227, 227, 229, 0.62)";
-  const frost2 = isDark ? "rgba(203, 213, 225, 0.52)" : "rgba(187, 187, 192, 0.62)";
-  const hi1 = isDark ? "rgba(251, 251, 252, 0.92)" : "rgba(251, 251, 252, 0.96)";
-  const hi2 = isDark ? "rgba(217, 217, 222, 0.9)" : "rgba(217, 217, 222, 0.96)";
+export function getMasterDefsInner(_isDark = false): string {
+  const back1 = "var(--g-back-1, #5b5b5e)";
+  const back2 = "var(--g-back-2, #161617)";
+  const frost1 = "var(--g-frost-1, rgba(227, 227, 229, 0.62))";
+  const frost2 = "var(--g-frost-2, rgba(187, 187, 192, 0.62))";
+  const hi1 = "var(--g-highlight-1, rgba(251, 251, 252, 0.96))";
+  const hi2 = "var(--g-highlight-2, rgba(217, 217, 222, 0.96))";
   const rim1 = "rgba(255, 255, 255, 0.98)";
   const rim2 = "rgba(255, 255, 255, 0)";
 

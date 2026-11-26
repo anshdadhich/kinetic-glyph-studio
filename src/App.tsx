@@ -185,16 +185,6 @@ export default function App() {
     };
   }, []);
 
-  useEffect(() => {
-    const root = document.documentElement;
-    root.setAttribute("data-theme", theme);
-    if (theme === "dark") {
-      root.classList.add("dark");
-    } else {
-      root.classList.remove("dark");
-    }
-  }, [theme]);
-
   const filteredIcons = useMemo(() => {
     const q = query.trim().toLowerCase();
     return ICONS.filter((ic) => {
