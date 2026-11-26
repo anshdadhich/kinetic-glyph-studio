@@ -104,11 +104,29 @@
 .icon-svg [data-part] {
   transform-box: fill-box;
   transform-origin: center;
-  will-change: transform, opacity;
 }
 
 .icon-svg [data-pivot] {
   transform-box: view-box;
+}
+
+/* Continuous idle rotors (wind turbine / radar sweep) */
+@keyframes kg-rotor-spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
+
+.icon-svg .kg-rotor {
+  transform-box: view-box;
+  transform-origin: var(--kg-ox, 12px) var(--kg-oy, 12px);
+  animation: kg-rotor-spin var(--kg-dur, 4s) linear infinite;
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .icon-svg .kg-rotor {
+    animation: none;
+  }
 }
 
 @media (prefers-reduced-motion: reduce) {

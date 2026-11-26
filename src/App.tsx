@@ -1,4 +1,4 @@
-import { useEffect, useId, useMemo, useRef, useState } from "react";
+import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
 import { Search, Volume2, VolumeX, Check } from "lucide-react";
 import {
   ICONS,
@@ -18,6 +18,12 @@ import {
   toggleSound,
   triggerSound,
 } from "./audio/foley";
+import {
+  getSoundMode,
+  setSoundMode,
+  subscribeSoundMode,
+  SoundMode,
+} from "./audio/samples";
 import { triggerChoreography } from "./physics/spring";
 
 type ViewMode = "style" | "icon";
@@ -35,7 +41,7 @@ interface IconTileProps {
   onCopySvg: (svgEl: SVGSVGElement | null, styleId: StyleId, label: string) => void;
 }
 
-function IconTile({
+const IconTile = memo(function IconTile({
   icon,
   styleDef,
   clickMode,
@@ -104,7 +110,7 @@ function IconTile({
       )}
     </button>
   );
-}
+});
 
 const SHORT_STYLE_LABELS: Record<StyleId, string> = {
   outline: "Outline",
@@ -123,6 +129,7 @@ export default function App() {
   const [category, setCategory] = useState<CategoryFilter>("All");
   const [query, setQuery] = useState("");
   const [audioStatus, setAudioStatus] = useState<AudioStatus>(() => getAudioStatus());
+  const [soundMode, setSoundModeState] = useState<SoundMode>(() => getSoundMode());
   const [selected, setSelected] = useState<{ iconName: string; styleId: StyleId }>({
     iconName: "bicycle",
     styleId: "glass",
@@ -134,6 +141,7 @@ export default function App() {
     const unsub = subscribeAudioStatus(() => {
       setAudioStatus(getAudioStatus());
     });
+    const unsubMode = subscribeSoundMode(() => setSoundModeState(getSoundMode()));
     const unlockOnPointer = () => {
       if (getAudioStatus() === "idle") {
         initAudio();
@@ -142,6 +150,7 @@ export default function App() {
     window.addEventListener("pointerdown", unlockOnPointer, { passive: true });
     return () => {
       unsub();
+      unsubMode();
       window.removeEventListener("pointerdown", unlockOnPointer);
     };
   }, []);
@@ -181,13 +190,17 @@ export default function App() {
     [selected.styleId]
   );
 
-  const showToast = (msg: string) => {
+  const showToast = useCallback((msg: string) => {
     setToastMsg(msg);
     if (toastTimerRef.current) window.clearTimeout(toastTimerRef.current);
     toastTimerRef.current = window.setTimeout(() => setToastMsg(null), 1800);
-  };
+  }, []);
 
-  const handleCopySvg = (svgEl: SVGSVGElement | null, styleId: StyleId, label: string) => {
+  const handleSelect = useCallback((ic: IconDef, st: StyleDef) => {
+    setSelected({ iconName: ic.name, styleId: st.id });
+  }, []);
+
+  const handleCopySvg = useCallback((svgEl: SVGSVGElement | null, styleId: StyleId, label: string) => {
     if (!svgEl) return;
     const clone = svgEl.cloneNode(true) as SVGSVGElement;
     clone.querySelectorAll("[data-part]").forEach((el) => {
@@ -212,7 +225,7 @@ export default function App() {
     void navigator.clipboard.writeText(standalone).then(() => {
       showToast(`Copied ${label} SVG`);
     });
-  };
+  }, [theme, showToast]);
 
   const soundButtonLabel =
     audioStatus === "muted"
@@ -271,7 +284,28 @@ export default function App() {
             </a>
           </nav>
 
-          <div className="flex items-center shrink-0">
+          <div className="flex items-center gap-2 shrink-0">
+            <div
+              role="group"
+              aria-label="Sound engine"
+              className="inline-flex rounded-lg border border-[var(--border)] bg-[var(--surface)] p-0.5 gap-0.5"
+            >
+              {(["synth", "real"] as SoundMode[]).map((m) => (
+                <button
+                  key={m}
+                  type="button"
+                  onClick={() => setSoundMode(m)}
+                  aria-pressed={soundMode === m}
+                  className={`rounded-md px-3 py-1.5 text-xs font-medium cursor-pointer transition-colors whitespace-nowrap shrink-0 ${
+                    soundMode === m
+                      ? "bg-[var(--accent)] text-[var(--accent-text)]"
+                      : "text-[var(--muted)] hover:text-[var(--text)]"
+                  }`}
+                >
+                  {m === "synth" ? "Synth" : "Real"}
+                </button>
+              ))}
+            </div>
             <button
               type="button"
               onClick={toggleSound}
@@ -478,9 +512,7 @@ export default function App() {
                           selected.styleId === styleDef.id
                         }
                         showLabel={icon.label}
-                        onSelect={(ic, st) =>
-                          setSelected({ iconName: ic.name, styleId: st.id })
-                        }
+                        onSelect={handleSelect}
                         onCopySvg={handleCopySvg}
                       />
                     ))}
@@ -521,9 +553,7 @@ export default function App() {
                           selected.styleId === styleDef.id
                         }
                         showLabel={SHORT_STYLE_LABELS[styleDef.id]}
-                        onSelect={(ic, st) =>
-                          setSelected({ iconName: ic.name, styleId: st.id })
-                        }
+                        onSelect={handleSelect}
                         onCopySvg={handleCopySvg}
                       />
                     ))}

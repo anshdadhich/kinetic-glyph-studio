@@ -1,3 +1,5 @@
+import { getSoundMode, playSample } from "./samples";
+
 export type AudioStatus = "idle" | "ready" | "muted";
 
 let audioCtx: AudioContext | null = null;
@@ -54,13 +56,18 @@ export function initAudio(): void {
 }
 
 export function toggleSound(): void {
-  if (!audioCtx || audioCtx.state === "suspended") {
+  if (!audioCtx) {
     soundEnabled = true;
     initAudio();
+    notify();
     return;
   }
   soundEnabled = !soundEnabled;
-  notify();
+  if (soundEnabled && audioCtx.state === "suspended") {
+    void audioCtx.resume().then(notify);
+  } else {
+    notify();
+  }
 }
 
 function tone(
@@ -276,10 +283,13 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 659.25, 659.25, t + 0.06, 0.16, 0.07, 0.01);
   },
   music(d, t) {
-    // Bright major triad arpeggio (C5 - E5 - G5)
-    tone(d, "triangle", 523.25, 523.25, t, 0.14, 0.085);
-    tone(d, "triangle", 659.25, 659.25, t + 0.055, 0.15, 0.08);
-    tone(d, "sine", 783.99, 783.99, t + 0.11, 0.2, 0.075);
+    // Clean plucked C-major arpeggio; short gated notes so retriggers never smear
+    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
+      const off = i * 0.075;
+      noise(d, "bandpass", 2600, 3400, 3.5, t + off, 0.012, 0.045, 0.001);
+      tone(d, "triangle", f, f, t + off, 0.15, 0.085, 0.003);
+      tone(d, "sine", f * 2, f * 2, t + off, 0.09, 0.025, 0.003);
+    });
   },
   image(d, t) {
     // Polaroid frame slide + soft sun-rise shimmer
@@ -294,15 +304,15 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 4. KINETIC OBJECTS & TOOLS ===
   bicycle(d, t) {
-    // Freewheel hub coasting ratchet ticks + two-stroke brass bicycle bell
-    for (let i = 0; i < 6; i++) {
-      const offset = i * 0.048;
-      noise(d, "bandpass", 3400, 2600, 5.5, t + offset, 0.012, 0.14, 0.001);
-      tone(d, "triangle", 520, 240, t + offset, 0.015, 0.05, 0.001);
+    // Freewheel ratchet ticks + friendly double bicycle bell
+    for (let i = 0; i < 5; i++) {
+      noise(d, "bandpass", 3400, 2400, 5.5, t + i * 0.026, 0.012, 0.075, 0.001);
+      tone(d, "triangle", 1900, 1600, t + i * 0.026, 0.012, 0.035, 0.001);
     }
-    [0.01, 0.12].forEach((delay) => {
-      tone(d, "sine", 1567.98, 1567.98, t + delay, 0.24, 0.11, 0.002);
-      tone(d, "sine", 3135.96, 3135.96, t + delay, 0.15, 0.045, 0.002);
+    [0.09, 0.22].forEach((off) => {
+      tone(d, "triangle", 1318.5, 1300, t + off, 0.16, 0.12, 0.002);
+      tone(d, "sine", 1975, 1950, t + off, 0.11, 0.055, 0.002);
+      tone(d, "sine", 2637, 2600, t + off, 0.07, 0.025, 0.002);
     });
   },
   scissors(d, t) {
@@ -332,10 +342,10 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "bandpass", 2400, 1200, 1.4, t + 0.11, 0.1, 0.12, 0.01);
   },
   pen(d, t) {
-    // Crisp fountain nib scribble across paper
-    noise(d, "bandpass", 3000, 5200, 2.2, t, 0.045, 0.16, 0.003);
-    noise(d, "bandpass", 3600, 4800, 2.4, t + 0.06, 0.04, 0.14, 0.003);
-    noise(d, "bandpass", 2800, 4400, 2.0, t + 0.11, 0.05, 0.12, 0.003);
+    noise(d, "bandpass", 2600, 5200, 2.0, t, 0.08, 0.22, 0.003);
+    noise(d, "bandpass", 3400, 4400, 2.4, t + 0.09, 0.07, 0.2, 0.003);
+    noise(d, "bandpass", 2800, 4600, 2.2, t + 0.18, 0.09, 0.18, 0.003);
+    tone(d, "triangle", 520, 380, t + 0.02, 0.05, 0.06, 0.002);
   },
   sliders(d, t) {
     // Smooth studio console fader glide + center detent click
@@ -362,11 +372,10 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 5. NATURE, ENERGY, TIME & COMMERCE ===
   rocket(d, t) {
-    // Ignition spark + ascending thruster exhaust roar
-    noise(d, "bandpass", 2600, 900, 1.5, t, 0.05, 0.2, 0.002);
-    noise(d, "lowpass", 180, 760, 0.9, t + 0.02, 0.36, 0.32, 0.025);
-    tone(d, "sawtooth", 78, 148, t + 0.02, 0.32, 0.11, 0.03);
-    tone(d, "sine", 54, 92, t + 0.02, 0.34, 0.22, 0.02);
+    noise(d, "highpass", 2600, 5200, 1.4, t, 0.07, 0.2, 0.002);
+    noise(d, "lowpass", 180, 900, 0.9, t + 0.02, 0.5, 0.38, 0.03);
+    tone(d, "sawtooth", 70, 150, t + 0.02, 0.42, 0.12, 0.03);
+    tone(d, "sine", 48, 96, t + 0.02, 0.46, 0.26, 0.02);
   },
   compass(d, t) {
     // Precision brass detent click + magnetic harmonic ping
@@ -412,15 +421,20 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "lowpass", 900, 240, 1.1, t + 0.14, 0.2, 0.18, 0.006);
   },
   heart(d, t) {
-    // Double cardiac lub-dub pulse
-    tone(d, "sine", 95, 48, t, 0.09, 0.28);
-    tone(d, "sine", 115, 52, t + 0.11, 0.1, 0.24);
+    // Audible midrange lub-dub with chest thump (not sub-only)
+    tone(d, "sine", 120, 62, t, 0.13, 0.3, 0.004);
+    tone(d, "triangle", 260, 130, t, 0.08, 0.16, 0.003);
+    noise(d, "lowpass", 520, 220, 1.2, t, 0.09, 0.16, 0.006);
+    tone(d, "sine", 135, 68, t + 0.17, 0.12, 0.24, 0.004);
+    tone(d, "triangle", 300, 150, t + 0.17, 0.065, 0.12, 0.003);
+    noise(d, "lowpass", 600, 260, 1.2, t + 0.17, 0.075, 0.12, 0.005);
   },
   star(d, t) {
-    // Sparkling crystalline celestial chime triad
-    tone(d, "sine", 1046.5, 1046.5, t, 0.16, 0.09);
-    tone(d, "sine", 1568, 1568, t + 0.04, 0.18, 0.08);
-    tone(d, "sine", 2093, 2093, t + 0.08, 0.2, 0.06);
+    // Soft celestial twinkle: warm fundamental, octave shimmer, airy tail
+    tone(d, "triangle", 880, 880, t, 0.18, 0.09, 0.004);
+    tone(d, "sine", 1318.5, 1318.5, t + 0.035, 0.2, 0.07, 0.004);
+    tone(d, "sine", 1760, 1760, t + 0.075, 0.16, 0.04, 0.004);
+    noise(d, "bandpass", 4200, 6200, 2.2, t + 0.02, 0.16, 0.035, 0.02);
   },
   zap(d, t) {
     // High-voltage electrical arc snap + crackle
@@ -446,17 +460,19 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 240, 290, t, 0.16, 0.045);
   },
   rain(d, t) {
-    // Crisp multi-drop water plinks + soft shower hiss
-    noise(d, "highpass", 1800, 1400, 1.0, t, 0.18, 0.06, 0.01);
-    tone(d, "sine", 980, 1360, t, 0.055, 0.09, 0.002);
-    tone(d, "sine", 1140, 1580, t + 0.05, 0.055, 0.085, 0.002);
-    tone(d, "sine", 860, 1220, t + 0.1, 0.06, 0.08, 0.002);
+    // Single continuous rain bed — soft shower wash, no separate droplet plinks
+    noise(d, "highpass", 2200, 1700, 0.8, t, 0.5, 0.11, 0.08);
+    noise(d, "bandpass", 1400, 900, 0.9, t + 0.03, 0.44, 0.07, 0.06);
+    noise(d, "bandpass", 3200, 2600, 1.2, t + 0.12, 0.3, 0.045, 0.04);
   },
   flame(d, t) {
-    // Warm fire whoosh + crackling ember pops
-    noise(d, "lowpass", 650, 1400, 1.4, t, 0.2, 0.14, 0.015);
-    noise(d, "highpass", 2800, 4200, 3.5, t + 0.04, 0.03, 0.12, 0.001);
-    noise(d, "highpass", 3400, 4800, 3.5, t + 0.11, 0.025, 0.1, 0.001);
+    // Ignition fwump + rolling low fire with sparse dry crackle
+    noise(d, "lowpass", 380, 900, 1.0, t, 0.34, 0.2, 0.012);
+    noise(d, "bandpass", 700, 1500, 1.2, t + 0.04, 0.28, 0.11, 0.03);
+    tone(d, "sine", 150, 110, t, 0.26, 0.07, 0.02);
+    for (let i = 0; i < 5; i++) {
+      noise(d, "bandpass", 2600 + i * 420, 1800, 3.8, t + 0.05 + i * 0.055, 0.014, 0.09, 0.001);
+    }
   },
   snowflake(d, t) {
     // Frosty crystalline ice chime
@@ -470,9 +486,10 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "bandpass", 900, 520, 2.4, t + 0.08, 0.18, 0.08, 0.02);
   },
   leaf(d, t) {
-    // Crisp dry-leaf botanical rustle
-    noise(d, "bandpass", 2200, 3600, 2.2, t, 0.07, 0.11, 0.004);
-    noise(d, "bandpass", 1800, 2900, 2.0, t + 0.075, 0.065, 0.085, 0.004);
+    // Dry leaf flutter: soft mid rustle with a light paper tick
+    noise(d, "bandpass", 900, 2200, 1.5, t, 0.14, 0.13, 0.02);
+    noise(d, "bandpass", 1400, 900, 1.6, t + 0.07, 0.12, 0.1, 0.02);
+    noise(d, "bandpass", 2600, 3200, 3.0, t + 0.02, 0.03, 0.055, 0.003);
   },
   droplet(d, t) {
     // Pure resonant water droplet bloop
@@ -480,9 +497,11 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 1320, 1480, t + 0.055, 0.05, 0.06, 0.002);
   },
   mountain(d, t) {
-    // Alpine breeze + crisp summit chime
-    noise(d, "bandpass", 480, 920, 1.8, t, 0.18, 0.08, 0.02);
-    tone(d, "triangle", 659.25, 659.25, t + 0.04, 0.22, 0.08);
+    // High-altitude wind across stone: broad airy gust + low massif drone
+    noise(d, "bandpass", 500, 1600, 1.1, t, 0.34, 0.13, 0.06);
+    noise(d, "bandpass", 1100, 600, 1.3, t + 0.1, 0.26, 0.08, 0.04);
+    tone(d, "sine", 98, 92, t, 0.4, 0.1, 0.06);
+    tone(d, "triangle", 196, 196, t + 0.02, 0.32, 0.045, 0.06);
   },
 
   // === 7. COMMERCE & FINANCE ===
@@ -514,11 +533,13 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 1046.5, 1174.6, t + 0.035, 0.11, 0.09);
   },
   gift(d, t) {
-    // Ribbon untie whoosh + celebratory 3-note chime
-    noise(d, "bandpass", 1400, 3000, 1.5, t, 0.07, 0.1, 0.003);
-    tone(d, "sine", 587.3, 587.3, t + 0.03, 0.12, 0.1);
-    tone(d, "sine", 880, 880, t + 0.075, 0.16, 0.1);
-    tone(d, "sine", 1174.6, 1174.6, t + 0.12, 0.18, 0.09);
+    // Box lid pop + bright three-note celebration
+    noise(d, "bandpass", 1200, 2400, 2.2, t, 0.028, 0.2, 0.001);
+    tone(d, "sine", 180, 95, t + 0.01, 0.07, 0.16, 0.001);
+    [659.25, 880, 1318.5].forEach((f, i) => {
+      tone(d, "triangle", f, f, t + 0.06 + i * 0.065, 0.14, 0.09, 0.003);
+    });
+    noise(d, "highpass", 5000, 6800, 2.0, t + 0.08, 0.16, 0.03, 0.01);
   },
   trophy(d, t) {
     // Triumphant brass fanfare triad
@@ -527,10 +548,13 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "triangle", 783.99, 783.99, t + 0.12, 0.22, 0.14);
   },
   crown(d, t) {
-    // Bright royal harp flourish
-    [523.25, 659.25, 783.99, 1046.5].forEach((f, i) => {
-      tone(d, "sine", f, f, t + i * 0.035, 0.18, 0.085);
+    // Regal brass flourish: warm fifth-based fanfare with a jewel shimmer
+    [523.25, 783.99, 1046.5].forEach((f, i) => {
+      tone(d, "triangle", f, f, t + i * 0.07, 0.22 - i * 0.02, 0.11, 0.004);
+      tone(d, "sawtooth", f / 2, f / 2, t + i * 0.07, 0.16, 0.022, 0.01);
     });
+    tone(d, "sine", 2093, 2093, t + 0.16, 0.2, 0.035, 0.006);
+    noise(d, "highpass", 5200, 6800, 2.0, t + 0.14, 0.16, 0.025, 0.02);
   },
   coin(d, t) {
     // High-Q spinning brass coin ring
@@ -538,9 +562,13 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 3136, 3080, t + 0.01, 0.18, 0.06, 0.001);
   },
   receipt(d, t) {
-    // Thermal printer zip + crisp paper tear-off
-    noise(d, "bandpass", 1900, 3200, 3.0, t, 0.08, 0.11, 0.003);
-    noise(d, "highpass", 2600, 4200, 1.5, t + 0.09, 0.055, 0.14, 0.002);
+    // Thermal printer feed: dense stepper ticks then a clean tear-off zip
+    for (let i = 0; i < 8; i++) {
+      noise(d, "bandpass", 2400, 3000, 4.5, t + i * 0.024, 0.009, 0.09, 0.001);
+      tone(d, "triangle", 620 + (i % 2) * 90, 300, t + i * 0.024, 0.012, 0.045, 0.001);
+    }
+    noise(d, "bandpass", 1800, 4200, 2.2, t + 0.2, 0.1, 0.12, 0.004);
+    tone(d, "sine", 300, 210, t + 0.21, 0.05, 0.06, 0.002);
   },
 
   // === 8. TECH & CONTROLS ===
@@ -665,11 +693,11 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 340, 520, t, 0.18, 0.05);
   },
   car(d, t) {
-    // Classic double car horn beep-beep
-    tone(d, "sawtooth", 440, 440, t, 0.07, 0.065, 0.003);
-    tone(d, "sawtooth", 554.37, 554.37, t, 0.07, 0.055, 0.003);
-    tone(d, "sawtooth", 440, 440, t + 0.1, 0.09, 0.065, 0.003);
-    tone(d, "sawtooth", 554.37, 554.37, t + 0.1, 0.09, 0.055, 0.003);
+    tone(d, "sawtooth", 440, 440, t, 0.09, 0.07, 0.003);
+    tone(d, "sawtooth", 554.37, 554.37, t, 0.09, 0.055, 0.003);
+    tone(d, "sawtooth", 440, 440, t + 0.12, 0.1, 0.07, 0.003);
+    tone(d, "sawtooth", 554.37, 554.37, t + 0.12, 0.1, 0.055, 0.003);
+    tone(d, "sine", 90, 140, t, 0.24, 0.11, 0.02);
   },
   train(d, t) {
     // Rail track clack-clack + classic locomotive whistle chord
@@ -680,9 +708,12 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 587.33, 587.33, t + 0.02, 0.2, 0.07, 0.008);
   },
   ship(d, t) {
-    // Deep harbor foghorn + gentle water lap
-    tone(d, "sawtooth", 146.83, 142, t, 0.28, 0.085, 0.02);
-    noise(d, "lowpass", 680, 320, 1.4, t + 0.04, 0.22, 0.08, 0.02);
+    // Harbor horn: warm detuned two-reed blast + soft hull wash
+    tone(d, "sawtooth", 196, 190, t, 0.4, 0.09, 0.05);
+    tone(d, "triangle", 98, 96, t, 0.44, 0.14, 0.05);
+    tone(d, "sine", 392, 388, t + 0.01, 0.34, 0.04, 0.05);
+    noise(d, "lowpass", 720, 300, 1.2, t + 0.05, 0.34, 0.09, 0.06);
+    noise(d, "bandpass", 1400, 800, 1.6, t + 0.22, 0.18, 0.05, 0.04);
   },
   gamepad(d, t) {
     // Retro 8-bit chiptune powerup arpeggio
@@ -697,9 +728,9 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "highpass", 1800, 2600, 1.8, t + 0.05, 0.03, 0.14, 0.001);
   },
   flag(d, t) {
-    // Crisp fabric snap in brisk wind
-    noise(d, "bandpass", 900, 2200, 1.8, t, 0.075, 0.14, 0.003);
-    noise(d, "bandpass", 1100, 2600, 1.8, t + 0.08, 0.07, 0.11, 0.003);
+    noise(d, "bandpass", 900, 2200, 1.8, t, 0.1, 0.16, 0.004);
+    noise(d, "bandpass", 1100, 2600, 1.8, t + 0.11, 0.09, 0.13, 0.004);
+    noise(d, "highpass", 2400, 3600, 1.6, t + 0.2, 0.12, 0.07, 0.008);
   },
   sparkles(d, t) {
     // Shimmering fairy-dust harp glissando
@@ -746,11 +777,19 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     });
   },
   trumpet(d, t) {
-    // Brassy jazz fanfare fifth with lip-scoop attack
-    tone(d, "sawtooth", 360, 392, t, 0.09, 0.065, 0.008);
-    tone(d, "triangle", 392, 392, t, 0.09, 0.09, 0.008);
-    tone(d, "sawtooth", 540, 587.33, t + 0.07, 0.18, 0.07, 0.008);
-    tone(d, "triangle", 587.33, 587.33, t + 0.07, 0.19, 0.1, 0.008);
+    // Brassy triplet fanfare: quick C-E pickup into a held bright G
+    const notes: Array<[number, number, number]> = [
+      [523.25, 0, 0.13],
+      [659.25, 0.1, 0.13],
+      [783.99, 0.2, 0.34],
+    ];
+    notes.forEach(([f, off, dur]) => {
+      tone(d, "sawtooth", f * 0.994, f * 1.004, t + off, dur, 0.07, 0.012);
+      tone(d, "sawtooth", f * 1.006, f * 0.996, t + off, dur, 0.06, 0.012);
+      tone(d, "square", f * 2, f * 2, t + off, dur * 0.72, 0.022, 0.012);
+      tone(d, "triangle", f, f, t + off, dur, 0.045, 0.01);
+    });
+    noise(d, "bandpass", 1600, 2800, 1.5, t + 0.02, 0.09, 0.03, 0.006);
   },
   metronome(d, t) {
     // Crisp wooden metronome tick-tock blocks synced to pendulum swing
@@ -797,10 +836,9 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 12. HOME & LAB ===
   window(d, t) {
-    // Brass sash latch click + twin casements opening to gentle breeze
-    noise(d, "bandpass", 3200, 2100, 4.8, t, 0.016, 0.2, 0.001);
-    tone(d, "triangle", 580, 320, t, 0.028, 0.09, 0.001);
-    noise(d, "bandpass", 460, 1550, 2.2, t + 0.035, 0.24, 0.13, 0.025);
+    noise(d, "bandpass", 3200, 2100, 4.8, t, 0.02, 0.22, 0.001);
+    tone(d, "triangle", 580, 320, t, 0.03, 0.1, 0.001);
+    noise(d, "bandpass", 460, 1550, 2.2, t + 0.05, 0.3, 0.14, 0.025);
   },
   door(d, t) {
     // Doorknob latch click + wooden door swing resonance
@@ -829,11 +867,10 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "bandpass", 980, 420, 1.8, t + 0.12, 0.14, 0.11, 0.015);
   },
   microscope(d, t) {
-    // Fine brass focus rack clicks + illuminated specimen chime
-    [0, 0.034, 0.068].forEach((off) => {
-      noise(d, "bandpass", 3400, 2400, 5.2, t + off, 0.012, 0.16, 0.001);
-    });
-    tone(d, "sine", 1174.66, 1318.5, t + 0.06, 0.16, 0.09, 0.003);
+    for (let i = 0; i < 3; i++) {
+      noise(d, "bandpass", 3400, 2400, 5.2, t + i * 0.045, 0.016, 0.18, 0.001);
+    }
+    tone(d, "sine", 1174.66, 1318.5, t + 0.1, 0.22, 0.11, 0.004);
   },
   telescope(d, t) {
     // Brass optical barrel slide + celestial starlight chime
@@ -850,18 +887,16 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 840, 1480, t + 0.12, 0.06, 0.085, 0.002);
   },
   campfire(d, t) {
-    // Warm hearth whoosh + crackling firewood ember pops
-    noise(d, "lowpass", 620, 1300, 1.3, t, 0.24, 0.15, 0.02);
-    [0.025, 0.075, 0.135].forEach((off, i) => {
-      noise(d, "highpass", 2900 + i * 500, 4800, 3.6, t + off, 0.024, 0.13 - i * 0.02, 0.001);
-    });
-    tone(d, "sine", 1380, 1680, t + 0.1, 0.07, 0.05, 0.002);
+    noise(d, "lowpass", 620, 1300, 1.3, t, 0.3, 0.18, 0.02);
+    for (let i = 0; i < 7; i++) {
+      noise(d, "highpass", 2800 + i * 300, 5000, 3.4, t + 0.02 + i * 0.06, 0.022, 0.15, 0.001);
+    }
+    tone(d, "sine", 140, 90, t, 0.3, 0.06, 0.02);
   },
   parachute(d, t) {
-    // Ripstop nylon canopy snap + breezy descent whoosh
-    noise(d, "bandpass", 900, 2600, 1.5, t, 0.06, 0.22, 0.002);
-    tone(d, "sine", 145, 72, t, 0.07, 0.18, 0.002);
-    noise(d, "bandpass", 380, 920, 1.8, t + 0.05, 0.22, 0.12, 0.02);
+    noise(d, "bandpass", 900, 2600, 1.5, t, 0.08, 0.26, 0.002);
+    tone(d, "sine", 145, 72, t, 0.09, 0.2, 0.002);
+    noise(d, "bandpass", 380, 920, 1.8, t + 0.06, 0.28, 0.14, 0.02);
   },
 
   // === 13. CORE UI II ===
@@ -973,10 +1008,13 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "bandpass", 1700, 3400, 1.8, t + 0.02, 0.07, 0.14, 0.003);
   },
   signature(d, t) {
-    // Smooth fountain pen ink flourish across parchment
-    noise(d, "bandpass", 2800, 4900, 2.4, t + 0.02, 0.07, 0.14, 0.004);
-    noise(d, "bandpass", 3400, 5400, 2.4, t + 0.1, 0.08, 0.13, 0.004);
-    tone(d, "sine", 880, 1174.66, t + 0.11, 0.1, 0.045);
+    // Fountain nib paper scratch: three short mid-band strokes + warm sign-off
+    noise(d, "bandpass", 1900, 2900, 3.4, t, 0.042, 0.13, 0.004);
+    noise(d, "bandpass", 2300, 3300, 3.2, t + 0.055, 0.045, 0.115, 0.004);
+    noise(d, "bandpass", 2000, 3100, 3.4, t + 0.115, 0.05, 0.12, 0.004);
+    tone(d, "triangle", 700, 620, t + 0.02, 0.06, 0.035, 0.004);
+    tone(d, "sine", 1046.5, 1046.5, t + 0.21, 0.16, 0.075, 0.004);
+    tone(d, "sine", 1318.5, 1318.5, t + 0.25, 0.14, 0.045, 0.004);
   },
 
   // === 15. MEDIA & AUDIO II ===
@@ -986,9 +1024,15 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "triangle", 210, 82, t, 0.055, 0.18, 0.001);
   },
   rewind(d, t) {
-    // High-speed reverse tape chirp
-    tone(d, "sawtooth", 980, 340, t, 0.11, 0.065, 0.003);
-    noise(d, "bandpass", 2600, 1100, 2.2, t, 0.11, 0.11, 0.004);
+    // Tape transport reversing: descending motor whirr + fast spool flutter + stop clunk
+    tone(d, "triangle", 1180, 430, t, 0.2, 0.14, 0.004);
+    tone(d, "sawtooth", 590, 210, t + 0.01, 0.19, 0.055, 0.006);
+    noise(d, "bandpass", 3000, 1200, 2.6, t, 0.2, 0.1, 0.005);
+    for (let i = 0; i < 4; i++) {
+      noise(d, "highpass", 4200, 3600, 2.4, t + 0.035 + i * 0.036, 0.012, 0.06, 0.001);
+    }
+    noise(d, "bandpass", 1600, 900, 4.0, t + 0.205, 0.022, 0.2, 0.001);
+    tone(d, "sine", 150, 80, t + 0.205, 0.05, 0.14, 0.001);
   },
   "fast-forward"(d, t) {
     // High-speed forward tape chirp
@@ -1008,17 +1052,18 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 440, 880, t + 0.03, 0.13, 0.085);
   },
   film(d, t) {
-    // 35mm film sprocket advance clatter
-    [0, 0.04, 0.08, 0.12].forEach((off) => {
-      noise(d, "bandpass", 2600, 1800, 4.2, t + off, 0.015, 0.16, 0.001);
-      tone(d, "triangle", 420, 200, t + off, 0.018, 0.07, 0.001);
-    });
+    for (let i = 0; i < 5; i++) {
+      noise(d, "bandpass", 2600, 1800, 4.2, t + i * 0.05, 0.02, 0.18, 0.001);
+    }
+    tone(d, "triangle", 420, 200, t + 0.02, 0.03, 0.08, 0.001);
   },
   tv(d, t) {
-    // CRT power-on static burst + warm phosphor hum
-    noise(d, "highpass", 2200, 5400, 1.4, t, 0.06, 0.16, 0.002);
-    tone(d, "sine", 140, 180, t + 0.02, 0.15, 0.1, 0.01);
-    tone(d, "sine", 1560, 1560, t + 0.03, 0.09, 0.04, 0.005);
+    // CRT power-on: degauss thump, static bloom, then a quiet flyback whine
+    tone(d, "sine", 120, 68, t, 0.11, 0.18, 0.002);
+    tone(d, "triangle", 240, 150, t + 0.008, 0.16, 0.09, 0.004);
+    noise(d, "bandpass", 1100, 3400, 1.5, t + 0.02, 0.18, 0.11, 0.01);
+    noise(d, "highpass", 4600, 3000, 1.2, t + 0.05, 0.12, 0.045, 0.02);
+    tone(d, "sine", 3120, 3080, t + 0.06, 0.11, 0.018, 0.004);
   },
   speaker(d, t) {
     // Punchy subwoofer excursion thump-thump
@@ -1044,27 +1089,37 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "bandpass", 2400, 1400, 2.2, t + 0.08, 0.07, 0.16, 0.004);
   },
   drill(d, t) {
-    // High-RPM cordless drill motor whine
-    tone(d, "sawtooth", 240, 580, t, 0.18, 0.08, 0.01);
-    noise(d, "bandpass", 1800, 3800, 2.4, t + 0.01, 0.17, 0.13, 0.01);
+    // Cordless drill spool-up: rising motor, airflow through chuck, body rattle
+    tone(d, "sawtooth", 150, 430, t, 0.27, 0.085, 0.02);
+    tone(d, "square", 75, 215, t, 0.27, 0.045, 0.02);
+    noise(d, "bandpass", 650, 2500, 2.2, t + 0.01, 0.26, 0.16, 0.02);
+    noise(d, "bandpass", 2300, 3800, 4.5, t + 0.05, 0.2, 0.07, 0.02);
+    for (let i = 0; i < 5; i++) {
+      noise(d, "highpass", 4200, 3600, 3.0, t + 0.04 + i * 0.04, 0.01, 0.04, 0.001);
+    }
+    // bit bite at the end
+    noise(d, "bandpass", 1800, 900, 3.2, t + 0.25, 0.02, 0.13, 0.001);
   },
   screwdriver(d, t) {
-    // Ratcheting driver clicks + snug torque finish
+    // Manual screwdriver: three ratchet detents + final seated torque thunk
     for (let i = 0; i < 3; i++) {
-      noise(d, "bandpass", 3000, 2100, 5.0, t + i * 0.042, 0.014, 0.18, 0.001);
-      tone(d, "triangle", 540, 240, t + i * 0.042, 0.018, 0.075, 0.001);
+      const off = i * 0.062;
+      noise(d, "bandpass", 2500, 1900, 4.6, t + off, 0.014, 0.16, 0.001);
+      tone(d, "triangle", 760 - i * 60, 520, t + off, 0.02, 0.06, 0.001);
     }
+    tone(d, "sine", 190, 120, t + 0.19, 0.09, 0.15, 0.002);
+    noise(d, "bandpass", 1200, 700, 2.8, t + 0.19, 0.045, 0.12, 0.002);
   },
   axe(d, t) {
-    // Heavy timber chop thud at t+75ms + flying wood chip snap
-    tone(d, "sine", 165, 52, t + 0.075, 0.11, 0.28, 0.001);
-    noise(d, "bandpass", 1400, 750, 2.0, t + 0.075, 0.045, 0.24, 0.001);
-    noise(d, "highpass", 2600, 3800, 2.5, t + 0.1, 0.03, 0.12, 0.001);
+    noise(d, "highpass", 2600, 4800, 2.2, t, 0.06, 0.1, 0.004);
+    tone(d, "sine", 165, 52, t + 0.075, 0.13, 0.34, 0.001);
+    noise(d, "bandpass", 1400, 750, 2.0, t + 0.075, 0.05, 0.28, 0.001);
+    noise(d, "highpass", 2600, 3800, 2.5, t + 0.11, 0.04, 0.14, 0.001);
   },
   shovel(d, t) {
-    // Gritty earth scoop crunch + toss whoosh
-    noise(d, "bandpass", 700, 2100, 1.5, t, 0.09, 0.2, 0.005);
-    noise(d, "bandpass", 1400, 800, 1.8, t + 0.095, 0.09, 0.14, 0.005);
+    noise(d, "bandpass", 700, 2100, 1.5, t, 0.12, 0.22, 0.006);
+    noise(d, "lowpass", 300, 160, 1.2, t + 0.05, 0.1, 0.14, 0.008);
+    noise(d, "bandpass", 1400, 800, 1.8, t + 0.12, 0.1, 0.16, 0.006);
   },
   ruler(d, t) {
     // Caliper slider zip + millimeter detent ticks
@@ -1098,39 +1153,38 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 17. WORLD & ENERGY II ===
   satellite(d, t) {
-    // Telemetry chirp + orbital relay ping
-    tone(d, "sine", 1320, 1760, t, 0.05, 0.08, 0.002);
-    tone(d, "sine", 1760, 1320, t + 0.055, 0.06, 0.08, 0.002);
-    tone(d, "sine", 2093, 2093, t + 0.11, 0.14, 0.065, 0.002);
+    tone(d, "sine", 1320, 1760, t, 0.06, 0.1, 0.002);
+    tone(d, "sine", 1760, 1320, t + 0.07, 0.07, 0.1, 0.002);
+    tone(d, "sine", 2093, 2093, t + 0.16, 0.18, 0.12, 0.002);
+    tone(d, "sine", 1568, 1568, t + 0.4, 0.14, 0.07, 0.002);
   },
   atom(d, t) {
-    // Quantum harmonic shimmer + sub-atomic resonance
-    tone(d, "sine", 660, 990, t, 0.16, 0.08);
-    tone(d, "sine", 1320, 1980, t + 0.02, 0.18, 0.05);
-    tone(d, "triangle", 220, 330, t, 0.14, 0.07);
+    tone(d, "sine", 660, 990, t, 0.2, 0.11, 0.006);
+    tone(d, "sine", 1320, 1980, t + 0.02, 0.22, 0.07, 0.006);
+    tone(d, "triangle", 220, 330, t, 0.18, 0.09, 0.006);
+    noise(d, "bandpass", 3200, 5200, 2.0, t + 0.04, 0.16, 0.05, 0.01);
   },
   planet(d, t) {
-    // Deep cosmic synth swell
-    tone(d, "sine", 164.81, 220, t, 0.26, 0.14, 0.02);
-    tone(d, "triangle", 329.63, 440, t + 0.03, 0.24, 0.07, 0.02);
+    tone(d, "sine", 164.81, 220, t, 0.34, 0.16, 0.03);
+    tone(d, "triangle", 329.63, 440, t + 0.04, 0.3, 0.09, 0.03);
+    noise(d, "bandpass", 320, 1100, 1.2, t, 0.3, 0.06, 0.04);
   },
   ufo(d, t) {
-    // Classic sci-fi saucer vibrato beam warble
-    tone(d, "sine", 420, 760, t, 0.09, 0.1, 0.005);
-    tone(d, "sine", 760, 480, t + 0.09, 0.09, 0.09, 0.005);
-    tone(d, "sine", 480, 920, t + 0.18, 0.1, 0.07, 0.005);
+    tone(d, "sine", 420, 760, t, 0.12, 0.12, 0.006);
+    tone(d, "sine", 760, 480, t + 0.12, 0.12, 0.11, 0.006);
+    tone(d, "sine", 480, 920, t + 0.24, 0.12, 0.1, 0.006);
+    tone(d, "sine", 920, 620, t + 0.36, 0.12, 0.08, 0.006);
   },
   volcano(d, t) {
-    // Deep subterranean rumble + pyroclastic burst
-    tone(d, "sine", 82, 36, t, 0.24, 0.28, 0.004);
-    noise(d, "lowpass", 420, 1400, 1.0, t + 0.02, 0.24, 0.24, 0.01);
-    noise(d, "highpass", 2400, 4200, 2.0, t + 0.06, 0.08, 0.1, 0.002);
+    tone(d, "sine", 82, 36, t, 0.34, 0.32, 0.006);
+    noise(d, "lowpass", 420, 1400, 1.0, t + 0.02, 0.34, 0.28, 0.012);
+    noise(d, "bandpass", 2400, 4200, 1.8, t + 0.08, 0.16, 0.14, 0.004);
+    tone(d, "sine", 110, 45, t + 0.1, 0.3, 0.18, 0.01);
   },
   plug(d, t) {
-    // Solid wall-outlet prong insertion snap + 60Hz hum blip
-    noise(d, "bandpass", 2200, 1400, 4.0, t, 0.02, 0.22, 0.001);
-    tone(d, "triangle", 240, 110, t, 0.04, 0.15, 0.001);
-    tone(d, "sine", 120, 120, t + 0.03, 0.09, 0.09, 0.004);
+    noise(d, "bandpass", 2200, 1400, 4.0, t, 0.025, 0.26, 0.001);
+    tone(d, "triangle", 240, 110, t, 0.05, 0.18, 0.001);
+    tone(d, "sine", 120, 120, t + 0.04, 0.16, 0.12, 0.006);
   },
   windmill(d, t) {
     // Cyclic airy turbine blade whoosh
@@ -1149,17 +1203,20 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 1380, 1360, t + 0.22, 0.16, 0.045, 0.002);
   },
   dna(d, t) {
-    // Cascading double-helix marimba arpeggio
-    [523.25, 659.25, 783.99, 987.77, 1174.66].forEach((f, i) => {
-      tone(d, "sine", f, f, t + i * 0.036, 0.11, 0.075, 0.002);
+    [523.25, 659.25, 783.99, 987.77, 1174.66, 1567.98].forEach((f, i) => {
+      tone(d, "sine", f, f * 0.98, t + i * 0.055, 0.22, 0.1, 0.002);
+      tone(d, "triangle", f * 2, f * 2, t + i * 0.055, 0.09, 0.025, 0.002);
     });
   },
 
   // === 18. WEATHER & NATURE II ===
   tornado(d, t) {
-    // Swirling funnel vortex wind roar
-    noise(d, "bandpass", 340, 1650, 2.4, t, 0.16, 0.2, 0.015);
-    noise(d, "bandpass", 1500, 460, 2.4, t + 0.12, 0.18, 0.16, 0.015);
+    // Rotating funnel roar: low rumble + swept bands circling into the vortex
+    tone(d, "sine", 58, 84, t, 0.5, 0.16, 0.06);
+    noise(d, "lowpass", 260, 900, 0.9, t, 0.46, 0.22, 0.05);
+    noise(d, "bandpass", 500, 1900, 1.8, t + 0.02, 0.24, 0.16, 0.04);
+    noise(d, "bandpass", 1900, 650, 1.8, t + 0.18, 0.26, 0.15, 0.04);
+    noise(d, "bandpass", 700, 2400, 2.2, t + 0.34, 0.22, 0.12, 0.03);
   },
   rainbow(d, t) {
     // Luminous 6-note pentatonic harp arc
@@ -1295,11 +1352,14 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 1174.66, 1174.66, t + 0.06, 0.09, 0.075);
   },
   bug(d, t) {
-    // Quick insectoid skitter ticks
-    for (let i = 0; i < 4; i++) {
-      noise(d, "highpass", 3200, 4800, 3.5, t + i * 0.028, 0.014, 0.14, 0.001);
-      tone(d, "triangle", 640 - i * 40, 340, t + i * 0.028, 0.016, 0.06, 0.001);
+    // Chitinous scuttle: seven tiny footfall ticks over a faint body rustle
+    for (let i = 0; i < 7; i++) {
+      const off = i * 0.026;
+      noise(d, "bandpass", 3800 + (i % 3) * 420, 2400, 3.4, t + off, 0.013, 0.15 - i * 0.008, 0.001);
+      tone(d, "triangle", 640 + (i % 2) * 110, 300, t + off, 0.016, 0.06, 0.001);
     }
+    noise(d, "bandpass", 850, 1600, 1.2, t + 0.02, 0.16, 0.05, 0.02);
+    tone(d, "sawtooth", 155, 185, t + 0.03, 0.13, 0.028, 0.015);
   },
   usb(d, t) {
     // Metallic USB-C plug click + host chime
@@ -1307,9 +1367,9 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 587.33, 880, t + 0.03, 0.1, 0.095);
   },
   fingerprint(d, t) {
-    // Biometric ridge scan sweep + unlock approval ping
-    tone(d, "sine", 480, 960, t, 0.12, 0.075, 0.008);
-    tone(d, "sine", 1046.5, 1318.5, t + 0.1, 0.12, 0.095, 0.002);
+    noise(d, "bandpass", 900, 4200, 2.0, t, 0.16, 0.1, 0.01);
+    tone(d, "sine", 480, 960, t + 0.02, 0.14, 0.09, 0.006);
+    tone(d, "sine", 1046.5, 1318.5, t + 0.16, 0.16, 0.11, 0.003);
   },
   "sd-card"(d, t) {
     // Spring-loaded card slot click-lock
@@ -1351,15 +1411,22 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 190, 95, t + 0.04, 0.06, 0.14, 0.003);
   },
   flashlight(d, t) {
-    // Heavy tactical tail-switch click + bright beam hum
-    noise(d, "bandpass", 2800, 1700, 4.5, t, 0.02, 0.24, 0.001);
-    tone(d, "triangle", 360, 140, t, 0.035, 0.12, 0.001);
-    tone(d, "sine", 880, 1174.66, t + 0.025, 0.11, 0.08);
+    // Aluminum tail-switch click, then a bright beam flare
+    noise(d, "bandpass", 2600, 1500, 3.6, t, 0.022, 0.26, 0.001);
+    tone(d, "triangle", 300, 120, t, 0.035, 0.14, 0.001);
+    noise(d, "highpass", 1800, 5200, 1.4, t + 0.03, 0.16, 0.09, 0.006);
+    tone(d, "sine", 880, 1320, t + 0.035, 0.18, 0.1, 0.004);
+    tone(d, "sine", 1760, 1760, t + 0.05, 0.12, 0.045, 0.002);
   },
   candle(d, t) {
-    // Match strike hiss + soft warm hearth flicker
-    noise(d, "highpass", 2600, 4800, 1.8, t, 0.065, 0.14, 0.003);
-    tone(d, "sine", 523.25, 587.33, t + 0.04, 0.18, 0.06, 0.015);
+    // Match strike + soft wax-flame flutter
+    noise(d, "bandpass", 3600, 1200, 2.2, t, 0.07, 0.12, 0.003);
+    noise(d, "bandpass", 700, 1400, 1.1, t + 0.06, 0.3, 0.09, 0.03);
+    noise(d, "lowpass", 1100, 700, 0.9, t + 0.1, 0.24, 0.06, 0.03);
+    tone(d, "sine", 210, 196, t + 0.05, 0.2, 0.045, 0.02);
+    for (let i = 0; i < 3; i++) {
+      noise(d, "bandpass", 2600, 1800, 3.6, t + 0.12 + i * 0.07, 0.012, 0.055, 0.001);
+    }
   },
   broom(d, t) {
     // Brisk twin straw bristle sweeps across floor
@@ -1384,16 +1451,21 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 22. TRAVEL & PLAY II ===
   helicopter(d, t) {
-    // Rhythmic twin-blade rotor chop + turbine whine
-    [0, 0.055, 0.11, 0.165].forEach((off) => {
-      noise(d, "lowpass", 520, 180, 1.5, t + off, 0.042, 0.2, 0.003);
-      tone(d, "sine", 110, 62, t + off, 0.038, 0.14, 0.002);
-    });
+    // Main-rotor blade slap over a detuned turbine whine
+    for (let i = 0; i < 8; i++) {
+      const off = i * 0.072;
+      noise(d, "lowpass", 640, 200, 1.6, t + off, 0.05, 0.2, 0.002);
+      tone(d, "sine", 120, 58, t + off, 0.055, 0.15, 0.002);
+    }
+    tone(d, "sawtooth", 320, 360, t, 0.5, 0.035, 0.05);
+    tone(d, "sawtooth", 326, 366, t, 0.5, 0.03, 0.05);
+    tone(d, "sine", 1150, 1300, t + 0.05, 0.4, 0.02, 0.04);
   },
   submarine(d, t) {
-    // Periscope hydraulic hiss + deep underwater sonar ping
-    noise(d, "bandpass", 1200, 2400, 2.2, t, 0.06, 0.1, 0.005);
-    tone(d, "sine", 1244.5, 1235, t + 0.045, 0.26, 0.11, 0.002);
+    noise(d, "bandpass", 1200, 2400, 2.2, t, 0.09, 0.11, 0.006);
+    tone(d, "sine", 1244.5, 1235, t + 0.06, 0.34, 0.14, 0.002);
+    tone(d, "sine", 1244.5, 1235, t + 0.42, 0.26, 0.07, 0.002);
+    tone(d, "sine", 110, 70, t, 0.34, 0.1, 0.02);
   },
   sailboat(d, t) {
     // Canvas sail billow snap + gentle hull water wake
@@ -1401,9 +1473,9 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     noise(d, "lowpass", 680, 280, 1.4, t + 0.05, 0.2, 0.1, 0.02);
   },
   balloon(d, t) {
-    // Burner flame whoosh + airy buoyant ascent chime
-    noise(d, "lowpass", 420, 1100, 1.3, t, 0.16, 0.14, 0.015);
-    tone(d, "sine", 440, 659.25, t + 0.03, 0.18, 0.08, 0.01);
+    noise(d, "lowpass", 420, 1100, 1.3, t, 0.22, 0.18, 0.02);
+    tone(d, "sine", 440, 880, t + 0.04, 0.24, 0.1, 0.01);
+    noise(d, "bandpass", 800, 2200, 1.4, t + 0.12, 0.22, 0.07, 0.02);
   },
   skateboard(d, t) {
     // Crisp wooden tail-pop ollie + urethane wheel roll
@@ -1421,15 +1493,15 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     });
   },
   basketball(d, t) {
-    // Hollow rubber hardwood dribble bounce-bounce
-    tone(d, "sine", 175, 68, t, 0.08, 0.26, 0.001);
-    tone(d, "sine", 195, 76, t + 0.11, 0.075, 0.2, 0.001);
+    tone(d, "sine", 175, 68, t, 0.1, 0.32, 0.001);
+    noise(d, "bandpass", 900, 500, 2.0, t, 0.02, 0.1, 0.001);
+    tone(d, "sine", 195, 76, t + 0.16, 0.1, 0.28, 0.001);
+    noise(d, "bandpass", 950, 520, 2.0, t + 0.16, 0.02, 0.09, 0.001);
   },
   chess(d, t) {
-    // Weighted Staunton wood piece lift & solid board thud
-    tone(d, "triangle", 280, 160, t, 0.035, 0.1, 0.002);
-    tone(d, "sine", 160, 58, t + 0.095, 0.08, 0.24, 0.001);
-    noise(d, "bandpass", 1200, 700, 2.2, t + 0.095, 0.025, 0.16, 0.001);
+    tone(d, "triangle", 280, 160, t, 0.05, 0.13, 0.002);
+    noise(d, "bandpass", 1200, 700, 2.2, t + 0.1, 0.035, 0.2, 0.001);
+    tone(d, "sine", 160, 58, t + 0.1, 0.1, 0.28, 0.001);
   },
   tent(d, t) {
     // Canvas tent zipper unzip + warm campfire night cricket chirp
@@ -1444,16 +1516,22 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
   // === 23. STUDIO & SOUND II ===
   violin(d, t) {
-    // Expressive bowed string legato fifth
-    tone(d, "sawtooth", 440, 444, t, 0.2, 0.055, 0.03);
-    tone(d, "triangle", 440, 444, t, 0.2, 0.08, 0.03);
-    tone(d, "sawtooth", 659.25, 663, t + 0.07, 0.18, 0.05, 0.03);
-    tone(d, "triangle", 659.25, 663, t + 0.07, 0.18, 0.075, 0.03);
+    tone(d, "sawtooth", 440, 444, t, 0.24, 0.055, 0.04);
+    tone(d, "triangle", 440, 444, t, 0.24, 0.09, 0.04);
+    tone(d, "sawtooth", 659.25, 663, t + 0.09, 0.22, 0.05, 0.04);
+    tone(d, "triangle", 659.25, 663, t + 0.09, 0.22, 0.08, 0.04);
   },
   saxophone(d, t) {
-    // Smooth brassy reed scoop into bluesy note
-    tone(d, "sawtooth", 293.66, 329.63, t, 0.14, 0.065, 0.012);
-    tone(d, "triangle", 329.63, 392, t + 0.05, 0.18, 0.095, 0.012);
+    // Breathy reed swell bending up into a smoky two-note jazz phrase
+    noise(d, "bandpass", 800, 1700, 2.2, t, 0.2, 0.05, 0.03);
+    const bend = (f1: number, f2: number, off: number, dur: number, peak: number) => {
+      tone(d, "sawtooth", f1, f2, t + off, dur, peak, 0.05);
+      tone(d, "square", f1 * 1.005, f2 * 0.995, t + off, dur, peak * 0.5, 0.06);
+      tone(d, "triangle", f1 * 2, f2 * 2, t + off, dur * 0.9, peak * 0.45, 0.05);
+    };
+    bend(196, 220, 0.01, 0.24, 0.07);
+    bend(293.66, 329.63, 0.14, 0.3, 0.065);
+    noise(d, "bandpass", 1700, 1100, 1.8, t + 0.16, 0.2, 0.028, 0.02);
   },
   accordion(d, t) {
     // Airy bellows breath + warm reed squeeze chord
@@ -1561,19 +1639,45 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
   },
 };
 
-export function triggerSound(name: string, anchorEl?: HTMLElement | null): void {
-  if (!soundEnabled || !audioCtx || audioCtx.state !== "running") return;
-  const fn = SOUND_FX[name];
-  if (!fn || !masterGain) return;
+// The context can be suspended on the first interaction (or after the tab is
+// backgrounded). `resume()` is async, so callers must wait for it before
+// scheduling audio nodes — otherwise the first click is silently dropped.
+function ensureAudioRunning(): Promise<boolean> {
+  if (typeof window === "undefined") return Promise.resolve(false);
+  if (!audioCtx) initAudio();
+  if (!audioCtx) return Promise.resolve(false);
+  if (audioCtx.state === "running") return Promise.resolve(true);
+  return audioCtx
+    .resume()
+    .then(() => {
+      notify();
+      return audioCtx?.state === "running";
+    })
+    .catch(() => false);
+}
 
-  const pan = audioCtx.createStereoPanner();
-  if (anchorEl && typeof window !== "undefined") {
-    const r = anchorEl.getBoundingClientRect();
-    const center = (r.left + r.width / 2) / window.innerWidth;
-    pan.pan.value = Math.max(-0.8, Math.min(0.8, center * 2 - 1));
-  } else {
-    pan.pan.value = 0;
-  }
-  pan.connect(masterGain);
-  fn(pan, audioCtx.currentTime);
+export function triggerSound(name: string, anchorEl?: HTMLElement | null): void {
+  if (!soundEnabled) return;
+  const fn = SOUND_FX[name];
+
+  void ensureAudioRunning().then(async (ready) => {
+    if (!ready || !soundEnabled || !audioCtx || audioCtx.state !== "running" || !masterGain) {
+      return;
+    }
+    const pan = audioCtx.createStereoPanner();
+    if (anchorEl && typeof window !== "undefined") {
+      const r = anchorEl.getBoundingClientRect();
+      const center = (r.left + r.width / 2) / window.innerWidth;
+      pan.pan.value = Math.max(-0.8, Math.min(0.8, center * 2 - 1));
+    } else {
+      pan.pan.value = 0;
+    }
+    pan.connect(masterGain);
+
+    if (getSoundMode() === "real") {
+      const played = await playSample(name, audioCtx, pan);
+      if (played) return;
+    }
+    if (fn) fn(pan, audioCtx.currentTime + 0.01);
+  });
 }

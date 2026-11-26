@@ -417,9 +417,10 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(p, 80, { tx: -1.2, ty: 0.6, rot: 8 }, { stiffness: 460, damping: 14, holdMs: 70 });
   },
   sliders(svg) {
-    animatePart(q(svg, "knob-1"), { tx: 3.0 }, { stiffness: 360, damping: 14 });
-    animatePart(q(svg, "knob-2"), { tx: -3.0 }, { stiffness: 360, damping: 14 });
-    animatePart(q(svg, "knob-3"), { tx: 2.6 }, { stiffness: 360, damping: 14 });
+    // Console faders glide to staggered levels, then settle back
+    animatePart(q(svg, "knob-1"), { tx: 3.4 }, { stiffness: 380, damping: 14, holdMs: 120 });
+    schedulePart(q(svg, "knob-2"), 45, { tx: -3.6 }, { stiffness: 360, damping: 14, holdMs: 120 });
+    schedulePart(q(svg, "knob-3"), 90, { tx: 2.8 }, { stiffness: 400, damping: 14, holdMs: 120 });
   },
   link(svg) {
     animatePart(q(svg, "link-a"), { tx: 1.4, ty: -1.4 }, { stiffness: 440, damping: 14 });
@@ -436,13 +437,9 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
 
   // === 5. WORLD & ENERGY ===
   rocket(svg) {
-    const flame = q(svg, "flame");
-    const core = q(svg, "flame-core");
-    animatePart(flame, { sy: 1.65, sx: 1.18, rot: -6, ty: 0.4 }, { stiffness: 520, damping: 10, holdMs: 85 });
-    schedulePart(flame, 95, { sy: 1.3, sx: 0.9, rot: 7, ty: 0.2 }, { stiffness: 520, damping: 10, holdMs: 85 });
-    schedulePart(flame, 190, { sy: 1.75, sx: 1.22, rot: -4, ty: 0.5 }, { stiffness: 480, damping: 11, holdMs: 95 });
-    animatePart(core, { sy: 1.45, sx: 1.15, rot: 5 }, { stiffness: 560, damping: 10, holdMs: 80 });
-    schedulePart(core, 95, { sy: 1.7, sx: 0.88, rot: -6 }, { stiffness: 560, damping: 10, holdMs: 90 });
+    animatePart(q(svg, "flame"), { sy: 1.7, sx: 0.86, ty: 0.6 }, { stiffness: 520, damping: 10, holdMs: 90 });
+    schedulePart(q(svg, "flame"), 100, { sy: 1.35, sx: 1.1 }, { stiffness: 520, damping: 11, holdMs: 90 });
+    animatePart(q(svg, "body"), { ty: -2.6 }, { stiffness: 240, damping: 12, holdMs: 200 });
   },
   compass(svg) {
     animatePart(q(svg, "needle"), { rot: 145 }, { stiffness: 210, damping: 8, holdMs: 135 });
@@ -551,8 +548,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "chip"), { sx: 1.35, sy: 1.35 }, { stiffness: 460, damping: 13, holdMs: 120 });
   },
   wallet(svg) {
-    animatePart(q(svg, "clasp"), { tx: 2.2, sx: 1.15 }, { stiffness: 420, damping: 13, holdMs: 110 });
-    animatePart(q(svg, "bill"), { ty: -2.6, rot: -4 }, { stiffness: 360, damping: 13, holdMs: 120 });
+    animatePart(q(svg, "clasp"), { ty: -1.6, rot: -12 }, { stiffness: 460, damping: 12, holdMs: 130 });
+    animatePart(q(svg, "bill"), { ty: -3.0, rot: -6, sx: 1.06 }, { stiffness: 320, damping: 12, holdMs: 190 });
   },
   tag(svg) {
     const t = q(svg, "tag");
@@ -621,7 +618,9 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "core"), { sx: 1.25, sy: 1.25 }, { stiffness: 480, damping: 12, holdMs: 110 });
   },
   key(svg) {
-    animatePart(q(svg, "key"), { rot: 45, tx: 1.5 }, { stiffness: 360, damping: 13, holdMs: 130 });
+    // A short, readable deadbolt turn without swinging the bit out of frame
+    animatePart(q(svg, "key"), { rot: 18, tx: 0.3 }, { stiffness: 300, damping: 12, holdMs: 170 });
+    schedulePart(q(svg, "key"), 200, { rot: 0, tx: 0 }, { stiffness: 380, damping: 13, holdMs: 100 });
   },
 
   // === 9. TIME & EVERYDAY ===
@@ -638,8 +637,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(q(svg, "face"), 95, { rot: -6 }, { stiffness: 560, damping: 10, holdMs: 75 });
   },
   globe(svg) {
-    animatePart(q(svg, "meridian"), { sx: 0.45 }, { stiffness: 240, damping: 13, holdMs: 150 });
-    animatePart(q(svg, "equator"), { sy: 1.15 }, { stiffness: 280, damping: 14, holdMs: 150 });
+    animatePart(q(svg, "meridian"), { sx: 0.35, rot: 20 }, { stiffness: 220, damping: 12, holdMs: 220 });
+    animatePart(q(svg, "equator"), { sy: 1.2 }, { stiffness: 260, damping: 12, holdMs: 200 });
   },
   lightbulb(svg) {
     animatePart(q(svg, "bulb"), { sx: 1.12, sy: 1.12, ty: -1.0 }, { stiffness: 420, damping: 12, holdMs: 120 });
@@ -707,9 +706,11 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "bull"), { sx: 1.45, sy: 1.45 }, { stiffness: 500, damping: 12, holdMs: 110 });
   },
   flag(svg) {
+    // Cloth flaps in the wind while staying pinned to the mast
     const c = q(svg, "cloth");
-    animatePart(c, { sx: 1.16, rot: -8 }, { stiffness: 400, damping: 11, holdMs: 100 });
-    schedulePart(c, 105, { sx: 0.92, rot: 7 }, { stiffness: 400, damping: 11, holdMs: 100 });
+    animatePart(c, { sx: 1.16, sy: 0.97 }, { stiffness: 320, damping: 10, holdMs: 120 });
+    schedulePart(c, 130, { sx: 0.9, sy: 1.03 }, { stiffness: 340, damping: 10, holdMs: 120 });
+    schedulePart(c, 260, { sx: 1.06, sy: 0.99 }, { stiffness: 360, damping: 11, holdMs: 110 });
   },
   sparkles(svg) {
     animatePart(q(svg, "main"), { rot: 45, sx: 1.22, sy: 1.22 }, { stiffness: 360, damping: 12, holdMs: 120 });
@@ -727,11 +728,14 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
 
   // === 11. STUDIO & SOUND ===
   guitar(svg) {
+    // Plectrum sweeps down across the strings; body and neck ring out
     const s = q(svg, "strings");
-    animatePart(q(svg, "body"), { rot: -6, ty: -0.8 }, { stiffness: 320, damping: 13, holdMs: 140 });
-    animatePart(q(svg, "pick"), { tx: -1.8, ty: 1.8, rot: -20 }, { stiffness: 500, damping: 13, holdMs: 110 });
-    animatePart(s, { tx: 0.65, ty: -0.4, sx: 1.18 }, { stiffness: 620, damping: 10, holdMs: 70 });
-    schedulePart(s, 75, { tx: -0.65, ty: 0.4, sx: 0.9 }, { stiffness: 620, damping: 10, holdMs: 70 });
+    animatePart(s, { sx: 1.14 }, { stiffness: 700, damping: 9, holdMs: 70 });
+    schedulePart(s, 65, { sx: 0.93 }, { stiffness: 700, damping: 9, holdMs: 70 });
+    schedulePart(s, 130, { sx: 1.05 }, { stiffness: 700, damping: 10, holdMs: 60 });
+    animatePart(q(svg, "pick"), { tx: -2.2, ty: 2.6, rot: -20 }, { stiffness: 540, damping: 12, holdMs: 80 });
+    animatePart(q(svg, "body"), { rot: -2.5, ty: -0.4 }, { stiffness: 320, damping: 13, holdMs: 140 });
+    animatePart(q(svg, "neck"), { rot: -1.2 }, { stiffness: 320, damping: 13, holdMs: 140 });
   },
   drum(svg) {
     const sl = q(svg, "stick-l");
@@ -838,10 +842,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "spark"), { ty: -3.2, tx: 1.0, op: 0.25 }, { stiffness: 240, damping: 12, holdMs: 160 });
   },
   parachute(svg) {
-    animatePart(q(svg, "chute"), { ty: -1.8, sx: 1.12, sy: 0.9 }, { stiffness: 220, damping: 12, holdMs: 160 });
-    const c = q(svg, "cargo");
-    animatePart(c, { rot: -15, ty: -1.4 }, { stiffness: 220, damping: 11, holdMs: 115 });
-    schedulePart(c, 120, { rot: 14, ty: -0.6 }, { stiffness: 220, damping: 11, holdMs: 115 });
+    animatePart(q(svg, "chute"), { sx: 1.18, sy: 0.86, ty: -2.0 }, { stiffness: 300, damping: 12, holdMs: 200 });
+    schedulePart(q(svg, "cargo"), 60, { ty: 1.4, rot: 10 }, { stiffness: 240, damping: 12, holdMs: 200 });
   },
 
   // === 13. CORE UI II ===
@@ -929,8 +931,11 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "lines"), { tx: 1.4, sx: 1.08 }, { stiffness: 380, damping: 14, holdMs: 120 });
   },
   notebook(svg) {
-    animatePart(q(svg, "spiral"), { ty: -1.4, sx: 1.12 }, { stiffness: 420, damping: 13, holdMs: 115 });
-    animatePart(q(svg, "cover"), { rot: -6, tx: 1.0 }, { stiffness: 360, damping: 14, holdMs: 120 });
+    const cover = q(svg, "cover");
+    animatePart(cover, { sx: 0.045, rot: -2.5 }, { stiffness: 260, damping: 17, holdMs: 320 });
+    schedulePart(q(svg, "page"), 70, { sx: 1.035, sy: 1.02 }, { stiffness: 380, damping: 14, holdMs: 190 });
+    schedulePart(q(svg, "lines"), 130, { tx: 0.7 }, { stiffness: 420, damping: 14, holdMs: 160 });
+    animatePart(q(svg, "spiral"), { sx: 1.12 }, { stiffness: 420, damping: 13, holdMs: 220 });
   },
   signature(svg) {
     const nib = q(svg, "nib");
@@ -961,11 +966,12 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(p2, 45, { tx: 1.6, ty: 1.1 }, { stiffness: 380, damping: 13, holdMs: 120 });
   },
   repeat(svg) {
-    animatePart(q(svg, "loop"), { rot: 180, sx: 1.1, sy: 1.1 }, { stiffness: 240, damping: 14, holdMs: 180 });
+    // Intentionally static - looping arrows stay put.
+    void svg;
   },
   film(svg) {
-    animatePart(q(svg, "strip"), { tx: -2.2 }, { stiffness: 360, damping: 14, holdMs: 130 });
-    animatePart(q(svg, "frame"), { sx: 1.15, sy: 1.15 }, { stiffness: 440, damping: 13, holdMs: 120 });
+    animatePart(q(svg, "strip"), { ty: -3.2 }, { stiffness: 300, damping: 15, holdMs: 160 });
+    animatePart(q(svg, "frames"), { sx: 1.05, sy: 1.03 }, { stiffness: 440, damping: 13, holdMs: 130 });
   },
   tv(svg) {
     animatePart(q(svg, "ant-l"), { rot: -16 }, { stiffness: 400, damping: 11, holdMs: 120 });
@@ -983,8 +989,10 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "ring"), { sx: 1.12, sy: 1.12 }, { stiffness: 360, damping: 13, holdMs: 140 });
   },
   captions(svg) {
-    animatePart(q(svg, "frame"), { ty: -0.9, sx: 1.06 }, { stiffness: 400, damping: 14, holdMs: 115 });
-    animatePart(q(svg, "lines"), { tx: 1.5, sx: 1.12 }, { stiffness: 440, damping: 13, holdMs: 115 });
+    const lines = q(svg, "lines");
+    animatePart(q(svg, "frame"), { sy: 0.955 }, { stiffness: 480, damping: 15, holdMs: 110 });
+    animatePart(lines, { ty: 1.8, op: 0.15 }, { stiffness: 520, damping: 16, holdMs: 60 });
+    schedulePart(lines, 80, { ty: 0, op: 1 }, { stiffness: 380, damping: 14, holdMs: 150 });
   },
 
   // === 16. KINETIC TOOLS II ===
@@ -994,24 +1002,28 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(s, 80, { tx: -2.2, ty: -1.1, rot: -4 }, { stiffness: 520, damping: 14, holdMs: 75 });
   },
   drill(svg) {
-    animatePart(q(svg, "bit"), { tx: 2.4, sy: 0.85 }, { stiffness: 620, damping: 10, holdMs: 140 });
-    animatePart(q(svg, "body"), { tx: -0.9, rot: -3 }, { stiffness: 540, damping: 11, holdMs: 120 });
+    const bit = q(svg, "bit");
+    const body = q(svg, "body");
+    animatePart(bit, { tx: 1.5, sy: 0.94 }, { stiffness: 640, damping: 18, holdMs: 230 });
+    animatePart(body, { tx: -0.5, rot: -1.8 }, { stiffness: 480, damping: 11, holdMs: 90 });
+    schedulePart(body, 110, { tx: 0.35, rot: 1.1 }, { stiffness: 480, damping: 12, holdMs: 90 });
   },
   screwdriver(svg) {
     const d = q(svg, "driver");
-    animatePart(d, { rot: 42, tx: 0.8, ty: 0.8 }, { stiffness: 360, damping: 13, holdMs: 90 });
-    schedulePart(d, 100, { rot: -24, tx: 0.4, ty: 0.4 }, { stiffness: 360, damping: 13, holdMs: 90 });
+    animatePart(d, { rot: -24, tx: 0.7, ty: 0.9 }, { stiffness: 380, damping: 12, holdMs: 90 });
+    schedulePart(d, 110, { rot: 18, tx: -0.3, ty: -0.5 }, { stiffness: 420, damping: 13, holdMs: 80 });
+    schedulePart(d, 210, { rot: 0, tx: 0, ty: 0 }, { stiffness: 420, damping: 14, holdMs: 80 });
   },
   axe(svg) {
     const a = q(svg, "axe");
-    animatePart(a, { rot: 20 }, { stiffness: 380, damping: 14, holdMs: 65 });
-    schedulePart(a, 75, { rot: -44 }, { stiffness: 540, damping: 13, holdMs: 90 });
-    schedulePart(q(svg, "chip"), 95, { tx: 2.4, ty: -2.4, rot: 38, op: 0.35 }, { stiffness: 340, damping: 13, holdMs: 130 });
+    animatePart(a, { rot: -55, ty: -1.2 }, { stiffness: 300, damping: 12, holdMs: 90 });
+    schedulePart(a, 110, { rot: 48, ty: 1.4 }, { stiffness: 620, damping: 11, holdMs: 110 });
+    schedulePart(q(svg, "chip"), 145, { tx: 3.0, ty: -2.6, rot: 42, op: 0.3 }, { stiffness: 340, damping: 13, holdMs: 140 });
   },
   shovel(svg) {
     const sp = q(svg, "spade");
-    animatePart(sp, { tx: -1.4, ty: 2.2, rot: -12 }, { stiffness: 400, damping: 13, holdMs: 85 });
-    schedulePart(sp, 95, { tx: 1.8, ty: -2.0, rot: 16 }, { stiffness: 380, damping: 13, holdMs: 105 });
+    animatePart(sp, { tx: -1.8, ty: 2.6, rot: -16 }, { stiffness: 420, damping: 12, holdMs: 100 });
+    schedulePart(sp, 120, { tx: 2.0, ty: -2.2, rot: 18 }, { stiffness: 380, damping: 12, holdMs: 120 });
   },
   ruler(svg) {
     animatePart(q(svg, "slider"), { tx: 3.0 }, { stiffness: 360, damping: 13, holdMs: 130 });
@@ -1044,42 +1056,45 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(q(svg, "beam"), 50, { sx: 1.28, sy: 1.28, op: 0.3 }, { stiffness: 420, damping: 12, holdMs: 130 });
   },
   atom(svg) {
-    animatePart(q(svg, "core"), { sx: 1.38, sy: 1.38 }, { stiffness: 460, damping: 12, holdMs: 130 });
-    animatePart(q(svg, "orbit-1"), { rot: 180 }, { stiffness: 190, damping: 13, holdMs: 220 });
-    animatePart(q(svg, "orbit-2"), { rot: -180 }, { stiffness: 190, damping: 13, holdMs: 220 });
+    animatePart(q(svg, "core"), { sx: 1.5, sy: 1.5, op: 0.8 }, { stiffness: 480, damping: 11, holdMs: 140 });
+    animatePart(q(svg, "orbit-1"), { rot: 360 }, { stiffness: 140, damping: 12, holdMs: 320 });
+    animatePart(q(svg, "orbit-2"), { rot: -360 }, { stiffness: 140, damping: 12, holdMs: 320 });
   },
   planet(svg) {
-    animatePart(q(svg, "ring"), { rot: -18, sx: 1.12 }, { stiffness: 280, damping: 13, holdMs: 160 });
-    animatePart(q(svg, "globe"), { rot: 12, ty: -0.7 }, { stiffness: 300, damping: 14, holdMs: 150 });
+    animatePart(q(svg, "ring"), { rot: -28, sx: 1.15 }, { stiffness: 240, damping: 12, holdMs: 240 });
+    animatePart(q(svg, "globe"), { rot: 40, sx: 1.05, sy: 1.05 }, { stiffness: 220, damping: 13, holdMs: 240 });
   },
   ufo(svg) {
-    animatePart(q(svg, "saucer"), { ty: -2.0, rot: -7 }, { stiffness: 320, damping: 12, holdMs: 140 });
-    schedulePart(q(svg, "beam"), 40, { sy: 1.32, sx: 1.18, op: 0.35 }, { stiffness: 360, damping: 12, holdMs: 150 });
+    animatePart(q(svg, "saucer"), { ty: -3.2, rot: -9 }, { stiffness: 280, damping: 10, holdMs: 220 });
+    schedulePart(q(svg, "beam"), 50, { sy: 1.5, sx: 1.25, op: 0.4 }, { stiffness: 300, damping: 11, holdMs: 220 });
   },
   volcano(svg) {
-    animatePart(q(svg, "cone"), { ty: 0.7, sx: 1.04 }, { stiffness: 460, damping: 13, holdMs: 100 });
-    animatePart(q(svg, "plume"), { ty: -2.8, sx: 1.26, sy: 1.26 }, { stiffness: 360, damping: 11, holdMs: 140 });
-    schedulePart(q(svg, "spark"), 50, { ty: -3.2, tx: 1.4, sx: 1.35, op: 0.3 }, { stiffness: 340, damping: 11, holdMs: 140 });
+    animatePart(q(svg, "cone"), { ty: 0.8, sx: 1.06, rot: -2 }, { stiffness: 520, damping: 12, holdMs: 120 });
+    animatePart(q(svg, "plume"), { ty: -3.6, sx: 1.35, sy: 1.4, op: 0.85 }, { stiffness: 340, damping: 10, holdMs: 200 });
+    schedulePart(q(svg, "spark"), 60, { ty: -4.0, tx: 1.8, sx: 1.5, op: 0.25 }, { stiffness: 320, damping: 11, holdMs: 180 });
   },
   plug(svg) {
     animatePart(q(svg, "prongs"), { ty: -2.2 }, { stiffness: 480, damping: 14, holdMs: 100 });
     animatePart(q(svg, "body"), { ty: -1.4 }, { stiffness: 440, damping: 14, holdMs: 105 });
   },
   windmill(svg) {
-    animatePart(q(svg, "blades"), { rot: 360 }, { stiffness: 150, damping: 13, holdMs: 280 });
-    animatePart(q(svg, "tower"), { ty: 0.4 }, { stiffness: 360, damping: 15, holdMs: 140 });
+    // Rotor idles continuously via CSS; the click nudges the mast in the wind
+    animatePart(q(svg, "tower"), { rot: 1.1, tx: 0.5 }, { stiffness: 320, damping: 13, holdMs: 180 });
   },
   solar(svg) {
-    animatePart(q(svg, "panel"), { rot: -8, ty: 0.4 }, { stiffness: 340, damping: 14, holdMs: 130 });
-    animatePart(q(svg, "rays"), { rot: 40, sx: 1.24, sy: 1.24 }, { stiffness: 320, damping: 12, holdMs: 140 });
+    animatePart(q(svg, "panel"), { rot: -6 }, { stiffness: 340, damping: 14, holdMs: 130 });
+    animatePart(q(svg, "rays"), { rot: 32, sx: 1.22, sy: 1.22 }, { stiffness: 320, damping: 12, holdMs: 140 });
   },
   radar(svg) {
-    animatePart(q(svg, "sweep"), { rot: 270 }, { stiffness: 180, damping: 14, holdMs: 240 });
-    schedulePart(q(svg, "blip"), 95, { sx: 1.65, sy: 1.65, op: 0.35 }, { stiffness: 480, damping: 11, holdMs: 130 });
+    // Sweep idles continuously via CSS; the click pings the contact blip
+    animatePart(q(svg, "blip"), { sx: 1.9, sy: 1.9, op: 0.2 }, { stiffness: 520, damping: 9, holdMs: 130 });
+    schedulePart(q(svg, "blip"), 220, { sx: 1.15, sy: 1.15, op: 1 }, { stiffness: 420, damping: 12, holdMs: 120 });
   },
   dna(svg) {
-    animatePart(q(svg, "strand-1"), { sx: 0.55, ty: -0.9 }, { stiffness: 280, damping: 13, holdMs: 150 });
-    animatePart(q(svg, "strand-2"), { sx: 0.55, ty: 0.9 }, { stiffness: 280, damping: 13, holdMs: 150 });
+    // Twist the helix toward edge-on: both strands pinch and counter-rotate
+    animatePart(q(svg, "strand-1"), { sx: 0.58, rot: 5 }, { stiffness: 260, damping: 12, holdMs: 260 });
+    animatePart(q(svg, "strand-2"), { sx: 0.58, rot: -5 }, { stiffness: 260, damping: 12, holdMs: 260 });
+    animatePart(q(svg, "rungs"), { sx: 0.32, op: 0.35 }, { stiffness: 300, damping: 13, holdMs: 240 });
   },
 
   // === 18. WEATHER & NATURE II ===
@@ -1161,8 +1176,11 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "bars"), { sx: 1.06 }, { stiffness: 400, damping: 14, holdMs: 130 });
   },
   "qr-code"(svg) {
-    animatePart(q(svg, "beam"), { ty: 6.0, sx: 1.08 }, { stiffness: 260, damping: 14, holdMs: 165 });
-    animatePart(q(svg, "grid"), { sx: 1.06, sy: 1.06 }, { stiffness: 420, damping: 14, holdMs: 120 });
+    // Finder patterns lock on in sequence, then the data matrix settles
+    animatePart(q(svg, "finder-tl"), { sx: 1.16, sy: 1.16 }, { stiffness: 460, damping: 13, holdMs: 110 });
+    schedulePart(q(svg, "finder-tr"), 55, { sx: 1.16, sy: 1.16 }, { stiffness: 460, damping: 13, holdMs: 110 });
+    schedulePart(q(svg, "finder-bl"), 110, { sx: 1.16, sy: 1.16 }, { stiffness: 460, damping: 13, holdMs: 110 });
+    schedulePart(q(svg, "data"), 150, { sx: 1.1, sy: 1.1 }, { stiffness: 420, damping: 14, holdMs: 100 });
   },
   scale(svg) {
     const beam = q(svg, "beam");
@@ -1217,25 +1235,26 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(q(svg, "led"), 40, { sx: 1.6, sy: 1.6, op: 0.3 }, { stiffness: 520, damping: 12, holdMs: 130 });
   },
   bug(svg) {
-    const l = q(svg, "legs");
-    animatePart(q(svg, "body"), { ty: -1.4, rot: -6 }, { stiffness: 460, damping: 12, holdMs: 100 });
-    animatePart(l, { rot: 10, sx: 1.12 }, { stiffness: 540, damping: 11, holdMs: 75 });
-    schedulePart(l, 80, { rot: -10, sx: 0.94 }, { stiffness: 540, damping: 11, holdMs: 80 });
+    const l = q(svg, "legs-l");
+    const r = q(svg, "legs-r");
+    const body = q(svg, "body");
+    // Alternating tripod scuttle with a light carapace bob
+    animatePart(l, { rot: 9, ty: -0.35 }, { stiffness: 640, damping: 11, holdMs: 55 });
+    animatePart(r, { rot: -9, ty: 0.35 }, { stiffness: 640, damping: 11, holdMs: 55 });
+    schedulePart(l, 85, { rot: -9, ty: 0.25 }, { stiffness: 640, damping: 11, holdMs: 55 });
+    schedulePart(r, 85, { rot: 9, ty: -0.25 }, { stiffness: 640, damping: 11, holdMs: 55 });
+    animatePart(body, { ty: -0.8, rot: -3 }, { stiffness: 520, damping: 13, holdMs: 130 });
+    schedulePart(body, 145, { ty: 0.35, rot: 2 }, { stiffness: 520, damping: 13, holdMs: 110 });
   },
   usb(svg) {
     animatePart(q(svg, "plug"), { ty: -2.4 }, { stiffness: 480, damping: 14, holdMs: 110 });
     animatePart(q(svg, "body"), { ty: -1.2 }, { stiffness: 440, damping: 14, holdMs: 110 });
   },
   fingerprint(svg) {
-    const r1 = q(svg, "ring-1");
-    const r2 = q(svg, "ring-2");
-    const c = q(svg, "core");
-    streamStroke(r1, 0, 440, 0.4);
-    streamStroke(r2, 45, 440, 0.4);
-    streamStroke(c, 90, 420, 0.4);
-    animatePart(c, { sx: 1.24, sy: 1.24 }, { stiffness: 440, damping: 13, holdMs: 120 });
-    schedulePart(r2, 40, { sx: 1.12, sy: 1.12 }, { stiffness: 400, damping: 13, holdMs: 120 });
-    schedulePart(r1, 80, { sx: 1.08, sy: 1.08 }, { stiffness: 380, damping: 13, holdMs: 120 });
+    streamStroke(q(svg, "ring-1"), 0, 360, 0.38);
+    streamStroke(q(svg, "ring-2"), 60, 360, 0.38);
+    streamStroke(q(svg, "core"), 120, 340, 0.38);
+    animatePart(q(svg, "core"), { sx: 1.3, sy: 1.3, op: 0.75 }, { stiffness: 440, damping: 12, holdMs: 180 });
   },
   "sd-card"(svg) {
     animatePart(q(svg, "card"), { ty: 2.6, sx: 0.95 }, { stiffness: 440, damping: 14, holdMs: 115 });
@@ -1267,14 +1286,16 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "pocket"), { ty: 0.9, sx: 1.06 }, { stiffness: 380, damping: 14, holdMs: 115 });
   },
   flashlight(svg) {
-    animatePart(q(svg, "body"), { rot: -8, tx: -0.8 }, { stiffness: 420, damping: 14, holdMs: 120 });
-    schedulePart(q(svg, "beam"), 35, { tx: 2.2, sx: 1.32, sy: 1.24, op: 0.45 }, { stiffness: 460, damping: 12, holdMs: 135 });
+    // Tail-switch press, then the beam flares wide
+    animatePart(q(svg, "body"), { ty: 0.7, sx: 0.985 }, { stiffness: 560, damping: 15, holdMs: 75 });
+    schedulePart(q(svg, "beam"), 25, { sy: 1.5, sx: 1.3 }, { stiffness: 360, damping: 10, holdMs: 190 });
   },
   candle(svg) {
     const f = q(svg, "flame");
-    animatePart(f, { sy: 1.24, sx: 0.88, rot: -9 }, { stiffness: 420, damping: 11, holdMs: 85 });
-    schedulePart(f, 95, { sy: 1.1, sx: 1.08, rot: 9 }, { stiffness: 420, damping: 11, holdMs: 90 });
-    animatePart(q(svg, "wax"), { sy: 0.95, ty: 0.4 }, { stiffness: 340, damping: 14, holdMs: 120 });
+    animatePart(f, { sy: 1.3, sx: 0.86, rot: -12 }, { stiffness: 460, damping: 10, holdMs: 80 });
+    schedulePart(f, 90, { sy: 1.14, sx: 1.06, rot: 11 }, { stiffness: 460, damping: 10, holdMs: 85 });
+    schedulePart(f, 180, { sy: 1.22, sx: 0.92, rot: -6 }, { stiffness: 460, damping: 10, holdMs: 80 });
+    animatePart(q(svg, "wax"), { sy: 0.94, ty: 0.5 }, { stiffness: 340, damping: 14, holdMs: 160 });
   },
   broom(svg) {
     const b = q(svg, "broom");
@@ -1296,13 +1317,13 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
 
   // === 22. TRAVEL & PLAY II ===
   helicopter(svg) {
-    animatePart(q(svg, "rotor"), { sx: 0.25 }, { stiffness: 620, damping: 10, holdMs: 140 });
-    schedulePart(q(svg, "rotor"), 110, { sx: 1.15 }, { stiffness: 620, damping: 10, holdMs: 110 });
-    animatePart(q(svg, "body"), { ty: -2.0, rot: -6 }, { stiffness: 300, damping: 13, holdMs: 160 });
+    // Main rotor spins up hard while the airframe hovers and noses over
+    animatePart(q(svg, "rotor"), { rot: 720 }, { stiffness: 150, damping: 16, holdMs: 260 });
+    animatePart(q(svg, "body"), { ty: -1.8, rot: -4 }, { stiffness: 300, damping: 12, holdMs: 180 });
   },
   submarine(svg) {
-    animatePart(q(svg, "scope"), { ty: -2.4 }, { stiffness: 420, damping: 13, holdMs: 130 });
-    animatePart(q(svg, "hull"), { tx: 2.2, ty: 0.8, rot: 3 }, { stiffness: 260, damping: 13, holdMs: 160 });
+    // Whole boat cruises with a gentle submerged bob
+    animatePart(q(svg, "hull"), { ty: 1.0, rot: -2 }, { stiffness: 260, damping: 13, holdMs: 180 });
   },
   sailboat(svg) {
     animatePart(q(svg, "sail"), { rot: -10, sx: 1.08 }, { stiffness: 260, damping: 12, holdMs: 145 });
@@ -1310,8 +1331,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "wave"), { tx: -2.4, ty: 0.4 }, { stiffness: 220, damping: 13, holdMs: 160 });
   },
   balloon(svg) {
-    animatePart(q(svg, "envelope"), { ty: -2.8, sx: 1.12, sy: 1.12 }, { stiffness: 240, damping: 12, holdMs: 170 });
-    animatePart(q(svg, "basket"), { ty: -2.2, rot: -8 }, { stiffness: 240, damping: 11, holdMs: 160 });
+    // Envelope, ropes and basket rise together
+    animatePart(q(svg, "balloon"), { ty: -2.6, sx: 1.03, sy: 1.05, rot: -2 }, { stiffness: 220, damping: 11, holdMs: 220 });
   },
   skateboard(svg) {
     animatePart(q(svg, "deck"), { ty: -2.6, rot: -18, tx: 1.8 }, { stiffness: 380, damping: 12, holdMs: 130 });
@@ -1329,25 +1350,26 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
   },
   chess(svg) {
     const p = q(svg, "piece");
-    animatePart(p, { ty: -2.8, rot: -8 }, { stiffness: 400, damping: 13, holdMs: 85 });
-    schedulePart(p, 95, { tx: 2.2, ty: 0.6, rot: 4 }, { stiffness: 480, damping: 14, holdMs: 95 });
+    animatePart(p, { ty: -2.8, sy: 1.02 }, { stiffness: 420, damping: 13, holdMs: 110 });
+    schedulePart(p, 120, { ty: 0.5, sx: 1.05, sy: 0.95 }, { stiffness: 520, damping: 14, holdMs: 90 });
   },
   tent(svg) {
     animatePart(q(svg, "canopy"), { sx: 1.08, sy: 0.94, ty: -0.8 }, { stiffness: 360, damping: 13, holdMs: 130 });
     animatePart(q(svg, "door"), { sx: 0.65, op: 0.6 }, { stiffness: 380, damping: 14, holdMs: 135 });
   },
   luggage(svg) {
-    animatePart(q(svg, "handle"), { ty: -2.4 }, { stiffness: 420, damping: 13, holdMs: 120 });
-    animatePart(q(svg, "case"), { tx: 1.8, rot: -5 }, { stiffness: 340, damping: 13, holdMs: 140 });
-    animatePart(q(svg, "wheels"), { tx: 1.8, rot: 240 }, { stiffness: 240, damping: 13, holdMs: 160 });
+    animatePart(q(svg, "handle"), { ty: -2.2 }, { stiffness: 460, damping: 13, holdMs: 120 });
+    animatePart(q(svg, "case"), { ty: -0.5, rot: -3 }, { stiffness: 300, damping: 12, holdMs: 170 });
   },
 
   // === 23. STUDIO & SOUND II ===
   violin(svg) {
+    // Bow draws across the strings while the body rings
     const bow = q(svg, "bow");
-    animatePart(q(svg, "body"), { rot: -5, ty: -0.6 }, { stiffness: 320, damping: 13, holdMs: 140 });
-    animatePart(bow, { tx: 2.6, ty: -0.8, rot: -6 }, { stiffness: 420, damping: 13, holdMs: 85 });
-    schedulePart(bow, 95, { tx: -2.2, ty: 0.6, rot: 4 }, { stiffness: 420, damping: 13, holdMs: 90 });
+    animatePart(bow, { tx: 1.9, ty: -0.8 }, { stiffness: 360, damping: 11, holdMs: 140 });
+    schedulePart(bow, 150, { tx: -1.5, ty: 0.6 }, { stiffness: 360, damping: 11, holdMs: 140 });
+    animatePart(q(svg, "strings"), { sx: 1.1 }, { stiffness: 640, damping: 10, holdMs: 90 });
+    animatePart(q(svg, "body"), { rot: -2, ty: -0.4 }, { stiffness: 320, damping: 13, holdMs: 180 });
   },
   saxophone(svg) {
     animatePart(q(svg, "horn"), { rot: -10, ty: -1.0 }, { stiffness: 340, damping: 12, holdMs: 135 });
@@ -1387,8 +1409,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "deck"), { ty: -0.9 }, { stiffness: 440, damping: 13, holdMs: 110 });
   },
   spotlight(svg) {
-    animatePart(q(svg, "lamp"), { rot: 12, ty: -0.6 }, { stiffness: 360, damping: 13, holdMs: 130 });
-    schedulePart(q(svg, "beam"), 35, { sx: 1.25, sy: 1.2, op: 0.4 }, { stiffness: 400, damping: 12, holdMs: 145 });
+    animatePart(q(svg, "lamp"), { rot: 7 }, { stiffness: 360, damping: 13, holdMs: 130 });
+    schedulePart(q(svg, "beam"), 30, { sx: 1.1, sy: 1.05, op: 0.7 }, { stiffness: 400, damping: 12, holdMs: 145 });
   },
   "tuning-fork"(svg) {
     const f = q(svg, "fork");
@@ -1431,8 +1453,8 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     schedulePart(q(svg, "bubble"), 45, { ty: -3.2, sx: 1.35, sy: 1.35, op: 0.3 }, { stiffness: 280, damping: 12, holdMs: 150 });
   },
   syringe(svg) {
-    animatePart(q(svg, "plunger"), { ty: 2.6 }, { stiffness: 460, damping: 14, holdMs: 105 });
-    schedulePart(q(svg, "drop"), 55, { ty: 2.8, sx: 1.22, sy: 1.22, op: 0.35 }, { stiffness: 380, damping: 12, holdMs: 125 });
+    animatePart(q(svg, "plunger"), { ty: 3.2, sy: 0.85 }, { stiffness: 520, damping: 12, holdMs: 120 });
+    schedulePart(q(svg, "drop"), 90, { ty: 3.4, sx: 1.3, sy: 1.3, op: 0.3 }, { stiffness: 360, damping: 12, holdMs: 150 });
   },
   "petri-dish"(svg) {
     animatePart(q(svg, "lid"), { ty: -2.4, rot: -6 }, { stiffness: 360, damping: 13, holdMs: 140 });

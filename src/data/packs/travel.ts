@@ -156,16 +156,16 @@ export const TRAVEL_ICONS: IconDef[] = [
     motionSummary: "Pennant cloth ripples across its vertical mast",
     soundSummary: "Crisp fabric flag snap in breeze",
     svgs: {
-      outline: `<line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${K}/><path data-part="cloth" data-pivot="6 9" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${K}/>`,
-      solid: `<rect x="4.6" y="3.2" width="1.9" height="17.6" rx="0.95" fill="currentColor"/><path data-part="cloth" data-pivot="6 9" fill="currentColor" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z"/>`,
-      duotone: `<line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${DK}/><path data-part="cloth" data-pivot="6 9" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${D}/>`,
+      outline: `<line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${K}/><path data-part="cloth" data-pivot="5.5 9" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${K}/>`,
+      solid: `<rect x="4.6" y="3.2" width="1.9" height="17.6" rx="0.95" fill="currentColor"/><path data-part="cloth" data-pivot="5.5 9" fill="currentColor" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z"/>`,
+      duotone: `<line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${DK}/><path data-part="cloth" data-pivot="5.5 9" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${D}/>`,
       glass: glassCompose(
         `<rect x="4.5" y="3.2" width="2" height="17.6" rx="1" ${GB}/>`,
-        `<path data-part="cloth" data-pivot="6 9" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z"/>`
+        `<path data-part="cloth" data-pivot="5.5 9" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z"/>`
       ),
-      stencil: `<rect x="4.6" y="3.5" width="1.8" height="17" rx="0.9" fill="currentColor"/><g data-part="cloth" data-pivot="6 9" fill="currentColor"><path d="M7.5 4.4C9.5 4.2 11 5.1 12.6 5.1V13.2C11 13.3 9.5 12.5 7.5 12.9Z"/><path d="M14.2 4.8C16.3 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.2 13.2Z"/></g>`,
-      hardware: `<rect x="4.5" y="3.2" width="2" height="17.6" rx="1" ${HD}/><path data-part="cloth" data-pivot="6 9" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z" ${HA}/>`,
-      relief: `<g data-part="cloth" data-pivot="6 9"><path transform="translate(1.5,1.5)" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${RS}/><path d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${RF}/></g><line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${RF_LINE}/>`,
+      stencil: `<rect x="4.6" y="3.5" width="1.8" height="17" rx="0.9" fill="currentColor"/><g data-part="cloth" data-pivot="5.5 9" fill="currentColor"><path d="M7.5 4.4C9.5 4.2 11 5.1 12.6 5.1V13.2C11 13.3 9.5 12.5 7.5 12.9Z"/><path d="M14.2 4.8C16.3 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.2 13.2Z"/></g>`,
+      hardware: `<rect x="4.5" y="3.2" width="2" height="17.6" rx="1" ${HD}/><path data-part="cloth" data-pivot="5.5 9" d="M5.5 4.4C8.6 3.3 11.6 5.8 14.6 4.7C16.6 4.1 18.2 4.3 19.2 4.8V13.4C17.9 12.7 16.2 12.7 14.5 13.4C11.5 14.4 8.5 12 5.5 13.1Z" ${HA}/>`,
+      relief: `<g data-part="cloth" data-pivot="5.5 9"><path transform="translate(1.5,1.5)" d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${RS}/><path d="M5.5 4.5C8.5 3.5 11.5 5.8 14.5 4.8C16.5 4.2 18 4.4 19 4.8V13.2C17.8 12.6 16.2 12.6 14.5 13.2C11.5 14.2 8.5 12 5.5 13Z" ${RF}/></g><line x1="5.5" y1="3.5" x2="5.5" y2="20.5" ${RF_LINE}/>`,
     },
   },
   // 98. SPARKLES

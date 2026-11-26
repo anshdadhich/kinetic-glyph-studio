@@ -50,12 +50,12 @@ export const CORE2_ICONS: IconDef[] = [
     soundSummary: "Crisp modal dismiss snap + descending mute click",
     svgs: {
       outline: `<line data-part="arm-1" data-pivot="12 12" x1="6" y1="6" x2="18" y2="18" ${K}/><line data-part="arm-2" data-pivot="12 12" x1="18" y1="6" x2="6" y2="18" ${K}/>`,
-      solid: `<g fill="currentColor"><rect data-part="arm-1" data-pivot="12 12" x="10.7" y="4" width="2.6" height="16" rx="1.3" transform="rotate(-45 12 12)"/><rect data-part="arm-2" data-pivot="12 12" x="10.7" y="4" width="2.6" height="16" rx="1.3" transform="rotate(45 12 12)"/></g>`,
+      solid: `<g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><line data-part="arm-1" data-pivot="12 12" x1="6.2" y1="6.2" x2="17.8" y2="17.8"/><line data-part="arm-2" data-pivot="12 12" x1="17.8" y1="6.2" x2="6.2" y2="17.8"/></g>`,
       duotone: `<circle cx="12" cy="12" r="8.5" ${D}/><line data-part="arm-1" data-pivot="12 12" x1="8" y1="8" x2="16" y2="16" ${DK}/><line data-part="arm-2" data-pivot="12 12" x1="16" y1="8" x2="8" y2="16" ${DK}/>`,
       glass: glassCompose(
-        `<circle cx="10.8" cy="10.8" r="7.5" ${GB}/>`,
-        `<circle cx="12.2" cy="12.2" r="8.4"/>`,
-        `<g ${GF}><circle cx="12.2" cy="12.2" r="8.4"/></g><line data-part="arm-1" data-pivot="12.2 12.2" x1="8.6" y1="8.6" x2="15.8" y2="15.8" ${GBS}/><line data-part="arm-2" data-pivot="12.2 12.2" x1="15.8" y1="8.6" x2="8.6" y2="15.8" ${GBS}/>`
+        `<circle cx="12" cy="12" r="8.5" ${GB}/><g fill="none" stroke="url(#g-back)" stroke-width="2.8" stroke-linecap="round" opacity="0.55"><line x1="5.8" y1="5.8" x2="18.2" y2="18.2"/><line x1="18.2" y1="5.8" x2="5.8" y2="18.2"/></g>`,
+        `<circle cx="12" cy="12" r="8.5"/>`,
+        `<circle cx="12" cy="12" r="8.5" ${GF}/><circle cx="12" cy="12" r="7.1" fill="none" stroke="url(#g-rim)" stroke-width="0.7" opacity="0.7"/><g fill="none" stroke="url(#g-back)" stroke-width="2.6" stroke-linecap="round"><line data-part="arm-1" data-pivot="12 12" x1="8.1" y1="8.1" x2="15.9" y2="15.9"/><line data-part="arm-2" data-pivot="12 12" x1="15.9" y1="8.1" x2="8.1" y2="15.9"/></g><circle cx="12" cy="5.4" r="1.5" ${GH} opacity="0.8"/>`
       ),
       stencil: `<g fill="currentColor"><g data-part="arm-1" data-pivot="12 12"><rect x="10.8" y="4" width="2.4" height="6.2" rx="1.2" transform="rotate(-45 12 12)"/><rect x="10.8" y="13.8" width="2.4" height="6.2" rx="1.2" transform="rotate(-45 12 12)"/></g><g data-part="arm-2" data-pivot="12 12"><rect x="10.8" y="4" width="2.4" height="6.2" rx="1.2" transform="rotate(45 12 12)"/><rect x="10.8" y="13.8" width="2.4" height="6.2" rx="1.2" transform="rotate(45 12 12)"/></g><circle cx="12" cy="12" r="1.4"/></g>`,
       hardware: `<circle cx="12" cy="12" r="9" ${HD}/><circle cx="12" cy="12" r="6.8" ${HM}/><line data-part="arm-1" data-pivot="12 12" x1="8.8" y1="8.8" x2="15.2" y2="15.2" stroke="#ff6b35" stroke-width="2" stroke-linecap="round"/><line data-part="arm-2" data-pivot="12 12" x1="15.2" y1="8.8" x2="8.8" y2="15.2" stroke="#ff6b35" stroke-width="2" stroke-linecap="round"/>`,

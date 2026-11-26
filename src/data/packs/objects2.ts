@@ -20,6 +20,12 @@ import {
   RF_LINE,
 } from "../shared";
 
+// Flashlight: flared lens head, tapered barrel, grip grooves, beam ticks above
+const FL_BODY = "M7.2 4.6H16.8L16 7.4L14.6 10.4V19.2C14.6 20.1 13.9 20.8 13 20.8H11C10.1 20.8 9.4 20.1 9.4 19.2V10.4L8 7.4Z";
+const FL_LENS = `<line x1="8.35" y1="6.3" x2="15.65" y2="6.3"/>`;
+const FL_GRIP = `<line x1="10.3" y1="14.2" x2="13.7" y2="14.2"/><line x1="10.3" y1="16.6" x2="13.7" y2="16.6"/>`;
+const FL_BEAM = `<line x1="12" y1="1.4" x2="12" y2="3.4"/><line x1="8.2" y1="2.3" x2="9.4" y2="3.5"/><line x1="15.8" y1="2.3" x2="14.6" y2="3.5"/>`;
+
 export const OBJECTS2_ICONS: IconDef[] = [
   // 201. STOPWATCH
   {
@@ -113,16 +119,17 @@ export const OBJECTS2_ICONS: IconDef[] = [
     motionSummary: "Tactical barrel snaps up as three bright light beams flare outward",
     soundSummary: "Heavy aluminum tactical tail-switch click + beam hum",
     svgs: {
-      outline: `<path data-part="body" d="M9 20.5V12L7 9V7.2H17V9L15 12V20.5Z" ${K}/><g data-part="beam" data-pivot="12 6.5" ${K_THIN}><line x1="12" y1="3" x2="12" y2="5"/><line x1="7.5" y1="3.8" x2="8.8" y2="5.2"/><line x1="16.5" y1="3.8" x2="15.2" y2="5.2"/></g>`,
-      solid: `<path data-part="body" fill="currentColor" d="M7 7H17V9.2L15 12V20.4H9V12L7 9.2Z"/><g data-part="beam" data-pivot="12 6.5" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line x1="12" y1="2.8" x2="12" y2="5"/><line x1="7.2" y1="3.6" x2="8.6" y2="5"/><line x1="16.8" y1="3.6" x2="15.4" y2="5"/></g>`,
-      duotone: `<path data-part="body" d="M9 20.5V12L7 9V7.2H17V9L15 12V20.5Z" ${D}/><g data-part="beam" data-pivot="12 6.5" ${DK}><line x1="12" y1="3" x2="12" y2="5"/><line x1="7.5" y1="3.8" x2="8.8" y2="5.2"/><line x1="16.5" y1="3.8" x2="15.2" y2="5.2"/></g>`,
+      outline: `<g data-part="body" ${K}><path d="${FL_BODY}"/><g stroke-width="1.3">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${K_THIN}>${FL_BEAM}</g>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><g stroke="#000" stroke-width="1.1" stroke-linecap="round">${FL_LENS}${FL_GRIP}</g></mask></defs><g data-part="body" fill="currentColor" mask="url(#__GID__-m1)"><path d="${FL_BODY}"/></g><g data-part="beam" data-pivot="12 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">${FL_BEAM}</g>`,
+      duotone: `<g data-part="body"><path d="${FL_BODY}" ${D}/><g ${DK_THIN}>${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${DK}>${FL_BEAM}</g>`,
       glass: glassCompose(
-        `<g data-part="beam" data-pivot="12 6.5" ${GBS}><line x1="12" y1="2.8" x2="12" y2="5"/><line x1="7.2" y1="3.6" x2="8.6" y2="5"/><line x1="16.8" y1="3.6" x2="15.4" y2="5"/></g>`,
-        `<path data-part="body" d="M7 7H17V9.2L15 12V20.4H9V12L7 9.2Z"/>`
+        `<path d="${FL_BODY}" ${GB}/>`,
+        ``,
+        `<g data-part="body"><path d="${FL_BODY}" ${GF}/><path d="${FL_BODY}" fill="none" stroke="url(#g-back)" stroke-width="1.5"/><g fill="none" stroke="url(#g-back)" stroke-width="1.2" stroke-linecap="round">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${GBS} stroke-width="1.6">${FL_BEAM}</g>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="body"><polygon points="7 7 17 7 17 9.2 15.2 11.4 8.8 11.4 7 9.2"/><rect x="9" y="12.6" width="6" height="7.8" rx="1"/></g><g data-part="beam" data-pivot="12 6.5" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line x1="12" y1="2.8" x2="12" y2="5"/><line x1="7.4" y1="3.6" x2="8.8" y2="5"/><line x1="16.6" y1="3.6" x2="15.2" y2="5"/></g></g>`,
-      hardware: `<g data-part="body"><path d="M7 7H17V9.2L15 12V20.4H9V12L7 9.2Z" ${HD}/><circle cx="12" cy="14.5" r="1.2" ${HA}/></g><g data-part="beam" data-pivot="12 6.5" stroke="#ff6b35" stroke-width="1.9" stroke-linecap="round"><line x1="12" y1="2.8" x2="12" y2="5"/><line x1="7.2" y1="3.6" x2="8.6" y2="5"/><line x1="16.8" y1="3.6" x2="15.4" y2="5"/></g>`,
-      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="M9 20.5V12L7 9V7.2H17V9L15 12V20.5Z" ${RS}/><path d="M9 20.5V12L7 9V7.2H17V9L15 12V20.5Z" ${RF}/></g><g data-part="beam" data-pivot="12 6.5" ${RF_LINE}><line x1="12" y1="3" x2="12" y2="5"/><line x1="7.5" y1="3.8" x2="8.8" y2="5.2"/><line x1="16.5" y1="3.8" x2="15.2" y2="5.2"/></g>`,
+      stencil: `<g data-part="body" fill="currentColor"><path d="M7.2 4.6H16.8L16 7.4L14.6 10.4V12.2H9.4V10.4L8 7.4Z"/><rect x="9.4" y="13" width="5.2" height="2.6" rx="0.8"/><rect x="9.4" y="16.4" width="5.2" height="4.4" rx="1.4"/></g><g data-part="beam" data-pivot="12 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">${FL_BEAM}</g>`,
+      hardware: `<g data-part="body"><path d="${FL_BODY}" ${HD}/><rect x="8" y="5.2" width="8" height="1.5" rx="0.75" ${HA}/><g fill="none" stroke="#3f3f46" stroke-width="1.2" stroke-linecap="round">${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" fill="none" stroke="#ff6b35" stroke-width="1.9" stroke-linecap="round">${FL_BEAM}</g>`,
+      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="${FL_BODY}" ${RS}/><path d="${FL_BODY}" ${RF}/><g ${RF_LINE} stroke-width="1.1">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${RF_LINE}>${FL_BEAM}</g>`,
     },
   },
   // 206. CANDLE

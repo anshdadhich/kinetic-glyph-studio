@@ -10,6 +10,7 @@ import {
   GBS,
   GH,
   glassCompose,
+  simpleSvgs,
   HL,
   HM,
   HD,
@@ -20,6 +21,19 @@ import {
   RF_LINE,
 } from "../shared";
 
+// Hand saw: D-grip with a cutout + tapered blade with cut teeth
+const SAW_HANDLE =
+  "M7.8 8.8H5.9A3.1 3.1 0 0 0 2.8 11.9V16.9A3.1 3.1 0 0 0 5.9 20H7.8Z";
+const SAW_GRIP =
+  "M6.35 12.3H5.8A1.55 1.55 0 0 0 4.25 13.85V15A1.55 1.55 0 0 0 5.8 16.55H6.35Z";
+const SAW_BLADE =
+  "M7.8 8.8L22 10.3V11.5L21.2 12.1L20.8 11.3L20 12.2L19.6 11.4L18.8 12.3L18.4 11.5L17.6 12.4L17.2 11.6L16.4 12.5L16 11.7L15.2 12.6L14.8 11.8L14 12.7L13.6 11.9L12.8 12.8L12.4 12L11.6 12.9L11.2 12.1L10.4 13L10 12.2L9.2 13.1L8.8 12.3L8 13.2L7.8 12.6Z";
+
+// Axe: crescent bit + eye + long tapered haft
+const AXE_HEAD =
+  "M16.6 3.2C12.9 2 8.3 3 5.1 6.3C8.1 9.5 12.8 10.4 16.9 8.8L18.8 6.1Z";
+const AXE_HANDLE = "M14.6 20.8L11.9 20.2L15.7 7.3L18.4 8Z";
+
 export const TOOLS2_ICONS: IconDef[] = [
   // 151. SAW
   {
@@ -29,16 +43,17 @@ export const TOOLS2_ICONS: IconDef[] = [
     motionSummary: "Serrated steel blade saws back and forth smoothly from wooden handle",
     soundSummary: "Rhythmic carpenter hand-saw wood rasp strokes",
     svgs: {
-      outline: `<g data-part="saw" data-pivot="16 8" ${K}><path d="M14.5 5.2L19.2 9.9A1.5 1.5 0 0 1 19.2 12L17.4 13.8L10.6 7L12.4 5.2A1.5 1.5 0 0 1 14.5 5.2Z"/><path d="M10.6 7L4 13.6L5.5 15L4.8 16.5L6.8 16.3L6.5 18.2L8.5 17.8L8.4 19.6L17.4 13.8" ${K_THIN}/></g>`,
-      solid: `<g data-part="saw" data-pivot="16 8" fill="currentColor"><path fill-rule="evenodd" d="M14.6 4.8L19.6 9.8A1.6 1.6 0 0 1 19.6 12.1L17.4 14.3L10.2 7.1L12.4 4.8A1.6 1.6 0 0 1 14.6 4.8ZM13.8 7.5A0.8 0.8 0 0 0 12.7 8.6L15.8 11.7A0.8 0.8 0 0 0 16.9 10.6Z"/><path d="M10.5 7.4L4 13.9L5.4 15.2L4.8 16.8L6.8 16.6L6.6 18.4L8.6 18L8.4 19.8L17.1 14Z" opacity="0.72"/></g>`,
-      duotone: `<g data-part="saw" data-pivot="16 8"><path d="M10.6 7L4 13.6L5.5 15L4.8 16.5L6.8 16.3L6.5 18.2L8.5 17.8L8.4 19.6L17.4 13.8Z" ${D}/><path d="M14.5 5.2L19.2 9.9A1.5 1.5 0 0 1 19.2 12L17.4 13.8L10.6 7L12.4 5.2A1.5 1.5 0 0 1 14.5 5.2Z" ${DK}/></g>`,
+      outline: `<g data-part="saw" ${K}><path d="${SAW_HANDLE}"/><path d="${SAW_GRIP}"/><path d="${SAW_BLADE}"/></g>`,
+      solid: `<g data-part="saw" fill="currentColor" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}"/><path d="${SAW_BLADE}"/></g>`,
+      duotone: `<g data-part="saw" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}" ${D}/><path d="${SAW_BLADE}" ${D}/></g>`,
       glass: glassCompose(
-        `<path data-part="saw" data-pivot="16 8" d="M14.6 4.8L19.6 9.8A1.6 1.6 0 0 1 19.6 12.1L17.4 14.3L10.2 7.1L12.4 4.8A1.6 1.6 0 0 1 14.6 4.8Z" ${GB}/>`,
-        `<path data-part="saw" data-pivot="16 8" d="M10.5 7.4L4 13.9L5.4 15.2L4.8 16.8L6.8 16.6L6.6 18.4L8.6 18L8.4 19.8L17.1 14Z"/>`
+        `<path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${GB}/><path d="${SAW_BLADE}" ${GB}/>`,
+        `<path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd"/><path d="${SAW_BLADE}"/>`,
+        `<g data-part="saw"><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${GF}/><path d="${SAW_BLADE}" ${GF}/><path d="M8.2 9.9L21 11.2" fill="none" stroke="url(#g-rim)" stroke-width="0.7"/></g>`
       ),
-      stencil: `<g data-part="saw" data-pivot="16 8" fill="currentColor"><path d="M14.6 4.8L19.6 9.8A1.5 1.5 0 0 1 19.6 12L18 13.6L10.8 6.4L12.4 4.8A1.5 1.5 0 0 1 14.6 4.8Z"/><path d="M10 7.6L4 13.6L5.4 15L4.8 16.6L6.8 16.4L6.6 18.2L8.6 17.8L8.4 19.6L16.6 14.2Z"/></g>`,
-      hardware: `<g data-part="saw" data-pivot="16 8"><path d="M10.5 7.4L4 13.9L5.4 15.2L4.8 16.8L6.8 16.6L6.6 18.4L8.6 18L8.4 19.8L17.1 14Z" ${HL}/><path d="M14.6 4.8L19.6 9.8A1.6 1.6 0 0 1 19.6 12.1L17.4 14.3L10.2 7.1L12.4 4.8A1.6 1.6 0 0 1 14.6 4.8Z" ${HA}/></g>`,
-      relief: `<g data-part="saw" data-pivot="16 8"><path transform="translate(1.3,1.3)" d="M10.6 7L4 13.6L5.5 15L4.8 16.5L6.8 16.3L6.5 18.2L8.5 17.8L8.4 19.6L17.4 13.8Z" ${RS}/><path d="M10.6 7L4 13.6L5.5 15L4.8 16.5L6.8 16.3L6.5 18.2L8.5 17.8L8.4 19.6L17.4 13.8Z" ${RF}/><path d="M14.5 5.2L19.2 9.9A1.5 1.5 0 0 1 19.2 12L17.4 13.8L10.6 7L12.4 5.2A1.5 1.5 0 0 1 14.5 5.2Z" ${RF}/></g>`,
+      stencil: `<g data-part="saw" fill="currentColor" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}"/><path d="${SAW_BLADE}"/><rect x="7.4" y="8.1" width="2.2" height="1.2" rx="0.5"/></g>`,
+      hardware: `<g data-part="saw"><path d="${SAW_HANDLE}" ${HA}/><path d="${SAW_GRIP}" ${HD}/><path d="${SAW_BLADE}" ${HL}/><path d="M8.2 9.8L21.4 11.2" fill="none" stroke="#ff6b35" stroke-width="0.7" opacity="0.9"/></g>`,
+      relief: `<g data-part="saw"><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" transform="translate(1.3,1.3)" ${RS}/><path d="${SAW_BLADE}" transform="translate(1.3,1.3)" ${RS}/><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${RF}/><path d="${SAW_BLADE}" ${RF}/></g>`,
     },
   },
   // 152. DRILL
@@ -89,16 +104,17 @@ export const TOOLS2_ICONS: IconDef[] = [
     motionSummary: "Forged axe swings down in chopping arc sending wood chip flying",
     soundSummary: "Sharp timber chop crack + flying wood splinter",
     svgs: {
-      outline: `<g data-part="axe" data-pivot="6 18" ${K}><line x1="5.5" y1="18.5" x2="15" y2="9"/><path d="M12 6L17.8 4.2A6.5 6.5 0 0 1 19.8 11.8L14 10Z"/></g><polygon data-part="chip" points="5.5 7 7.5 6 7 8.2" fill="currentColor"/>`,
-      solid: `<g data-part="axe" data-pivot="6 18" fill="currentColor"><path d="M14.3 8.3L15.7 9.7L6.5 18.9A1 1 0 0 1 5.1 17.5Z"/><path d="M11.8 6L17.8 4A6.8 6.8 0 0 1 20 12L13.8 10.2Z"/></g><polygon data-part="chip" points="5.5 7 7.8 5.8 7.2 8.4" fill="currentColor"/>`,
-      duotone: `<g data-part="axe" data-pivot="6 18"><line x1="5.5" y1="18.5" x2="15" y2="9" ${DK}/><path d="M12 6L17.8 4.2A6.5 6.5 0 0 1 19.8 11.8L14 10Z" ${D}/></g><polygon data-part="chip" points="5.5 7 7.5 6 7 8.2" fill="currentColor"/>`,
+      outline: `<g data-part="axe" data-pivot="12 12" ${K}><path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/><path d="M15.1 8.4L17.6 5" ${K_THIN}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="currentColor"/>`,
+      solid: `<g data-part="axe" data-pivot="12 12" fill="currentColor"><path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="currentColor"/>`,
+      duotone: `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}" ${D}/><path d="${AXE_HANDLE}" ${D}/><path d="M15.1 8.4L17.6 5" ${DK_THIN}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${D}/>`,
       glass: glassCompose(
-        `<path data-part="axe" data-pivot="6 18" d="M14.3 8.3L15.7 9.7L6.5 18.9A1 1 0 0 1 5.1 17.5Z" ${GB}/><circle data-part="chip" cx="6.5" cy="7" r="1.2" ${GB}/>`,
-        `<path data-part="axe" data-pivot="6 18" d="M11.8 6L17.8 4A6.8 6.8 0 0 1 20 12L13.8 10.2Z"/>`
+        `<path d="${AXE_HEAD}" ${GB}/><path d="${AXE_HANDLE}" ${GB}/>`,
+        `<path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/>`,
+        `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}" ${GF}/><path d="${AXE_HANDLE}" ${GF}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" fill="none" stroke="url(#g-rim)" stroke-width="0.75"/><path d="M15.1 8.4L17.6 5" fill="none" stroke="url(#g-back)" stroke-width="1.1"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="url(#g-highlight)"/>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="axe" data-pivot="6 18"><path d="M13.5 9.1L14.9 10.5L6.5 18.9A1 1 0 0 1 5.1 17.5Z"/><path d="M12 6L17.8 4.1A6.6 6.6 0 0 1 19.9 11.9L14.2 10.2Z"/></g><polygon data-part="chip" points="5.5 7 7.8 5.8 7.2 8.4"/></g>`,
-      hardware: `<g data-part="axe" data-pivot="6 18"><path d="M14.3 8.3L15.7 9.7L6.5 18.9A1 1 0 0 1 5.1 17.5Z" ${HD}/><path d="M11.8 6L17.8 4A6.8 6.8 0 0 1 20 12L13.8 10.2Z" ${HL}/></g><polygon data-part="chip" points="5.5 7 7.8 5.8 7.2 8.4" ${HA}/>`,
-      relief: `<g data-part="axe" data-pivot="6 18"><path transform="translate(1.3,1.3)" d="M12 6L17.8 4.2A6.5 6.5 0 0 1 19.8 11.8L14 10Z" ${RS}/><line x1="5.5" y1="18.5" x2="15" y2="9" ${RF_LINE}/><path d="M12 6L17.8 4.2A6.5 6.5 0 0 1 19.8 11.8L14 10Z" ${RF}/></g><polygon data-part="chip" points="5.5 7 7.8 5.8 7.2 8.4" ${RS}/>`,
+      stencil: `<g fill="currentColor"><g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}"/><path d="M14.9 8.6L16.7 8.9L12.8 20.6L11.1 20.2Z"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z"/></g>`,
+      hardware: `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HANDLE}" ${HL}/><path d="${AXE_HEAD}" ${HM}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" fill="none" stroke="#ff6b35" stroke-width="1.4" stroke-linecap="round"/><path d="M15.1 8.4L17.6 5" fill="none" stroke="#3f3f46" stroke-width="1.1"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${HA}/>`,
+      relief: `<g data-part="axe" data-pivot="12 12"><path transform="translate(1.3,1.3)" d="${AXE_HEAD}" ${RS}/><path transform="translate(1.3,1.3)" d="${AXE_HANDLE}" ${RS}/><path d="${AXE_HEAD}" ${RF}/><path d="${AXE_HANDLE}" ${RF}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" ${RF_LINE}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${RF}/>`,
     },
   },
   // 155. SHOVEL

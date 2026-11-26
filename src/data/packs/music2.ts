@@ -9,6 +9,7 @@ import {
   GB,
   GBS,
   GH,
+  GHS,
   glassCompose,
   HL,
   HM,
@@ -20,6 +21,22 @@ import {
   RF_LINE,
 } from "../shared";
 
+// Violin: two-bout body, f-holes, bridge, pegged scroll and a bowed stick
+const VIO_BODY = "M12 7.9C10.3 7.9 9 9 9 10.4C9 11.3 9.4 12.1 10.1 12.6C8.9 13.2 8.1 14.3 8.1 15.6C8.1 17.5 9.8 19 12 19C14.2 19 15.9 17.5 15.9 15.6C15.9 14.3 15.1 13.2 13.9 12.6C14.6 12.1 15 11.3 15 10.4C15 9 13.7 7.9 12 7.9Z";
+const VIO_SCROLL = `<circle cx="12" cy="3.55" r="1.15"/><path d="M10.9 4.7L10.5 8.3H13.5L13.1 4.7Z"/>`;
+const VIO_PEGS = `<line x1="10.25" y1="5.5" x2="13.75" y2="5.5"/><line x1="10.25" y1="6.7" x2="13.75" y2="6.7"/>`;
+const VIO_FHOLES = `<path d="M10.35 13.3C9.85 13.7 9.65 14.3 9.75 15"/><path d="M13.65 13.3C14.15 13.7 14.35 14.3 14.25 15"/>`;
+const VIO_BRIDGE = `<line x1="10.55" y1="15.55" x2="13.45" y2="15.55"/>`;
+const VIO_STRINGS = `<line x1="11.4" y1="5.3" x2="11.4" y2="16.4"/><line x1="12" y1="5.3" x2="12" y2="16.4"/><line x1="12.6" y1="5.3" x2="12.6" y2="16.4"/>`;
+const VIO_BOW = `<line x1="4.2" y1="16.2" x2="19.8" y2="10.4"/><line x1="4.2" y1="16.2" x2="5.5" y2="15.7"/>`;
+
+// Spotlight: flared par-can with a lens bar and a wide light cone
+const SPL_CAN = `<path d="M8.3 3.4H15.7L17.3 8.3H6.7Z"/>`;
+const SPL_HANDLE = `<path d="M9.2 3.4C9.2 2.2 10.4 1.4 12 1.4C13.6 1.4 14.8 2.2 14.8 3.4"/>`;
+const SPL_LENS = `<rect x="6.9" y="8.3" width="10.2" height="1.4" rx="0.7"/>`;
+const SPL_BEAM = `<path d="M7.2 9.7L3.6 21H20.4L16.8 9.7Z"/>`;
+const SPL_RAYS = `<line x1="9.6" y1="12.4" x2="8.5" y2="16.8"/><line x1="12" y1="12.8" x2="12" y2="17.6"/><line x1="14.4" y1="12.4" x2="15.5" y2="16.8"/>`;
+
 export const MUSIC2_ICONS: IconDef[] = [
   // 221. VIOLIN
   {
@@ -29,16 +46,17 @@ export const MUSIC2_ICONS: IconDef[] = [
     motionSummary: "Wooden bow glides smoothly across violin strings while body resonates",
     soundSummary: "Warm expressively bowed violin string fifth",
     svgs: {
-      outline: `<g data-part="body" data-pivot="12 12" ${K}><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12"/><path d="M9.6 10.2C8.4 10.8 8.4 12.6 9.2 13.6C7.6 14.2 6 15.8 6.8 17.6C7.6 19.4 10.6 19.8 12.2 18.2C13.8 16.6 13.4 14.2 12 13.2"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${K_THIN}/>`,
-      solid: `<g data-part="body" data-pivot="12 12" fill="currentColor"><path d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z"/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
-      duotone: `<g data-part="body" data-pivot="12 12"><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12" ${DK}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${D}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${DK_THIN}/>`,
+      outline: `<g data-part="body" data-pivot="12 18" ${K}><path d="${VIO_BODY}"/><g stroke-width="1.2">${VIO_FHOLES}${VIO_BRIDGE}</g></g><g data-part="neck" data-pivot="12 8" ${K}>${VIO_SCROLL}<g stroke-width="1.2">${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" ${K_THIN}>${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" ${K}>${VIO_BOW}</g>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><g fill="none" stroke="#000" stroke-width="1.05" stroke-linecap="round" stroke-linejoin="round">${VIO_FHOLES}${VIO_BRIDGE}${VIO_STRINGS}</g></mask></defs><g data-part="body" data-pivot="12 18"><path d="${VIO_BODY}" fill="currentColor" mask="url(#__GID__-m1)"/><g fill="none" stroke="currentColor" stroke-width="1.15" stroke-linecap="round">${VIO_FHOLES}${VIO_BRIDGE}</g></g><g data-part="neck" data-pivot="12 8"><g fill="currentColor" mask="url(#__GID__-m1)">${VIO_SCROLL}</g><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" fill="none" stroke="currentColor" stroke-width="0.95" stroke-linecap="round">${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">${VIO_BOW}</g>`,
+      duotone: `<g data-part="body" data-pivot="12 18"><path d="${VIO_BODY}" ${D}/><g ${DK_THIN}>${VIO_FHOLES}${VIO_BRIDGE}</g></g><g data-part="neck" data-pivot="12 8"><g ${D}>${VIO_SCROLL}</g><g ${DK}>${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" ${DK_THIN}>${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" ${DK}>${VIO_BOW}</g>`,
       glass: glassCompose(
-        `<path data-part="body" data-pivot="12 12" d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z" ${GB}/><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${GBS}/>`,
-        `<path data-part="body" data-pivot="12 12" d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/>`
+        `<path d="${VIO_BODY}" ${GB}/><g ${GB}>${VIO_SCROLL}</g>`,
+        ``,
+        `<g data-part="body" data-pivot="12 18"><path d="${VIO_BODY}" ${GF}/><g fill="none" stroke="url(#g-back)" stroke-width="1.2" stroke-linecap="round">${VIO_FHOLES}${VIO_BRIDGE}</g></g><g data-part="neck" data-pivot="12 8"><g ${GF}>${VIO_SCROLL}</g><g ${GBS} stroke-width="1.3">${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" ${GBS} stroke-width="1.1">${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" ${GHS}>${VIO_BOW}</g>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="body" data-pivot="12 12"><path d="M15.5 4.8L19.2 8.5L18 9.7L14.3 6Z"/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></g>`,
-      hardware: `<g data-part="body" data-pivot="12 12"><path d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z" ${HD}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${HL}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="#ff6b35" stroke-width="1.6" stroke-linecap="round"/>`,
-      relief: `<g data-part="body" data-pivot="12 12"><path transform="translate(1.2,1.2)" d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${RS}/><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12" ${RF_LINE}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${RF}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${RF_LINE}/>`,
+      stencil: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><g fill="none" stroke="#000" stroke-width="1.1" stroke-linecap="round" stroke-linejoin="round">${VIO_FHOLES}${VIO_BRIDGE}${VIO_STRINGS}</g></mask></defs><g data-part="body" data-pivot="12 18"><path d="${VIO_BODY}" fill="currentColor" mask="url(#__GID__-m1)"/></g><g data-part="neck" data-pivot="12 8"><g fill="currentColor" mask="url(#__GID__-m1)">${VIO_SCROLL}</g><g fill="none" stroke="currentColor" stroke-width="1.5" stroke-linecap="round">${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" fill="none" stroke="currentColor" stroke-width="1" stroke-linecap="round">${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">${VIO_BOW}</g>`,
+      hardware: `<g data-part="body" data-pivot="12 18"><path d="${VIO_BODY}" ${HL}/><g fill="none" stroke="#3f3f46" stroke-width="1.2" stroke-linecap="round">${VIO_FHOLES}</g><line x1="10.55" y1="15.55" x2="13.45" y2="15.55" ${HA}/></g><g data-part="neck" data-pivot="12 8"><g ${HM}>${VIO_SCROLL}</g><g fill="none" stroke="#3f3f46" stroke-width="1.5" stroke-linecap="round">${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" fill="none" stroke="#52525b" stroke-width="1.05" stroke-linecap="round">${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" fill="none" stroke="#ff6b35" stroke-width="1.7" stroke-linecap="round">${VIO_BOW}</g>`,
+      relief: `<g data-part="body" data-pivot="12 18"><path transform="translate(1.3,1.3)" d="${VIO_BODY}" ${RS}/><path d="${VIO_BODY}" ${RF}/><g ${RF_LINE} stroke-width="1.1">${VIO_FHOLES}${VIO_BRIDGE}</g></g><g data-part="neck" data-pivot="12 8"><g transform="translate(1.3,1.3)" ${RS}>${VIO_SCROLL}</g><g ${RF}>${VIO_SCROLL}</g><g ${RF_LINE}>${VIO_PEGS}</g></g><g data-part="strings" data-pivot="12 12" ${RF_LINE} stroke-width="1.1">${VIO_STRINGS}</g><g data-part="bow" data-pivot="12 12" ${RF_LINE}>${VIO_BOW}</g>`,
     },
   },
   // 222. SAXOPHONE
@@ -113,8 +131,9 @@ export const MUSIC2_ICONS: IconDef[] = [
       solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><circle cx="10" cy="12" r="5.2" fill="#000"/><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/></mask></defs><rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2" fill="currentColor" mask="url(#__GID__-m1)"/><g data-part="platter" data-pivot="10 12" fill="currentColor"><circle cx="10" cy="12" r="4.3"/><circle cx="10" cy="12" r="1.2" opacity="0.4"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
       duotone: `<rect x="3.5" y="4.5" width="17" height="15" rx="2" ${DK}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${D}/><circle cx="10" cy="12" r="1" fill="currentColor"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${DK}/>`,
       glass: glassCompose(
-        `<g data-part="platter" data-pivot="10 12" ${GB}><circle cx="10" cy="12" r="4.5"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${GBS}/>`,
-        `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2"/>`
+        `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2" ${GB}/>`,
+        ``,
+        `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2" ${GF}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${GB}/><circle cx="10" cy="12" r="2.7" fill="none" stroke="url(#g-highlight)" stroke-width="0.55" opacity="0.7"/><path d="M10 9A3 3 0 0 1 13 12" fill="none" stroke="url(#g-highlight)" stroke-width="0.9" stroke-linecap="round"/><circle cx="10" cy="12" r="1.05" ${GH}/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="url(#g-back)" stroke-width="1.7" stroke-linecap="round"/><circle cx="17.8" cy="7.5" r="1.3" ${GB}/><circle cx="17.8" cy="7.5" r="0.55" ${GH}/>`
       ),
       stencil: `<g fill="currentColor"><rect x="3.5" y="4.5" width="17" height="2" rx="0.8"/><rect x="3.5" y="17.5" width="17" height="2" rx="0.8"/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.2"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>`,
       hardware: `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2" ${HL}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${HD}/><circle cx="10" cy="12" r="1.2" ${HA}/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="#ff6b35" stroke-width="1.8" stroke-linecap="round"/>`,
@@ -187,19 +206,20 @@ export const MUSIC2_ICONS: IconDef[] = [
     name: "spotlight",
     label: "Stage Light",
     category: "Studio & Sound",
-    motionSummary: "Stage par-can tilts forward flaring bright dramatic spotlight cone",
+    motionSummary: "Stage par-can tilts as its light cone flares across the floor",
     soundSummary: "Heavy stage breaker switch clunk + warm halogen buzz",
     svgs: {
-      outline: `<path data-part="lamp" data-pivot="8 9" d="M4.5 6.5L8.5 4.2L12.5 9.8L8.5 12.1Z" ${K}/><path data-part="beam" data-pivot="10.5 11" d="M11 10.8L19.8 14.2V19.8L9.6 11.8" ${K_THIN}/>`,
-      solid: `<path data-part="lamp" data-pivot="8 9" fill="currentColor" d="M4.2 6.4L8.6 3.8L12.8 9.8L8.4 12.4Z"/><polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" fill="currentColor" opacity="0.48"/>`,
-      duotone: `<polygon data-part="lamp" data-pivot="8 9" points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${DK}/><polygon data-part="beam" data-pivot="10.5 11" points="11 10.8 19.8 14.2 19.8 19.8 9.6 11.8" ${D}/>`,
+      outline: `<g data-part="lamp" data-pivot="12 8.3" ${K}>${SPL_CAN}${SPL_HANDLE}<g stroke-width="1.2">${SPL_LENS}</g></g><g data-part="beam" data-pivot="12 9.7" ${K_THIN}>${SPL_BEAM}${SPL_RAYS}</g>`,
+      solid: `<path data-part="beam" data-pivot="12 9.7" d="${SPL_BEAM}" fill="currentColor" opacity="0.4"/><g data-part="lamp" data-pivot="12 8.3"><path d="M8.3 3.4H15.7L17.2 8.05H6.8Z" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">${SPL_HANDLE}</g><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" fill="currentColor"/></g>`,
+      duotone: `<g data-part="beam" data-pivot="12 9.7" opacity="0.85"><path d="${SPL_BEAM}" ${D}/></g><g data-part="lamp" data-pivot="12 8.3" ${D}>${SPL_CAN}${SPL_HANDLE}<g ${DK}>${SPL_LENS}</g></g>`,
       glass: glassCompose(
-        `<polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" ${GB}/>`,
-        `<polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4"/>`
+        `<path d="${SPL_BEAM}" ${GB}/><g ${GB}>${SPL_CAN}</g>`,
+        ``,
+        `<g data-part="beam" data-pivot="12 9.7" fill="url(#g-back)" opacity="0.5">${SPL_BEAM}</g><g data-part="lamp" data-pivot="12 8.3"><g ${GF}>${SPL_CAN}</g><g fill="none" stroke="url(#g-frost)" stroke-width="1.5" stroke-linecap="round">${SPL_HANDLE}</g><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" ${GH}/></g>`
       ),
-      stencil: `<g fill="currentColor"><polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4"/><g data-part="beam" data-pivot="10.5 11"><polygon points="12.2 11 19.8 14.4 19.8 16.5 11.4 12"/><polygon points="10.6 12.6 19.8 17.6 19.8 19.8 9.6 13.4"/></g></g>`,
-      hardware: `<polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" ${HA} opacity="0.72"/><polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4" ${HD}/>`,
-      relief: `<polygon data-part="beam" data-pivot="10.5 11" points="11 10.8 19.8 14.2 19.8 19.8 9.6 11.8" ${RS}/><g data-part="lamp" data-pivot="8 9"><polygon transform="translate(1.2,1.2)" points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${RS}/><polygon points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${RF}/></g>`,
+      stencil: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><path d="M8.4 10.6L5.6 19.4H18.4L15.6 10.6Z" fill="#000"/></mask></defs><path data-part="beam" data-pivot="12 9.7" d="${SPL_BEAM}" fill="currentColor" mask="url(#__GID__-m1)"/><g data-part="lamp" data-pivot="12 8.3"><path d="M8.3 3.4H15.7L17.2 8.05H6.8Z" fill="currentColor"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">${SPL_HANDLE}</g><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" fill="currentColor"/></g>`,
+      hardware: `<path data-part="beam" data-pivot="12 9.7" d="${SPL_BEAM}" ${HA} opacity="0.4"/><g data-part="lamp" data-pivot="12 8.3"><path d="M8.3 3.4H15.7L17.2 8.05H6.8Z" ${HD}/><g fill="none" stroke="#52525b" stroke-width="1.5" stroke-linecap="round">${SPL_HANDLE}</g><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" ${HA}/></g>`,
+      relief: `<g data-part="beam" data-pivot="12 9.7"><path transform="translate(1.4,1.4)" d="${SPL_BEAM}" ${RS}/><path d="${SPL_BEAM}" ${RF}/></g><g data-part="lamp" data-pivot="12 8.3"><g transform="translate(1.4,1.4)"><path d="M8.3 3.4H15.7L17.2 8.05H6.8Z" ${RS}/><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" ${RS}/></g><path d="M8.3 3.4H15.7L17.2 8.05H6.8Z" ${RF}/><rect x="6.7" y="8.55" width="10.6" height="1.3" rx="0.65" ${RF}/><g ${RF_LINE}>${SPL_HANDLE}</g></g>`,
     },
   },
   // 230. TUNING FORK

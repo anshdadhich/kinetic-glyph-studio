@@ -1,0 +1,460 @@
+﻿
+===== everyday.ts:26-42 =====
+    name: "window",
+    label: "Window",
+    category: "Home & Lab",
+    motionSummary: "Twin casement panes swing open outward on side hinges as fresh breeze streams inside",
+    soundSummary: "Brass sash latch click + window panes opening to breeze",
+    svgs: {
+      outline: `<rect x="4" y="4" width="16" height="15.5" rx="1.4" ${K}/><line x1="2.8" y1="19.5" x2="21.2" y2="19.5" ${K}/><g data-part="pane-l" data-pivot="4.5 12" ${K_THIN}><rect x="4.8" y="4.8" width="6.8" height="13.9" rx="0.5"/><line x1="4.8" y1="11.5" x2="11.6" y2="11.5"/></g><g data-part="pane-r" data-pivot="19.5 12" ${K_THIN}><rect x="12.4" y="4.8" width="6.8" height="13.9" rx="0.5"/><line x1="12.4" y1="11.5" x2="19.2" y2="11.5"/></g><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" ${K_THIN}/>`,
+      solid: `<path fill="currentColor" fill-rule="evenodd" d="M4 3.8H20A1.3 1.3 0 0 1 21.3 5.1V19H21.6A0.9 0.9 0 0 1 21.6 20.8H2.4A0.9 0.9 0 0 1 2.4 19H2.7V5.1A1.3 1.3 0 0 1 4 3.8ZM5 5.4V18.2H19V5.4Z"/><g data-part="pane-l" data-pivot="4.8 12" fill="currentColor" opacity="0.45"><path fill-rule="evenodd" d="M5.4 5.8H11.5V17.8H5.4ZM6.6 7V11H10.3V7ZM6.6 12.2V16.6H10.3V12.2Z"/></g><g data-part="pane-r" data-pivot="19.2 12" fill="currentColor" opacity="0.45"><path fill-rule="evenodd" d="M12.5 5.8H18.6V17.8H12.5ZM13.7 7V11H17.4V7ZM13.7 12.2V16.6H17.4V12.2Z"/></g><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" fill="none" stroke="currentColor" stroke-width="1.45" stroke-linecap="round"/>`,
+      duotone: `<rect x="4" y="4" width="16" height="15.5" rx="1.4" ${DK}/><line x1="2.8" y1="19.5" x2="21.2" y2="19.5" ${DK}/><g data-part="pane-l" data-pivot="4.5 12"><rect x="4.8" y="4.8" width="6.8" height="13.9" rx="0.5" ${D}/><line x1="4.8" y1="11.5" x2="11.6" y2="11.5" ${DK_THIN}/></g><g data-part="pane-r" data-pivot="19.5 12"><rect x="12.4" y="4.8" width="6.8" height="13.9" rx="0.5" ${D}/><line x1="12.4" y1="11.5" x2="19.2" y2="11.5" ${DK_THIN}/></g><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" ${DK_THIN}/>`,
+      glass: glassCompose(
+        `<rect x="4" y="4" width="16" height="15.5" rx="1.4" ${GBS}/><rect x="2.8" y="19" width="18.4" height="1.6" rx="0.8" ${GB}/><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" ${GBS}/>`,
+        `<g><rect data-part="pane-l" data-pivot="4.8 12" x="5.2" y="5.2" width="6.2" height="13.2" rx="0.7"/><rect data-part="pane-r" data-pivot="19.2 12" x="12.6" y="5.2" width="6.2" height="13.2" rx="0.7"/></g>`
+      ),
+      stencil: `<rect x="2.8" y="19.2" width="18.4" height="1.6" rx="0.8" fill="currentColor"/><g fill="currentColor"><path data-part="pane-l" data-pivot="4.5 12" fill-rule="evenodd" d="M4.4 4.5H11.1V18.1H4.4ZM6 6.1V16.5H9.6V6.1Z"/><path data-part="pane-r" data-pivot="19.5 12" fill-rule="evenodd" d="M12.9 4.5H19.6V18.1H12.9ZM14.4 6.1V16.5H18V6.1Z"/></g><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round"/>`,
+      hardware: `<rect x="3.8" y="3.8" width="16.4" height="15.8" rx="1.4" ${HD}/><rect x="2.6" y="19" width="18.8" height="1.8" rx="0.8" ${HM}/><rect data-part="pane-l" data-pivot="4.8 12" x="5.2" y="5.2" width="6.2" height="13.2" rx="0.6" ${HL}/><rect data-part="pane-r" data-pivot="19.2 12" x="12.6" y="5.2" width="6.2" height="13.2" rx="0.6" ${HL}/><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" fill="none" stroke="#ff6b35" stroke-width="1.5" stroke-linecap="round"/>`,
+      relief: `<rect transform="translate(1.4,1.4)" x="4" y="4" width="16" height="15.5" rx="1.4" ${RS}/><rect x="4" y="4" width="16" height="15.5" rx="1.4" ${RF}/><line x1="2.8" y1="19.5" x2="21.2" y2="19.5" ${RF_LINE}/><g data-part="pane-l" data-pivot="4.5 12"><rect x="4.8" y="4.8" width="6.8" height="13.9" rx="0.5" ${RF}/><line x1="4.8" y1="11.5" x2="11.6" y2="11.5" ${RF_LINE}/></g><g data-part="pane-r" data-pivot="19.5 12"><rect x="12.4" y="4.8" width="6.8" height="13.9" rx="0.5" ${RF}/><line x1="12.4" y1="11.5" x2="19.2" y2="11.5" ${RF_LINE}/></g><path data-part="breeze" d="M6.2 9.4H14.4A1.35 1.35 0 1 0 13.1 8.05M7.2 13.4H16.2A1.35 1.35 0 1 1 14.9 14.75" ${RF_LINE}/>`,
+    },
+
+===== everyday.ts:129-145 =====
+    name: "microscope",
+    label: "Microscope",
+    category: "Home & Lab",
+    motionSummary: "Optical eyepiece tube focuses downward toward illuminated specimen slide",
+    soundSummary: "Precision focus rack clicks + lab discovery chime",
+    svgs: {
+      outline: `<g data-part="tube" data-pivot="11 8"><path d="M12.5 3.5L15 6L10.8 11.8L8.2 9.4Z" ${K}/><line x1="8.8" y1="10.2" x2="7.5" y2="12" ${K_THIN}/></g><line data-part="slide" x1="7" y1="15.2" x2="13.5" y2="15.2" ${K}/><path data-part="base" d="M13 8.8A5.2 5.2 0 0 1 14 19.2H5.5M14 19.2H18.5" ${K}/>`,
+      solid: `<g data-part="tube" data-pivot="11 8" fill="currentColor"><path d="M12.2 3.5A0.8 0.8 0 0 1 13.3 3.5L15.2 5.4A0.8 0.8 0 0 1 15.3 6.5L11.2 12A0.7 0.7 0 0 1 10.1 12.1L8 10A0.7 0.7 0 0 1 8 8.9Z"/></g><rect data-part="slide" x="6.5" y="14.2" width="7" height="1.8" rx="0.9" fill="currentColor"/><path data-part="base" d="M13 8.8A5.3 5.3 0 0 1 14.2 19.4H5.2M14.2 19.4H18.8" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"/>`,
+      duotone: `<g data-part="tube" data-pivot="11 8"><polygon points="12.5 3.5 15 6 10.8 11.8 8.2 9.4" ${D}/><line x1="8.8" y1="10.2" x2="7.5" y2="12" ${DK_THIN}/></g><line data-part="slide" x1="7" y1="15.2" x2="13.5" y2="15.2" ${DK}/><path data-part="base" d="M13 8.8A5.2 5.2 0 0 1 14 19.2H5.5M14 19.2H18.5" ${DK}/>`,
+      glass: glassCompose(
+        `<path data-part="base" d="M13 8.8A5.2 5.2 0 0 1 14 19.2H5.5M14 19.2H18.5" ${GBS}/><rect data-part="slide" x="6.5" y="14.2" width="7" height="1.8" rx="0.9" ${GB}/>`,
+        `<path data-part="tube" data-pivot="11 8" d="M12.2 3.5A0.8 0.8 0 0 1 13.3 3.5L15.2 5.4A0.8 0.8 0 0 1 15.3 6.5L11.2 12A0.7 0.7 0 0 1 10.1 12.1L8 10A0.7 0.7 0 0 1 8 8.9Z"/>`
+      ),
+      stencil: `<path data-part="tube" data-pivot="11 8" d="M12.2 3.6A0.7 0.7 0 0 1 13.2 3.6L15.1 5.5A0.7 0.7 0 0 1 15.2 6.5L11.1 11.9A0.6 0.6 0 0 1 10.1 12L8.2 10A0.6 0.6 0 0 1 8.2 9Z" fill="currentColor"/><rect data-part="slide" x="6.8" y="14.2" width="6.5" height="1.8" rx="0.9" fill="currentColor"/><g data-part="base" fill="currentColor"><path d="M13.2 8.2A5.5 5.5 0 0 1 17 18.2L15.4 16.8A3.6 3.6 0 0 0 12.4 10.2Z"/><rect x="5.5" y="18.2" width="13" height="2" rx="1"/></g>`,
+      hardware: `<path data-part="base" d="M13 8.8A5.3 5.3 0 0 1 14.2 19.4H5.2M14.2 19.4H18.8" fill="none" stroke="#3f3f46" stroke-width="2.2" stroke-linecap="round"/><rect data-part="slide" x="6.5" y="14.2" width="7" height="1.8" rx="0.8" ${HA}/><path data-part="tube" data-pivot="11 8" d="M12.2 3.5A0.8 0.8 0 0 1 13.3 3.5L15.2 5.4A0.8 0.8 0 0 1 15.3 6.5L11.2 12A0.7 0.7 0 0 1 10.1 12.1L8 10A0.7 0.7 0 0 1 8 8.9Z" ${HL}/>`,
+      relief: `<g data-part="base"><path transform="translate(1.3,1.3)" d="M13 8.8A5.2 5.2 0 0 1 14 19.2H5.5M14 19.2H18.5" ${RS_LINE}/><path d="M13 8.8A5.2 5.2 0 0 1 14 19.2H5.5M14 19.2H18.5" ${RF_LINE}/></g><line data-part="slide" x1="7" y1="15.2" x2="13.5" y2="15.2" ${RF_LINE}/><g data-part="tube" data-pivot="11 8"><polygon transform="translate(1.3,1.3)" points="12.5 3.5 15 6 10.8 11.8 8.2 9.4" ${RS}/><polygon points="12.5 3.5 15 6 10.8 11.8 8.2 9.4" ${RF}/></g>`,
+    },
+
+===== media.ts:168-185 =====
+    name: "music",
+    label: "Music",
+    category: "Media & Audio",
+    motionSummary: "Twin beamed notes dance alternately to rhythm",
+    soundSummary: "Bright C-major triad arpeggio",
+    svgs: {
+      outline: `<g data-part="note-1" data-pivot="8.5 14"><ellipse cx="6.75" cy="17.8" rx="3" ry="2.25" transform="rotate(-18 6.75 17.8)" ${K}/><path d="M9.6 17.2V6.3A1.2 1.2 0 0 1 10.5 5.15L18.2 3.3A1.2 1.2 0 0 1 19.7 4.45" ${K}/></g><g data-part="note-2" data-pivot="17 12"><ellipse cx="17" cy="15.6" rx="3" ry="2.25" transform="rotate(-18 17 15.6)" ${K}/><line x1="19.7" y1="15" x2="19.7" y2="4.45" ${K}/></g>`,
+      solid: `<g data-part="note-1" data-pivot="8.5 14" fill="currentColor"><ellipse cx="6.75" cy="17.8" rx="3.1" ry="2.35" transform="rotate(-18 6.75 17.8)"/><path d="M8.7 17.2V6.3A1.4 1.4 0 0 1 9.8 4.95L18.5 2.9A1.3 1.3 0 0 1 20.1 4.15V6.6L10.4 8.9V17.2Z"/></g><g data-part="note-2" data-pivot="17 12" fill="currentColor"><ellipse cx="17" cy="15.6" rx="3.1" ry="2.35" transform="rotate(-18 17 15.6)"/><rect x="18.6" y="4.2" width="1.75" height="11" rx="0.8"/></g>`,
+      duotone: `<g data-part="note-1" data-pivot="8.5 14"><ellipse cx="6.75" cy="17.8" rx="3" ry="2.25" transform="rotate(-18 6.75 17.8)" ${D}/><path d="M9.6 17.2V6.3A1.2 1.2 0 0 1 10.5 5.15L18.2 3.3A1.2 1.2 0 0 1 19.7 4.45" ${DK}/></g><g data-part="note-2" data-pivot="17 12"><ellipse cx="17" cy="15.6" rx="3" ry="2.25" transform="rotate(-18 17 15.6)" ${D}/><line x1="19.7" y1="15" x2="19.7" y2="4.45" ${DK}/></g>`,
+      glass: glassCompose(
+        `<line data-part="note-1" data-pivot="8.5 14" x1="9.6" y1="17.4" x2="9.6" y2="7" ${GBS}/><line data-part="note-2" data-pivot="17 12" x1="19.8" y1="15.2" x2="19.8" y2="5.2" ${GBS}/>`,
+        `<path data-part="note-1" data-pivot="14 6" d="M9.1 6.3A1.9 1.9 0 0 1 10.5 4.8L18.3 3A1.9 1.9 0 0 1 20.6 4.85V6.8A1.8 1.8 0 0 1 19.2 8.5L11.4 10.35A1.9 1.9 0 0 1 9.1 8.5Z"/>`,
+        `<g data-part="note-1" data-pivot="14 6" ${GF}><path d="M9.1 6.3A1.9 1.9 0 0 1 10.5 4.8L18.3 3A1.9 1.9 0 0 1 20.6 4.85V6.8A1.8 1.8 0 0 1 19.2 8.5L11.4 10.35A1.9 1.9 0 0 1 9.1 8.5Z"/></g><ellipse data-part="note-1" data-pivot="8.5 14" cx="6.75" cy="17.9" rx="3.5" ry="2.7" transform="rotate(-18 6.75 17.9)" ${GB}/><ellipse data-part="note-2" data-pivot="17 12" cx="17" cy="15.6" rx="3.5" ry="2.7" transform="rotate(-18 17 15.6)" ${GB}/>`
+      ),
+      stencil: `<g data-part="note-1" data-pivot="8.5 14" fill="currentColor"><ellipse cx="6.75" cy="17.8" rx="2.9" ry="2.2" transform="rotate(-18 6.75 17.8)"/><path d="M8.8 15.2V6.3A1.2 1.2 0 0 1 9.8 5.1L18.8 3V5.4L10.5 7.4V15.2Z"/></g><g data-part="note-2" data-pivot="17 12" fill="currentColor"><ellipse cx="17" cy="15.6" rx="2.9" ry="2.2" transform="rotate(-18 17 15.6)"/><rect x="18.6" y="6.8" width="1.7" height="6.8" rx="0.6"/></g>`,
+      hardware: `<g data-part="note-1" data-pivot="8.5 14"><path d="M9.6 17.2V6.3A1.2 1.2 0 0 1 10.5 5.15L18.2 3.3A1.2 1.2 0 0 1 19.7 4.45" fill="none" stroke="#52525b" stroke-width="1.9" stroke-linecap="round"/><ellipse cx="6.75" cy="17.8" rx="3.1" ry="2.35" transform="rotate(-18 6.75 17.8)" ${HA}/></g><g data-part="note-2" data-pivot="17 12"><line x1="19.7" y1="15" x2="19.7" y2="4.45" stroke="#52525b" stroke-width="1.9" stroke-linecap="round"/><ellipse cx="17" cy="15.6" rx="3.1" ry="2.35" transform="rotate(-18 17 15.6)" ${HL}/></g>`,
+      relief: `<g data-part="note-1" data-pivot="8.5 14"><g transform="translate(1.5,1.5)"><ellipse cx="6.75" cy="17.8" rx="3" ry="2.25" transform="rotate(-18 6.75 17.8)" ${RS}/><path d="M9.6 17.2V6.3A1.2 1.2 0 0 1 10.5 5.15L18.2 3.3A1.2 1.2 0 0 1 19.7 4.45" ${RS_LINE}/></g><path d="M9.6 17.2V6.3A1.2 1.2 0 0 1 10.5 5.15L18.2 3.3A1.2 1.2 0 0 1 19.7 4.45" ${RF_LINE}/><ellipse cx="6.75" cy="17.8" rx="3" ry="2.25" transform="rotate(-18 6.75 17.8)" ${RF}/></g><g data-part="note-2" data-pivot="17 12"><g transform="translate(1.5,1.5)"><ellipse cx="17" cy="15.6" rx="3" ry="2.25" transform="rotate(-18 17 15.6)" ${RS}/><line x1="19.7" y1="15" x2="19.7" y2="4.45" ${RS_LINE}/></g><line x1="19.7" y1="15" x2="19.7" y2="4.45" ${RF_LINE}/><ellipse cx="17" cy="15.6" rx="3" ry="2.25" transform="rotate(-18 17 15.6)" ${RF}/></g>`,
+    },
+
+===== media2.ts:129-140 =====
+    name: "film",
+    label: "Film Strip",
+    category: "Media & Audio",
+    motionSummary: "Perforated celluloid strip advances upward by a frame while inner shot scales",
+    soundSummary: "35mm celluloid film sprocket clicks + shutter advance",
+    svgs: simpleSvgs(
+      `<path data-part="strip" fill-rule="evenodd" d="M4 4H20V20H4ZM5.6 5.6V8H7.6V5.6ZM16.4 5.6V8H18.4V5.6ZM5.6 10V12.4H7.6V10ZM16.4 10V12.4H18.4V10ZM5.6 14.4V16.8H7.6V14.4ZM16.4 14.4V16.8H18.4V14.4Z"/>
+<g data-part="frame"><rect x="8.6" y="7.8" width="6.8" height="8.4" rx="0.8"/></g>`
+    ),
+  },
+  // 147. TV
+  {
+
+===== media2.ts:141-158 =====
+    name: "tv",
+    label: "Retro TV",
+    category: "Media & Audio",
+    motionSummary: "Rabbit-ear antennas wiggle asymmetrically as CRT screen flashes on",
+    soundSummary: "Channel dial click + warm CRT tube static hum",
+    svgs: {
+      outline: `<line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8" ${K}/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8" ${K}/><rect x="3.5" y="8" width="17" height="12" rx="2.4" ${K}/><rect data-part="screen" x="5.8" y="10.2" width="9.6" height="7.6" rx="1" ${K_THIN}/><circle cx="18" cy="12" r="0.8" fill="currentColor"/><circle cx="18" cy="15.2" r="0.8" fill="currentColor"/>`,
+      solid: `<g stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8"/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8"/></g><path fill="currentColor" fill-rule="evenodd" d="M5.8 7.8H18.2A2.4 2.4 0 0 1 20.6 10.2V17.8A2.4 2.4 0 0 1 18.2 20.2H5.8A2.4 2.4 0 0 1 3.4 17.8V10.2A2.4 2.4 0 0 1 5.8 7.8ZM6 10.4V17.6H15.2V10.4ZM17.8 11.4A0.9 0.9 0 1 0 17.8 13.2A0.9 0.9 0 1 0 17.8 11.4ZM17.8 14.8A0.9 0.9 0 1 0 17.8 16.6A0.9 0.9 0 1 0 17.8 14.8Z"/><rect data-part="screen" x="6.6" y="11" width="8" height="6" rx="0.8" fill="currentColor" opacity="0.45"/>`,
+      duotone: `<line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8" ${DK}/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8" ${DK}/><rect x="3.5" y="8" width="17" height="12" rx="2.4" ${DK}/><rect data-part="screen" x="5.8" y="10.2" width="9.6" height="7.6" rx="1" ${D}/><circle cx="18" cy="12" r="0.8" fill="currentColor"/><circle cx="18" cy="15.2" r="0.8" fill="currentColor"/>`,
+      glass: glassCompose(
+        `<line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8" ${GBS}/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8" ${GBS}/>`,
+        `<rect x="3.5" y="8" width="17" height="12" rx="2.4"/>`,
+        `<g ${GF}><rect x="3.5" y="8" width="17" height="12" rx="2.4"/></g><rect data-part="screen" x="5.8" y="10.2" width="9.6" height="7.6" rx="1" ${GB}/><circle cx="18" cy="12" r="0.8" ${GB}/><circle cx="18" cy="15.2" r="0.8" ${GB}/>`
+      ),
+      stencil: `<g stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8"/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8"/></g><g fill="currentColor"><path d="M5.6 8.2H15.8V10H5.6V18H15.8V19.8H5.6A2.2 2.2 0 0 1 3.4 17.6V10.4A2.2 2.2 0 0 1 5.6 8.2Z"/><rect data-part="screen" x="6.8" y="11" width="7.8" height="6" rx="0.8"/><path d="M17.2 8.2H18.4A2.2 2.2 0 0 1 20.6 10.4V17.6A2.2 2.2 0 0 1 18.4 19.8H17.2Z"/></g>`,
+      hardware: `<g stroke="#52525b" stroke-width="1.8" stroke-linecap="round"><line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8"/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8"/></g><rect x="3.5" y="8" width="17" height="12" rx="2.4" ${HD}/><rect data-part="screen" x="5.6" y="10.2" width="9.8" height="7.6" rx="1.2" ${HL}/><circle cx="18" cy="12" r="1" ${HA}/><circle cx="18" cy="15.5" r="0.9" ${HM}/>`,
+      relief: `<line data-part="ant-l" data-pivot="12 8" x1="12" y1="8" x2="7.5" y2="3.8" ${RF_LINE}/><line data-part="ant-r" data-pivot="12 8" x1="12" y1="8" x2="16.5" y2="3.8" ${RF_LINE}/><rect transform="translate(1.3,1.3)" x="3.5" y="8" width="17" height="12" rx="2.4" ${RS}/><rect x="3.5" y="8" width="17" height="12" rx="2.4" ${RF}/><rect data-part="screen" x="5.8" y="10.2" width="9.6" height="7.6" rx="1" ${RF}/>`,
+    },
+
+===== media2.ts:202-218 =====
+    name: "captions",
+    label: "Subtitles",
+    category: "Media & Audio",
+    motionSummary: "Caption display frame pops gently while lower subtitle bars animate",
+    soundSummary: "Soft teleprompter tick + closed-caption switch pop",
+    svgs: {
+      outline: `<rect data-part="frame" x="3.5" y="5" width="17" height="14" rx="2.4" ${K}/><g data-part="lines" ${K_THIN}><line x1="6.8" y1="12.2" x2="11.2" y2="12.2"/><line x1="13.4" y1="12.2" x2="17.2" y2="12.2"/><line x1="6.8" y1="15.2" x2="14.5" y2="15.2"/></g>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><g data-part="lines" fill="#000"><rect x="6.5" y="11.4" width="4.8" height="1.6" rx="0.8"/><rect x="13" y="11.4" width="4.5" height="1.6" rx="0.8"/><rect x="6.5" y="14.4" width="8.2" height="1.6" rx="0.8"/></g></mask></defs><rect data-part="frame" x="3.5" y="5" width="17" height="14" rx="2.5" fill="currentColor" mask="url(#__GID__-m1)"/>`,
+      duotone: `<rect data-part="frame" x="3.5" y="5" width="17" height="14" rx="2.4" ${D}/><g data-part="lines" ${DK}><line x1="6.8" y1="12.2" x2="11.2" y2="12.2"/><line x1="13.4" y1="12.2" x2="17.2" y2="12.2"/><line x1="6.8" y1="15.2" x2="14.5" y2="15.2"/></g>`,
+      glass: glassCompose(
+        `<g data-part="lines" ${GB}><rect x="6.5" y="11.4" width="4.8" height="1.6" rx="0.8"/><rect x="13" y="11.4" width="4.5" height="1.6" rx="0.8"/><rect x="6.5" y="14.4" width="8.2" height="1.6" rx="0.8"/></g>`,
+        `<rect data-part="frame" x="3.5" y="5" width="17" height="14" rx="2.5"/>`
+      ),
+      stencil: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><g data-part="lines" fill="#000"><rect x="6.5" y="11.4" width="4.8" height="1.6" rx="0.8"/><rect x="13" y="11.4" width="4.5" height="1.6" rx="0.8"/><rect x="6.5" y="14.4" width="8.2" height="1.6" rx="0.8"/></g></mask></defs><g data-part="frame" fill="currentColor" mask="url(#__GID__-m1)"><rect x="3.5" y="5" width="17" height="5" rx="1.6"/><rect x="3.5" y="11" width="17" height="8" rx="1.8"/></g>`,
+      hardware: `<rect data-part="frame" x="3.5" y="5" width="17" height="14" rx="2.4" ${HD}/><g data-part="lines"><rect x="6.5" y="11.4" width="4.8" height="1.6" rx="0.8" ${HL}/><rect x="13" y="11.4" width="4.5" height="1.6" rx="0.8" ${HA}/><rect x="6.5" y="14.4" width="8.2" height="1.6" rx="0.8" ${HL}/></g>`,
+      relief: `<g data-part="frame"><rect transform="translate(1.3,1.3)" x="3.5" y="5" width="17" height="14" rx="2.4" ${RS}/><rect x="3.5" y="5" width="17" height="14" rx="2.4" ${RF}/></g><g data-part="lines" ${RF_LINE}><line x1="6.8" y1="12.2" x2="11.2" y2="12.2"/><line x1="13.4" y1="12.2" x2="17.2" y2="12.2"/><line x1="6.8" y1="15.2" x2="14.5" y2="15.2"/></g>`,
+    },
+
+===== music.ts:27-44 =====
+    name: "guitar",
+    label: "Guitar",
+    category: "Studio & Sound",
+    motionSummary: "Plectrum strums across strings while acoustic body tilts with resonance",
+    soundSummary: "Warm 5-string acoustic chord strum",
+    svgs: {
+      outline: `<g data-part="body" data-pivot="12 12" ${K}><rect x="15.8" y="4.2" width="4.2" height="3.8" rx="1" transform="rotate(45 17.9 6.1)"/><line x1="16.2" y1="7.8" x2="11.4" y2="12.6"/><path d="M9.6 10.6C7.8 10.4 6.2 11.4 5.8 13C5.4 14.3 4.2 15 3.6 16.2A3.6 3.6 0 0 0 8.6 20.6C9.8 20 10.5 18.8 11.8 18.4C13.4 18 14.4 16.4 14.2 14.6Z"/></g><g data-part="strings" data-pivot="10 14" ${K_THIN}><line x1="7.2" y1="14.5" x2="9.7" y2="17"/><line x1="8.6" y1="13.1" x2="11.1" y2="15.6"/></g><polygon data-part="pick" data-pivot="12 14" points="12.2 12.6 13.8 13.2 12.6 14.6" fill="currentColor"/>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><g data-part="strings" data-pivot="10 14" stroke="#000" stroke-width="1.25" stroke-linecap="round"><line x1="7" y1="14.4" x2="9.6" y2="17"/><line x1="8.5" y1="12.9" x2="11.1" y2="15.5"/></g><circle data-part="pick" data-pivot="12 14" cx="12.5" cy="13.5" r="1" fill="#000"/></mask></defs><g mask="url(#__GID__-m1)"><g data-part="body" data-pivot="12 12" fill="currentColor"><rect x="15.6" y="4" width="4.4" height="4" rx="1.1" transform="rotate(45 17.8 6)"/><path d="M15.5 7L17 8.5L11.8 13.7L10.3 12.2Z"/><path d="M9.8 10.4C7.8 10.2 6.1 11.3 5.6 13C5.2 14.4 4 15.1 3.3 16.4A3.8 3.8 0 0 0 8.6 20.9C9.9 20.2 10.6 19 12 18.6C13.7 18.1 14.8 16.4 14.6 14.4Z"/></g></g>`,
+      duotone: `<g data-part="body" data-pivot="12 12"><rect x="15.8" y="4.2" width="4.2" height="3.8" rx="1" transform="rotate(45 17.9 6.1)" ${D}/><line x1="16.2" y1="7.8" x2="11.4" y2="12.6" ${DK}/><path d="M9.6 10.6C7.8 10.4 6.2 11.4 5.8 13C5.4 14.3 4.2 15 3.6 16.2A3.6 3.6 0 0 0 8.6 20.6C9.8 20 10.5 18.8 11.8 18.4C13.4 18 14.4 16.4 14.2 14.6Z" ${D}/></g><g data-part="strings" data-pivot="10 14" ${DK_THIN}><line x1="7.2" y1="14.5" x2="9.7" y2="17"/><line x1="8.6" y1="13.1" x2="11.1" y2="15.6"/></g><polygon data-part="pick" data-pivot="12 14" points="12.2 12.6 13.8 13.2 12.6 14.6" fill="currentColor"/>`,
+      glass: glassCompose(
+        `<g data-part="body" data-pivot="12 12" ${GB}><rect x="15.6" y="4" width="4.4" height="4" rx="1.1" transform="rotate(45 17.8 6)"/><path d="M15.5 7L17 8.5L11.8 13.7L10.3 12.2Z"/></g>`,
+        `<path data-part="body" data-pivot="12 12" d="M9.8 10.4C7.8 10.2 6.1 11.3 5.6 13C5.2 14.4 4 15.1 3.3 16.4A3.8 3.8 0 0 0 8.6 20.9C9.9 20.2 10.6 19 12 18.6C13.7 18.1 14.8 16.4 14.6 14.4Z"/>`,
+        `<g data-part="body" data-pivot="12 12" ${GF}><path d="M9.8 10.4C7.8 10.2 6.1 11.3 5.6 13C5.2 14.4 4 15.1 3.3 16.4A3.8 3.8 0 0 0 8.6 20.9C9.9 20.2 10.6 19 12 18.6C13.7 18.1 14.8 16.4 14.6 14.4Z"/></g><g data-part="strings" data-pivot="10 14" ${GBS}><line x1="7" y1="14.4" x2="9.6" y2="17"/><line x1="8.5" y1="12.9" x2="11.1" y2="15.5"/></g><circle data-part="pick" data-pivot="12 14" cx="12.6" cy="13.5" r="1.15" ${GH}/>`
+      ),
+      stencil: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><g data-part="strings" data-pivot="10 14" stroke="#000" stroke-width="1.25" stroke-linecap="round"><line x1="7" y1="14.4" x2="9.4" y2="16.8"/><line x1="8.4" y1="13" x2="10.8" y2="15.4"/></g><circle data-part="pick" data-pivot="12 14" cx="12.5" cy="13.5" r="1" fill="#000"/></mask></defs><g mask="url(#__GID__-m1)"><g data-part="body" data-pivot="12 12" fill="currentColor"><rect x="15.6" y="4" width="4.4" height="4" rx="1" transform="rotate(45 17.8 6)"/><path d="M15.2 7.2L16.8 8.8L12.6 13L11 11.4Z"/><path d="M9.6 10.6C7.6 10.4 6 11.5 5.6 13.2L11 18.6C12.7 18.2 14.2 16.6 14.2 14.6Z"/><path d="M4.6 14.6C4 15.4 3.4 16 3.3 16.5A3.8 3.8 0 0 0 8.5 20.8C9 20.6 9.6 20 10.1 19.5Z"/></g></g>`,
+      hardware: `<g data-part="body" data-pivot="12 12"><rect x="15.6" y="4" width="4.4" height="4" rx="1" transform="rotate(45 17.8 6)" ${HD}/><path d="M15.5 7L17 8.5L11.8 13.7L10.3 12.2Z" ${HM}/><path d="M9.8 10.4C7.8 10.2 6.1 11.3 5.6 13C5.2 14.4 4 15.1 3.3 16.4A3.8 3.8 0 0 0 8.6 20.9C9.9 20.2 10.6 19 12 18.6C13.7 18.1 14.8 16.4 14.6 14.4Z" ${HL}/></g><g data-part="strings" data-pivot="10 14" stroke="#52525b" stroke-width="1.25" stroke-linecap="round"><line x1="7" y1="14.4" x2="9.6" y2="17"/><line x1="8.5" y1="12.9" x2="11.1" y2="15.5"/></g><circle data-part="pick" data-pivot="12 14" cx="12.5" cy="13.5" r="1.15" ${HA}/>`,
+      relief: `<g data-part="body" data-pivot="12 12"><path transform="translate(1.4,1.4)" d="M9.6 10.6C7.8 10.4 6.2 11.4 5.8 13C5.4 14.3 4.2 15 3.6 16.2A3.6 3.6 0 0 0 8.6 20.6C9.8 20 10.5 18.8 11.8 18.4C13.4 18 14.4 16.4 14.2 14.6Z" ${RS}/><rect x="15.8" y="4.2" width="4.2" height="3.8" rx="1" transform="rotate(45 17.9 6.1)" ${RF}/><line x1="16.2" y1="7.8" x2="11.4" y2="12.6" ${RF_LINE}/><path d="M9.6 10.6C7.8 10.4 6.2 11.4 5.8 13C5.4 14.3 4.2 15 3.6 16.2A3.6 3.6 0 0 0 8.6 20.6C9.8 20 10.5 18.8 11.8 18.4C13.4 18 14.4 16.4 14.2 14.6Z" ${RF}/></g><g data-part="strings" data-pivot="10 14" ${RF_LINE}><line x1="7.2" y1="14.5" x2="9.7" y2="17"/><line x1="8.6" y1="13.1" x2="11.1" y2="15.6"/></g><polygon data-part="pick" data-pivot="12 14" points="12.2 12.6 13.8 13.2 12.6 14.6" ${RS}/>`,
+    },
+
+===== music.ts:88-104 =====
+    name: "trumpet",
+    label: "Trumpet",
+    category: "Studio & Sound",
+    motionSummary: "Brass horn lifts as piston valves depress and sound rays flare",
+    soundSummary: "Bright brass jazz fanfare fifth",
+    svgs: {
+      outline: `<g data-part="horn" data-pivot="6 13" ${K}><path d="M3 13H12.2C14.6 13 16.8 10.6 18.2 8.2V17.8C16.8 15.4 14.6 13 12.2 13"/><path d="M7.5 13V15.5A1.8 1.8 0 0 0 9.3 17.3H12A1.8 1.8 0 0 0 13.8 15.5V13"/></g><g data-part="valves" ${K_THIN}><line x1="9" y1="13" x2="9" y2="9.4"/><line x1="11" y1="13" x2="11" y2="9.4"/><line x1="13" y1="13" x2="13" y2="9.4"/></g><g data-part="blast" data-pivot="19.5 13" ${K_THIN}><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+      solid: `<g data-part="horn" data-pivot="6 13" fill="currentColor"><path d="M2.8 12.1H12.2C14.6 12.1 16.8 9.8 18.5 7.6V18.4C16.8 16.2 14.6 13.9 12.2 13.9H2.8Z"/><path d="M7.4 13.5V15.6A2 2 0 0 0 9.4 17.6H12A2 2 0 0 0 14 15.6V13.5" fill="none" stroke="currentColor" stroke-width="1.7"/></g><g data-part="valves" fill="currentColor"><rect x="8.3" y="9" width="1.4" height="3.6" rx="0.6"/><rect x="10.3" y="9" width="1.4" height="3.6" rx="0.6"/><rect x="12.3" y="9" width="1.4" height="3.6" rx="0.6"/></g><g data-part="blast" data-pivot="19.5 13" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+      duotone: `<g data-part="horn" data-pivot="6 13"><path d="M12.2 13C14.6 13 16.8 10.6 18.2 8.2V17.8C16.8 15.4 14.6 13 12.2 13Z" ${D}/><path d="M3 13H12.2M7.5 13V15.5A1.8 1.8 0 0 0 9.3 17.3H12A1.8 1.8 0 0 0 13.8 15.5V13" ${DK}/></g><g data-part="valves" ${DK_THIN}><line x1="9" y1="13" x2="9" y2="9.4"/><line x1="11" y1="13" x2="11" y2="9.4"/><line x1="13" y1="13" x2="13" y2="9.4"/></g><g data-part="blast" data-pivot="19.5 13" ${DK_THIN}><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+      glass: glassCompose(
+        `<g data-part="valves" ${GB}><rect x="8.3" y="9" width="1.4" height="3.8" rx="0.6"/><rect x="10.3" y="9" width="1.4" height="3.8" rx="0.6"/><rect x="12.3" y="9" width="1.4" height="3.8" rx="0.6"/></g><g data-part="blast" data-pivot="19.5 13" ${GBS}><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+        `<path data-part="horn" data-pivot="6 13" d="M2.8 12H12.2C14.6 12 16.8 9.8 18.5 7.6V18.4C16.8 16.2 14.6 14 12.2 14H2.8Z"/>`
+      ),
+      stencil: `<g data-part="horn" data-pivot="6 13" fill="currentColor"><rect x="2.8" y="12.1" width="9.2" height="1.8" rx="0.7"/><path d="M13.2 11.8C15.2 11.2 17 9.4 18.4 7.8V18.2C17 16.6 15.2 14.8 13.2 14.2Z"/><rect x="7.8" y="15.4" width="5.2" height="1.8" rx="0.8"/></g><g data-part="valves" fill="currentColor"><rect x="8.3" y="9" width="1.4" height="2.6" rx="0.5"/><rect x="10.3" y="9" width="1.4" height="2.6" rx="0.5"/><rect x="12.3" y="9" width="1.4" height="2.6" rx="0.5"/></g><g data-part="blast" data-pivot="19.5 13" ${K_THIN}><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+      hardware: `<g data-part="valves"><rect x="8.3" y="9" width="1.4" height="3.8" rx="0.5" ${HA}/><rect x="10.3" y="9" width="1.4" height="3.8" rx="0.5" ${HA}/><rect x="12.3" y="9" width="1.4" height="3.8" rx="0.5" ${HA}/></g><g data-part="horn" data-pivot="6 13"><path d="M7.4 13.5V15.6A2 2 0 0 0 9.4 17.6H12A2 2 0 0 0 14 15.6V13.5" fill="none" stroke="#52525b" stroke-width="1.7"/><path d="M2.8 12.1H12.2C14.6 12.1 16.8 9.8 18.5 7.6V18.4C16.8 16.2 14.6 13.9 12.2 13.9H2.8Z" ${HL}/></g><g data-part="blast" data-pivot="19.5 13" stroke="#ff6b35" stroke-width="1.8" stroke-linecap="round"><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+      relief: `<g data-part="horn" data-pivot="6 13"><path transform="translate(1.4,1.4)" d="M12.2 13C14.6 13 16.8 10.6 18.2 8.2V17.8C16.8 15.4 14.6 13 12.2 13Z" ${RS}/><path d="M3 13H12.2M7.5 13V15.5A1.8 1.8 0 0 0 9.3 17.3H12A1.8 1.8 0 0 0 13.8 15.5V13" ${RF_LINE}/><path d="M12.2 13C14.6 13 16.8 10.6 18.2 8.2V17.8C16.8 15.4 14.6 13 12.2 13Z" ${RF}/></g><g data-part="valves" ${RF_LINE}><line x1="9" y1="13" x2="9" y2="9.4"/><line x1="11" y1="13" x2="11" y2="9.4"/><line x1="13" y1="13" x2="13" y2="9.4"/></g><g data-part="blast" data-pivot="19.5 13" ${RF_LINE}><line x1="20.2" y1="10.5" x2="22" y2="9.2"/><line x1="20.4" y1="13" x2="22.4" y2="13"/><line x1="20.2" y1="15.5" x2="22" y2="16.8"/></g>`,
+    },
+
+===== music2.ts:26-42 =====
+    name: "violin",
+    label: "Violin",
+    category: "Studio & Sound",
+    motionSummary: "Wooden bow glides smoothly across violin strings while body resonates",
+    soundSummary: "Warm expressively bowed violin string fifth",
+    svgs: {
+      outline: `<g data-part="body" data-pivot="12 12" ${K}><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12"/><path d="M9.6 10.2C8.4 10.8 8.4 12.6 9.2 13.6C7.6 14.2 6 15.8 6.8 17.6C7.6 19.4 10.6 19.8 12.2 18.2C13.8 16.6 13.4 14.2 12 13.2"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${K_THIN}/>`,
+      solid: `<g data-part="body" data-pivot="12 12" fill="currentColor"><path d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z"/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
+      duotone: `<g data-part="body" data-pivot="12 12"><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12" ${DK}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${D}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${DK_THIN}/>`,
+      glass: glassCompose(
+        `<path data-part="body" data-pivot="12 12" d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z" ${GB}/><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${GBS}/>`,
+        `<path data-part="body" data-pivot="12 12" d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/>`
+      ),
+      stencil: `<g fill="currentColor"><g data-part="body" data-pivot="12 12"><path d="M15.5 4.8L19.2 8.5L18 9.7L14.3 6Z"/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z"/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"/></g>`,
+      hardware: `<g data-part="body" data-pivot="12 12"><path d="M15.5 4.8L19.2 8.5L18 9.7L16.7 8.4L12.6 12.5L11.5 11.4L15.6 7.3L14.3 6Z" ${HD}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${HL}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" stroke="#ff6b35" stroke-width="1.6" stroke-linecap="round"/>`,
+      relief: `<g data-part="body" data-pivot="12 12"><path transform="translate(1.2,1.2)" d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${RS}/><path d="M15.8 5.2L18.8 8.2M17.3 6.7L12 12" ${RF_LINE}/><path d="M11.6 10.4C10.2 9.2 8.2 10.2 8.4 12.2C6.8 12.8 5.4 15.4 6.6 17.6C7.8 19.8 11.2 19.8 12.8 17.8C14.2 16.2 13.8 13.8 12.6 12.8Z" ${RF}/></g><line data-part="bow" data-pivot="12 12" x1="5" y1="8.5" x2="18.5" y2="17" ${RF_LINE}/>`,
+    },
+
+===== music2.ts:46-62 =====
+    name: "saxophone",
+    label: "Saxophone",
+    category: "Studio & Sound",
+    motionSummary: "Curved brass horn sways soulfully as warm jazz note floats upward",
+    soundSummary: "Soulful brass jazz saxophone swell",
+    svgs: {
+      outline: `<path data-part="horn" data-pivot="11 17" d="M6.5 4.8H8.8A2.2 2.2 0 0 1 11 7V15.5A2.5 2.5 0 0 0 16 15.5V12.5H13.5L18.5 11.5L17.5 16.5A4.2 4.2 0 0 1 9 16.5V7H6.5" ${K}/><circle data-part="note" cx="18.5" cy="6.2" r="1.4" fill="currentColor"/>`,
+      solid: `<path data-part="horn" data-pivot="11 17" fill="currentColor" d="M6.2 4.2H9A2.6 2.6 0 0 1 11.6 6.8V15.4A2 2 0 0 0 15.6 15.4V13.2L13.5 12.4L19.4 10.8L18.4 16.5A4.6 4.6 0 0 1 9.2 16.5V7.2H6.2Z"/><circle data-part="note" cx="18.5" cy="6.2" r="1.5" fill="currentColor"/>`,
+      duotone: `<path data-part="horn" data-pivot="11 17" d="M6.5 4.8H8.8A2.2 2.2 0 0 1 11 7V15.5A2.5 2.5 0 0 0 16 15.5V12.5H13.5L18.5 11.5L17.5 16.5A4.2 4.2 0 0 1 9 16.5V7H6.5" ${D}/><circle data-part="note" cx="18.5" cy="6.2" r="1.4" fill="currentColor"/>`,
+      glass: glassCompose(
+        `<circle data-part="note" cx="18.5" cy="6.2" r="1.5" ${GB}/>`,
+        `<path data-part="horn" data-pivot="11 17" d="M6.2 4.2H9A2.6 2.6 0 0 1 11.6 6.8V15.4A2 2 0 0 0 15.6 15.4V13.2L13.5 12.4L19.4 10.8L18.4 16.5A4.6 4.6 0 0 1 9.2 16.5V7.2H6.2Z"/>`
+      ),
+      stencil: `<g fill="currentColor"><g data-part="horn" data-pivot="11 17"><path d="M6.2 4.4H9A2.4 2.4 0 0 1 11.4 6.8V13H9.2V7H6.2Z"/><path d="M9.2 14.4H11.4V15.5A2.2 2.2 0 0 0 15.8 15.5V13.2L13.6 12.4L19.2 11L18.2 16.5A4.4 4.4 0 0 1 9.2 16.5Z"/></g><circle data-part="note" cx="18.5" cy="6.2" r="1.4"/></g>`,
+      hardware: `<path data-part="horn" data-pivot="11 17" d="M6.2 4.2H9A2.6 2.6 0 0 1 11.6 6.8V15.4A2 2 0 0 0 15.6 15.4V13.2L13.5 12.4L19.4 10.8L18.4 16.5A4.6 4.6 0 0 1 9.2 16.5V7.2H6.2Z" ${HL}/><circle data-part="note" cx="18.5" cy="6.2" r="1.5" ${HA}/>`,
+      relief: `<g data-part="horn" data-pivot="11 17"><path transform="translate(1.2,1.2)" d="M6.2 4.4H9A2.4 2.4 0 0 1 11.4 6.8V15.4A2 2 0 0 0 15.4 15.4V13.2L13.5 12.4L19.2 11L18.2 16.5A4.4 4.4 0 0 1 9.2 16.5V7H6.2Z" ${RS}/><path d="M6.2 4.4H9A2.4 2.4 0 0 1 11.4 6.8V15.4A2 2 0 0 0 15.4 15.4V13.2L13.5 12.4L19.2 11L18.2 16.5A4.4 4.4 0 0 1 9.2 16.5V7H6.2Z" ${RF}/></g><circle data-part="note" cx="18.5" cy="6.2" r="1.4" ${RS}/>`,
+    },
+
+===== music2.ts:106-122 =====
+    name: "turntable",
+    label: "Turntable",
+    category: "Studio & Sound",
+    motionSummary: "Direct-drive platter spins 360┬░ as S-shaped tonearm drops onto vinyl groove",
+    soundSummary: "DJ vinyl slipmat scratch + warm house bass pulse",
+    svgs: {
+      outline: `<rect x="3.5" y="4.5" width="17" height="15" rx="2" ${K}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${K}/><circle cx="10" cy="12" r="1" fill="currentColor"/><path d="M10 9A3 3 0 0 1 13 12" ${K_THIN}/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${K}/>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><circle cx="10" cy="12" r="5.2" fill="#000"/><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round"/></mask></defs><rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2" fill="currentColor" mask="url(#__GID__-m1)"/><g data-part="platter" data-pivot="10 12" fill="currentColor"><circle cx="10" cy="12" r="4.3"/><circle cx="10" cy="12" r="1.2" opacity="0.4"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"/>`,
+      duotone: `<rect x="3.5" y="4.5" width="17" height="15" rx="2" ${DK}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${D}/><circle cx="10" cy="12" r="1" fill="currentColor"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${DK}/>`,
+      glass: glassCompose(
+        `<g data-part="platter" data-pivot="10 12" ${GB}><circle cx="10" cy="12" r="4.5"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${GBS}/>`,
+        `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2.2"/>`
+      ),
+      stencil: `<g fill="currentColor"><rect x="3.5" y="4.5" width="17" height="2" rx="0.8"/><rect x="3.5" y="17.5" width="17" height="2" rx="0.8"/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.2"/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round"/></g>`,
+      hardware: `<rect x="3.4" y="4.4" width="17.2" height="15.2" rx="2" ${HL}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${HD}/><circle cx="10" cy="12" r="1.2" ${HA}/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" fill="none" stroke="#ff6b35" stroke-width="1.8" stroke-linecap="round"/>`,
+      relief: `<rect transform="translate(1.3,1.3)" x="3.5" y="4.5" width="17" height="15" rx="2" ${RS}/><rect x="3.5" y="4.5" width="17" height="15" rx="2" ${RF}/><g data-part="platter" data-pivot="10 12"><circle cx="10" cy="12" r="4.5" ${RF}/><circle cx="10" cy="12" r="1" ${RS}/></g><path data-part="arm" data-pivot="17.8 7.5" d="M17.8 7.5V13.5L15.5 15.8" ${RF_LINE}/>`,
+    },
+
+===== music2.ts:187-203 =====
+    name: "spotlight",
+    label: "Stage Light",
+    category: "Studio & Sound",
+    motionSummary: "Stage par-can tilts forward flaring bright dramatic spotlight cone",
+    soundSummary: "Heavy stage breaker switch clunk + warm halogen buzz",
+    svgs: {
+      outline: `<path data-part="lamp" data-pivot="8 9" d="M4.5 6.5L8.5 4.2L12.5 9.8L8.5 12.1Z" ${K}/><path data-part="beam" data-pivot="10.5 11" d="M11 10.8L19.8 14.2V19.8L9.6 11.8" ${K_THIN}/>`,
+      solid: `<path data-part="lamp" data-pivot="8 9" fill="currentColor" d="M4.2 6.4L8.6 3.8L12.8 9.8L8.4 12.4Z"/><polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" fill="currentColor" opacity="0.48"/>`,
+      duotone: `<polygon data-part="lamp" data-pivot="8 9" points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${DK}/><polygon data-part="beam" data-pivot="10.5 11" points="11 10.8 19.8 14.2 19.8 19.8 9.6 11.8" ${D}/>`,
+      glass: glassCompose(
+        `<polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" ${GB}/>`,
+        `<polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4"/>`
+      ),
+      stencil: `<g fill="currentColor"><polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4"/><g data-part="beam" data-pivot="10.5 11"><polygon points="12.2 11 19.8 14.4 19.8 16.5 11.4 12"/><polygon points="10.6 12.6 19.8 17.6 19.8 19.8 9.6 13.4"/></g></g>`,
+      hardware: `<polygon data-part="beam" data-pivot="10.5 11" points="11.5 10.6 20 14.4 20 20 9.6 12" ${HA} opacity="0.72"/><polygon data-part="lamp" data-pivot="8 9" points="4.2 6.4 8.6 3.8 12.8 9.8 8.4 12.4" ${HD}/>`,
+      relief: `<polygon data-part="beam" data-pivot="10.5 11" points="11 10.8 19.8 14.2 19.8 19.8 9.6 11.8" ${RS}/><g data-part="lamp" data-pivot="8 9"><polygon transform="translate(1.2,1.2)" points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${RS}/><polygon points="4.5 6.5 8.5 4.2 12.5 9.8 8.5 12.1" ${RF}/></g>`,
+    },
+
+===== tools.ts:26-170 =====
+    name: "bicycle",
+    label: "Bicycle",
+    category: "Kinetic Tools",
+    motionSummary: "Steady frame while airy wheels and crank spin +360┬░",
+    soundSummary: "Brass bicycle bell + freewheel coasting ratchet",
+    svgs: {
+      outline: `
+        <g data-part="wheel-back" data-pivot="5.8 16" ${K}>
+          <circle cx="5.8" cy="16" r="3.8"/>
+          ${triSpokes(5.8, 16, 3.2, 'stroke="currentColor" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16" ${K}>
+          <circle cx="18.2" cy="16" r="3.8"/>
+          ${triSpokes(18.2, 16, 3.2, 'stroke="currentColor" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <g data-part="frame" ${K}>
+          <path d="M5.8 16L9.4 10.4H15L11.2 16Z"/>
+          <path d="M18.2 16L15 8H17.4"/>
+          <path d="M8.2 8H10.8M9.4 10.4L9.2 8"/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16">
+          <circle cx="11.2" cy="16" r="1.1" fill="currentColor"/>
+          <line x1="11.2" y1="14" x2="11.2" y2="18" stroke="currentColor" stroke-width="1.2" stroke-linecap="round"/>
+        </g>
+      `,
+      solid: `
+        <g data-part="wheel-back" data-pivot="5.8 16" fill="currentColor">
+          <path fill-rule="evenodd" d="M5.8 12A4 4 0 1 0 5.8 20A4 4 0 1 0 5.8 12ZM5.8 13.4A2.6 2.6 0 1 1 5.8 18.6A2.6 2.6 0 1 1 5.8 13.4Z"/>
+          ${triSpokes(5.8, 16, 2.8, 'stroke="currentColor" stroke-width="0.7" stroke-linecap="round"')}
+          <circle cx="5.8" cy="16" r="0.8"/>
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16" fill="currentColor">
+          <path fill-rule="evenodd" d="M18.2 12A4 4 0 1 0 18.2 20A4 4 0 1 0 18.2 12ZM18.2 13.4A2.6 2.6 0 1 1 18.2 18.6A2.6 2.6 0 1 1 18.2 13.4Z"/>
+          ${triSpokes(18.2, 16, 2.8, 'stroke="currentColor" stroke-width="0.7" stroke-linecap="round"')}
+          <circle cx="18.2" cy="16" r="0.8"/>
+        </g>
+        <g data-part="frame" ${K}>
+          <path d="M5.8 16L9.4 10.4H15L11.2 16Z"/>
+          <path d="M18.2 16L15 8H17.4"/>
+          <line x1="8" y1="8" x2="11" y2="8"/>
+          <line x1="9.4" y1="10.4" x2="9.2" y2="8"/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16" fill="currentColor">
+          <circle cx="11.2" cy="16" r="1.4"/>
+          <rect x="10.7" y="13.7" width="1" height="4.6" rx="0.4"/>
+        </g>
+      `,
+      duotone: `
+        <g data-part="wheel-back" data-pivot="5.8 16">
+          <circle cx="5.8" cy="16" r="3.8" ${DK}/>
+          ${triSpokes(5.8, 16, 3.2, 'stroke="currentColor" stroke-width="0.7" stroke-linecap="round"')}
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16">
+          <circle cx="18.2" cy="16" r="3.8" ${DK}/>
+          ${triSpokes(18.2, 16, 3.2, 'stroke="currentColor" stroke-width="0.7" stroke-linecap="round"')}
+        </g>
+        <g data-part="frame">
+          <path d="M5.8 16L9.4 10.4H15L11.2 16Z" ${D}/>
+          <path d="M18.2 16L15 8H17.4M8.2 8H10.8M9.4 10.4L9.2 8" ${DK}/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16">
+          <circle cx="11.2" cy="16" r="1" fill="currentColor"/>
+          <line x1="11.2" y1="14" x2="11.2" y2="18" stroke="currentColor" stroke-width="1" stroke-linecap="round"/>
+        </g>
+      `,
+      glass: glassCompose(
+        `<g data-part="wheel-back" data-pivot="5.8 16">
+          <circle cx="5.8" cy="16" r="3.8" ${GBS}/>
+          ${triSpokes(5.8, 16, 3.1, 'stroke="url(#g-back)" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16">
+          <circle cx="18.2" cy="16" r="3.8" ${GBS}/>
+          ${triSpokes(18.2, 16, 3.1, 'stroke="url(#g-back)" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <path data-part="frame" d="M18.2 16L15 8H17.4M8.2 8H10.8M9.4 10.4L9.2 8" ${GBS}/>
+        <g data-part="crank" data-pivot="11.2 16">
+          <line x1="11.2" y1="13.8" x2="11.2" y2="18.2" stroke="url(#g-back)" stroke-width="1.2" stroke-linecap="round"/>
+        </g>`,
+        `<path data-part="frame" d="M5.8 16L9.4 10.4H15L11.2 16Z"/><circle data-part="wheel-back" data-pivot="5.8 16" cx="5.8" cy="16" r="1.4"/><circle data-part="wheel-front" data-pivot="18.2 16" cx="18.2" cy="16" r="1.4"/><circle data-part="crank" data-pivot="11.2 16" cx="11.2" cy="16" r="1.4"/>`
+      ),
+      stencil: `
+        <g data-part="wheel-back" data-pivot="5.8 16" fill="currentColor">
+          <path d="M2.1 15.2A3.8 3.8 0 0 1 9.5 15.2H7.7A2 2 0 0 0 3.9 15.2Z"/>
+          <path d="M9.5 16.8A3.8 3.8 0 0 1 2.1 16.8H3.9A2 2 0 0 0 7.7 16.8Z"/>
+          <circle cx="5.8" cy="16" r="0.9"/>
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16" fill="currentColor">
+          <path d="M14.5 15.2A3.8 3.8 0 0 1 21.9 15.2H20.1A2 2 0 0 0 16.3 15.2Z"/>
+          <path d="M21.9 16.8A3.8 3.8 0 0 1 14.5 16.8H16.3A2 2 0 0 0 20.1 16.8Z"/>
+          <circle cx="18.2" cy="16" r="0.9"/>
+        </g>
+        <g data-part="frame" fill="currentColor">
+          <path d="M5.8 15.2L9.1 10.1H15.2L14.3 11.5H9.9L7 16Z"/>
+          <path d="M14.5 7.8H17.5V9.2H15.6L18.7 15.8L17.3 16.4Z"/>
+          <rect x="8" y="7.6" width="3" height="1.3" rx="0.4"/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16" fill="currentColor">
+          <circle cx="11.2" cy="16" r="1.2"/>
+          <rect x="10.7" y="13.7" width="1" height="4.6" rx="0.4"/>
+        </g>
+      `,
+      hardware: `
+        <g data-part="wheel-back" data-pivot="5.8 16">
+          <circle cx="5.8" cy="16" r="3.8" fill="none" stroke="#18181b" stroke-width="1.6"/>
+          ${triSpokes(5.8, 16, 3.1, 'stroke="#71717a" stroke-width="0.8" stroke-linecap="round"')}
+          <circle cx="5.8" cy="16" r="0.9" ${HD}/>
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16">
+          <circle cx="18.2" cy="16" r="3.8" fill="none" stroke="#18181b" stroke-width="1.6"/>
+          ${triSpokes(18.2, 16, 3.1, 'stroke="#71717a" stroke-width="0.8" stroke-linecap="round"')}
+          <circle cx="18.2" cy="16" r="0.9" ${HD}/>
+        </g>
+        <g data-part="frame">
+          <path d="M5.8 16L9.4 10.4H15L11.2 16Z" fill="none" stroke="#a1a1aa" stroke-width="1.6" stroke-linejoin="round"/>
+          <path d="M18.2 16L15 8H17.4M9.4 10.4L9.2 8" fill="none" stroke="#52525b" stroke-width="1.4" stroke-linecap="round"/>
+          <rect x="7.8" y="7.2" width="3.2" height="1.3" rx="0.6" ${HD}/>
+          <circle cx="16.4" cy="11.8" r="0.9" ${HA}/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16">
+          <circle cx="11.2" cy="16" r="1.3" ${HM}/>
+          <rect x="10.7" y="13.8" width="1" height="4.4" rx="0.4" ${HD}/>
+        </g>
+      `,
+      relief: `
+        <g data-part="wheel-back" data-pivot="5.8 16">
+          <g transform="translate(1.2,1.2)" ${RS_LINE}><circle cx="5.8" cy="16" r="3.8"/></g>
+          <circle cx="5.8" cy="16" r="3.8" ${RF_LINE}/>
+          ${triSpokes(5.8, 16, 3.2, 'stroke="var(--rel-stroke)" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <g data-part="wheel-front" data-pivot="18.2 16">
+          <g transform="translate(1.2,1.2)" ${RS_LINE}><circle cx="18.2" cy="16" r="3.8"/></g>
+          <circle cx="18.2" cy="16" r="3.8" ${RF_LINE}/>
+          ${triSpokes(18.2, 16, 3.2, 'stroke="var(--rel-stroke)" stroke-width="0.85" stroke-linecap="round"')}
+        </g>
+        <g data-part="frame">
+          <path transform="translate(1.2,1.2)" d="M5.8 16L9.4 10.4H15L11.2 16Z" ${RS}/>
+          <path d="M5.8 16L9.4 10.4H15L11.2 16Z" ${RF}/>
+          <path d="M18.2 16L15 8H17.4M8.2 8H10.8M9.4 10.4L9.2 8" ${RF_LINE}/>
+        </g>
+        <g data-part="crank" data-pivot="11.2 16">
+          <circle cx="11.2" cy="16" r="1.2" ${RF}/>
+          <line x1="11.2" y1="14" x2="11.2" y2="18" ${RF_LINE}/>
+        </g>
+      `,
+    },
+
+===== tools.ts:255-272 =====
+    name: "pen",
+    label: "Pen",
+    category: "Kinetic Tools",
+    motionSummary: "Fountain pen nib scribbles briskly across baseline",
+    soundSummary: "Crisp nib scratch across textured paper",
+    svgs: {
+      outline: `<g data-part="pen" data-pivot="5 19" ${K}><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/><line x1="14" y1="6.5" x2="17.5" y2="10"/></g><line x1="4.5" y1="21" x2="19.5" y2="21" ${K_THIN} opacity="0.45"/>`,
+      solid: `<g data-part="pen" data-pivot="5 19" fill="currentColor"><path d="M16.5 3.6L20.4 7.5L9.2 18.7H4.8V14.3Z"/></g><rect x="4.5" y="20" width="15" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>`,
+      duotone: `<g data-part="pen" data-pivot="5 19"><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${D}/><line x1="14" y1="6.5" x2="17.5" y2="10" ${DK}/></g>`,
+      glass: glassCompose(
+        `<path data-part="pen" data-pivot="5 19" transform="translate(-1.5,-1.1)" d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${GB}/>`,
+        `<path data-part="pen" data-pivot="5 19" d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/>`,
+        `<g data-part="pen" data-pivot="5 19" ${GF}><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/></g><polygon data-part="pen" data-pivot="5 19" points="5 15.5 8.5 19 5 19" ${GB}/>`
+      ),
+      stencil: `<g data-part="pen" data-pivot="5 19" fill="currentColor"><polygon points="16.5 4 20 7.5 17.8 9.7 14.3 6.2"/><polygon points="13.2 7.3 16.7 10.8 8.5 19 5 19 5 15.5"/></g>`,
+      hardware: `<g data-part="pen" data-pivot="5 19"><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${HL}/><polygon points="16.5 4 20 7.5 17.8 9.7 14.3 6.2" ${HA}/><polygon points="5 15.5 8.5 19 5 19" ${HD}/></g>`,
+      relief: `<g data-part="pen" data-pivot="5 19"><path transform="translate(1.5,1.5)" d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${RS}/><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${RF}/><line x1="14" y1="6.5" x2="17.5" y2="10" ${RF_LINE}/></g>`,
+    },
+
+===== tools2.ts:27-38 =====
+    name: "saw",
+    label: "Hand Saw",
+    category: "Kinetic Tools",
+    motionSummary: "Serrated steel blade saws back and forth smoothly from wooden handle",
+    soundSummary: "Rhythmic carpenter hand-saw wood rasp strokes",
+    svgs: simpleSvgs(
+      `<path data-part="saw" d="M2.8 7.4H17.8L21 10.6L18.6 12.4L17.2 14.4L15.8 12.4L14.4 14.4L13 12.4L11.6 14.4L10.2 12.4L8.8 14.4L7.4 12.4L6 14.4L4.6 12.4L3.2 10.6Z"/>
+<path d="M6.4 13.6C6.4 16.8 7.8 19.2 10.4 19.2C13 19.2 14.2 16.8 13.6 13.6H11.4C11.6 15.6 11.2 17 10.4 17C9.6 17 9.2 15.6 9.4 13.6Z"/>`
+    ),
+  },
+  // 152. DRILL
+  {
+
+===== tools2.ts:39-55 =====
+    name: "drill",
+    label: "Power Drill",
+    category: "Kinetic Tools",
+    motionSummary: "Drill chassis kicks lightly while spiral bit thrusts forward",
+    soundSummary: "Variable-speed cordless electric drill chuck whir",
+    svgs: {
+      outline: `<g data-part="body" ${K}><path d="M4.5 7.5H13.2A1.5 1.5 0 0 1 14.7 9V11.8A1.5 1.5 0 0 1 13.2 13.3H6.5L5.4 18.5H8.5"/><path d="M4.5 7.5A2.2 2.2 0 0 0 4.5 13.3H6.5"/></g><g data-part="bit" ${K}><line x1="14.7" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12" ${K_THIN}/></g>`,
+      solid: `<path data-part="body" fill="currentColor" d="M5.6 7H13.4A1.6 1.6 0 0 1 15 8.6V12.2A1.6 1.6 0 0 1 13.4 13.8H9.2L7.8 19.2H4.6L6 13.8H5.6A3.4 3.4 0 0 1 5.6 7Z"/><path data-part="bit" fill="currentColor" d="M15.4 8.6H17.2V9.5H21A0.9 0.9 0 0 1 21 11.3H17.2V12.2H15.4Z"/>`,
+      duotone: `<g data-part="body"><path d="M5.5 7.4H13.4A1.5 1.5 0 0 1 14.9 8.9V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.5A3 3 0 0 1 5.5 7.4Z" ${D}/></g><g data-part="bit" ${DK}><line x1="14.9" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12"/></g>`,
+      glass: glassCompose(
+        `<path data-part="bit" d="M15.2 8.6H17.2V9.5H21A0.9 0.9 0 0 1 21 11.3H17.2V12.2H15.2Z" ${GB}/>`,
+        `<path data-part="body" d="M5.6 7H13.4A1.6 1.6 0 0 1 15 8.6V12.2A1.6 1.6 0 0 1 13.4 13.8H9.2L7.8 19.2H4.6L6 13.8H5.6A3.4 3.4 0 0 1 5.6 7Z"/>`
+      ),
+      stencil: `<g fill="currentColor"><g data-part="body"><path d="M5.6 7.2H14.6V13.4H5.6A3.1 3.1 0 0 1 5.6 7.2Z"/><polygon points="6.2 14.4 9 14.4 7.8 19.2 5 19.2"/></g><path data-part="bit" d="M15.8 8.8H17.6V9.7H21V11.1H17.6V12H15.8Z"/></g>`,
+      hardware: `<g data-part="body"><rect x="4.8" y="13.2" width="3.8" height="5.8" rx="1" transform="rotate(10 6 15)" ${HD}/><rect x="3" y="7" width="12" height="6.6" rx="2.6" ${HL}/><circle cx="6.2" cy="10.3" r="1.2" ${HA}/></g><g data-part="bit"><rect x="15" y="8.6" width="2.2" height="3.4" rx="0.6" ${HD}/><rect x="17.2" y="9.6" width="4" height="1.5" rx="0.7" ${HM}/></g>`,
+      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="M5.6 7.2H13.4A1.5 1.5 0 0 1 14.9 8.7V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.6A3.1 3.1 0 0 1 5.6 7.2Z" ${RS}/><path d="M5.6 7.2H13.4A1.5 1.5 0 0 1 14.9 8.7V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.6A3.1 3.1 0 0 1 5.6 7.2Z" ${RF}/></g><g data-part="bit" ${RF_LINE}><line x1="14.9" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12"/></g>`,
+    },
+
+===== tools2.ts:59-75 =====
+    name: "screwdriver",
+    label: "Screwdriver",
+    category: "Kinetic Tools",
+    motionSummary: "Fluted driver turns with crisp rotational twist and downward drive",
+    soundSummary: "Triple ratchet screwdriver turn clicks",
+    svgs: {
+      outline: `<g data-part="driver" data-pivot="12 12" ${K}><path d="M14.8 4.4L19.6 9.2L17.6 11.2A1.4 1.4 0 0 1 15.6 11.2L12.8 8.4A1.4 1.4 0 0 1 12.8 6.4Z"/><line x1="14.2" y1="9.8" x2="6" y2="18"/><polygon points="4.5 19.5 7 19 5 17" fill="currentColor"/></g>`,
+      solid: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z"/><path d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z"/></g>`,
+      duotone: `<g data-part="driver" data-pivot="12 12"><path d="M14.8 4.4L19.6 9.2L17.6 11.2A1.4 1.4 0 0 1 15.6 11.2L12.8 8.4A1.4 1.4 0 0 1 12.8 6.4Z" ${D}/><line x1="14.2" y1="9.8" x2="5.4" y2="18.6" ${DK}/></g>`,
+      glass: glassCompose(
+        `<path data-part="driver" data-pivot="12 12" d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z" ${GB}/>`,
+        `<path data-part="driver" data-pivot="12 12" d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z"/>`
+      ),
+      stencil: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M15.2 4.2L19.8 8.8L17.6 11L13 6.4Z"/><polygon points="12.6 10.2 13.8 11.4 6.6 18.6 4.4 19.6 5.4 17.4"/></g>`,
+      hardware: `<g data-part="driver" data-pivot="12 12"><path d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z" ${HL}/><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${HA}/></g>`,
+      relief: `<g data-part="driver" data-pivot="12 12"><path transform="translate(1.3,1.3)" d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${RS}/><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${RF}/><line x1="14.2" y1="9.8" x2="5.4" y2="18.6" ${RF_LINE}/></g>`,
+    },
+
+===== tools2.ts:79-91 =====
+    name: "axe",
+    label: "Axe",
+    category: "Kinetic Tools",
+    motionSummary: "Forged axe swings down in chopping arc sending wood chip flying",
+    soundSummary: "Sharp timber chop crack + flying wood splinter",
+    svgs: simpleSvgs(
+      `<path data-part="axe" d="M4.5 20.5L10.8 5.6L13.3 6.5L7.5 20.5Z"/>
+<path d="M11.2 3.8C14.6 3 18.2 3.8 20.5 6.4C18.4 9.4 15.2 11 11.8 11L10.2 7.4Z"/>
+<path data-part="chip" d="M19.6 2.4L21.6 1.8L21 4.2Z"/>`
+    ),
+  },
+  // 155. SHOVEL
+  {

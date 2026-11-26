@@ -20,6 +20,27 @@ import {
   RF_LINE,
 } from "../shared";
 
+// Keyboard keycaps (three chunky keys per row + spacebar)
+const KB_ROW_1 = `<rect x="5.2" y="8.4" width="4" height="2.2" rx="0.7"/><rect x="10" y="8.4" width="4" height="2.2" rx="0.7"/><rect x="14.8" y="8.4" width="4" height="2.2" rx="0.7"/>`;
+const KB_ROW_2 = `<rect x="5.2" y="11.4" width="4" height="2.2" rx="0.7"/><rect x="10" y="11.4" width="4" height="2.2" rx="0.7"/><rect x="14.8" y="11.4" width="4" height="2.2" rx="0.7"/>`;
+const KB_SPACE = `<rect x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6"/>`;
+
+// Bug: capsule carapace + dome head, split by a center seam, three legs per side
+const BUG_BODY = "M12 8.4C14.6 8.4 16.6 10.7 16.6 13.9C16.6 17.1 14.6 19.6 12 19.6C9.4 19.6 7.4 17.1 7.4 13.9C7.4 10.7 9.4 8.4 12 8.4Z";
+const BUG_DOME = "M9.7 8.6C9.7 6.3 10.6 5.1 12 5.1C13.4 5.1 14.3 6.3 14.3 8.6";
+const BUG_HALF_L = "M11.3 8.6C9.2 9.2 7.4 11.2 7.4 13.9C7.4 16.8 9 19.1 11.3 19.5Z";
+const BUG_HALF_R = "M12.7 8.6C14.8 9.2 16.6 11.2 16.6 13.9C16.6 16.8 15 19.1 12.7 19.5Z";
+const BUG_SPLIT = `<line x1="12" y1="9.8" x2="12" y2="19.4"/>`;
+const BUG_ANT = `<path d="M10.6 5.9L9.2 3.7"/><path d="M13.4 5.9L14.8 3.7"/>`;
+const BUG_LEG_L = `<path d="M8.5 10.6L5.9 9.1L4.5 10.3"/><path d="M8.2 13.3H4.6"/><path d="M8.5 15.9L5.9 17.3L4.7 16.3"/>`;
+const BUG_LEG_R = `<path d="M15.5 10.6L18.1 9.1L19.5 10.3"/><path d="M15.8 13.3H19.4"/><path d="M15.5 15.9L18.1 17.3L19.3 16.3"/>`;
+
+// Fingerprint: four nested arcs opening downward plus a small core arch
+const FP_RING_1 = "M5.2 12.4C5.2 8.4 8.2 5.4 12 5.4C15.8 5.4 18.8 8.4 18.8 12.4C18.8 15.2 17.9 17.7 16.2 19.6";
+const FP_RING_2 = "M7.8 14.8C7.4 13.8 7.2 12.7 7.2 11.6C7.2 8.9 9.3 6.8 12 6.8C14.7 6.8 16.8 8.9 16.8 11.6C16.8 14.3 16 16.5 14.7 18.2";
+const FP_RING_3 = "M9.9 16.8C9.5 15.6 9.2 14.3 9.2 13C9.2 11.4 10.4 10.2 12 10.2C13.6 10.2 14.8 11.4 14.8 13C14.8 14.7 14.3 16.2 13.4 17.6";
+const FP_CORE = "M11.6 15.2C11.4 14.6 11.3 14 11.3 13.4C11.3 12.6 11.6 12.2 12 12.2C12.4 12.2 12.7 12.6 12.7 13.4C12.7 14 12.6 14.6 12.4 15.2";
+
 export const TECH2_ICONS: IconDef[] = [
   // 191. KEYBOARD
   {
@@ -29,16 +50,17 @@ export const TECH2_ICONS: IconDef[] = [
     motionSummary: "Mechanical keycaps depress sequentially inside aluminum frame",
     soundSummary: "Triple tactile mechanical keyboard switch clackety-clack",
     svgs: {
-      outline: `<rect x="3" y="6" width="18" height="12" rx="2.2" ${K}/><g ${K_THIN}><line data-part="key-1" x1="6.2" y1="9.6" x2="8.8" y2="9.6"/><line data-part="key-2" x1="11.2" y1="9.6" x2="13.2" y2="9.6"/><line data-part="key-3" x1="15.6" y1="9.6" x2="17.8" y2="9.6"/><line x1="7.5" y1="14.2" x2="16.5" y2="14.2"/></g>`,
-      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><rect data-part="key-1" x="5.8" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/><rect data-part="key-2" x="10.7" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/><rect data-part="key-3" x="15.6" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/><rect x="7.5" y="13.4" width="9" height="1.6" rx="0.8" fill="#000"/></mask></defs><rect x="3" y="6" width="18" height="12" rx="2.4" fill="currentColor" mask="url(#__GID__-m1)"/>`,
-      duotone: `<rect x="3" y="6" width="18" height="12" rx="2.2" ${D}/><g ${DK}><line data-part="key-1" x1="6.2" y1="9.6" x2="8.6" y2="9.6"/><line data-part="key-2" x1="11" y1="9.6" x2="13.2" y2="9.6"/><line data-part="key-3" x1="15.6" y1="9.6" x2="17.8" y2="9.6"/><line x1="7.5" y1="14.2" x2="16.5" y2="14.2"/></g>`,
+      outline: `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${K}/><g data-part="key-1" ${K_THIN}>${KB_ROW_1}</g><g data-part="key-2" ${K_THIN}>${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" ${K_THIN}/>`,
+      solid: `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" fill="none" stroke="currentColor" stroke-width="2"/><g data-part="key-1" fill="currentColor">${KB_ROW_1}</g><g data-part="key-2" fill="currentColor">${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" fill="currentColor"/>`,
+      duotone: `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${D}/><g data-part="key-1" fill="currentColor">${KB_ROW_1}</g><g data-part="key-2" fill="currentColor">${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" fill="currentColor"/>`,
       glass: glassCompose(
-        `<g ${GB}><rect data-part="key-1" x="5.8" y="8.8" width="2.6" height="1.8" rx="0.6"/><rect data-part="key-2" x="10.7" y="8.8" width="2.6" height="1.8" rx="0.6"/><rect data-part="key-3" x="15.6" y="8.8" width="2.6" height="1.8" rx="0.6"/><rect x="7.5" y="13.4" width="9" height="1.6" rx="0.8"/></g>`,
-        `<rect x="3" y="6" width="18" height="12" rx="2.4"/>`
+        `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${GB}/>`,
+        ``,
+        `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${GF}/><g data-part="key-1" ${GB}>${KB_ROW_1}</g><g data-part="key-2" ${GB}>${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" ${GB}/>`
       ),
-      stencil: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><rect data-part="key-1" x="5.8" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/><rect data-part="key-2" x="10.7" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/><rect data-part="key-3" x="15.6" y="8.8" width="2.6" height="1.8" rx="0.6" fill="#000"/></mask></defs><g fill="currentColor" mask="url(#__GID__-m1)"><rect x="3" y="6" width="18" height="5.4" rx="1.8"/><rect x="3" y="12.6" width="18" height="5.4" rx="1.8"/></g>`,
-      hardware: `<rect x="3" y="6" width="18" height="12" rx="2.2" ${HD}/><rect data-part="key-1" x="5.8" y="8.8" width="2.6" height="1.8" rx="0.6" ${HL}/><rect data-part="key-2" x="10.7" y="8.8" width="2.6" height="1.8" rx="0.6" ${HA}/><rect data-part="key-3" x="15.6" y="8.8" width="2.6" height="1.8" rx="0.6" ${HL}/><rect x="7.5" y="13.4" width="9" height="1.6" rx="0.8" ${HM}/>`,
-      relief: `<rect transform="translate(1.3,1.3)" x="3" y="6" width="18" height="12" rx="2.2" ${RS}/><rect x="3" y="6" width="18" height="12" rx="2.2" ${RF}/><g ${RF_LINE}><line data-part="key-1" x1="6.2" y1="9.6" x2="8.6" y2="9.6"/><line data-part="key-2" x1="11" y1="9.6" x2="13.2" y2="9.6"/><line data-part="key-3" x1="15.6" y1="9.6" x2="17.8" y2="9.6"/><line x1="7.5" y1="14.2" x2="16.5" y2="14.2"/></g>`,
+      stencil: `<g fill="currentColor"><rect x="2.4" y="6.4" width="19.2" height="1.9" rx="0.95"/><rect x="2.4" y="15.9" width="19.2" height="1.7" rx="0.85"/><rect x="2.4" y="8.3" width="1.4" height="7.6"/><rect x="20.2" y="8.3" width="1.4" height="7.6"/><g data-part="key-1">${KB_ROW_1}</g><g data-part="key-2">${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6"/></g>`,
+      hardware: `<rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${HD}/><g data-part="key-1" ${HL}>${KB_ROW_1}</g><g data-part="key-2" ${HL}>${KB_ROW_2}</g><rect data-part="key-3" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" ${HL}/>`,
+      relief: `<rect transform="translate(1.3,1.3)" x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${RS}/><rect x="2.4" y="6.4" width="19.2" height="11.2" rx="2.2" ${RF}/><g data-part="key-1"><g transform="translate(1.3,1.3)" fill="var(--rel-shadow)">${KB_ROW_1}</g><g ${RF}>${KB_ROW_1}</g></g><g data-part="key-2"><g transform="translate(1.3,1.3)" fill="var(--rel-shadow)">${KB_ROW_2}</g><g ${RF}>${KB_ROW_2}</g></g><g data-part="key-3"><rect transform="translate(1.3,1.3)" x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" ${RS}/><rect x="7.2" y="14.4" width="9.6" height="1.6" rx="0.6" ${RF}/></g>`,
     },
   },
   // 192. MOUSE
@@ -108,19 +130,20 @@ export const TECH2_ICONS: IconDef[] = [
     name: "bug",
     label: "Bug",
     category: "Tech & Controls",
-    motionSummary: "Six articulated beetle legs scurry rapidly while carapace wiggles",
+    motionSummary: "Six legs paddle in alternating tripods while the carapace bobs",
     soundSummary: "Tiny crisp beetle leg scurry clicks",
     svgs: {
-      outline: `<g data-part="legs" data-pivot="12 13" ${K_THIN}><path d="M5 10.5L7.6 11.8M4.5 14H7.2M5.5 17.5L8 16.2"/><path d="M19 10.5L16.4 11.8M19.5 14H16.8M18.5 17.5L16 16.2"/></g><g data-part="body" ${K}><rect x="7.5" y="8" width="9" height="11.5" rx="4.5"/><path d="M9.5 8.2C9.5 6.2 10.6 5 12 5C13.4 5 14.5 6.2 14.5 8.2"/><line x1="12" y1="8.5" x2="12" y2="19.5" ${K_THIN}/></g>`,
-      solid: `<g data-part="legs" data-pivot="12 13" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><path d="M4.8 10.2L7.8 11.8M4.2 14H7.5M5.2 17.8L8.2 16.2"/><path d="M19.2 10.2L16.2 11.8M19.8 14H16.5M18.8 17.8L15.8 16.2"/></g><g data-part="body" fill="currentColor"><rect x="7.5" y="8" width="9" height="11.6" rx="4.5"/><path d="M9.4 8.2A2.6 2.6 0 0 1 14.6 8.2Z"/></g>`,
-      duotone: `<g data-part="legs" data-pivot="12 13" ${DK_THIN}><path d="M5 10.5L7.6 11.8M4.5 14H7.2M5.5 17.5L8 16.2"/><path d="M19 10.5L16.4 11.8M19.5 14H16.8M18.5 17.5L16 16.2"/></g><g data-part="body"><rect x="7.5" y="8" width="9" height="11.5" rx="4.5" ${D}/><path d="M9.5 8.2A2.5 2.5 0 0 1 14.5 8.2" ${DK}/><line x1="12" y1="8.5" x2="12" y2="19.5" ${DK_THIN}/></g>`,
+      outline: `<g data-part="legs-l" data-pivot="12 13.5" ${K_THIN}>${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" ${K_THIN}>${BUG_LEG_R}</g><g data-part="body" ${K}><path d="${BUG_BODY}"/><path d="${BUG_DOME}"/><g stroke-width="1.3">${BUG_SPLIT}${BUG_ANT}</g></g>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><line x1="12" y1="9.6" x2="12" y2="19.4" stroke="#000" stroke-width="1.15" stroke-linecap="round"/></mask></defs><g data-part="legs-l" data-pivot="12 13.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_R}</g><g data-part="body" fill="currentColor" mask="url(#__GID__-m1)"><path d="${BUG_BODY}"/><path d="${BUG_DOME}"/><g fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round">${BUG_ANT}</g></g>`,
+      duotone: `<g data-part="legs-l" data-pivot="12 13.5" ${DK_THIN}>${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" ${DK_THIN}>${BUG_LEG_R}</g><g data-part="body"><path d="${BUG_BODY}" ${D}/><path d="${BUG_DOME}" ${D}/><g ${DK_THIN}>${BUG_SPLIT}${BUG_ANT}</g></g>`,
       glass: glassCompose(
-        `<g data-part="legs" data-pivot="12 13" ${GBS}><path d="M4.8 10.2L7.8 11.8M4.2 14H7.5M5.2 17.8L8.2 16.2"/><path d="M19.2 10.2L16.2 11.8M19.8 14H16.5M18.8 17.8L15.8 16.2"/></g><path data-part="body" d="M9.4 8.4A2.6 2.6 0 0 1 14.6 8.4Z" ${GB}/>`,
-        `<rect data-part="body" x="7.5" y="8" width="9" height="11.6" rx="4.5"/>`
+        `<path d="${BUG_BODY}" ${GB}/><path d="${BUG_DOME}" ${GB}/>`,
+        ``,
+        `<g data-part="legs-l" data-pivot="12 13.5" ${GBS}>${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" ${GBS}>${BUG_LEG_R}</g><g data-part="body"><path d="${BUG_BODY}" ${GF}/><path d="${BUG_DOME}" ${GF}/><g ${GBS} stroke-width="1.35">${BUG_SPLIT}${BUG_ANT}</g></g>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="legs" data-pivot="12 13" stroke="currentColor" stroke-width="1.5" stroke-linecap="round"><path d="M4.8 10.2L7.5 11.6M4.2 14H7.2M5.2 17.8L7.8 16.4"/><path d="M19.2 10.2L16.5 11.6M19.8 14H16.8M18.8 17.8L16.2 16.4"/></g><g data-part="body"><path d="M7.5 12.5A4.5 4.5 0 0 1 11.3 8.1V19.4A4.5 4.5 0 0 1 7.5 15Z"/><path d="M12.7 8.1A4.5 4.5 0 0 1 16.5 12.5V15A4.5 4.5 0 0 1 12.7 19.4Z"/></g></g>`,
-      hardware: `<g data-part="legs" data-pivot="12 13" stroke="#52525b" stroke-width="1.6" stroke-linecap="round"><path d="M4.8 10.2L7.8 11.8M4.2 14H7.5M5.2 17.8L8.2 16.2"/><path d="M19.2 10.2L16.2 11.8M19.8 14H16.5M18.8 17.8L15.8 16.2"/></g><g data-part="body"><path d="M9.4 8.2A2.6 2.6 0 0 1 14.6 8.2Z" ${HA}/><rect x="7.5" y="8" width="9" height="11.6" rx="4.5" ${HD}/></g>`,
-      relief: `<g data-part="legs" data-pivot="12 13" ${RF_LINE}><path d="M5 10.5L7.6 11.8M4.5 14H7.2M5.5 17.5L8 16.2"/><path d="M19 10.5L16.4 11.8M19.5 14H16.8M18.5 17.5L16 16.2"/></g><g data-part="body"><rect transform="translate(1.3,1.3)" x="7.5" y="8" width="9" height="11.5" rx="4.5" ${RS}/><rect x="7.5" y="8" width="9" height="11.5" rx="4.5" ${RF}/></g>`,
+      stencil: `<g fill="currentColor"><g data-part="legs-l" data-pivot="12 13.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_R}</g><g data-part="body"><path d="${BUG_HALF_L}"/><path d="${BUG_HALF_R}"/><path d="${BUG_DOME}Z"/><g fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round">${BUG_ANT}</g></g></g>`,
+      hardware: `<g data-part="legs-l" data-pivot="12 13.5" fill="none" stroke="#52525b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" fill="none" stroke="#52525b" stroke-width="1.7" stroke-linecap="round" stroke-linejoin="round">${BUG_LEG_R}</g><g data-part="body"><path d="${BUG_BODY}" ${HD}/><path d="${BUG_DOME}" ${HA}/><g fill="none" stroke="#3f3f46" stroke-width="1.15" stroke-linecap="round">${BUG_SPLIT}${BUG_ANT}</g></g>`,
+      relief: `<g data-part="legs-l" data-pivot="12 13.5" ${RF_LINE}>${BUG_LEG_L}</g><g data-part="legs-r" data-pivot="12 13.5" ${RF_LINE}>${BUG_LEG_R}</g><g data-part="body"><path transform="translate(1.3,1.3)" d="${BUG_BODY}" ${RS}/><path transform="translate(1.3,1.3)" d="${BUG_DOME}" ${RS}/><path d="${BUG_BODY}" ${RF}/><path d="${BUG_DOME}" ${RF}/><g fill="none" stroke="var(--rel-stroke)" stroke-width="1.15" stroke-linecap="round">${BUG_SPLIT}${BUG_ANT}</g></g>`,
     },
   },
   // 196. USB
@@ -148,20 +171,20 @@ export const TECH2_ICONS: IconDef[] = [
     name: "fingerprint",
     label: "Fingerprint",
     category: "Tech & Controls",
-    motionSummary: "Biometric dermal ridges trace sequentially from core to outer arc",
+    motionSummary: "Biometric dermal ridges draw outward-in as the core locks last",
     soundSummary: "High-tech optical biometric scan lock chime",
     svgs: {
-      outline: `<path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" ${K}/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" ${K}/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" ${K}/>`,
-      solid: `<path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/>`,
-      duotone: `<circle cx="12" cy="12" r="8.2" ${D}/><path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" ${DK}/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" ${DK}/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" ${DK}/>`,
+      outline: `<path data-part="ring-1" d="${FP_RING_1}" ${K}/><path data-part="ring-2" d="${FP_RING_2}" ${K}/><path data-part="ring-3" d="${FP_RING_3}" ${K}/><path data-part="core" d="${FP_CORE}" ${K_THIN}/>`,
+      solid: `<g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round"><path data-part="ring-1" d="${FP_RING_1}"/><path data-part="ring-2" d="${FP_RING_2}"/><path data-part="ring-3" d="${FP_RING_3}"/><path data-part="core" d="${FP_CORE}"/></g>`,
+      duotone: `<circle cx="12" cy="12" r="8.4" ${D}/><g ${DK}><path data-part="ring-1" d="${FP_RING_1}"/><path data-part="ring-2" d="${FP_RING_2}"/><path data-part="ring-3" d="${FP_RING_3}"/><path data-part="core" d="${FP_CORE}"/></g>`,
       glass: glassCompose(
-        `<path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" ${GBS}/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" ${GBS}/>`,
-        `<path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" stroke="#fff" stroke-width="2.4" fill="none" stroke-linecap="round"/>`,
-        `<path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" stroke="url(#g-rim)" stroke-width="2.1" fill="none" stroke-linecap="round"/>`
+        `<g fill="none" stroke="url(#g-back)" stroke-width="3"><path d="${FP_RING_1}"/><path d="${FP_RING_2}"/><path d="${FP_RING_3}"/><path d="${FP_CORE}"/></g>`,
+        ``,
+        `<g ${GBS} stroke-width="1.6"><path data-part="ring-1" d="${FP_RING_1}"/><path data-part="ring-2" d="${FP_RING_2}"/><path data-part="ring-3" d="${FP_RING_3}"/><path data-part="core" d="${FP_CORE}"/></g>`
       ),
-      stencil: `<path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-dasharray="6 2.5"/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"/>`,
-      hardware: `<circle cx="12" cy="12" r="8.6" ${HD}/><path data-part="ring-1" d="M5.8 14A6.8 6.8 0 0 1 18.2 10.6" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round"/><path data-part="ring-2" d="M8.2 16.2A4.4 4.4 0 0 1 15.8 12.2" fill="none" stroke="#a1a1aa" stroke-width="1.8" stroke-linecap="round"/><path data-part="core" d="M10.8 17.6A2.1 2.1 0 0 1 13.4 13.5" fill="none" stroke="#ff6b35" stroke-width="1.9" stroke-linecap="round"/>`,
-      relief: `<g transform="translate(1.2,1.2)"><path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" ${RS_LINE}/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" ${RS_LINE}/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" ${RS_LINE}/></g><path data-part="ring-1" d="M5.5 14A7.2 7.2 0 0 1 18.5 10.5" ${RF_LINE}/><path data-part="ring-2" d="M8 16.5A4.6 4.6 0 0 1 16 12.2" ${RF_LINE}/><path data-part="core" d="M10.8 18A2.2 2.2 0 0 1 13.5 13.5" ${RF_LINE}/>`,
+      stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path data-part="ring-1" d="${FP_RING_1}" stroke-dasharray="5.5 2.2"/><path data-part="ring-2" d="${FP_RING_2}"/><path data-part="ring-3" d="${FP_RING_3}"/><path data-part="core" d="${FP_CORE}"/></g>`,
+      hardware: `<circle cx="12" cy="12" r="8.8" ${HD}/><g fill="none" stroke="#d4d4d8" stroke-width="1.7" stroke-linecap="round"><path data-part="ring-1" d="${FP_RING_1}"/><path data-part="ring-2" d="${FP_RING_2}"/><path data-part="ring-3" d="${FP_RING_3}"/></g><path data-part="core" d="${FP_CORE}" fill="none" stroke="#ff6b35" stroke-width="1.9" stroke-linecap="round"/>`,
+      relief: `<g data-part="ring-1"><path transform="translate(1.3,1.3)" d="${FP_RING_1}" ${RS_LINE}/><path d="${FP_RING_1}" ${RF_LINE}/></g><g data-part="ring-2"><path transform="translate(1.3,1.3)" d="${FP_RING_2}" ${RS_LINE}/><path d="${FP_RING_2}" ${RF_LINE}/></g><g data-part="ring-3"><path transform="translate(1.3,1.3)" d="${FP_RING_3}" ${RS_LINE}/><path d="${FP_RING_3}" ${RF_LINE}/></g><g data-part="core"><path transform="translate(1.3,1.3)" d="${FP_CORE}" ${RS_LINE}/><path d="${FP_CORE}" ${RF_LINE}/></g>`,
     },
   },
   // 198. SD CARD

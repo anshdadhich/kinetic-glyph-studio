@@ -18,3 +18,12 @@ View your app in AI Studio: https://ai.studio/apps/6085d14a-a7fd-4bdb-8a13-218bd
 2. Set the `GEMINI_API_KEY` in [.env.local](.env.local) to your Gemini API key
 3. Run the app:
    `npm run dev`
+
+## Sound modes
+
+The top bar has a **Synth / Real** switch so you can compare the two sound engines:
+
+- **Synth** — the original procedural Web Audio foley (no downloads, works offline).
+- **Real** — CC0 recordings in `public/sfx/`, one per icon where a suitable recording exists. Icons without a recording fall back to the synth engine. The choice is saved in local storage.
+
+All recordings are CC0 1.0 (no attribution required), sourced from the 3D Valley library. Individual sound credits are in `public/sfx/CREDITS.md`.

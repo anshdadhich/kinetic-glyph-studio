@@ -10,6 +10,7 @@ import {
   GBS,
   GH,
   glassCompose,
+  simpleSvgs,
   HL,
   HM,
   HD,
@@ -176,18 +177,9 @@ export const WORLD_ICONS: IconDef[] = [
     category: "World & Energy",
     motionSummary: "Double cardiac lub-dub expansion pulse",
     soundSummary: "Sub-bass double heartbeat lub-dub",
-    svgs: {
-      outline: `<path data-part="heart" d="M12 7.1C9.7 3.2 4.4 3.3 3 7.7C1.4 12.7 6.6 17.3 10.9 20.1C11.6 20.6 12.4 20.6 13.1 20.1C17.4 17.3 22.6 12.7 21 7.7C19.6 3.3 14.3 3.2 12 7.1Z" ${K}/>`,
-      solid: `<path data-part="heart" fill="currentColor" d="M12 7C9.6 3 4.2 3.1 2.8 7.6C1.2 12.7 6.5 17.4 10.8 20.2C11.5 20.7 12.5 20.7 13.2 20.2C17.5 17.4 22.8 12.7 21.2 7.6C19.8 3.1 14.4 3 12 7Z"/>`,
-      duotone: `<path data-part="heart" d="M12 7.1C9.7 3.2 4.4 3.3 3 7.7C1.4 12.7 6.6 17.3 10.9 20.1C11.6 20.6 12.4 20.6 13.1 20.1C17.4 17.3 22.6 12.7 21 7.7C19.6 3.3 14.3 3.2 12 7.1Z" ${D}/>`,
-      glass: glassCompose(
-        `<path data-part="heart" data-pivot="12 12" transform="translate(-1.6,-1.1)" d="M12 7C9.6 3 4.2 3.1 2.8 7.6C1.2 12.7 6.5 17.4 10.8 20.2C11.5 20.7 12.5 20.7 13.2 20.2C17.5 17.4 22.8 12.7 21.2 7.6C19.8 3.1 14.4 3 12 7Z" ${GB}/>`,
-        `<path data-part="heart" data-pivot="12 12" d="M12 7C9.6 3 4.2 3.1 2.8 7.6C1.2 12.7 6.5 17.4 10.8 20.2C11.5 20.7 12.5 20.7 13.2 20.2C17.5 17.4 22.8 12.7 21.2 7.6C19.8 3.1 14.4 3 12 7Z"/>`
-      ),
-      stencil: `<g data-part="heart" fill="currentColor"><path d="M11.2 6.2V20.2C6.8 17.3 1.4 12.7 3 7.7C4.3 3.5 9.1 3.2 11.2 6.2Z"/><path d="M12.8 6.2C14.9 3.2 19.7 3.5 21 7.7C22.6 12.7 17.2 17.3 12.8 20.2Z"/></g>`,
-      hardware: `<g data-part="heart"><path d="M12 7C9.6 3 4.2 3.1 2.8 7.6C1.2 12.7 6.5 17.4 10.8 20.2C11.5 20.7 12.5 20.7 13.2 20.2C17.5 17.4 22.8 12.7 21.2 7.6C19.8 3.1 14.4 3 12 7Z" ${HL}/><circle cx="7.8" cy="8.2" r="1.25" ${HA}/></g>`,
-      relief: `<g data-part="heart"><path transform="translate(1.5,1.5)" d="M12 7.1C9.7 3.2 4.4 3.3 3 7.7C1.4 12.7 6.6 17.3 10.9 20.1C11.6 20.6 12.4 20.6 13.1 20.1C17.4 17.3 22.6 12.7 21 7.7C19.6 3.3 14.3 3.2 12 7.1Z" ${RS}/><path d="M12 7.1C9.7 3.2 4.4 3.3 3 7.7C1.4 12.7 6.6 17.3 10.9 20.1C11.6 20.6 12.4 20.6 13.1 20.1C17.4 17.3 22.6 12.7 21 7.7C19.6 3.3 14.3 3.2 12 7.1Z" ${RF}/></g>`,
-    },
+    svgs: simpleSvgs(
+      `<path data-part="heart" d="M12 20.7C10.9 19.7 3.2 14.2 3.2 8.8C3.2 5.9 5.4 3.8 8.1 3.8C9.9 3.8 11.3 4.9 12 6.2C12.7 4.9 14.1 3.8 15.9 3.8C18.6 3.8 20.8 5.9 20.8 8.8C20.8 14.2 13.1 19.7 12 20.7Z"/>`
+    ),
   },
   // 49. STAR (Smooth rounded 5-point Star matching optical frosted glass reference!)
   {

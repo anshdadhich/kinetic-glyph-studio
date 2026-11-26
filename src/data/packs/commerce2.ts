@@ -20,6 +20,24 @@ import {
   RF_LINE,
 } from "../shared";
 
+// QR code: three 6.4u finder frames with a 2.4u eye + scattered data modules
+const QR_DATA = `<rect x="14.6" y="14.6" width="2.2" height="2.2" rx="0.5"/><rect x="17.6" y="14.6" width="1.6" height="1.6" rx="0.4"/><rect x="14.6" y="17.6" width="1.6" height="1.6" rx="0.4"/><rect x="17.2" y="17.2" width="2" height="2" rx="0.5"/><rect x="10.9" y="3.8" width="1.2" height="1.2" rx="0.3"/><rect x="12.7" y="3.8" width="1.2" height="1.2" rx="0.3"/><rect x="3.8" y="10.9" width="1.2" height="1.2" rx="0.3"/><rect x="3.8" y="12.7" width="1.2" height="1.2" rx="0.3"/>`;
+
+const qrFinderOutline = (x: number, y: number) =>
+  `<rect x="${x}" y="${y}" width="6.4" height="6.4" rx="1.2"/><rect x="${x + 2}" y="${y + 2}" width="2.4" height="2.4" rx="0.6" ${K_THIN}/>`;
+
+const qrFinderPath = (x: number, y: number) =>
+  `M${x} ${y}H${x + 6.4}V${y + 6.4}H${x}ZM${x + 2} ${y + 2}V${y + 4.4}H${x + 4.4}V${y + 2}Z`;
+
+const qrFinderDuo = (x: number, y: number) =>
+  `<rect x="${x}" y="${y}" width="6.4" height="6.4" rx="1.2" ${D}/><rect x="${x + 2}" y="${y + 2}" width="2.4" height="2.4" rx="0.6" fill="currentColor"/>`;
+
+const qrFinderGlass = (x: number, y: number) =>
+  `<rect x="${x}" y="${y}" width="6.4" height="6.4" rx="1.2" ${GF}/><rect x="${x + 2}" y="${y + 2}" width="2.4" height="2.4" rx="0.6" ${GB}/>`;
+
+const qrFinderHardware = (x: number, y: number) =>
+  `<rect x="${x}" y="${y}" width="6.4" height="6.4" rx="1.2" ${HL}/><rect x="${x + 2}" y="${y + 2}" width="2.4" height="2.4" rx="0.6" ${HD}/>`;
+
 export const COMMERCE2_ICONS: IconDef[] = [
   // 181. PIGGY BANK
   {
@@ -94,9 +112,9 @@ export const COMMERCE2_ICONS: IconDef[] = [
       solid: `<g data-part="bars" fill="currentColor"><rect x="3.8" y="5.8" width="2" height="12.4" rx="0.8"/><rect x="7.4" y="5.8" width="1.4" height="12.4" rx="0.7"/><rect x="10.4" y="5.8" width="2.2" height="12.4" rx="0.8"/><rect x="14.2" y="5.8" width="1.4" height="12.4" rx="0.7"/><rect x="17.2" y="5.8" width="2.4" height="12.4" rx="0.8"/></g><rect data-part="beam" x="2.6" y="11.2" width="18.8" height="1.6" rx="0.8" fill="currentColor"/>`,
       duotone: `<rect x="3" y="5" width="18" height="14" rx="2" ${D}/><g data-part="bars" ${DK}><line x1="5.5" y1="7.5" x2="5.5" y2="16.5"/><line x1="9" y1="7.5" x2="9" y2="16.5" ${DK_THIN}/><line x1="12.5" y1="7.5" x2="12.5" y2="16.5"/><line x1="16" y1="7.5" x2="16" y2="16.5" ${DK_THIN}/><line x1="18.5" y1="7.5" x2="18.5" y2="16.5"/></g><line data-part="beam" x1="2.5" y1="12" x2="21.5" y2="12" ${DK}/>`,
       glass: glassCompose(
-        `<g data-part="bars" ${GB}><rect x="5" y="6.8" width="2" height="10.4" rx="0.8"/><rect x="9" y="6.8" width="1.4" height="10.4" rx="0.7"/><rect x="12.4" y="6.8" width="2.2" height="10.4" rx="0.8"/><rect x="16.6" y="6.8" width="2" height="10.4" rx="0.8"/></g>`,
-        `<rect x="3.2" y="5" width="17.6" height="14" rx="2"/>`,
-        `<g ${GF}><rect x="3.2" y="5" width="17.6" height="14" rx="2"/></g><rect data-part="beam" x="2.6" y="11.2" width="18.8" height="1.6" rx="0.8" ${GB}/>`
+        `<rect x="3.2" y="5" width="17.6" height="14" rx="2" ${GB}/>`,
+        ``,
+        `<rect x="3.2" y="5" width="17.6" height="14" rx="2" ${GF}/><g data-part="bars" ${GB}><rect x="5" y="6.8" width="1.8" height="10.4" rx="0.7"/><rect x="8.2" y="6.8" width="1.2" height="10.4" rx="0.5"/><rect x="11" y="6.8" width="2.2" height="10.4" rx="0.8"/><rect x="14.8" y="6.8" width="1.2" height="10.4" rx="0.5"/><rect x="17.6" y="6.8" width="2" height="10.4" rx="0.7"/></g><rect data-part="beam" x="2.6" y="11.2" width="18.8" height="1.6" rx="0.8" ${GB}/>`
       ),
       stencil: `<g fill="currentColor"><g data-part="bars"><rect x="4" y="5.8" width="2" height="5" rx="0.6"/><rect x="4" y="13.2" width="2" height="5" rx="0.6"/><rect x="8.2" y="5.8" width="1.8" height="5" rx="0.6"/><rect x="8.2" y="13.2" width="1.8" height="5" rx="0.6"/><rect x="12.2" y="5.8" width="2.4" height="5" rx="0.6"/><rect x="12.2" y="13.2" width="2.4" height="5" rx="0.6"/><rect x="17" y="5.8" width="2.2" height="5" rx="0.6"/><rect x="17" y="13.2" width="2.2" height="5" rx="0.6"/></g><rect data-part="beam" x="2.6" y="11.3" width="18.8" height="1.4" rx="0.7"/></g>`,
       hardware: `<rect x="2.8" y="4.8" width="18.4" height="14.4" rx="2" ${HD}/><g data-part="bars"><rect x="5" y="7" width="2" height="10" rx="0.6" ${HL}/><rect x="9" y="7" width="1.5" height="10" rx="0.6" ${HL}/><rect x="12.5" y="7" width="2.2" height="10" rx="0.6" ${HL}/><rect x="17" y="7" width="2" height="10" rx="0.6" ${HL}/></g><rect data-part="beam" x="2.5" y="11.2" width="19" height="1.6" rx="0.8" ${HA}/>`,
@@ -108,20 +126,20 @@ export const COMMERCE2_ICONS: IconDef[] = [
     name: "qr-code",
     label: "QR Code",
     category: "Commerce & Finance",
-    motionSummary: "Finder squares tighten cleanly as optical laser beam scans across matrix",
+    motionSummary: "Finder patterns snap into focus in sequence as data modules lock in",
     soundSummary: "Digital camera optical QR lock-on double beep",
     svgs: {
-      outline: `<g data-part="grid" ${K}><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1"/><path d="M14 14H16.5V16.5M19.5 14V19.5H14"/></g><line data-part="beam" x1="3" y1="12" x2="21" y2="12" ${K_THIN}/>`,
-      solid: `<g data-part="grid" fill="currentColor"><path fill-rule="evenodd" d="M4.2 4.2H10.2V10.2H4.2ZM5.8 5.8V8.6H8.6V5.8Z"/><path fill-rule="evenodd" d="M13.8 4.2H19.8V10.2H13.8ZM15.4 5.8V8.6H18.2V5.8Z"/><path fill-rule="evenodd" d="M4.2 13.8H10.2V19.8H4.2ZM5.8 15.4V18.2H8.6V15.4Z"/><rect x="13.8" y="13.8" width="2.6" height="2.6" rx="0.5"/><rect x="17.2" y="17.2" width="2.6" height="2.6" rx="0.5"/></g><rect data-part="beam" x="3" y="11.2" width="18" height="1.5" rx="0.75" fill="currentColor"/>`,
-      duotone: `<g data-part="grid"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1" ${D}/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1" ${D}/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1" ${D}/><rect x="14" y="14" width="2.4" height="2.4" rx="0.5" fill="currentColor"/><rect x="17" y="17" width="2.4" height="2.4" rx="0.5" fill="currentColor"/></g><line data-part="beam" x1="3" y1="12" x2="21" y2="12" ${DK}/>`,
+      outline: `<g data-part="finder-tl" data-pivot="6.6 6.6" ${K}>${qrFinderOutline(3.4, 3.4)}</g><g data-part="finder-tr" data-pivot="17.4 6.6" ${K}>${qrFinderOutline(14.2, 3.4)}</g><g data-part="finder-bl" data-pivot="6.6 17.4" ${K}>${qrFinderOutline(3.4, 14.2)}</g><g data-part="data" fill="currentColor">${QR_DATA}</g>`,
+      solid: `<g data-part="finder-tl" data-pivot="6.6 6.6" fill="currentColor" fill-rule="evenodd"><path d="${qrFinderPath(3.4, 3.4)}"/></g><g data-part="finder-tr" data-pivot="17.4 6.6" fill="currentColor" fill-rule="evenodd"><path d="${qrFinderPath(14.2, 3.4)}"/></g><g data-part="finder-bl" data-pivot="6.6 17.4" fill="currentColor" fill-rule="evenodd"><path d="${qrFinderPath(3.4, 14.2)}"/></g><g data-part="data" fill="currentColor">${QR_DATA}</g>`,
+      duotone: `<g data-part="finder-tl" data-pivot="6.6 6.6">${qrFinderDuo(3.4, 3.4)}</g><g data-part="finder-tr" data-pivot="17.4 6.6">${qrFinderDuo(14.2, 3.4)}</g><g data-part="finder-bl" data-pivot="6.6 17.4">${qrFinderDuo(3.4, 14.2)}</g><g data-part="data" fill="currentColor">${QR_DATA}</g>`,
       glass: glassCompose(
-        `<g data-part="grid" ${GB}><rect x="14" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1"/></g>`,
-        `<g data-part="grid"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="14" y="14" width="5.5" height="5.5" rx="1"/></g>`,
-        `<g data-part="grid" ${GF}><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="14" y="14" width="5.5" height="5.5" rx="1"/></g><rect data-part="beam" x="3" y="11.2" width="18" height="1.5" rx="0.75" ${GB}/>`
+        `<rect x="3.4" y="3.4" width="17.2" height="17.2" rx="2" ${GB}/>`,
+        ``,
+        `<g data-part="finder-tl" data-pivot="6.6 6.6">${qrFinderGlass(3.4, 3.4)}</g><g data-part="finder-tr" data-pivot="17.4 6.6">${qrFinderGlass(14.2, 3.4)}</g><g data-part="finder-bl" data-pivot="6.6 17.4">${qrFinderGlass(3.4, 14.2)}</g><g data-part="data" ${GB}>${QR_DATA}</g>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="grid"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1"/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1"/><rect x="14" y="14" width="2.4" height="2.4" rx="0.5"/><rect x="17.1" y="17.1" width="2.4" height="2.4" rx="0.5"/></g><rect data-part="beam" x="3" y="11.3" width="18" height="1.4" rx="0.7"/></g>`,
-      hardware: `<g data-part="grid"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1" ${HL}/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1" ${HL}/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1" ${HL}/><rect x="14.2" y="14.2" width="2.4" height="2.4" rx="0.5" ${HD}/><rect x="17" y="17" width="2.4" height="2.4" rx="0.5" ${HD}/></g><rect data-part="beam" x="3" y="11.2" width="18" height="1.6" rx="0.8" ${HA}/>`,
-      relief: `<g data-part="grid"><g transform="translate(1.2,1.2)"><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1" ${RS}/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1" ${RS}/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1" ${RS}/></g><rect x="4.5" y="4.5" width="5.5" height="5.5" rx="1" ${RF}/><rect x="14" y="4.5" width="5.5" height="5.5" rx="1" ${RF}/><rect x="4.5" y="14" width="5.5" height="5.5" rx="1" ${RF}/></g><line data-part="beam" x1="3" y1="12" x2="21" y2="12" ${RF_LINE}/>`,
+      stencil: `<g fill="currentColor"><g data-part="finder-tl" data-pivot="6.6 6.6"><path d="${qrFinderPath(3.4, 3.4)}"/></g><g data-part="finder-tr" data-pivot="17.4 6.6"><path d="${qrFinderPath(14.2, 3.4)}"/></g><g data-part="finder-bl" data-pivot="6.6 17.4"><path d="${qrFinderPath(3.4, 14.2)}"/></g><g data-part="data">${QR_DATA}</g></g>`,
+      hardware: `<g data-part="finder-tl" data-pivot="6.6 6.6">${qrFinderHardware(3.4, 3.4)}</g><g data-part="finder-tr" data-pivot="17.4 6.6">${qrFinderHardware(14.2, 3.4)}</g><g data-part="finder-bl" data-pivot="6.6 17.4">${qrFinderHardware(3.4, 14.2)}</g><g data-part="data" ${HD}>${QR_DATA}</g>`,
+      relief: `<g data-part="finder-tl" data-pivot="6.6 6.6"><path transform="translate(1.2,1.2)" d="${qrFinderPath(3.4, 3.4)}" ${RS}/><path d="${qrFinderPath(3.4, 3.4)}" ${RF}/></g><g data-part="finder-tr" data-pivot="17.4 6.6"><path transform="translate(1.2,1.2)" d="${qrFinderPath(14.2, 3.4)}" ${RS}/><path d="${qrFinderPath(14.2, 3.4)}" ${RF}/></g><g data-part="finder-bl" data-pivot="6.6 17.4"><path transform="translate(1.2,1.2)" d="${qrFinderPath(3.4, 14.2)}" ${RS}/><path d="${qrFinderPath(3.4, 14.2)}" ${RF}/></g><g data-part="data"><g transform="translate(1.2,1.2)" fill="var(--rel-shadow)">${QR_DATA}</g><g fill="var(--rel-face)" stroke="var(--rel-stroke)" stroke-width="0.9">${QR_DATA}</g></g>`,
     },
   },
   // 186. SCALE
@@ -136,12 +154,13 @@ export const COMMERCE2_ICONS: IconDef[] = [
       solid: `<g fill="currentColor"><rect x="11" y="4.4" width="2" height="15" rx="1"/><rect x="7.8" y="18.6" width="8.4" height="1.8" rx="0.9"/><rect data-part="beam" data-pivot="12 7" x="4" y="6.1" width="16" height="1.8" rx="0.9"/><path data-part="pan-l" data-pivot="5.8 7" d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z"/><path data-part="pan-r" data-pivot="18.2 7" d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z"/></g>`,
       duotone: `<line x1="12" y1="4.5" x2="12" y2="19.5" ${DK}/><line x1="8" y1="19.5" x2="16" y2="19.5" ${DK}/><line data-part="beam" data-pivot="12 7" x1="4.5" y1="7" x2="19.5" y2="7" ${DK}/><path data-part="pan-l" data-pivot="5.8 7" d="M5.8 7.2L3.5 13.5A2.5 2.5 0 0 0 8.1 13.5Z" ${D}/><path data-part="pan-r" data-pivot="18.2 7" d="M18.2 7.2L15.9 13.5A2.5 2.5 0 0 0 20.5 13.5Z" ${D}/>`,
       glass: glassCompose(
-        `<line x1="12" y1="4.5" x2="12" y2="19.5" ${GBS}/><line x1="8" y1="19.5" x2="16" y2="19.5" ${GBS}/><rect data-part="beam" data-pivot="12 7" x="4" y="6.1" width="16" height="1.8" rx="0.9" ${GB}/>`,
-        `<g><path data-part="pan-l" data-pivot="5.8 7" d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z"/><path data-part="pan-r" data-pivot="18.2 7" d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z"/></g>`
+        `<path d="M12 4.5V19.5M8 19.5H16" fill="none" stroke="url(#g-back)" stroke-width="2.6" stroke-linecap="round"/>`,
+        ``,
+        `<line x1="12" y1="4.5" x2="12" y2="19.5" ${GBS}/><line x1="8" y1="19.5" x2="16" y2="19.5" ${GBS}/><g data-part="beam" data-pivot="12 7"><rect x="4" y="6.1" width="16" height="1.8" rx="0.9" ${GF}/><rect x="4" y="6.1" width="16" height="1.8" rx="0.9" ${GBS}/></g><g data-part="pan-l" data-pivot="5.8 7"><path d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${GF}/><path d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${GBS}/></g><g data-part="pan-r" data-pivot="18.2 7"><path d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${GF}/><path d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${GBS}/></g>`
       ),
       stencil: `<g fill="currentColor"><rect x="11" y="4.5" width="2" height="14" rx="0.9"/><rect x="7.8" y="18.8" width="8.4" height="1.6" rx="0.8"/><rect data-part="beam" data-pivot="12 7" x="4" y="6.1" width="16" height="1.8" rx="0.9"/><path data-part="pan-l" data-pivot="5.8 7" d="M3.4 13.5A2.5 2.5 0 0 0 8.2 13.5Z"/><path data-part="pan-r" data-pivot="18.2 7" d="M15.8 13.5A2.5 2.5 0 0 0 20.6 13.5Z"/></g>`,
       hardware: `<rect x="11" y="4.4" width="2" height="15" rx="1" ${HD}/><rect x="7.8" y="18.6" width="8.4" height="1.8" rx="0.9" ${HD}/><rect data-part="beam" data-pivot="12 7" x="4" y="6.1" width="16" height="1.8" rx="0.9" ${HL}/><path data-part="pan-l" data-pivot="5.8 7" d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${HA}/><path data-part="pan-r" data-pivot="18.2 7" d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${HM}/>`,
-      relief: `<line x1="12" y1="4.5" x2="12" y2="19.5" ${RF_LINE}/><line x1="8" y1="19.5" x2="16" y2="19.5" ${RF_LINE}/><line data-part="beam" data-pivot="12 7" x1="4.5" y1="7" x2="19.5" y2="7" ${RF_LINE}/><path data-part="pan-l" data-pivot="5.8 7" d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${RF}/><path data-part="pan-r" data-pivot="18.2 7" d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${RF}/>`,
+      relief: `<line x1="12" y1="4.5" x2="12" y2="19.5" ${RF_LINE}/><line x1="8" y1="19.5" x2="16" y2="19.5" ${RF_LINE}/><g data-part="beam" data-pivot="12 7"><line transform="translate(1.3,1.3)" x1="4.5" y1="7" x2="19.5" y2="7" ${RS_LINE}/><line x1="4.5" y1="7" x2="19.5" y2="7" ${RF_LINE}/></g><g data-part="pan-l" data-pivot="5.8 7"><path transform="translate(1.3,1.3)" d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${RS}/><path d="M5.8 7.5L3.4 13.4A2.5 2.5 0 0 0 8.2 13.4Z" ${RF}/></g><g data-part="pan-r" data-pivot="18.2 7"><path transform="translate(1.3,1.3)" d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${RS}/><path d="M18.2 7.5L15.8 13.4A2.5 2.5 0 0 0 20.6 13.4Z" ${RF}/></g>`,
     },
   },
   // 187. BRIEFCASE
@@ -195,15 +214,16 @@ export const COMMERCE2_ICONS: IconDef[] = [
     soundSummary: "Crisp retail discount cash-register ding",
     svgs: {
       outline: `<line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" ${K}/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.4" ${K}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.4" ${K}/>`,
-      solid: `<rect data-part="slash" data-pivot="12 12" x="10.9" y="2.8" width="2.2" height="18.4" rx="1.1" transform="rotate(45 12 12)" fill="currentColor"/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.6" fill="currentColor"/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.6" fill="currentColor"/>`,
+      solid: `<line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="currentColor" stroke-width="2.8" stroke-linecap="round"/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.6" fill="currentColor"/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.6" fill="currentColor"/>`,
       duotone: `<line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" ${DK}/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.4" ${D}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.4" ${D}/>`,
       glass: glassCompose(
-        `<rect data-part="slash" data-pivot="12 12" x="10.9" y="2.8" width="2.2" height="18.4" rx="1.1" transform="rotate(45 12 12)" ${GB}/>`,
-        `<g><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.7"/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.7"/></g>`
+        `<circle cx="7.2" cy="7.2" r="2.6" ${GB}/><circle cx="16.8" cy="16.8" r="2.6" ${GB}/>`,
+        ``,
+        `<line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="url(#g-back)" stroke-width="2.8" stroke-linecap="round"/><g data-part="dot-tl"><circle cx="7.2" cy="7.2" r="2.6" ${GF}/><circle cx="7.2" cy="7.2" r="2.6" ${GBS}/></g><g data-part="dot-br"><circle cx="16.8" cy="16.8" r="2.6" ${GF}/><circle cx="16.8" cy="16.8" r="2.6" ${GBS}/></g>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="slash" data-pivot="12 12"><rect x="10.9" y="2.8" width="2.2" height="7.6" rx="1.1" transform="rotate(45 12 12)"/><rect x="10.9" y="13.6" width="2.2" height="7.6" rx="1.1" transform="rotate(45 12 12)"/></g><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.5"/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.5"/></g>`,
-      hardware: `<rect data-part="slash" data-pivot="12 12" x="10.9" y="2.8" width="2.2" height="18.4" rx="1.1" transform="rotate(45 12 12)" ${HD}/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.6" ${HA}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.6" ${HL}/>`,
-      relief: `<g transform="translate(1.3,1.3)"><line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" ${RS_LINE}/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.4" ${RS}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.4" ${RS}/></g><line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" ${RF_LINE}/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.4" ${RF}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.4" ${RF}/>`,
+      stencil: `<g fill="currentColor"><line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="currentColor" stroke-width="2.6" stroke-linecap="round" stroke-dasharray="3.4 1.8"/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.5"/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.5"/></g>`,
+      hardware: `<line data-part="slash" data-pivot="12 12" x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="#3f3f46" stroke-width="2.8" stroke-linecap="round"/><circle data-part="dot-tl" cx="7.2" cy="7.2" r="2.6" ${HA}/><circle data-part="dot-br" cx="16.8" cy="16.8" r="2.6" ${HL}/>`,
+      relief: `<g data-part="slash" data-pivot="12 12"><line transform="translate(1.3,1.3)" x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="var(--rel-shadow)" stroke-width="2.8" stroke-linecap="round"/><line x1="18.5" y1="5.5" x2="5.5" y2="18.5" stroke="var(--rel-stroke)" stroke-width="2.8" stroke-linecap="round"/></g><g data-part="dot-tl"><circle transform="translate(1.3,1.3)" cx="7.2" cy="7.2" r="2.4" ${RS}/><circle cx="7.2" cy="7.2" r="2.4" ${RF}/></g><g data-part="dot-br"><circle transform="translate(1.3,1.3)" cx="16.8" cy="16.8" r="2.4" ${RS}/><circle cx="16.8" cy="16.8" r="2.4" ${RF}/></g>`,
     },
   },
   // 190. TICKET
