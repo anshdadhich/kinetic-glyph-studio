@@ -39,11 +39,10 @@ function standaloneSvg(icon: IconDef, style: StyleId): string {
 interface TileProps {
   icon: IconDef;
   style: StyleId;
-  armed: boolean;
   onCopied: (message: string) => void;
 }
 
-const LibTile = memo(function LibTile({ icon, style, armed, onCopied }: TileProps) {
+const LibTile = memo(function LibTile({ icon, style, onCopied }: TileProps) {
   const svgRef = useRef<SVGSVGElement | null>(null);
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const gid = useId().replace(/:/g, "");
@@ -76,8 +75,9 @@ const LibTile = memo(function LibTile({ icon, style, armed, onCopied }: TileProp
         className="lib-icon"
         onClick={copy}
         onPointerEnter={() => {
+          initAudio();
           animate();
-          if (armed) triggerSound(icon.name, btnRef.current);
+          triggerSound(icon.name, btnRef.current);
         }}
         aria-label={`Copy ${icon.label} in ${style} style`}
         title={`${icon.label} — click to copy SVG`}
@@ -106,6 +106,9 @@ export default function LibraryUI() {
   const timer = useRef<number | null>(null);
 
   useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
+  useEffect(() => {
+    initAudio();
+  }, []);
   useEffect(() => {
     if (window.location.hash === "#library") {
       window.setTimeout(() => {
@@ -278,7 +281,6 @@ export default function LibraryUI() {
               key={icon.name}
               icon={icon}
               style={style}
-              armed={armed}
               onCopied={onCopied}
             />
           ))}

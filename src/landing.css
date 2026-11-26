@@ -83,11 +83,19 @@
 .wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
 .wig-capsule:active { transform: scale(.97); }
 .wig-capsule-buy { color: #fff; background: #111; padding: 6px 6px 6px 20px; }
+.wig-capsule-buy > span { color: #fff; }
 .wig-capsule-buy:hover { background: #000; }
 .wig-capsule-price { color: #fff; background: #2e2e2e; border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
 .wig-capsule-quiet { background: #0000000f; padding: 0 20px; }
 .wig-capsule-quiet:hover { background: #00000017; }
 .wig-guarantee { color: var(--muted); margin-top: 12px; font-size: 13px; }
+
+/* Sponsor wall placed directly under the hero */
+.wig-sponsor-strip { margin-top: 56px; padding-top: 32px; border-top: 1px solid var(--rule); }
+.wig-sponsor-strip-head { display: flex; align-items: end; justify-content: space-between; gap: 16px; margin-bottom: 20px; }
+.wig-sponsor-strip-head h2 { font-weight: 600; font-size: 20px; margin-top: 4px; }
+.wig-sponsor-strip-head > p { color: var(--muted); font-size: 13px; max-width: 220px; text-align: right; }
+.wig-eyebrow { color: var(--faint); font-size: 11px; text-transform: uppercase; letter-spacing: .12em; }
 
 /* Sampler (wide section) */
 .wig-sampler { --wide: min(1280px, calc(100vw - 64px)); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); margin-top: 88px; }

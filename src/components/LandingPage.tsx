@@ -40,7 +40,6 @@ function StaticGlyph({ icon, style }: { icon: IconDef; style: StyleId }) {
 interface IconButtonProps {
   icon: IconDef;
   style: StyleId;
-  armed: boolean;
   onArm: () => void;
   className?: string;
 }
@@ -48,7 +47,6 @@ interface IconButtonProps {
 const IconButton = memo(function IconButton({
   icon,
   style,
-  armed,
   onArm,
   className = "",
 }: IconButtonProps) {
@@ -73,8 +71,9 @@ const IconButton = memo(function IconButton({
       type="button"
       onClick={play}
       onPointerEnter={() => {
+        initAudio();
         animate();
-        if (armed) triggerSound(icon.name, btnRef.current);
+        triggerSound(icon.name, btnRef.current);
       }}
       aria-label={`Play ${icon.label}, ${icon.soundSummary}`}
       title={`${icon.label} — ${icon.soundSummary}`}
@@ -323,6 +322,9 @@ export default function LandingPage() {
 
   useEffect(() => subscribeAudioStatus(() => setAudioStatus(getAudioStatus())), []);
   useEffect(() => {
+    initAudio();
+  }, []);
+  useEffect(() => {
     if (audioStatus === "ready") setArmed(true);
   }, [audioStatus]);
 
@@ -362,7 +364,7 @@ export default function LandingPage() {
         <ul className="wig-hero-icons" aria-label="A few of the icons">
           {heroIcons.map((icon, i) => (
             <li key={icon.name}>
-              <IconButton icon={icon} style={STYLES[i % STYLES.length].id} armed={armed} onArm={arm} />
+              <IconButton icon={icon} style={STYLES[i % STYLES.length].id} onArm={arm} />
             </li>
           ))}
         </ul>
@@ -397,7 +399,18 @@ export default function LandingPage() {
             Become a sponsor <span aria-hidden="true">→</span>
           </a>
         </div>
-        <p className="wig-guarantee">No account. No install. Sound switches on with your first click.</p>
+        <p className="wig-guarantee">No account. No install. Every sound is generated live in the browser.</p>
+
+        <section id="sponsors" className="wig-sponsor-strip" aria-labelledby="sponsor-title">
+          <div className="wig-sponsor-strip-head">
+            <div>
+              <p className="wig-eyebrow">Sponsor wall</p>
+              <h2 id="sponsor-title">10 blocks · $30 each</h2>
+            </div>
+            <p>Your name, link and one line, right here under the intro.</p>
+          </div>
+          <SponsorWall />
+        </section>
 
         <section className="wig-sampler" id="sampler" aria-label="Sampler">
           <div className="wig-sampler-head">
@@ -413,7 +426,7 @@ export default function LandingPage() {
                 <ul className="wig-panel-grid">
                   {sampleIcons.map((icon) => (
                     <li key={icon.name}>
-                      <IconButton icon={icon} style={style.id} armed={armed} onArm={arm} />
+                      <IconButton icon={icon} style={style.id} onArm={arm} />
                     </li>
                   ))}
                 </ul>
@@ -471,14 +484,6 @@ export default function LandingPage() {
               <h3>Procedural sound</h3>
               <p>Short synth voices built on the fly. No audio files, no downloads, no subscriptions.</p>
             </div>
-          </div>
-        </section>
-
-        <section className="wig-section" id="sponsors" aria-labelledby="sponsor-title">
-          <h2 id="sponsor-title">Sponsors</h2>
-          <p className="wig-section-lead">Ten blocks. $30 each. Your name, link and note, right here for good.</p>
-          <div style={{ marginTop: 24 }}>
-            <SponsorWall />
           </div>
         </section>
 
