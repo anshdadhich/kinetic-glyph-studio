@@ -12,6 +12,7 @@ import { SvgDefs, getMasterDefsInner } from "./components/SvgDefs";
 import { SpotlightStage } from "./components/SpotlightStage";
 import LandingPage from "./components/LandingPage";
 import LibraryUI from "./components/LibraryUI";
+import DocsVariants from "./components/DocsVariants";
 import {
   AudioStatus,
   getAudioStatus,
@@ -87,7 +88,7 @@ const IconTile = memo(function IconTile({
       type="button"
       onPointerEnter={handlePointerEnter}
       onClick={handleClick}
-      title={`${icon.label} — ${styleDef.label}`}
+      title={`${icon.label} in ${styleDef.label}`}
       aria-label={`${icon.label} in ${styleDef.label} style`}
       aria-pressed={isSelected}
       className={`group flex flex-col items-center justify-center gap-1.5 rounded-xl border p-2 text-[var(--icon-color)] cursor-pointer transition-colors focus-visible:outline-2 focus-visible:outline-offset-2 focus-visible:outline-[var(--text)] ${
@@ -133,6 +134,17 @@ export default function App() {
       <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
         <SvgDefs />
         <LibraryUI showFooter />
+      </div>
+    );
+  }
+  if (
+    typeof window !== "undefined" &&
+    window.location.pathname.replace(/\/$/, "") === "/docs/variants"
+  ) {
+    return (
+      <div className="min-h-screen bg-[var(--bg)] text-[var(--text)]">
+        <SvgDefs />
+        <DocsVariants />
       </div>
     );
   }
@@ -254,7 +266,7 @@ export default function App() {
     <div className="min-h-screen bg-[var(--bg)] text-[var(--text)] transition-colors">
       <SvgDefs />
 
-      {/* Top Bar Contract: 3 zones (wordmark — clean nav links — 1 primary action) */}
+      {/* Top Bar Contract: 3 zones (wordmark, clean nav links, 1 primary action) */}
       <header className="hidden">
         <div className="mx-auto flex max-w-[1200px] items-center justify-between gap-8 px-6 py-4">
           <a

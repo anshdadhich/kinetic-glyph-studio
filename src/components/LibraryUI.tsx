@@ -19,9 +19,10 @@ import {
   triggerSound,
 } from "../audio/foley";
 import { triggerChoreography } from "../physics/spring";
+import { copyText } from "../clipboard";
 import "../library.css";
 
-function standaloneSvg(icon: IconDef, style: StyleId): string {
+export function standaloneSvg(icon: IconDef, style: StyleId): string {
   let inner = icon.svgs[style].replace(/__GID__/g, "kg");
   inner = inner
     .replace(/(id="|url\(#)([^"-]+)-(out|in|m\d+)/g, "$1kg-$3")
@@ -59,12 +60,8 @@ const LibTile = memo(function LibTile({ icon, style, onCopied }: TileProps) {
     initAudio();
     animate();
     triggerSound(icon.name, btnRef.current);
-    try {
-      await navigator.clipboard.writeText(standaloneSvg(icon, style));
-      onCopied(`Copied ${icon.label} (${style}) SVG`);
-    } catch {
-      onCopied("Clipboard unavailable in this browser");
-    }
+    const ok = await copyText(standaloneSvg(icon, style));
+    onCopied(ok ? `Copied ${icon.label} (${style}) SVG` : "Clipboard unavailable in this browser");
   }, [animate, icon, onCopied, style]);
 
   return (
@@ -80,7 +77,7 @@ const LibTile = memo(function LibTile({ icon, style, onCopied }: TileProps) {
           triggerSound(icon.name, btnRef.current);
         }}
         aria-label={`Copy ${icon.label} in ${style} style`}
-        title={`${icon.label} — click to copy SVG`}
+        title={`${icon.label}, click to copy SVG`}
       >
         <svg
           ref={svgRef}

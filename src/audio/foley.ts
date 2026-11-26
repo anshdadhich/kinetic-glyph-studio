@@ -458,7 +458,7 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
     tone(d, "sine", 240, 290, t, 0.16, 0.045);
   },
   rain(d, t) {
-    // Single continuous rain bed — soft shower wash, no separate droplet plinks
+    // Single continuous rain bed - soft shower wash, no separate droplet plinks
     noise(d, "highpass", 2200, 1700, 0.8, t, 0.5, 0.11, 0.08);
     noise(d, "bandpass", 1400, 900, 0.9, t + 0.03, 0.44, 0.07, 0.06);
     noise(d, "bandpass", 3200, 2600, 1.2, t + 0.12, 0.3, 0.045, 0.04);
@@ -1646,7 +1646,7 @@ export const SOUND_FX: Record<string, (dest: AudioNode, t: number) => void> = {
 
 // The context can be suspended on the first interaction (or after the tab is
 // backgrounded). `resume()` is async, so callers must wait for it before
-// scheduling audio nodes — otherwise the first click is silently dropped.
+// scheduling audio nodes - otherwise the first click is silently dropped.
 function ensureAudioRunning(): Promise<boolean> {
   if (typeof window === "undefined") return Promise.resolve(false);
   if (!audioCtx) initAudio();

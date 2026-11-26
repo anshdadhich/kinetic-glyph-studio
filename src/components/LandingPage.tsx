@@ -63,7 +63,7 @@ const IconButton = memo(function IconButton({
         triggerSound(icon.name, btnRef.current);
       }}
       aria-label={`Play ${icon.label}, ${icon.soundSummary}`}
-      title={`${icon.label} — ${icon.soundSummary}`}
+      title={`${icon.label}, ${icon.soundSummary}`}
       className={`wig-icon ${className}`}
     >
       <svg
@@ -79,7 +79,7 @@ const IconButton = memo(function IconButton({
 });
 
 /* ------------------------------------------------------------------ */
-/* Sponsors — ten $30 slots with a demo checkout                       */
+/* Sponsors - ten $30 slots with a demo checkout                       */
 /* ------------------------------------------------------------------ */
 
 interface Sponsor {
@@ -182,7 +182,7 @@ function SponsorCheckout({
               <strong>${PRICE}.00</strong>
             </div>
             <p style={{ color: "var(--faint)", fontSize: 12, marginTop: 8 }}>
-              Demo checkout — no real charge. Your details are saved in this browser only.
+              Demo checkout. No real charge. Your details are saved in this browser only.
             </p>
             <button
               type="button"
@@ -289,7 +289,7 @@ const FAQ = [
   ["What do I get as a sponsor?", "Your name, link and one-line note live on this page in a permanent 10-slot wall."],
   ["Can I change my details later?", "Yes. Clear the demo wall with Reset demo and claim the same slot again with new details."],
   ["How many icons are there?", "240 icons, each in seven styles: outline, solid, duotone, glass, stencil, hardware and relief."],
-  ["Do the icons really make sound?", "Every icon has its own procedural Web Audio foley, generated in the browser — no sample files."],
+  ["Do the icons really make sound?", "Every icon has its own procedural Web Audio foley, generated in the browser. No sample files."],
   ["Does reduced motion work?", "Yes. All choreography respects prefers-reduced-motion."],
 ];
 
@@ -349,7 +349,7 @@ export default function LandingPage() {
           ))}
         </ul>
         <p className="wig-hint">
-          <span>{armed ? "Now just hover over any icon — each one sounds different" : "Click an icon to turn on its sound"}</span>
+          <span>{armed ? "Now just hover over any icon, each one sounds different" : "Click an icon to turn on its sound"}</span>
         </p>
 
         <div className="wig-copy">
