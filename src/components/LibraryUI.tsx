@@ -169,7 +169,7 @@ export default function LibraryUI() {
             aria-pressed={audioStatus === "ready"}
           >
             {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
-            Sound {audioStatus === "muted" ? "off" : "on"}
+            {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
           </button>
         </div>
 
@@ -269,7 +269,7 @@ export default function LibraryUI() {
         </div>
 
         <p className="lib-count" aria-live="polite">
-          {filtered.length} {category === "All" ? "" : `${category} `}icons · click any icon to copy its SVG
+          {filtered.length} {category === "All" ? "" : `${category} `}icons · click any icon to copy its SVG{!armed ? " · click once to enable sound" : " · hover to hear them"}
         </p>
 
         <ul className="lib-grid">
