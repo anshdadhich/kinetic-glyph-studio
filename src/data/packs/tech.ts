@@ -50,7 +50,7 @@ export const TECH_ICONS: IconDef[] = [
     soundSummary: "Dual-tone BLE pairing chime",
     svgs: {
       outline: `<path data-part="rune" d="M7 7.5L16.5 16L12 20V4L16.5 8L7 16.5" ${K}/>`,
-      solid: `<path data-part="rune" d="M7 7.5L16.5 16L12 20V4L16.5 8L7 16.5" fill="none" stroke="currentColor" stroke-width="2.3" stroke-linecap="round" stroke-linejoin="round"/>`,
+      solid: `<path data-part="rune" fill="currentColor" fill-rule="evenodd" d="M12 2.8A1.1 1.1 0 0 1 12.75 3.1L17.45 7.45A1.1 1.1 0 0 1 17.45 9.05L13.75 12L17.45 14.95A1.1 1.1 0 0 1 17.45 16.55L12.75 20.9A1.1 1.1 0 0 1 10.9 20.1V14.3L7.5 17.4A1.1 1.1 0 1 1 6 15.8L10.1 12L6 8.2A1.1 1.1 0 0 1 7.5 6.6L10.9 9.7V3.9A1.1 1.1 0 0 1 12 2.8ZM13.1 6.4V10.1L15.15 8.25ZM13.1 13.9V17.6L15.15 15.75Z"/>`,
       duotone: `<g data-part="rune"><polygon points="12 4 16.5 8 12 12" ${D}/><polygon points="12 12 16.5 16 12 20" ${D}/><path d="M7 7.5L16.5 16L12 20V4L16.5 8L7 16.5" ${DK}/></g>`,
       glass: glassCompose(
         `<path data-part="rune" data-pivot="12 12" d="M6.8 7.5L16.2 16L11.8 20V4L16.2 8L6.8 16.5" ${GBS}/>`,
@@ -91,7 +91,7 @@ export const TECH_ICONS: IconDef[] = [
     soundSummary: "Clock-cycle crystal tick + logic hum",
     svgs: {
       outline: `<g data-part="pins" ${K}><path d="M9 2.5V5M15 2.5V5M9 19V21.5M15 19V21.5M2.5 9H5M2.5 15H5M19 9H21.5M19 15H21.5"/><rect x="5" y="5" width="14" height="14" rx="2.2"/></g><rect data-part="die" x="9" y="9" width="6" height="6" rx="0.9" ${K}/>`,
-      solid: `<path data-part="pins" d="M9 2.5V5M15 2.5V5M9 19V21.5M15 19V21.5M2.5 9H5M2.5 15H5M19 9H21.5M19 15H21.5" ${K}/><path fill="currentColor" fill-rule="evenodd" d="M7 5H17A2 2 0 0 1 19 7V17A2 2 0 0 1 17 19H7A2 2 0 0 1 5 17V7A2 2 0 0 1 7 5ZM8.5 8.5V15.5H15.5V8.5Z"/><rect data-part="die" x="9.6" y="9.6" width="4.8" height="4.8" rx="0.7" fill="currentColor"/>`,
+      solid: `<g data-part="pins" fill="currentColor"><rect x="8.1" y="2.3" width="1.8" height="2.8" rx="0.9"/><rect x="14.1" y="2.3" width="1.8" height="2.8" rx="0.9"/><rect x="8.1" y="18.9" width="1.8" height="2.8" rx="0.9"/><rect x="14.1" y="18.9" width="1.8" height="2.8" rx="0.9"/><rect x="2.3" y="8.1" width="2.8" height="1.8" rx="0.9"/><rect x="2.3" y="14.1" width="2.8" height="1.8" rx="0.9"/><rect x="18.9" y="8.1" width="2.8" height="1.8" rx="0.9"/><rect x="18.9" y="14.1" width="2.8" height="1.8" rx="0.9"/></g><path fill="currentColor" fill-rule="evenodd" d="M7 5H17A2 2 0 0 1 19 7V17A2 2 0 0 1 17 19H7A2 2 0 0 1 5 17V7A2 2 0 0 1 7 5ZM8.5 8.5V15.5H15.5V8.5Z"/><rect data-part="die" x="9.6" y="9.6" width="4.8" height="4.8" rx="0.7" fill="currentColor"/>`,
       duotone: `<g data-part="pins"><path d="M9 2.5V5M15 2.5V5M9 19V21.5M15 19V21.5M2.5 9H5M2.5 15H5M19 9H21.5M19 15H21.5" ${DK}/><rect x="5" y="5" width="14" height="14" rx="2.2" ${D}/></g><rect data-part="die" x="9" y="9" width="6" height="6" rx="0.9" ${D}/>`,
       glass: glassCompose(
         `<g data-part="pins" data-pivot="12 12" ${GBS}><path d="M9 2.5V6M15 2.5V6M9 18V21.5M15 18V21.5M2.5 9H6M2.5 15H6M18 9H21.5M18 15H21.5"/></g><rect data-part="die" data-pivot="12 12" x="8.8" y="8.8" width="6.4" height="6.4" rx="1.1" ${GB}/>`,
@@ -132,7 +132,7 @@ export const TECH_ICONS: IconDef[] = [
     soundSummary: "Crisp bracket double-click + slash chime",
     svgs: {
       outline: `<path data-part="left" d="M8.5 7.5L3.5 12L8.5 16.5" ${K}/><path data-part="right" d="M15.5 7.5L20.5 12L15.5 16.5" ${K}/><line data-part="slash" x1="13.5" y1="5.5" x2="10.5" y2="18.5" ${K}/>`,
-      solid: `<path data-part="left" d="M8.5 7.5L3.5 12L8.5 16.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><path data-part="right" d="M15.5 7.5L20.5 12L15.5 16.5" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"/><line data-part="slash" x1="13.6" y1="5.2" x2="10.4" y2="18.8" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`,
+      solid: `<g fill="currentColor"><path data-part="left" d="M8.5 6.8A1.1 1.1 0 0 1 9.25 8.7L5.6 12L9.25 15.3A1.1 1.1 0 1 1 7.75 16.9L3.1 12.7A1 1 0 0 1 3.1 11.3L7.75 7.1A1.1 1.1 0 0 1 8.5 6.8Z"/><path data-part="right" d="M15.5 6.8A1.1 1.1 0 0 1 16.25 7.1L20.9 11.3A1 1 0 0 1 20.9 12.7L16.25 16.9A1.1 1.1 0 1 1 14.75 15.3L18.4 12L14.75 8.7A1.1 1.1 0 0 1 15.5 6.8Z"/><path data-part="slash" d="M13.85 4.4A1.15 1.15 0 0 1 14.75 5.8L11.55 19.3A1.15 1.15 0 1 1 9.3 18.75L12.5 5.25A1.15 1.15 0 0 1 13.85 4.4Z"/></g>`,
       duotone: `<path data-part="left" d="M8.5 7.5L3.5 12L8.5 16.5" ${DK}/><path data-part="right" d="M15.5 7.5L20.5 12L15.5 16.5" ${DK}/><line data-part="slash" x1="13.5" y1="5.5" x2="10.5" y2="18.5" ${DK}/>`,
       glass: glassCompose(
         `<path data-part="left" data-pivot="6 12" d="M8.5 7.5L3.5 12L8.5 16.5" ${GBS}/><path data-part="right" data-pivot="18 12" d="M15.5 7.5L20.5 12L15.5 16.5" ${GBS}/>`,
@@ -155,9 +155,9 @@ export const TECH_ICONS: IconDef[] = [
       solid: `<ellipse data-part="top" cx="12" cy="6" rx="7.2" ry="2.7" fill="currentColor"/><path data-part="mid" d="M4.8 8.2C6.4 9.5 9.1 10 12 10C14.9 10 17.6 9.5 19.2 8.2V11.8C19.2 13.3 16 14.5 12 14.5C8 14.5 4.8 13.3 4.8 11.8Z" fill="currentColor"/><path data-part="bot" d="M4.8 13.8C6.4 15.1 9.1 15.6 12 15.6C14.9 15.6 17.6 15.1 19.2 13.8V17.6C19.2 19.1 16 20.3 12 20.3C8 20.3 4.8 19.1 4.8 17.6Z" fill="currentColor"/>`,
       duotone: `<ellipse data-part="top" cx="12" cy="6.2" rx="7" ry="2.6" ${D}/><path data-part="mid" d="M5 6.2V12C5 13.4 8.1 14.6 12 14.6C15.9 14.6 19 13.4 19 12V6.2" ${D}/><path data-part="bot" d="M5 12V17.8C5 19.2 8.1 20.4 12 20.4C15.9 20.4 19 19.2 19 17.8V12" ${DK}/>`,
       glass: glassCompose(
-        `<ellipse cx="12" cy="6" rx="7" ry="2.6" ${GB}/><path d="M5 8.2C6.6 9.5 9.2 10 12 10C14.8 10 17.4 9.5 19 8.2V12.2C19 13.7 15.9 14.9 12 14.9C8.1 14.9 5 13.7 5 12.2Z" ${GB}/><path d="M5 13.8C6.6 15.1 9.2 15.6 12 15.6C14.8 15.6 17.4 15.1 19 13.8V17.6C19 19.1 15.9 20.3 12 20.3C8.1 20.3 5 19.1 5 17.6Z" ${GB}/>`,
-        ``,
-        `<g data-part="bot" data-pivot="12 17"><path d="M5 13.8C6.6 15.1 9.2 15.6 12 15.6C14.8 15.6 17.4 15.1 19 13.8V17.6C19 19.1 15.9 20.3 12 20.3C8.1 20.3 5 19.1 5 17.6Z" ${GB}/><path d="M6.5 15.4C8 16.1 9.9 16.4 12 16.4" stroke="url(#g-highlight)" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.55"/></g><g data-part="mid" data-pivot="12 11.4"><path d="M5 8.2C6.6 9.5 9.2 10 12 10C14.8 10 17.4 9.5 19 8.2V12.2C19 13.7 15.9 14.9 12 14.9C8.1 14.9 5 13.7 5 12.2Z" ${GB}/><path d="M6.5 9.6C8 10.3 9.9 10.6 12 10.6" stroke="url(#g-highlight)" stroke-width="1" stroke-linecap="round" fill="none" opacity="0.55"/></g><g data-part="top" data-pivot="12 6"><ellipse cx="12" cy="6" rx="7" ry="2.6" ${GF}/><ellipse cx="12" cy="6" rx="7" ry="2.6" ${GBS}/><path d="M7.4 5.4C8.6 4.9 10.2 4.7 12 4.7" stroke="url(#g-highlight)" stroke-width="0.9" stroke-linecap="round" fill="none"/></g>`
+        `<ellipse data-part="top" data-pivot="12 6" cx="12" cy="6" rx="7" ry="2.6" ${GB}/><path data-part="bot" data-pivot="12 17.2" d="M5 14C6.6 15.2 9.2 15.7 12 15.7C14.8 15.7 17.4 15.2 19 14V17.6C19 19.1 15.9 20.3 12 20.3C8.1 20.3 5 19.1 5 17.6Z" ${GB}/>`,
+        `<path data-part="mid" data-pivot="12 11.4" d="M4.8 8.2C6.4 9.5 9.1 10 12 10C14.9 10 17.6 9.5 19.2 8.2V12.2C19.2 13.7 16 14.9 12 14.9C8 14.9 4.8 13.7 4.8 12.2Z"/>`,
+        `<g data-part="mid" data-pivot="12 11.4" ${GF}><path d="M4.8 8.2C6.4 9.5 9.1 10 12 10C14.9 10 17.6 9.5 19.2 8.2V12.2C19.2 13.7 16 14.9 12 14.9C8 14.9 4.8 13.7 4.8 12.2Z"/></g><ellipse data-part="top" data-pivot="12 6" cx="12" cy="6" rx="6.4" ry="2.1" ${GH}/>`
       ),
       stencil: `<ellipse data-part="top" cx="12" cy="6" rx="7" ry="2.4" fill="currentColor"/><g data-part="mid" fill="currentColor"><path d="M5 8.5C6.4 9.5 8.8 10 11.2 10.1V14.4C7.8 14.3 5 13.2 5 11.8Z"/><path d="M19 8.5C17.6 9.5 15.2 10 12.8 10.1V14.4C16.2 14.3 19 13.2 19 11.8Z"/></g><g data-part="bot" fill="currentColor"><path d="M5 14C6.4 15 8.8 15.5 11.2 15.6V20C7.8 19.9 5 18.8 5 17.4Z"/><path d="M19 14C17.6 15 15.2 15.5 12.8 15.6V20C16.2 19.9 19 18.8 19 17.4Z"/></g>`,
       hardware: `<ellipse data-part="top" cx="12" cy="6" rx="7.2" ry="2.7" ${HL}/><path data-part="mid" d="M4.8 8.2C6.4 9.5 9.1 10 12 10C14.9 10 17.6 9.5 19.2 8.2V11.8C19.2 13.3 16 14.5 12 14.5C8 14.5 4.8 13.3 4.8 11.8Z" ${HM}/><path data-part="bot" d="M4.8 13.8C6.4 15.1 9.1 15.6 12 15.6C14.9 15.6 17.6 15.1 19.2 13.8V17.6C19.2 19.1 16 20.3 12 20.3C8 20.3 4.8 19.1 4.8 17.6Z" ${HD}/>`,
@@ -173,12 +173,11 @@ export const TECH_ICONS: IconDef[] = [
     soundSummary: "Heavy tactile mains toggle + boot chime",
     svgs: {
       outline: `<path data-part="ring" d="M17.2 6.8A7.8 7.8 0 1 1 6.8 6.8" ${K}/><line data-part="stem" x1="12" y1="3.5" x2="12" y2="11.5" ${K}/>`,
-      solid: `<path data-part="ring" d="M17.2 6.8A7.8 7.8 0 1 1 6.8 6.8" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/><line data-part="stem" x1="12" y1="3.5" x2="12" y2="11.5" stroke="currentColor" stroke-width="2.4" stroke-linecap="round"/>`,
+      solid: `<g data-part="ring"><path fill="currentColor" d="M17.4 6.4A1.15 1.15 0 0 1 17.5 8.1A7.8 7.8 0 1 1 6.5 8.1A1.15 1.15 0 1 1 8.1 6.5A5.5 5.5 0 1 0 15.9 6.5A1.15 1.15 0 0 1 17.4 6.4Z" transform="rotate(180 12 12)"/></g><rect data-part="stem" x="10.8" y="3.2" width="2.4" height="8.5" rx="1.2" fill="currentColor"/>`,
       duotone: `<circle cx="12" cy="12.5" r="7.5" ${D} stroke="none"/><path data-part="ring" d="M17.2 6.8A7.8 7.8 0 1 1 6.8 6.8" ${DK}/><line data-part="stem" x1="12" y1="3.5" x2="12" y2="11.5" ${DK}/>`,
       glass: glassCompose(
-        `<circle cx="10.5" cy="11.2" r="7.8" ${GB}/>`,
-        `<circle cx="12" cy="12.5" r="8"/>`,
-        `<g ${GF}><circle cx="12" cy="12.5" r="8"/></g><path data-part="ring" data-pivot="12 12.5" d="M16 8A5.8 5.8 0 1 1 8 8" ${GBS}/><g data-part="stem"><rect x="11" y="5.2" width="2.2" height="6.8" rx="1.1" ${GB}/><rect x="11.5" y="5.6" width="0.6" height="5.4" rx="0.3" ${GH} opacity="0.9"/></g>`
+        `<path data-part="ring" data-pivot="12 12.5" d="M16.9 6.2A8 8 0 1 1 7.1 6.2L8.7 7.9A5.7 5.7 0 1 0 15.3 7.9Z" ${GB}/>`,
+        `<rect data-part="stem" x="10.6" y="3.2" width="2.8" height="8.8" rx="1.4"/>`
       ),
       stencil: `<g data-part="ring" fill="currentColor"><path d="M6.8 6.6A7.8 7.8 0 0 0 11 19.9V17.4A5.4 5.4 0 0 1 8.4 8.3Z"/><path d="M17.2 6.6A7.8 7.8 0 0 1 13 19.9V17.4A5.4 5.4 0 0 0 15.6 8.3Z"/></g><rect data-part="stem" x="10.9" y="3.5" width="2.2" height="8" rx="1.1" fill="currentColor"/>`,
       hardware: `<circle cx="12" cy="12.5" r="8.8" ${HD}/><path data-part="ring" d="M15.8 8.2A5.6 5.6 0 1 1 8.2 8.2" fill="none" stroke="#e4e4e7" stroke-width="2" stroke-linecap="round"/><line data-part="stem" x1="12" y1="5.8" x2="12" y2="12" stroke="#ff6b35" stroke-width="2.2" stroke-linecap="round"/>`,
@@ -197,7 +196,7 @@ export const TECH_ICONS: IconDef[] = [
       solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><path data-part="core" d="M9 12L11.1 14.1L15.2 9.7" fill="none" stroke="#000" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/></mask></defs><path data-part="shield" fill="currentColor" mask="url(#__GID__-m1)" d="M12 3L19.2 6.1V11.8C19.2 16.4 15.9 19.6 12 21C8.1 19.6 4.8 16.4 4.8 11.8V6.1Z"/>`,
       duotone: `<path data-part="shield" d="M12 3.2L19 6.2V11.8C19 16.2 15.8 19.4 12 20.8C8.2 19.4 5 16.2 5 11.8V6.2Z" ${D}/><path data-part="core" d="M9.2 12L11.2 14L15 9.8" ${DK}/>`,
       glass: glassCompose(
-        `<path data-part="shield" data-pivot="12 12" transform="translate(-1.5,-1)" d="M12 3L19.2 6.1V11.8C19.2 16.4 15.9 19.6 12 21C8.1 19.6 4.8 16.4 4.8 11.8V6.1Z" ${GB}/>`,
+        `<g data-part="shield" data-pivot="12 12"><path transform="translate(-1.5,-1)" d="M12 3L19.2 6.1V11.8C19.2 16.4 15.9 19.6 12 21C8.1 19.6 4.8 16.4 4.8 11.8V6.1Z" ${GB}/></g>`,
         `<path data-part="shield" data-pivot="12 12" d="M12 3L19.2 6.1V11.8C19.2 16.4 15.9 19.6 12 21C8.1 19.6 4.8 16.4 4.8 11.8V6.1Z"/>`,
         `<g data-part="shield" data-pivot="12 12" ${GF}><path d="M12 3L19.2 6.1V11.8C19.2 16.4 15.9 19.6 12 21C8.1 19.6 4.8 16.4 4.8 11.8V6.1Z"/></g><path data-part="core" d="M9 12L11.1 14.1L15.2 9.7" ${GBS}/>`
       ),
@@ -214,17 +213,17 @@ export const TECH_ICONS: IconDef[] = [
     motionSummary: "Brass key turns 45° clockwise from bow pivot",
     soundSummary: "Pin-tumbler key slide + deadbolt turn",
     svgs: {
-      outline: `<g data-part="key" data-pivot="12 12" ${K}><circle cx="16.4" cy="6.6" r="4.4"/><circle cx="16.4" cy="6.6" r="1.3" fill="currentColor" stroke="none"/><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2"/></g>`,
-      solid: `<path data-part="key" data-pivot="12 12" fill="currentColor" fill-rule="evenodd" d="M16.35 2.45A4.5 4.5 0 0 0 12.1 8.4L3.2 17.3A1 1 0 0 0 3.2 18.7L5.1 20.6A0.95 0.95 0 0 0 6.45 20.6L7.3 19.75L5.7 18.15L6.8 17.05L8.4 18.65L9.5 17.55L7.9 15.95L13.6 10.25A4.5 4.5 0 1 0 16.35 2.45ZM16.35 5.65A1.3 1.3 0 1 1 16.35 8.25A1.3 1.3 0 1 1 16.35 5.65Z"/>`,
-      duotone: `<g data-part="key" data-pivot="12 12"><circle cx="16.4" cy="6.6" r="4.4" ${D}/><circle cx="16.4" cy="6.6" r="1.3" fill="currentColor"/><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" ${DK}/></g>`,
+      outline: `<g data-part="key" data-pivot="16.35 6.95" ${K}><circle cx="16.35" cy="6.95" r="4.5"/><circle cx="17.15" cy="6.15" r="1.05" fill="currentColor" stroke="none"/><path d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89"/></g>`,
+      solid: `<path data-part="key" data-pivot="16.35 6.95" fill="currentColor" fill-rule="evenodd" d="M16.35 2.45A4.5 4.5 0 0 0 12.1 8.4L3.2 17.3A1 1 0 0 0 3.2 18.7L5.1 20.6A0.95 0.95 0 0 0 6.45 20.6L7.3 19.75L5.7 18.15L6.8 17.05L8.4 18.65L9.5 17.55L7.9 15.95L13.6 10.25A4.5 4.5 0 1 0 16.35 2.45ZM17.15 4.95A1.2 1.2 0 1 1 17.15 7.35A1.2 1.2 0 1 1 17.15 4.95Z"/>`,
+      duotone: `<g data-part="key" data-pivot="16.35 6.95"><circle cx="16.35" cy="6.95" r="4.5" ${D}/><circle cx="17.15" cy="6.15" r="1.1" fill="currentColor"/><path d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89" ${DK}/></g>`,
       glass: glassCompose(
-        `<circle cx="16.4" cy="6.6" r="4.5" ${GB}/><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" fill="none" stroke="url(#g-back)" stroke-width="3.4" stroke-linecap="round"/>`,
-        ``,
-        `<g data-part="key" data-pivot="12 12"><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" ${GBS}/><circle cx="16.4" cy="6.6" r="4.5" ${GF}/><circle cx="16.4" cy="6.6" r="4.5" ${GBS}/><circle cx="16.4" cy="6.6" r="1.3" ${GB}/></g>`
+        `<path data-part="key" data-pivot="16.35 6.95" d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89" ${GBS}/>`,
+        `<circle data-part="key" data-pivot="16.35 6.95" cx="16.35" cy="6.95" r="4.6"/>`,
+        `<g data-part="key" data-pivot="16.35 6.95" ${GF}><circle cx="16.35" cy="6.95" r="4.6"/></g><circle data-part="key" data-pivot="16.35 6.95" cx="17.15" cy="6.15" r="1.25" ${GB}/>`
       ),
-      stencil: `<defs><mask id="__GID__-keygap" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><g stroke="#000" stroke-width="1.2" stroke-linecap="round"><line x1="9.5" y1="10.1" x2="11.6" y2="12.2"/><line x1="7.3" y1="12.3" x2="9.4" y2="14.4"/></g></mask></defs><g data-part="key" data-pivot="12 12" fill="currentColor" mask="url(#__GID__-keygap)"><path fill-rule="evenodd" d="M16.35 2.45A4.5 4.5 0 0 0 12.1 8.4L3.2 17.3A1 1 0 0 0 3.2 18.7L5.1 20.6A0.95 0.95 0 0 0 6.45 20.6L7.3 19.75L5.7 18.15L6.8 17.05L8.4 18.65L9.5 17.55L7.9 15.95L13.6 10.25A4.5 4.5 0 1 0 16.35 2.45ZM16.35 5.65A1.3 1.3 0 1 1 16.35 8.25A1.3 1.3 0 1 1 16.35 5.65Z"/></g>`,
-      hardware: `<g data-part="key" data-pivot="12 12"><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" fill="none" stroke="#52525b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.4" cy="6.6" r="4.5" ${HL}/><circle cx="16.4" cy="6.6" r="1.4" ${HA}/></g>`,
-      relief: `<g data-part="key" data-pivot="12 12"><path transform="translate(1.4,1.4)" d="M16.35 2.45A4.5 4.5 0 1 1 16.35 11.45A4.5 4.5 0 1 1 16.35 2.45ZM16.35 5.65A1.3 1.3 0 1 0 16.35 8.25A1.3 1.3 0 1 0 16.35 5.65Z" fill-rule="evenodd" ${RS}/><path transform="translate(1.4,1.4)" d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" ${RS_LINE}/><path d="M13.2 9.8L3.8 19.2M5.9 17.1L7.6 18.8M4.2 18.8L5.6 20.2" ${RF_LINE}/><path d="M16.35 2.45A4.5 4.5 0 1 1 16.35 11.45A4.5 4.5 0 1 1 16.35 2.45ZM16.35 5.65A1.3 1.3 0 1 0 16.35 8.25A1.3 1.3 0 1 0 16.35 5.65Z" fill-rule="evenodd" ${RF}/></g>`,
+      stencil: `<g data-part="key" data-pivot="16.35 6.95" fill="currentColor"><path fill-rule="evenodd" d="M16.35 2.45A4.5 4.5 0 0 1 18.8 10.7L15.6 7.5A1.25 1.25 0 1 0 14.3 9.2L12.6 7.5A4.5 4.5 0 0 1 16.35 2.45ZM17.15 4.95A1.2 1.2 0 1 0 17.15 7.35A1.2 1.2 0 1 0 17.15 4.95Z"/><path d="M11.9 9.5L13.5 11.1L7.8 16.8L9.3 18.3L8.1 19.5L6.6 18L5.6 19L7.1 20.5L5.8 21.7L3.1 19Z"/></g>`,
+      hardware: `<g data-part="key" data-pivot="16.35 6.95"><path d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89" fill="none" stroke="#52525b" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"/><circle cx="16.35" cy="6.95" r="4.6" ${HL}/><circle cx="17.15" cy="6.15" r="1.35" ${HA}/></g>`,
+      relief: `<g data-part="key" data-pivot="16.35 6.95"><circle transform="translate(1.4,1.4)" cx="16.35" cy="6.95" r="4.5" ${RS}/><path transform="translate(1.4,1.4)" d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89" ${RS_LINE}/><path d="M13.17 10.13L3.87 19.42L5.64 21.19M6.17 17.13L7.93 18.89" ${RF_LINE}/><circle cx="16.35" cy="6.95" r="4.5" ${RF}/><circle cx="17.15" cy="6.15" r="1.05" ${RS}/></g>`,
     },
   },
 ];

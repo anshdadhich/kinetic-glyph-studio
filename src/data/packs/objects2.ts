@@ -20,12 +20,6 @@ import {
   RF_LINE,
 } from "../shared";
 
-// Flashlight: flared lens head, tapered barrel, grip grooves, beam ticks above
-const FL_BODY = "M7.2 4.6H16.8L16 7.4L14.6 10.4V19.2C14.6 20.1 13.9 20.8 13 20.8H11C10.1 20.8 9.4 20.1 9.4 19.2V10.4L8 7.4Z";
-const FL_LENS = `<line x1="8.35" y1="6.3" x2="15.65" y2="6.3"/>`;
-const FL_GRIP = `<line x1="10.3" y1="14.2" x2="13.7" y2="14.2"/><line x1="10.3" y1="16.6" x2="13.7" y2="16.6"/>`;
-const FL_BEAM = `<line x1="12" y1="1.4" x2="12" y2="3.4"/><line x1="8.2" y1="2.3" x2="9.4" y2="3.5"/><line x1="15.8" y1="2.3" x2="14.6" y2="3.5"/>`;
-
 export const OBJECTS2_ICONS: IconDef[] = [
   // 201. STOPWATCH
   {
@@ -116,20 +110,20 @@ export const OBJECTS2_ICONS: IconDef[] = [
     name: "flashlight",
     label: "Flashlight",
     category: "Time & Everyday",
-    motionSummary: "Tactical barrel snaps up as three bright light beams flare outward",
-    soundSummary: "Heavy aluminum tactical tail-switch click + beam hum",
+    motionSummary: "Angled tactical torch kicks subtly as three diagonal light beams flare top-right",
+    soundSummary: "Crisp tactical tail-switch click + bright beam burst",
     svgs: {
-      outline: `<g data-part="body" ${K}><path d="${FL_BODY}"/><g stroke-width="1.3">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${K_THIN}>${FL_BEAM}</g>`,
-      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect x="0" y="0" width="24" height="24" fill="#fff"/><g stroke="#000" stroke-width="1.1" stroke-linecap="round">${FL_LENS}${FL_GRIP}</g></mask></defs><g data-part="body" fill="currentColor" mask="url(#__GID__-m1)"><path d="${FL_BODY}"/></g><g data-part="beam" data-pivot="12 4" stroke="currentColor" stroke-width="1.9" stroke-linecap="round">${FL_BEAM}</g>`,
-      duotone: `<g data-part="body"><path d="${FL_BODY}" ${D}/><g ${DK_THIN}>${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${DK}>${FL_BEAM}</g>`,
+      outline: `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)" ${K}><rect x="3" y="11.6" width="9.8" height="4.8" rx="1.4"/><path d="M12.8 11.6L16 9.8V18.2L12.8 16.4Z"/><circle cx="8.8" cy="14" r="0.7" fill="currentColor" stroke="none"/></g></g><g data-part="beam" data-pivot="15.5 8.5" ${K_THIN}><line x1="17.2" y1="6.8" x2="20.4" y2="3.6"/><line x1="14.6" y1="5.2" x2="16" y2="2.6"/><line x1="18.8" y1="9.4" x2="21.4" y2="8"/></g>`,
+      solid: `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)" fill="currentColor"><path fill-rule="evenodd" d="M3 11.4H12.4L16.2 9.2V18.8L12.4 16.6H3A1.4 1.4 0 0 1 1.6 15.2V12.8A1.4 1.4 0 0 1 3 11.4ZM8.6 13A1 1 0 1 0 8.6 15A1 1 0 1 0 8.6 13Z"/></g></g><g data-part="beam" data-pivot="15.5 8.5" fill="currentColor"><rect x="16.4" y="4.3" width="4.4" height="1.7" rx="0.85" transform="rotate(-45 18.6 5.2)"/><rect x="14.2" y="3.1" width="3.2" height="1.6" rx="0.8" transform="rotate(-68 15.8 3.9)"/><rect x="18.3" y="7.8" width="3.2" height="1.6" rx="0.8" transform="rotate(-22 19.9 8.6)"/></g>`,
+      duotone: `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><path d="M3 11.6H12.8L16 9.8V18.2L12.8 16.4H3A1.4 1.4 0 0 1 1.6 15V13A1.4 1.4 0 0 1 3 11.6Z" ${D}/><line x1="12.8" y1="11.6" x2="12.8" y2="16.4" ${DK_THIN}/><circle cx="8.8" cy="14" r="0.85" fill="currentColor"/></g></g><g data-part="beam" data-pivot="15.5 8.5" ${DK}><line x1="17.2" y1="6.8" x2="20.4" y2="3.6"/><line x1="14.6" y1="5.2" x2="16" y2="2.6"/><line x1="18.8" y1="9.4" x2="21.4" y2="8"/></g>`,
       glass: glassCompose(
-        `<path d="${FL_BODY}" ${GB}/>`,
-        ``,
-        `<g data-part="body"><path d="${FL_BODY}" ${GF}/><path d="${FL_BODY}" fill="none" stroke="url(#g-back)" stroke-width="1.5"/><g fill="none" stroke="url(#g-back)" stroke-width="1.2" stroke-linecap="round">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${GBS} stroke-width="1.6">${FL_BEAM}</g>`
+        `<g data-part="beam" data-pivot="15.5 8.5" ${GBS}><line x1="17.2" y1="6.8" x2="20.4" y2="3.6"/><line x1="14.6" y1="5.2" x2="16" y2="2.6"/><line x1="18.8" y1="9.4" x2="21.4" y2="8"/></g><g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><path d="M12.4 11.4L16.2 9.2V18.8L12.4 16.6Z" ${GB}/></g></g>`,
+        `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><path d="M3 11.4H12.4L16.2 9.2V18.8L12.4 16.6H3A1.4 1.4 0 0 1 1.6 15.2V12.8A1.4 1.4 0 0 1 3 11.4Z"/></g></g>`,
+        `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><path d="M3 11.4H12.4L16.2 9.2V18.8L12.4 16.6H3A1.4 1.4 0 0 1 1.6 15.2V12.8A1.4 1.4 0 0 1 3 11.4Z" ${GF}/><circle cx="8.8" cy="14" r="1" ${GB}/></g></g>`
       ),
-      stencil: `<g data-part="body" fill="currentColor"><path d="M7.2 4.6H16.8L16 7.4L14.6 10.4V12.2H9.4V10.4L8 7.4Z"/><rect x="9.4" y="13" width="5.2" height="2.6" rx="0.8"/><rect x="9.4" y="16.4" width="5.2" height="4.4" rx="1.4"/></g><g data-part="beam" data-pivot="12 4" fill="none" stroke="currentColor" stroke-width="1.7" stroke-linecap="round">${FL_BEAM}</g>`,
-      hardware: `<g data-part="body"><path d="${FL_BODY}" ${HD}/><rect x="8" y="5.2" width="8" height="1.5" rx="0.75" ${HA}/><g fill="none" stroke="#3f3f46" stroke-width="1.2" stroke-linecap="round">${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" fill="none" stroke="#ff6b35" stroke-width="1.9" stroke-linecap="round">${FL_BEAM}</g>`,
-      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="${FL_BODY}" ${RS}/><path d="${FL_BODY}" ${RF}/><g ${RF_LINE} stroke-width="1.1">${FL_LENS}${FL_GRIP}</g></g><g data-part="beam" data-pivot="12 4" ${RF_LINE}>${FL_BEAM}</g>`,
+      stencil: `<g fill="currentColor"><g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><rect x="2.2" y="11.6" width="9.4" height="4.8" rx="1.4"/><polygon points="12.6 11.4 16.2 9.4 16.2 18.6 12.6 16.6"/></g></g><g data-part="beam" data-pivot="15.5 8.5"><rect x="16.4" y="4.3" width="4.2" height="1.6" rx="0.8" transform="rotate(-45 18.5 5.1)"/><rect x="14.2" y="3.1" width="3" height="1.5" rx="0.75" transform="rotate(-68 15.7 3.8)"/><rect x="18.3" y="7.8" width="3" height="1.5" rx="0.75" transform="rotate(-22 19.8 8.5)"/></g></g>`,
+      hardware: `<g data-part="body" data-pivot="10 14"><g transform="rotate(-45 10 14)"><rect x="2.2" y="11.4" width="10.4" height="5.2" rx="1.4" ${HD}/><path d="M12.4 11.4L16.2 9.2V18.8L12.4 16.6Z" ${HL}/><circle cx="8.6" cy="14" r="1.1" ${HA}/></g></g><g data-part="beam" data-pivot="15.5 8.5" stroke="#ff6b35" stroke-width="1.85" stroke-linecap="round"><line x1="17.2" y1="6.8" x2="20.4" y2="3.6"/><line x1="14.6" y1="5.2" x2="16" y2="2.6"/><line x1="18.8" y1="9.4" x2="21.4" y2="8"/></g>`,
+      relief: `<g data-part="body" data-pivot="10 14"><g transform="translate(1.2,1.2) rotate(-45 10 14)"><path d="M3 11.6H12.8L16 9.8V18.2L12.8 16.4H3A1.4 1.4 0 0 1 1.6 15V13A1.4 1.4 0 0 1 3 11.6Z" ${RS}/></g><g transform="rotate(-45 10 14)"><path d="M3 11.6H12.8L16 9.8V18.2L12.8 16.4H3A1.4 1.4 0 0 1 1.6 15V13A1.4 1.4 0 0 1 3 11.6Z" ${RF}/><circle cx="8.8" cy="14" r="0.9" ${RS}/></g></g><g data-part="beam" data-pivot="15.5 8.5" ${RF_LINE}><line x1="17.2" y1="6.8" x2="20.4" y2="3.6"/><line x1="14.6" y1="5.2" x2="16" y2="2.6"/><line x1="18.8" y1="9.4" x2="21.4" y2="8"/></g>`,
     },
   },
   // 206. CANDLE
@@ -140,16 +134,16 @@ export const OBJECTS2_ICONS: IconDef[] = [
     motionSummary: "Teardrop flame dances & sways gently above cylindrical wax pillar",
     soundSummary: "Match strike whisper + warm candle flame flutter",
     svgs: {
-      outline: `<path data-part="flame" data-pivot="12 9.5" d="M12 3.8C12 3.8 14.8 6.4 14.8 8.4A2.8 2.8 0 0 1 9.2 8.4C9.2 6.4 12 3.8 12 3.8Z" ${K}/><rect data-part="wax" x="8.5" y="12.2" width="7" height="8.2" rx="1.2" ${K}/>`,
-      solid: `<path data-part="flame" data-pivot="12 9.5" fill="currentColor" d="M12 3.5C12 3.5 15 6.3 15 8.5A3 3 0 0 1 9 8.5C9 6.3 12 3.5 12 3.5Z"/><rect data-part="wax" x="8.4" y="12.2" width="7.2" height="8.4" rx="1.4" fill="currentColor"/>`,
-      duotone: `<path data-part="flame" data-pivot="12 9.5" d="M12 3.8C12 3.8 14.8 6.4 14.8 8.4A2.8 2.8 0 0 1 9.2 8.4C9.2 6.4 12 3.8 12 3.8Z" ${D}/><rect data-part="wax" x="8.5" y="12.2" width="7" height="8.2" rx="1.2" ${D}/>`,
+      outline: `<path data-part="flame" data-pivot="12 10" d="M12 3.4C12 3.4 14.8 6.2 14.8 8.3A2.8 2.8 0 0 1 9.2 8.3C9.2 6.2 12 3.4 12 3.4Z" ${K}/><g data-part="wax"><line x1="12" y1="10.8" x2="12" y2="12.5" ${K_THIN}/><path d="M8.5 12.5H15.5V19.6A1.2 1.2 0 0 1 14.3 20.8H9.7A1.2 1.2 0 0 1 8.5 19.6Z" ${K}/><path d="M10.4 12.5V15.4A0.8 0.8 0 0 0 12 15.4V12.5" ${K_THIN}/></g>`,
+      solid: `<path data-part="flame" data-pivot="12 10" fill="currentColor" d="M12 3.2C12 3.2 15 6.1 15 8.4A3 3 0 0 1 9 8.4C9 6.1 12 3.2 12 3.2Z"/><g data-part="wax" fill="currentColor"><rect x="11.3" y="10.8" width="1.4" height="2" rx="0.7"/><path d="M8.4 12.5H15.6V19.5A1.3 1.3 0 0 1 14.3 20.8H9.7A1.3 1.3 0 0 1 8.4 19.5Z"/></g>`,
+      duotone: `<path data-part="flame" data-pivot="12 10" d="M12 3.4C12 3.4 14.8 6.2 14.8 8.3A2.8 2.8 0 0 1 9.2 8.3C9.2 6.2 12 3.4 12 3.4Z" ${D}/><g data-part="wax"><line x1="12" y1="10.8" x2="12" y2="12.5" ${DK_THIN}/><rect x="8.5" y="12.5" width="7" height="8.2" rx="1.2" ${D}/></g>`,
       glass: glassCompose(
-        `<path data-part="flame" data-pivot="12 9.5" d="M12 3.5C12 3.5 15 6.3 15 8.5A3 3 0 0 1 9 8.5C9 6.3 12 3.5 12 3.5Z" ${GB}/>`,
-        `<rect data-part="wax" x="8.4" y="12.2" width="7.2" height="8.4" rx="1.4"/>`
+        `<path data-part="flame" data-pivot="12 10" d="M12 3.2C12 3.2 15 6.1 15 8.4A3 3 0 0 1 9 8.4C9 6.1 12 3.2 12 3.2Z" ${GB}/><rect data-part="wax" x="11.3" y="10.8" width="1.4" height="2" rx="0.7" ${GB}/>`,
+        `<rect data-part="wax" x="8.4" y="12.5" width="7.2" height="8.3" rx="1.3"/>`
       ),
-      stencil: `<g fill="currentColor"><path data-part="flame" data-pivot="12 9.5" d="M12 3.6C12 3.6 14.8 6.3 14.8 8.4A2.8 2.8 0 0 1 9.2 8.4C9.2 6.3 12 3.6 12 3.6Z"/><g data-part="wax"><rect x="8.5" y="12.2" width="7" height="3.2" rx="1"/><rect x="8.5" y="16.4" width="7" height="4" rx="1"/></g></g>`,
-      hardware: `<path data-part="flame" data-pivot="12 9.5" d="M12 3.5C12 3.5 15 6.3 15 8.5A3 3 0 0 1 9 8.5C9 6.3 12 3.5 12 3.5Z" ${HA}/><rect data-part="wax" x="8.4" y="12.2" width="7.2" height="8.4" rx="1.4" ${HL}/>`,
-      relief: `<g data-part="flame" data-pivot="12 9.5"><path transform="translate(1.2,1.2)" d="M12 3.8C12 3.8 14.8 6.4 14.8 8.4A2.8 2.8 0 0 1 9.2 8.4C9.2 6.4 12 3.8 12 3.8Z" ${RS}/><path d="M12 3.8C12 3.8 14.8 6.4 14.8 8.4A2.8 2.8 0 0 1 9.2 8.4C9.2 6.4 12 3.8 12 3.8Z" ${RF}/></g><g data-part="wax"><rect transform="translate(1.2,1.2)" x="8.5" y="12.2" width="7" height="8.2" rx="1.2" ${RS}/><rect x="8.5" y="12.2" width="7" height="8.2" rx="1.2" ${RF}/></g>`,
+      stencil: `<g fill="currentColor"><path data-part="flame" data-pivot="12 10" d="M12 3.4C12 3.4 14.8 6.2 14.8 8.3A2.8 2.8 0 0 1 9.2 8.3C9.2 6.2 12 3.4 12 3.4Z"/><g data-part="wax"><rect x="11.3" y="10.8" width="1.4" height="1.8" rx="0.7"/><rect x="8.5" y="12.5" width="7" height="3.2" rx="1"/><rect x="8.5" y="16.7" width="7" height="4" rx="1"/></g></g>`,
+      hardware: `<path data-part="flame" data-pivot="12 10" d="M12 3.2C12 3.2 15 6.1 15 8.4A3 3 0 0 1 9 8.4C9 6.1 12 3.2 12 3.2Z" ${HA}/><g data-part="wax"><rect x="11.3" y="10.8" width="1.4" height="2" rx="0.7" ${HD}/><rect x="8.4" y="12.5" width="7.2" height="8.3" rx="1.3" ${HL}/></g>`,
+      relief: `<g data-part="flame" data-pivot="12 10"><path transform="translate(1.2,1.2)" d="M12 3.4C12 3.4 14.8 6.2 14.8 8.3A2.8 2.8 0 0 1 9.2 8.3C9.2 6.2 12 3.4 12 3.4Z" ${RS}/><path d="M12 3.4C12 3.4 14.8 6.2 14.8 8.3A2.8 2.8 0 0 1 9.2 8.3C9.2 6.2 12 3.4 12 3.4Z" ${RF}/></g><g data-part="wax"><line x1="12" y1="10.8" x2="12" y2="12.5" ${RF_LINE}/><rect transform="translate(1.2,1.2)" x="8.5" y="12.5" width="7" height="8.2" rx="1.2" ${RS}/><rect x="8.5" y="12.5" width="7" height="8.2" rx="1.2" ${RF}/></g>`,
     },
   },
   // 207. BROOM

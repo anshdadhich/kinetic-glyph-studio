@@ -10,6 +10,7 @@ import {
 } from "./data/icons";
 import { SvgDefs, getMasterDefsInner } from "./components/SvgDefs";
 import { SpotlightStage } from "./components/SpotlightStage";
+import LandingPage from "./components/LandingPage";
 import {
   AudioStatus,
   getAudioStatus,
@@ -245,13 +246,31 @@ export default function App() {
             href="#top"
             className="font-display text-lg font-bold tracking-tight text-[var(--text)] whitespace-nowrap shrink-0"
           >
-            Kinetic Glyph
+            wiggle icons
           </a>
 
           <nav
             aria-label="Primary navigation"
             className="hidden md:flex items-center gap-6 text-sm font-medium text-[var(--muted)]"
           >
+            <a
+              href="#sampler"
+              className="transition-colors hover:text-[var(--text)] hover:underline underline-offset-4 whitespace-nowrap shrink-0"
+            >
+              Sampler
+            </a>
+            <a
+              href="#library"
+              className="transition-colors hover:text-[var(--text)] hover:underline underline-offset-4 whitespace-nowrap shrink-0"
+            >
+              Library
+            </a>
+            <a
+              href="#sponsors"
+              className="transition-colors hover:text-[var(--text)] hover:underline underline-offset-4 whitespace-nowrap shrink-0"
+            >
+              Sponsors
+            </a>
             <button
               type="button"
               onClick={() => setViewMode("style")}
@@ -323,7 +342,9 @@ export default function App() {
         </div>
       </header>
 
-      <main id="top" className="mx-auto max-w-[1200px] px-6 py-8 space-y-6">
+      <LandingPage />
+
+      <main id="library" className="mx-auto max-w-[1200px] px-6 py-8 space-y-6">
         {/* Editorial Intro + Workspace Controls */}
         <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-2 max-w-2xl">

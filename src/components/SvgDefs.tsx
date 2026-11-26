@@ -26,8 +26,8 @@ export function getMasterDefsInner(isDark = false): string {
     <stop offset="0%" stop-color="${rim1}" />
     <stop offset="68%" stop-color="${rim2}" />
   </linearGradient>
-  <filter id="g-blur" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-    <feGaussianBlur stdDeviation="1.6" />
+  <filter id="g-blur" x="-12" y="-12" width="48" height="48" filterUnits="userSpaceOnUse">
+    <feGaussianBlur stdDeviation="1.35" />
   </filter>
   <!-- Tactile Hardware -->
   <linearGradient id="hw-light" x1="0" y1="0" x2="0.2" y2="1">
@@ -73,8 +73,8 @@ export function SvgDefs() {
           <stop offset="0%" style={{ stopColor: "var(--g-rim-1)" }} />
           <stop offset="68%" style={{ stopColor: "var(--g-rim-2)" }} />
         </linearGradient>
-        <filter id="g-blur" x="-50%" y="-50%" width="200%" height="200%" filterUnits="objectBoundingBox">
-          <feGaussianBlur stdDeviation="1.6" />
+        <filter id="g-blur" x="-12" y="-12" width="48" height="48" filterUnits="userSpaceOnUse">
+          <feGaussianBlur stdDeviation="1.35" />
         </filter>
         {/* Tactile Hardware */}
         <linearGradient id="hw-light" x1="0" y1="0" x2="0.2" y2="1">

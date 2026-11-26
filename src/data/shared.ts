@@ -40,7 +40,7 @@ export const STYLES: StyleDef[] = [
   {
     id: "outline",
     label: "Outline",
-    rule: "Uniform 1.75px rounded monoline",
+    rule: "Uniform 1.55px rounded monoline",
   },
   {
     id: "solid",
@@ -76,9 +76,9 @@ export const STYLES: StyleDef[] = [
 
 // Shared attribute presets
 export const K =
-  'fill="none" stroke="currentColor" stroke-width="1.75" stroke-linecap="round" stroke-linejoin="round"';
+  'fill="none" stroke="currentColor" stroke-width="1.55" stroke-linecap="round" stroke-linejoin="round"';
 export const K_THIN =
-  'fill="none" stroke="currentColor" stroke-width="1.3" stroke-linecap="round" stroke-linejoin="round"';
+  'fill="none" stroke="currentColor" stroke-width="1.2" stroke-linecap="round" stroke-linejoin="round"';
 
 // Refined thin-outline Duotone presets (1.2px outer contour)
 export const D =
@@ -90,7 +90,7 @@ export const DK_THIN =
 
 // Glass: frosted acrylic over dark charcoal + top-lit specular white rim + bright acrylic highlights
 export const GF =
-  'fill="url(#g-frost)" stroke="url(#g-rim)" stroke-width="0.75" stroke-linejoin="round" stroke-linecap="round"';
+  'fill="url(#g-frost)" stroke="url(#g-rim)" stroke-width="0.85" stroke-linejoin="round" stroke-linecap="round"';
 export const GFS =
   'fill="none" stroke="url(#g-frost)" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round"';
 export const GB = 'fill="url(#g-back)" stroke="none"';
@@ -101,9 +101,10 @@ export const GHS =
   'fill="none" stroke="url(#g-highlight)" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round"';
 
 /**
- * Frosted acrylic icon: a soft charcoal backing behind a translucent face with
- * a top-lit white rim. No masks or blur filters — they made thumbnails muddy
- * and cost a mask pair plus a Gaussian blur per icon in the grid.
+ * Composes a true optical frosted-glass SVG:
+ * - Sharp charcoal back layer outside the glass silhouette (`-out` mask)
+ * - Gaussian-blurred charcoal back layer strictly behind the glass (`-in` mask + `#g-blur`)
+ * - Translucent frosted acrylic + top-lit white specular rim layer on top
  */
 export function glassCompose(
   backSvg: string,
@@ -111,20 +112,7 @@ export function glassCompose(
   frontGlassSvg?: string
 ): string {
   const top = frontGlassSvg ?? `<g ${GF}>${frontMaskSvg}</g>`;
-  return `<g opacity="0.34">${backSvg}</g>${top}`;
-}
-
-/** Builds all seven style variants from a single set of shapes. */
-export function simpleSvgs(shapes: string): Record<StyleId, string> {
-  return {
-    outline: `<g ${K}>${shapes}</g>`,
-    solid: `<g fill="currentColor">${shapes}</g>`,
-    duotone: `<g ${D}>${shapes}</g>`,
-    glass: glassCompose(`<g ${GB}>${shapes}</g>`, shapes),
-    stencil: `<g fill="currentColor">${shapes}</g>`,
-    hardware: `<g ${HL}>${shapes}</g>`,
-    relief: `<g transform="translate(1.4,1.4)" ${RS}>${shapes}</g><g ${RF}>${shapes}</g>`,
-  };
+  return `<defs><mask id="__GID__-out" maskUnits="userSpaceOnUse" x="-12" y="-12" width="48" height="48"><rect x="-12" y="-12" width="48" height="48" fill="#fff"/><g fill="#000" stroke="#000" stroke-width="0.3">${frontMaskSvg}</g></mask><mask id="__GID__-in" maskUnits="userSpaceOnUse" x="-12" y="-12" width="48" height="48"><g fill="#fff" stroke="#fff" stroke-width="0.3">${frontMaskSvg}</g></mask></defs><g mask="url(#__GID__-out)">${backSvg}</g><g mask="url(#__GID__-in)"><g filter="url(#g-blur)">${backSvg}</g></g>${top}`;
 }
 
 // Tactile Hardware

@@ -10,7 +10,6 @@ import {
   GBS,
   GH,
   glassCompose,
-  simpleSvgs,
   HL,
   HM,
   HD,
@@ -21,39 +20,26 @@ import {
   RF_LINE,
 } from "../shared";
 
-// Hand saw: D-grip with a cutout + tapered blade with cut teeth
-const SAW_HANDLE =
-  "M7.8 8.8H5.9A3.1 3.1 0 0 0 2.8 11.9V16.9A3.1 3.1 0 0 0 5.9 20H7.8Z";
-const SAW_GRIP =
-  "M6.35 12.3H5.8A1.55 1.55 0 0 0 4.25 13.85V15A1.55 1.55 0 0 0 5.8 16.55H6.35Z";
-const SAW_BLADE =
-  "M7.8 8.8L22 10.3V11.5L21.2 12.1L20.8 11.3L20 12.2L19.6 11.4L18.8 12.3L18.4 11.5L17.6 12.4L17.2 11.6L16.4 12.5L16 11.7L15.2 12.6L14.8 11.8L14 12.7L13.6 11.9L12.8 12.8L12.4 12L11.6 12.9L11.2 12.1L10.4 13L10 12.2L9.2 13.1L8.8 12.3L8 13.2L7.8 12.6Z";
-
-// Axe: crescent bit + eye + long tapered haft
-const AXE_HEAD =
-  "M16.6 3.2C12.9 2 8.3 3 5.1 6.3C8.1 9.5 12.8 10.4 16.9 8.8L18.8 6.1Z";
-const AXE_HANDLE = "M14.6 20.8L11.9 20.2L15.7 7.3L18.4 8Z";
-
 export const TOOLS2_ICONS: IconDef[] = [
   // 151. SAW
   {
     name: "saw",
     label: "Hand Saw",
     category: "Kinetic Tools",
-    motionSummary: "Serrated steel blade saws back and forth smoothly from wooden handle",
+    motionSummary: "Horizontal serrated handsaw strokes back and forth cleanly from ergonomic D-handle",
     soundSummary: "Rhythmic carpenter hand-saw wood rasp strokes",
     svgs: {
-      outline: `<g data-part="saw" ${K}><path d="${SAW_HANDLE}"/><path d="${SAW_GRIP}"/><path d="${SAW_BLADE}"/></g>`,
-      solid: `<g data-part="saw" fill="currentColor" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}"/><path d="${SAW_BLADE}"/></g>`,
-      duotone: `<g data-part="saw" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}" ${D}/><path d="${SAW_BLADE}" ${D}/></g>`,
+      outline: `<g data-part="saw" data-pivot="18 11" ${K}><path d="M15.6 7.4L2.8 9.2V12.4L4 11.3L5.1 12.6L6.3 11.4L7.4 12.7L8.6 11.5L9.7 12.9L10.9 11.6L12 13L13.2 11.7L14.3 13.1L15.6 12.2"/><path d="M15.6 7H19.4C20.5 7 21.3 7.8 21.3 8.9L20.6 14.4A1.5 1.5 0 0 1 19.1 15.7H17.6A1.3 1.3 0 0 1 16.4 14.5L16.5 12.6H15.6Z"/><path d="M17.5 8.8H19.4L19 13.2H17.5Z" ${K_THIN}/></g>`,
+      solid: `<g data-part="saw" data-pivot="18 11" fill="currentColor"><path fill-rule="evenodd" d="M15.4 6.9H19.5C20.7 6.9 21.6 7.8 21.5 9L20.7 14.5A1.6 1.6 0 0 1 19.1 15.9H17.5A1.4 1.4 0 0 1 16.2 14.5L16.3 12.7H15.4ZM17.4 8.7V13.3H19.1L19.5 8.7Z"/><path d="M15.5 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.5 12.2Z" opacity="0.8"/></g>`,
+      duotone: `<g data-part="saw" data-pivot="18 11"><path d="M15.6 7.4L2.8 9.2V12.4L4 11.3L5.1 12.6L6.3 11.4L7.4 12.7L8.6 11.5L9.7 12.9L10.9 11.6L12 13L13.2 11.7L14.3 13.1L15.6 12.2Z" ${D}/><path fill-rule="evenodd" d="M15.6 7H19.4C20.5 7 21.3 7.8 21.3 8.9L20.6 14.4A1.5 1.5 0 0 1 19.1 15.7H17.6A1.3 1.3 0 0 1 16.4 14.5L16.5 12.6H15.6Z" ${D}/></g>`,
       glass: glassCompose(
-        `<path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${GB}/><path d="${SAW_BLADE}" ${GB}/>`,
-        `<path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd"/><path d="${SAW_BLADE}"/>`,
-        `<g data-part="saw"><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${GF}/><path d="${SAW_BLADE}" ${GF}/><path d="M8.2 9.9L21 11.2" fill="none" stroke="url(#g-rim)" stroke-width="0.7"/></g>`
+        `<path data-part="saw" data-pivot="18 11" fill-rule="evenodd" d="M15.4 6.9H19.5C20.7 6.9 21.6 7.8 21.5 9L20.7 14.5A1.6 1.6 0 0 1 19.1 15.9H17.5A1.4 1.4 0 0 1 16.2 14.5L16.3 12.7H15.4ZM17.4 8.7V13.3H19.1L19.5 8.7Z" ${GB}/>`,
+        `<path data-part="saw" data-pivot="18 11" d="M15.6 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.6 12.2Z"/>`,
+        `<g data-part="saw" data-pivot="18 11" ${GF}><path d="M15.6 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.6 12.2Z"/></g><line data-part="saw" data-pivot="18 11" x1="4" y1="9.6" x2="14.4" y2="8.2" ${GH}/>`
       ),
-      stencil: `<g data-part="saw" fill="currentColor" fill-rule="evenodd"><path d="${SAW_HANDLE} ${SAW_GRIP}"/><path d="${SAW_BLADE}"/><rect x="7.4" y="8.1" width="2.2" height="1.2" rx="0.5"/></g>`,
-      hardware: `<g data-part="saw"><path d="${SAW_HANDLE}" ${HA}/><path d="${SAW_GRIP}" ${HD}/><path d="${SAW_BLADE}" ${HL}/><path d="M8.2 9.8L21.4 11.2" fill="none" stroke="#ff6b35" stroke-width="0.7" opacity="0.9"/></g>`,
-      relief: `<g data-part="saw"><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" transform="translate(1.3,1.3)" ${RS}/><path d="${SAW_BLADE}" transform="translate(1.3,1.3)" ${RS}/><path d="${SAW_HANDLE} ${SAW_GRIP}" fill-rule="evenodd" ${RF}/><path d="${SAW_BLADE}" ${RF}/></g>`,
+      stencil: `<g data-part="saw" data-pivot="18 11" fill="currentColor"><path fill-rule="evenodd" d="M15.8 6.9H19.5C20.7 6.9 21.6 7.8 21.5 9L20.7 14.5A1.6 1.6 0 0 1 19.1 15.9H17.5A1.4 1.4 0 0 1 16.2 14.5L16.3 12.7H15.8ZM17.4 8.7V13.3H19.1L19.5 8.7Z"/><path d="M14.7 7.5L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L14.7 12.8Z"/></g>`,
+      hardware: `<g data-part="saw" data-pivot="18 11"><path d="M15.6 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.6 12.2Z" ${HL}/><path fill-rule="evenodd" d="M15.4 6.9H19.5C20.7 6.9 21.6 7.8 21.5 9L20.7 14.5A1.6 1.6 0 0 1 19.1 15.9H17.5A1.4 1.4 0 0 1 16.2 14.5L16.3 12.7H15.4ZM17.4 8.7V13.3H19.1L19.5 8.7Z" ${HA}/></g>`,
+      relief: `<g data-part="saw" data-pivot="18 11"><path transform="translate(1.3,1.3)" d="M15.6 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.6 12.2Z" ${RS}/><path d="M15.6 7.4L2.8 9.2V12.5L4 11.3L5.1 12.7L6.3 11.4L7.4 12.8L8.6 11.5L9.7 13L10.9 11.6L12 13.1L13.2 11.7L14.3 13.2L15.6 12.2Z" ${RF}/><path fill-rule="evenodd" d="M15.6 7H19.4C20.5 7 21.3 7.8 21.3 8.9L20.6 14.4A1.5 1.5 0 0 1 19.1 15.7H17.6A1.3 1.3 0 0 1 16.4 14.5L16.5 12.6H15.6Z" ${RF}/></g>`,
     },
   },
   // 152. DRILL
@@ -61,19 +47,19 @@ export const TOOLS2_ICONS: IconDef[] = [
     name: "drill",
     label: "Power Drill",
     category: "Kinetic Tools",
-    motionSummary: "Drill chassis kicks lightly while spiral bit thrusts forward",
-    soundSummary: "Variable-speed cordless electric drill chuck whir",
+    motionSummary: "Drill chassis kicks lightly while spiral bit bores forward",
+    soundSummary: "Electric drill chuck spin + helical bit bore",
     svgs: {
-      outline: `<g data-part="body" ${K}><path d="M4.5 7.5H13.2A1.5 1.5 0 0 1 14.7 9V11.8A1.5 1.5 0 0 1 13.2 13.3H6.5L5.4 18.5H8.5"/><path d="M4.5 7.5A2.2 2.2 0 0 0 4.5 13.3H6.5"/></g><g data-part="bit" ${K}><line x1="14.7" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12" ${K_THIN}/></g>`,
-      solid: `<path data-part="body" fill="currentColor" d="M5.6 7H13.4A1.6 1.6 0 0 1 15 8.6V12.2A1.6 1.6 0 0 1 13.4 13.8H9.2L7.8 19.2H4.6L6 13.8H5.6A3.4 3.4 0 0 1 5.6 7Z"/><path data-part="bit" fill="currentColor" d="M15.4 8.6H17.2V9.5H21A0.9 0.9 0 0 1 21 11.3H17.2V12.2H15.4Z"/>`,
-      duotone: `<g data-part="body"><path d="M5.5 7.4H13.4A1.5 1.5 0 0 1 14.9 8.9V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.5A3 3 0 0 1 5.5 7.4Z" ${D}/></g><g data-part="bit" ${DK}><line x1="14.9" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12"/></g>`,
+      outline: `<g data-part="body" ${K}><path d="M4.8 6.8H13.4A1.4 1.4 0 0 1 14.8 8.2V11.6A1.4 1.4 0 0 1 13.4 13H9.2L7.8 19H4.6L5.8 13H4.8A2.8 2.8 0 0 1 4.8 6.8Z"/><path d="M9 13L10.4 14.6" ${K_THIN}/><line x1="6.6" y1="9.9" x2="10.4" y2="9.9" ${K_THIN}/><line x1="3.8" y1="19" x2="9" y2="19"/></g><g data-part="bit" ${K}><rect x="14.8" y="8.2" width="2.4" height="3.4" rx="0.6"/><line x1="17.2" y1="9.9" x2="21.6" y2="9.9"/></g>`,
+      solid: `<path data-part="body" fill="currentColor" d="M5.2 6.6H13.6A1.4 1.4 0 0 1 15 8V11.8A1.4 1.4 0 0 1 13.6 13.2H9.2L8.2 18.2H9.4V19.6H3.8V18.2H5L6 13.2H5.2A3.3 3.3 0 0 1 5.2 6.6Z"/><path data-part="bit" fill="currentColor" d="M15.4 8H17.5V9.2H21.6A0.7 0.7 0 0 1 21.6 10.6H17.5V11.8H15.4Z"/>`,
+      duotone: `<g data-part="body"><path d="M4.8 6.8H13.4A1.4 1.4 0 0 1 14.8 8.2V11.6A1.4 1.4 0 0 1 13.4 13H9.2L7.8 19H4.6L5.8 13H4.8A2.8 2.8 0 0 1 4.8 6.8Z" ${D}/><line x1="3.8" y1="19" x2="9" y2="19" ${DK}/></g><g data-part="bit" ${DK}><rect x="14.8" y="8.2" width="2.4" height="3.4" rx="0.6" ${D}/><line x1="17.2" y1="9.9" x2="21.6" y2="9.9"/></g>`,
       glass: glassCompose(
-        `<path data-part="bit" d="M15.2 8.6H17.2V9.5H21A0.9 0.9 0 0 1 21 11.3H17.2V12.2H15.2Z" ${GB}/>`,
-        `<path data-part="body" d="M5.6 7H13.4A1.6 1.6 0 0 1 15 8.6V12.2A1.6 1.6 0 0 1 13.4 13.8H9.2L7.8 19.2H4.6L6 13.8H5.6A3.4 3.4 0 0 1 5.6 7Z"/>`
+        `<path data-part="bit" d="M15.2 8.2H17.5V9.2H21.6A0.7 0.7 0 0 1 21.6 10.6H17.5V11.6H15.2Z" ${GB}/>`,
+        `<path data-part="body" d="M5.2 6.6H13.6A1.4 1.4 0 0 1 15 8V11.8A1.4 1.4 0 0 1 13.6 13.2H9.2L8.2 18.2H9.4V19.6H3.8V18.2H5L6 13.2H5.2A3.3 3.3 0 0 1 5.2 6.6Z"/>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="body"><path d="M5.6 7.2H14.6V13.4H5.6A3.1 3.1 0 0 1 5.6 7.2Z"/><polygon points="6.2 14.4 9 14.4 7.8 19.2 5 19.2"/></g><path data-part="bit" d="M15.8 8.8H17.6V9.7H21V11.1H17.6V12H15.8Z"/></g>`,
-      hardware: `<g data-part="body"><rect x="4.8" y="13.2" width="3.8" height="5.8" rx="1" transform="rotate(10 6 15)" ${HD}/><rect x="3" y="7" width="12" height="6.6" rx="2.6" ${HL}/><circle cx="6.2" cy="10.3" r="1.2" ${HA}/></g><g data-part="bit"><rect x="15" y="8.6" width="2.2" height="3.4" rx="0.6" ${HD}/><rect x="17.2" y="9.6" width="4" height="1.5" rx="0.7" ${HM}/></g>`,
-      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="M5.6 7.2H13.4A1.5 1.5 0 0 1 14.9 8.7V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.6A3.1 3.1 0 0 1 5.6 7.2Z" ${RS}/><path d="M5.6 7.2H13.4A1.5 1.5 0 0 1 14.9 8.7V12A1.5 1.5 0 0 1 13.4 13.5H8.8L7.6 18.8H4.8L6 13.5H5.6A3.1 3.1 0 0 1 5.6 7.2Z" ${RF}/></g><g data-part="bit" ${RF_LINE}><line x1="14.9" y1="10.4" x2="21" y2="10.4"/><line x1="17" y1="8.8" x2="17" y2="12"/></g>`,
+      stencil: `<g fill="currentColor"><g data-part="body"><path d="M5.2 6.8H14.6V13H5.2A3.1 3.1 0 0 1 5.2 6.8Z"/><polygon points="6.1 14 8.9 14 7.7 19.2 4.9 19.2"/></g><path data-part="bit" d="M15.8 8.2H17.6V9.2H21.6V10.6H17.6V11.6H15.8Z"/></g>`,
+      hardware: `<g data-part="body"><polygon points="6 13 8.8 13 7.6 19.2 4.6 19.2" ${HD}/><rect x="2.8" y="6.6" width="12.2" height="6.6" rx="2.7" ${HL}/><circle cx="6.2" cy="9.9" r="1.2" ${HA}/></g><g data-part="bit"><rect x="15" y="8.1" width="2.4" height="3.6" rx="0.6" ${HD}/><rect x="17.4" y="9.2" width="4.2" height="1.4" rx="0.7" ${HM}/></g>`,
+      relief: `<g data-part="body"><path transform="translate(1.3,1.3)" d="M5.2 6.6H13.6A1.4 1.4 0 0 1 15 8V11.8A1.4 1.4 0 0 1 13.6 13.2H9.2L7.8 19H4.6L6 13.2H5.2A3.3 3.3 0 0 1 5.2 6.6Z" ${RS}/><path d="M5.2 6.6H13.6A1.4 1.4 0 0 1 15 8V11.8A1.4 1.4 0 0 1 13.6 13.2H9.2L7.8 19H4.6L6 13.2H5.2A3.3 3.3 0 0 1 5.2 6.6Z" ${RF}/></g><g data-part="bit" ${RF_LINE}><rect x="15" y="8.2" width="2.2" height="3.4" rx="0.5" ${RF}/><line x1="17.2" y1="9.9" x2="21.6" y2="9.9"/></g>`,
     },
   },
   // 153. SCREWDRIVER
@@ -82,18 +68,18 @@ export const TOOLS2_ICONS: IconDef[] = [
     label: "Screwdriver",
     category: "Kinetic Tools",
     motionSummary: "Fluted driver turns with crisp rotational twist and downward drive",
-    soundSummary: "Triple ratchet screwdriver turn clicks",
+    soundSummary: "Fine mechanical ratchet clicks + seated screw snap",
     svgs: {
-      outline: `<g data-part="driver" data-pivot="12 12" ${K}><path d="M14.8 4.4L19.6 9.2L17.6 11.2A1.4 1.4 0 0 1 15.6 11.2L12.8 8.4A1.4 1.4 0 0 1 12.8 6.4Z"/><line x1="14.2" y1="9.8" x2="6" y2="18"/><polygon points="4.5 19.5 7 19 5 17" fill="currentColor"/></g>`,
-      solid: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z"/><path d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z"/></g>`,
-      duotone: `<g data-part="driver" data-pivot="12 12"><path d="M14.8 4.4L19.6 9.2L17.6 11.2A1.4 1.4 0 0 1 15.6 11.2L12.8 8.4A1.4 1.4 0 0 1 12.8 6.4Z" ${D}/><line x1="14.2" y1="9.8" x2="5.4" y2="18.6" ${DK}/></g>`,
+      outline: `<g data-part="driver" data-pivot="12 12" ${K}><path d="M16.2 3.8A1.7 1.7 0 0 1 18.6 3.8L20.2 5.4A1.7 1.7 0 0 1 20.2 7.8L16.9 11.1L12.9 7.1Z"/><line x1="14.5" y1="9.5" x2="6.6" y2="17.4"/><path d="M6.6 17.4L4.2 19.8L3.7 19.3L5.6 16.4Z" fill="currentColor" stroke="none"/><path d="M7.6 18.4L4.7 20.3L4.2 19.8L6.6 17.4Z" fill="currentColor" stroke="none"/></g>`,
+      solid: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L16.9 11.3L12.7 7.1Z"/><path d="M13.5 9.4L14.6 10.5L7.4 17.7L6.7 19.2L4.2 20.2L5.2 17.7L6.3 16.6Z"/></g>`,
+      duotone: `<g data-part="driver" data-pivot="12 12"><path d="M16.2 3.8A1.7 1.7 0 0 1 18.6 3.8L20.2 5.4A1.7 1.7 0 0 1 20.2 7.8L16.9 11.1L12.9 7.1Z" ${D}/><line x1="14.5" y1="9.5" x2="6.4" y2="17.6" ${DK}/><path d="M6.4 17.6L4.2 19.8L5.2 16.4Z" fill="currentColor"/></g>`,
       glass: glassCompose(
-        `<path data-part="driver" data-pivot="12 12" d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z" ${GB}/>`,
-        `<path data-part="driver" data-pivot="12 12" d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z"/>`
+        `<path data-part="driver" data-pivot="12 12" d="M13.5 9.4L14.6 10.5L7.4 17.7L4.2 19.8L6.3 16.6Z" ${GB}/>`,
+        `<path data-part="driver" data-pivot="12 12" d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L16.9 11.3L12.7 7.1Z"/>`
       ),
-      stencil: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M15.2 4.2L19.8 8.8L17.6 11L13 6.4Z"/><polygon points="12.6 10.2 13.8 11.4 6.6 18.6 4.4 19.6 5.4 17.4"/></g>`,
-      hardware: `<g data-part="driver" data-pivot="12 12"><path d="M13.5 9.3L14.7 10.5L6.8 18.4L4.4 19.6L5.6 17.2Z" ${HL}/><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${HA}/></g>`,
-      relief: `<g data-part="driver" data-pivot="12 12"><path transform="translate(1.3,1.3)" d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${RS}/><path d="M15.2 4.2L19.8 8.8L17.6 11A1.6 1.6 0 0 1 15.3 11L13 8.7A1.6 1.6 0 0 1 13 6.4Z" ${RF}/><line x1="14.2" y1="9.8" x2="5.4" y2="18.6" ${RF_LINE}/></g>`,
+      stencil: `<g data-part="driver" data-pivot="12 12" fill="currentColor"><path d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L17.3 10.9L13.1 6.7Z"/><polygon points="12.5 10.2 13.8 11.5 6.8 18.5 4.2 19.8 5.5 17.2"/></g>`,
+      hardware: `<g data-part="driver" data-pivot="12 12"><path d="M13.5 9.4L14.6 10.5L7.4 17.7L4.2 19.8L6.3 16.6Z" ${HL}/><path d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L16.9 11.3L12.7 7.1Z" ${HA}/></g>`,
+      relief: `<g data-part="driver" data-pivot="12 12"><path transform="translate(1.3,1.3)" d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L16.9 11.3L12.7 7.1Z" ${RS}/><path d="M16.2 3.6A1.8 1.8 0 0 1 18.7 3.6L20.4 5.3A1.8 1.8 0 0 1 20.4 7.8L16.9 11.3L12.7 7.1Z" ${RF}/><line x1="14.5" y1="9.5" x2="5.2" y2="18.8" ${RF_LINE}/></g>`,
     },
   },
   // 154. AXE
@@ -101,20 +87,20 @@ export const TOOLS2_ICONS: IconDef[] = [
     name: "axe",
     label: "Axe",
     category: "Kinetic Tools",
-    motionSummary: "Forged axe swings down in chopping arc sending wood chip flying",
-    soundSummary: "Sharp timber chop crack + flying wood splinter",
+    motionSummary: "Forged axe winds up and swings down sharply sending wood chip flying",
+    soundSummary: "Crisp timber chop impact + flying wood splinter",
     svgs: {
-      outline: `<g data-part="axe" data-pivot="12 12" ${K}><path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/><path d="M15.1 8.4L17.6 5" ${K_THIN}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="currentColor"/>`,
-      solid: `<g data-part="axe" data-pivot="12 12" fill="currentColor"><path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="currentColor"/>`,
-      duotone: `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}" ${D}/><path d="${AXE_HANDLE}" ${D}/><path d="M15.1 8.4L17.6 5" ${DK_THIN}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${D}/>`,
+      outline: `<g data-part="axe" data-pivot="6 18" ${K}><path d="M4.1 18.7L14.4 8.4L15.9 9.9L5.6 20.2A1.05 1.05 0 0 1 4.1 18.7Z"/><path d="M12.1 7.6L14.7 3.7C17.9 5.1 20.1 7.9 20.8 11.6L16.9 14.3C16.2 12 14.9 10.4 13.1 9.7Z"/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" fill="currentColor"/>`,
+      solid: `<g data-part="axe" data-pivot="6 18" fill="currentColor"><path d="M4 18.6L14.4 8.2L16 9.8L5.6 20.2A1.1 1.1 0 0 1 4 18.6Z"/><path d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z"/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" fill="currentColor"/>`,
+      duotone: `<g data-part="axe" data-pivot="6 18"><path d="M4.1 18.7L14.4 8.4L15.9 9.9L5.6 20.2A1.05 1.05 0 0 1 4.1 18.7Z" ${DK}/><path d="M12.1 7.6L14.7 3.7C17.9 5.1 20.1 7.9 20.8 11.6L16.9 14.3C16.2 12 14.9 10.4 13.1 9.7Z" ${D}/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" fill="currentColor"/>`,
       glass: glassCompose(
-        `<path d="${AXE_HEAD}" ${GB}/><path d="${AXE_HANDLE}" ${GB}/>`,
-        `<path d="${AXE_HEAD}"/><path d="${AXE_HANDLE}"/>`,
-        `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}" ${GF}/><path d="${AXE_HANDLE}" ${GF}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" fill="none" stroke="url(#g-rim)" stroke-width="0.75"/><path d="M15.1 8.4L17.6 5" fill="none" stroke="url(#g-back)" stroke-width="1.1"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" fill="url(#g-highlight)"/>`
+        `<path data-part="axe" data-pivot="6 18" d="M4 18.6L14.4 8.2L16 9.8L5.6 20.2A1.1 1.1 0 0 1 4 18.6Z" ${GB}/><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" ${GB}/>`,
+        `<path data-part="axe" data-pivot="6 18" d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z"/>`,
+        `<g data-part="axe" data-pivot="6 18" ${GF}><path d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z"/></g><path data-part="axe" data-pivot="6 18" d="M18.6 6.2C19.6 7.5 20.1 9.1 20.3 10.8" ${GH}/>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="axe" data-pivot="12 12"><path d="${AXE_HEAD}"/><path d="M14.9 8.6L16.7 8.9L12.8 20.6L11.1 20.2Z"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z"/></g>`,
-      hardware: `<g data-part="axe" data-pivot="12 12"><path d="${AXE_HANDLE}" ${HL}/><path d="${AXE_HEAD}" ${HM}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" fill="none" stroke="#ff6b35" stroke-width="1.4" stroke-linecap="round"/><path d="M15.1 8.4L17.6 5" fill="none" stroke="#3f3f46" stroke-width="1.1"/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${HA}/>`,
-      relief: `<g data-part="axe" data-pivot="12 12"><path transform="translate(1.3,1.3)" d="${AXE_HEAD}" ${RS}/><path transform="translate(1.3,1.3)" d="${AXE_HANDLE}" ${RS}/><path d="${AXE_HEAD}" ${RF}/><path d="${AXE_HANDLE}" ${RF}/><path d="M6.4 6.4C8.8 8.6 12 9.7 15.3 9.2" ${RF_LINE}/></g><path data-part="chip" d="M19.8 2.2L22.1 1.6L21.4 4.1Z" ${RF}/>`,
+      stencil: `<g fill="currentColor"><g data-part="axe" data-pivot="6 18"><path d="M4 18.6L12 10.6L13.6 12.2L5.6 20.2A1.1 1.1 0 0 1 4 18.6Z"/><path d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z"/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18"/></g>`,
+      hardware: `<g data-part="axe" data-pivot="6 18"><path d="M4 18.6L14.4 8.2L16 9.8L5.6 20.2A1.1 1.1 0 0 1 4 18.6Z" ${HD}/><path d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z" ${HL}/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" ${HA}/>`,
+      relief: `<g data-part="axe" data-pivot="6 18"><path transform="translate(1.3,1.3)" d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z" ${RS}/><path d="M4 18.6L14.4 8.2L16 9.8L5.6 20.2A1.1 1.1 0 0 1 4 18.6Z" ${RF}/><path d="M11.9 7.6L14.6 3.5C18.1 5 20.3 7.9 21 11.8L16.9 14.6C16.2 12.1 14.8 10.4 13 9.7Z" ${RF}/></g><polygon data-part="chip" points="16.4 16 19.5 15 18.2 18" ${RS}/>`,
     },
   },
   // 155. SHOVEL

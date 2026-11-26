@@ -10,7 +10,6 @@ import {
   GBS,
   GH,
   glassCompose,
-  simpleSvgs,
   HL,
   HM,
   HD,
@@ -117,7 +116,7 @@ export const WORLD_ICONS: IconDef[] = [
     soundSummary: "Porcelain saucer clink + hot espresso steam hiss",
     svgs: {
       outline: `<path data-part="steam-1" d="M7.5 7.5C7 6.2 8.2 5.4 7.5 4" ${K_THIN}/><path data-part="steam-2" d="M10.5 7.2C10 5.8 11.2 4.8 10.5 3.3" ${K_THIN}/><path data-part="steam-3" d="M13.5 7.5C13 6.2 14.2 5.4 13.5 4" ${K_THIN}/><g data-part="cup" ${K}><path d="M4.8 10H15.8V15.2A4 4 0 0 1 11.8 19.2H8.8A4 4 0 0 1 4.8 15.2Z"/><path d="M15.8 11.2H17.6A2.1 2.1 0 0 1 17.6 15.4H15.8"/><line x1="4" y1="21" x2="17" y2="21"/></g>`,
-      solid: `<path data-part="steam-1" d="M7.5 7.5C7 6.2 8.2 5.4 7.5 4" ${K_THIN}/><path data-part="steam-2" d="M10.5 7.2C10 5.8 11.2 4.8 10.5 3.3" ${K_THIN}/><path data-part="steam-3" d="M13.5 7.5C13 6.2 14.2 5.4 13.5 4" ${K_THIN}/><g data-part="cup" fill="currentColor"><path d="M4.6 9.8H16V15.2A4.2 4.2 0 0 1 11.8 19.4H8.8A4.2 4.2 0 0 1 4.6 15.2Z"/><path d="M15.8 11.2H17.6A2.2 2.2 0 0 1 17.6 15.6H15.8" fill="none" stroke="currentColor" stroke-width="1.8"/><rect x="3.8" y="20.2" width="13.4" height="1.6" rx="0.8"/></g>`,
+      solid: `<path data-part="steam-1" fill="currentColor" d="M7.5 8.1A0.65 0.65 0 0 1 6.9 7.6C6.4 6.2 7.5 5.2 6.9 4.3A0.65 0.65 0 0 1 8.1 3.7C8.7 5 7.6 6 8.1 7.2A0.65 0.65 0 0 1 7.5 8.1Z"/><path data-part="steam-2" fill="currentColor" d="M10.5 7.8A0.65 0.65 0 0 1 9.9 7.3C9.4 5.8 10.5 4.7 9.9 3.6A0.65 0.65 0 0 1 11.1 3C11.7 4.4 10.6 5.5 11.1 6.9A0.65 0.65 0 0 1 10.5 7.8Z"/><path data-part="steam-3" fill="currentColor" d="M13.5 8.1A0.65 0.65 0 0 1 12.9 7.6C12.4 6.2 13.5 5.2 12.9 4.3A0.65 0.65 0 0 1 14.1 3.7C14.7 5 13.6 6 14.1 7.2A0.65 0.65 0 0 1 13.5 8.1Z"/><g data-part="cup" fill="currentColor"><path fill-rule="evenodd" d="M4.6 9.8H17.6A2.9 2.9 0 0 1 17.6 16.4H15.8A4.2 4.2 0 0 1 11.8 19.4H8.8A4.2 4.2 0 0 1 4.6 15.2ZM15.9 11.7V14.7H17.5A1.5 1.5 0 0 0 17.5 11.7Z"/><rect x="3.8" y="20.2" width="13.4" height="1.6" rx="0.8"/></g>`,
       duotone: `<path data-part="steam-1" d="M7.5 7.5C7 6.2 8.2 5.4 7.5 4" ${DK_THIN}/><path data-part="steam-2" d="M10.5 7.2C10 5.8 11.2 4.8 10.5 3.3" ${DK_THIN}/><path data-part="steam-3" d="M13.5 7.5C13 6.2 14.2 5.4 13.5 4" ${DK_THIN}/><g data-part="cup"><path d="M4.8 10H15.8V15.2A4 4 0 0 1 11.8 19.2H8.8A4 4 0 0 1 4.8 15.2Z" ${D}/><path d="M15.8 11.2H17.6A2.1 2.1 0 0 1 17.6 15.4H15.8M4 21H17" ${DK}/></g>`,
       glass: glassCompose(
         `<path data-part="steam-1" d="M7.5 7.5C7 6.2 8.2 5.4 7.5 4" ${GBS}/><path data-part="steam-2" d="M10.5 7.2C10 5.8 11.2 4.8 10.5 3.3" ${GBS}/><path data-part="steam-3" d="M13.5 7.5C13 6.2 14.2 5.4 13.5 4" ${GBS}/><g data-part="cup" data-pivot="10.5 15"><path d="M14.8 11.2H17.6A2.1 2.1 0 0 1 17.6 15.4H14.8" ${GBS}/><rect x="3.8" y="20.2" width="13.4" height="1.5" rx="0.75" ${GB}/><rect x="6" y="12.2" width="8.6" height="4.5" rx="1.6" ${GB}/></g>`,
@@ -158,7 +157,7 @@ export const WORLD_ICONS: IconDef[] = [
     soundSummary: "Metallic chain link clinks + deep bottom splash thud",
     svgs: {
       outline: `<g data-part="anchor" data-pivot="12 4.8" ${K}><circle cx="12" cy="4.75" r="2"/><line x1="12" y1="6.75" x2="12" y2="20.6"/><line x1="8.25" y1="10.25" x2="15.75" y2="10.25"/><path d="M4.3 12.8L4.3 13.7A7.7 7.1 0 0 0 19.7 13.7L19.7 12.8"/><path d="M2.9 14.5L4 13A0.45 0.45 0 0 1 4.7 13L5.8 14.5"/><path d="M18.2 14.5L19.3 13A0.45 0.45 0 0 1 20 13L21.1 14.5"/></g>`,
-      solid: `<g data-part="anchor" data-pivot="12 4.8" fill="currentColor"><path fill-rule="evenodd" d="M12 2.4A2.4 2.4 0 1 0 12 7.2A2.4 2.4 0 1 0 12 2.4ZM12 3.9A0.9 0.9 0 1 1 12 5.7A0.9 0.9 0 1 1 12 3.9Z"/><rect x="11" y="6.8" width="2" height="14" rx="1"/><rect x="8" y="9.3" width="8" height="1.9" rx="0.95"/><path d="M4.4 13.4A7.6 7 0 0 0 19.6 13.4" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"/><path d="M2.9 14.7L4 12.6A0.5 0.5 0 0 1 4.9 12.6L6 14.7A0.6 0.6 0 0 1 5.4 15.5H3.5A0.6 0.6 0 0 1 2.9 14.7Z"/><path d="M18 14.7L19.1 12.6A0.5 0.5 0 0 1 20 12.6L21.1 14.7A0.6 0.6 0 0 1 20.5 15.5H18.6A0.6 0.6 0 0 1 18 14.7Z"/></g>`,
+      solid: `<g data-part="anchor" data-pivot="12 4.8" fill="currentColor"><path fill-rule="evenodd" d="M12 2.4A2.4 2.4 0 1 0 12 7.2A2.4 2.4 0 1 0 12 2.4ZM12 3.9A0.9 0.9 0 1 1 12 5.7A0.9 0.9 0 1 1 12 3.9Z"/><rect x="11" y="6.8" width="2" height="14" rx="1"/><rect x="8" y="9.3" width="8" height="1.9" rx="0.95"/><path d="M3.4 13.4A8.6 8 0 0 0 20.6 13.4H18.6A6.6 6 0 0 1 5.4 13.4Z"/><path d="M2.9 14.7L4 12.6A0.5 0.5 0 0 1 4.9 12.6L6 14.7A0.6 0.6 0 0 1 5.4 15.5H3.5A0.6 0.6 0 0 1 2.9 14.7Z"/><path d="M18 14.7L19.1 12.6A0.5 0.5 0 0 1 20 12.6L21.1 14.7A0.6 0.6 0 0 1 20.5 15.5H18.6A0.6 0.6 0 0 1 18 14.7Z"/></g>`,
       duotone: `<g data-part="anchor" data-pivot="12 4.8"><circle cx="12" cy="4.75" r="2" ${D}/><line x1="12" y1="6.75" x2="12" y2="20.6" ${DK}/><line x1="8.25" y1="10.25" x2="15.75" y2="10.25" ${DK}/><path d="M4.4 13.4A7.6 7 0 0 0 19.6 13.4" ${DK}/><path d="M3.1 14.5L4.1 12.8A0.45 0.45 0 0 1 4.8 12.8L5.8 14.5Z" ${D}/><path d="M18.2 14.5L19.2 12.8A0.45 0.45 0 0 1 19.9 12.8L20.9 14.5Z" ${D}/></g>`,
       glass: glassCompose(
         `<g data-part="anchor" data-pivot="12 4.8"><rect x="11" y="6.8" width="2" height="14" rx="1" ${GB}/><path d="M4.4 13.4A7.6 7 0 0 0 19.6 13.4" ${GBS}/></g>`,
@@ -177,9 +176,19 @@ export const WORLD_ICONS: IconDef[] = [
     category: "World & Energy",
     motionSummary: "Double cardiac lub-dub expansion pulse",
     soundSummary: "Sub-bass double heartbeat lub-dub",
-    svgs: simpleSvgs(
-      `<path data-part="heart" d="M12 20.7C10.9 19.7 3.2 14.2 3.2 8.8C3.2 5.9 5.4 3.8 8.1 3.8C9.9 3.8 11.3 4.9 12 6.2C12.7 4.9 14.1 3.8 15.9 3.8C18.6 3.8 20.8 5.9 20.8 8.8C20.8 14.2 13.1 19.7 12 20.7Z"/>`
-    ),
+    svgs: {
+      outline: `<path data-part="heart" data-pivot="12 12" d="M12 7.2C9.8 3.6 4.6 3.7 3.2 7.9C1.7 12.6 6.8 17.1 11.1 19.9C11.65 20.25 12.35 20.25 12.9 19.9C17.2 17.1 22.3 12.6 20.8 7.9C19.4 3.7 14.2 3.6 12 7.2Z" ${K}/>`,
+      solid: `<path data-part="heart" data-pivot="12 12" fill="currentColor" d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z"/>`,
+      duotone: `<path data-part="heart" data-pivot="12 12" d="M12 7.2C9.8 3.6 4.6 3.7 3.2 7.9C1.7 12.6 6.8 17.1 11.1 19.9C11.65 20.25 12.35 20.25 12.9 19.9C17.2 17.1 22.3 12.6 20.8 7.9C19.4 3.7 14.2 3.6 12 7.2Z" ${D}/>`,
+      glass: glassCompose(
+        `<g data-part="heart" data-pivot="12 12"><path transform="translate(-1.5,-1)" d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z" ${GB}/></g>`,
+        `<path data-part="heart" data-pivot="12 12" d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z"/>`,
+        `<g data-part="heart" data-pivot="12 12" ${GF}><path d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z"/></g><path data-part="heart" data-pivot="12 12" d="M5.6 8.2A2.7 2.7 0 0 1 8.8 6.4" stroke="url(#g-highlight)" stroke-width="1.3" stroke-linecap="round" fill="none"/>`
+      ),
+      stencil: `<g data-part="heart" data-pivot="12 12" fill="currentColor"><path d="M11.3 6.5V20C6.9 17.1 1.7 12.6 3.2 7.9C4.4 3.9 9.2 3.5 11.3 6.5Z"/><path d="M12.7 6.5C14.8 3.5 19.6 3.9 20.8 7.9C22.3 12.6 17.1 17.1 12.7 20Z"/></g>`,
+      hardware: `<g data-part="heart" data-pivot="12 12"><path d="M12 7.1C9.7 3.3 4.4 3.4 3 7.8C1.5 12.7 6.7 17.3 11 20.1C11.6 20.5 12.4 20.5 13 20.1C17.3 17.3 22.5 12.7 21 7.8C19.6 3.4 14.3 3.3 12 7.1Z" ${HL}/><circle cx="7.8" cy="8.2" r="1.25" ${HA}/></g>`,
+      relief: `<g data-part="heart" data-pivot="12 12"><path transform="translate(1.5,1.5)" d="M12 7.2C9.8 3.6 4.6 3.7 3.2 7.9C1.7 12.6 6.8 17.1 11.1 19.9C11.65 20.25 12.35 20.25 12.9 19.9C17.2 17.1 22.3 12.6 20.8 7.9C19.4 3.7 14.2 3.6 12 7.2Z" ${RS}/><path d="M12 7.2C9.8 3.6 4.6 3.7 3.2 7.9C1.7 12.6 6.8 17.1 11.1 19.9C11.65 20.25 12.35 20.25 12.9 19.9C17.2 17.1 22.3 12.6 20.8 7.9C19.4 3.7 14.2 3.6 12 7.2Z" ${RF}/></g>`,
+    },
   },
   // 49. STAR (Smooth rounded 5-point Star matching optical frosted glass reference!)
   {
@@ -193,8 +202,8 @@ export const WORLD_ICONS: IconDef[] = [
       solid: `<path data-part="star" d="${STAR_P}" fill="currentColor"/>`,
       duotone: `<path data-part="star" d="${STAR_P}" ${D}/>`,
       glass: glassCompose(
-        `<path data-part="star" data-pivot="12 12" transform="translate(-2.4,-1.8) rotate(-14 12 12)" d="${STAR_P}" ${GB}/>`,
-        `<path data-part="star" data-pivot="12 12" transform="translate(1.1,0.8)" d="${STAR_P}"/>`
+        `<g data-part="star" data-pivot="12 12"><path transform="translate(-2.4,-1.8) rotate(-14 12 12)" d="${STAR_P}" ${GB}/></g>`,
+        `<g data-part="star" data-pivot="12 12"><path transform="translate(1.1,0.8)" d="${STAR_P}"/></g>`
       ),
       stencil: `<g data-part="star" fill="currentColor"><polygon points="12 2.8 14.1 8.5 12 10.6 9.9 8.5"/><polygon points="21 9.2 15.6 12.8 13.6 11.4 15.2 9.2"/><polygon points="17.5 19.6 12.5 15.8 13.4 13.6 15.8 14.2"/><polygon points="6.5 19.6 8.2 14.2 10.6 13.6 11.5 15.8"/><polygon points="3 9.2 8.8 9.2 10.4 11.4 8.4 12.8"/></g>`,
       hardware: `<g data-part="star"><path d="${STAR_P}" ${HL}/><circle cx="12" cy="12" r="1.4" ${HA}/></g>`,

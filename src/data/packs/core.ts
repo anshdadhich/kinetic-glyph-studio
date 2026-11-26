@@ -96,7 +96,7 @@ export const CORE_ICONS: IconDef[] = [
       solid: `<path data-part="gear" data-pivot="12 12" fill="currentColor" fill-rule="evenodd" d="${GEAR_PATH}M12 9.2A2.8 2.8 0 1 0 12 14.8A2.8 2.8 0 1 0 12 9.2Z"/>`,
       duotone: `<path data-part="gear" data-pivot="12 12" fill-rule="evenodd" d="${GEAR_PATH}M12 9.2A2.8 2.8 0 1 0 12 14.8A2.8 2.8 0 1 0 12 9.2Z" ${D}/>`,
       glass: glassCompose(
-        `<polygon data-part="gear" data-pivot="12 12" transform="translate(-1.5,-1.1)" points="${GEAR_P}" ${GB}/>`,
+        `<g data-part="gear" data-pivot="12 12"><polygon transform="translate(-1.5,-1.1)" points="${GEAR_P}" ${GB}/></g>`,
         `<path data-part="gear" data-pivot="12 12" fill-rule="evenodd" d="${GEAR_PATH}M12 9.3A2.7 2.7 0 1 0 12 14.7A2.7 2.7 0 1 0 12 9.3Z"/>`,
         `<g data-part="gear" data-pivot="12 12"><path fill-rule="evenodd" d="${GEAR_PATH}M12 9.3A2.7 2.7 0 1 0 12 14.7A2.7 2.7 0 1 0 12 9.3Z" ${GF}/><circle cx="12" cy="12" r="1.4" ${GH}/></g>`
       ),
@@ -134,7 +134,7 @@ export const CORE_ICONS: IconDef[] = [
     soundSummary: "Heavy deadbolt mechanical double-clack",
     svgs: {
       outline: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${K}/><g data-part="body" ${K}><rect x="4.8" y="10.5" width="14.4" height="10.2" rx="3"/><circle cx="12" cy="15.2" r="0.9"/><line x1="12" y1="16.1" x2="12" y2="17.8"/></g>`,
-      solid: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${K}/><path data-part="body" fill="currentColor" fill-rule="evenodd" d="M7.8 10.2H16.2A3.2 3.2 0 0 1 19.4 13.4V17.6A3.2 3.2 0 0 1 16.2 20.8H7.8A3.2 3.2 0 0 1 4.6 17.6V13.4A3.2 3.2 0 0 1 7.8 10.2ZM12 13.4A1.4 1.4 0 0 0 10.6 14.8A1.4 1.4 0 0 0 11.3 16V17.5A0.7 0.7 0 0 0 12.7 17.5V16A1.4 1.4 0 0 0 13.4 14.8A1.4 1.4 0 0 0 12 13.4Z"/>`,
+      solid: `<path data-part="shackle" fill="currentColor" d="M6.6 10.5V7.5A5.4 5.4 0 0 1 17.4 7.5V10.5H15.5V7.5A3.5 3.5 0 0 0 8.5 7.5V10.5Z"/><path data-part="body" fill="currentColor" fill-rule="evenodd" d="M7.8 10.2H16.2A3.2 3.2 0 0 1 19.4 13.4V17.6A3.2 3.2 0 0 1 16.2 20.8H7.8A3.2 3.2 0 0 1 4.6 17.6V13.4A3.2 3.2 0 0 1 7.8 10.2ZM12 13.4A1.4 1.4 0 0 0 10.6 14.8A1.4 1.4 0 0 0 11.3 16V17.5A0.7 0.7 0 0 0 12.7 17.5V16A1.4 1.4 0 0 0 13.4 14.8A1.4 1.4 0 0 0 12 13.4Z"/>`,
       duotone: `<path data-part="shackle" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.5 7.5V10.5" ${DK}/><g data-part="body"><rect x="4.8" y="10.5" width="14.4" height="10.2" rx="3" ${D}/><path fill="currentColor" d="M12 13.8A1.2 1.2 0 0 0 11.3 15.9V17.4A0.7 0.7 0 0 0 12.7 17.4V15.9A1.2 1.2 0 0 0 12 13.8Z"/></g>`,
       glass: glassCompose(
         `<path data-part="shackle" data-pivot="12 8" d="M7.5 12.5V7.2A4.5 4.5 0 0 1 16.5 7.2V12.5" ${GBS}/>`,
@@ -155,7 +155,7 @@ export const CORE_ICONS: IconDef[] = [
     soundSummary: "Ascending spring-release shackle pop",
     svgs: {
       outline: `<path data-part="shackle" data-pivot="7.5 10.5" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.2 6" ${K}/><g data-part="body" ${K}><rect x="4.8" y="10.5" width="14.4" height="10.2" rx="3"/><circle cx="12" cy="15.2" r="0.9"/><line x1="12" y1="16.1" x2="12" y2="17.8"/></g>`,
-      solid: `<path data-part="shackle" data-pivot="7.5 10.5" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.2 6" ${K}/><path data-part="body" fill="currentColor" fill-rule="evenodd" d="M7.8 10.2H16.2A3.2 3.2 0 0 1 19.4 13.4V17.6A3.2 3.2 0 0 1 16.2 20.8H7.8A3.2 3.2 0 0 1 4.6 17.6V13.4A3.2 3.2 0 0 1 7.8 10.2ZM12 13.4A1.4 1.4 0 0 0 10.6 14.8A1.4 1.4 0 0 0 11.3 16V17.5A0.7 0.7 0 0 0 12.7 17.5V16A1.4 1.4 0 0 0 13.4 14.8A1.4 1.4 0 0 0 12 13.4Z"/>`,
+      solid: `<path data-part="shackle" data-pivot="7.5 10.5" fill="currentColor" d="M6.6 10.5V7.5A5.4 5.4 0 0 1 17 5.5A0.95 0.95 0 0 1 15.3 6.35A3.5 3.5 0 0 0 8.5 7.5V10.5Z"/><path data-part="body" fill="currentColor" fill-rule="evenodd" d="M7.8 10.2H16.2A3.2 3.2 0 0 1 19.4 13.4V17.6A3.2 3.2 0 0 1 16.2 20.8H7.8A3.2 3.2 0 0 1 4.6 17.6V13.4A3.2 3.2 0 0 1 7.8 10.2ZM12 13.4A1.4 1.4 0 0 0 10.6 14.8A1.4 1.4 0 0 0 11.3 16V17.5A0.7 0.7 0 0 0 12.7 17.5V16A1.4 1.4 0 0 0 13.4 14.8A1.4 1.4 0 0 0 12 13.4Z"/>`,
       duotone: `<path data-part="shackle" data-pivot="7.5 10.5" d="M7.5 10.5V7.5A4.5 4.5 0 0 1 16.2 6" ${DK}/><g data-part="body"><rect x="4.8" y="10.5" width="14.4" height="10.2" rx="3" ${D}/><path fill="currentColor" d="M12 13.8A1.2 1.2 0 0 0 11.3 15.9V17.4A0.7 0.7 0 0 0 12.7 17.4V15.9A1.2 1.2 0 0 0 12 13.8Z"/></g>`,
       glass: glassCompose(
         `<path data-part="shackle" data-pivot="7.5 10.5" d="M7.5 12.5V7.2A4.5 4.5 0 0 1 16.2 6" ${GBS}/>`,
@@ -221,7 +221,7 @@ export const CORE_ICONS: IconDef[] = [
       solid: `<path data-part="plus" data-pivot="12 12" fill="currentColor" d="M10.8 4.8A1.2 1.2 0 0 1 13.2 4.8V10.8H19.2A1.2 1.2 0 0 1 19.2 13.2H13.2V19.2A1.2 1.2 0 0 1 10.8 19.2V13.2H4.8A1.2 1.2 0 0 1 4.8 10.8H10.8Z"/>`,
       duotone: `<circle cx="12" cy="12" r="8.5" ${D}/><g data-part="plus" data-pivot="12 12" ${DK}><line x1="12" y1="7" x2="12" y2="17"/><line x1="7" y1="12" x2="17" y2="12"/></g>`,
       glass: glassCompose(
-        `<path data-part="plus" data-pivot="12 12" transform="translate(-1.6,-1.3)" d="M10.6 4.8A1.4 1.4 0 0 1 13.4 4.8V10.6H19.2A1.4 1.4 0 0 1 19.2 13.4H13.4V19.2A1.4 1.4 0 0 1 10.6 19.2V13.4H4.8A1.4 1.4 0 0 1 4.8 10.6H10.6Z" ${GB}/>`,
+        `<g data-part="plus" data-pivot="12 12"><path transform="translate(-1.6,-1.3)" d="M10.6 4.8A1.4 1.4 0 0 1 13.4 4.8V10.6H19.2A1.4 1.4 0 0 1 19.2 13.4H13.4V19.2A1.4 1.4 0 0 1 10.6 19.2V13.4H4.8A1.4 1.4 0 0 1 4.8 10.6H10.6Z" ${GB}/></g>`,
         `<path data-part="plus" data-pivot="12 12" d="M10.6 4.8A1.4 1.4 0 0 1 13.4 4.8V10.6H19.2A1.4 1.4 0 0 1 19.2 13.4H13.4V19.2A1.4 1.4 0 0 1 10.6 19.2V13.4H4.8A1.4 1.4 0 0 1 4.8 10.6H10.6Z"/>`
       ),
       stencil: `<g data-part="plus" data-pivot="12 12" fill="currentColor"><rect x="10.9" y="4.5" width="2.2" height="5.5" rx="0.8"/><rect x="10.9" y="14" width="2.2" height="5.5" rx="0.8"/><rect x="4.5" y="10.9" width="5.5" height="2.2" rx="0.8"/><rect x="14" y="10.9" width="5.5" height="2.2" rx="0.8"/></g>`,

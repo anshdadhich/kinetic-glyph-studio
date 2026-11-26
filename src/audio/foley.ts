@@ -1,5 +1,3 @@
-import { getSoundMode, playSample } from "./samples";
-
 export type AudioStatus = "idle" | "ready" | "muted";
 
 let audioCtx: AudioContext | null = null;
@@ -1660,7 +1658,7 @@ export function triggerSound(name: string, anchorEl?: HTMLElement | null): void 
   if (!soundEnabled) return;
   const fn = SOUND_FX[name];
 
-  void ensureAudioRunning().then(async (ready) => {
+  void ensureAudioRunning().then((ready) => {
     if (!ready || !soundEnabled || !audioCtx || audioCtx.state !== "running" || !masterGain) {
       return;
     }
@@ -1673,11 +1671,6 @@ export function triggerSound(name: string, anchorEl?: HTMLElement | null): void 
       pan.pan.value = 0;
     }
     pan.connect(masterGain);
-
-    if (getSoundMode() === "real") {
-      const played = await playSample(name, audioCtx, pan);
-      if (played) return;
-    }
     if (fn) fn(pan, audioCtx.currentTime + 0.01);
   });
 }

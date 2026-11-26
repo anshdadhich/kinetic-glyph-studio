@@ -50,14 +50,14 @@ export const CORE2_ICONS: IconDef[] = [
     soundSummary: "Crisp modal dismiss snap + descending mute click",
     svgs: {
       outline: `<line data-part="arm-1" data-pivot="12 12" x1="6" y1="6" x2="18" y2="18" ${K}/><line data-part="arm-2" data-pivot="12 12" x1="18" y1="6" x2="6" y2="18" ${K}/>`,
-      solid: `<g fill="none" stroke="currentColor" stroke-width="2.7" stroke-linecap="round"><line data-part="arm-1" data-pivot="12 12" x1="6.2" y1="6.2" x2="17.8" y2="17.8"/><line data-part="arm-2" data-pivot="12 12" x1="17.8" y1="6.2" x2="6.2" y2="17.8"/></g>`,
+      solid: `<path data-part="arm-1" data-pivot="12 12" fill="currentColor" d="M7.28 5.52L18.48 16.72A1.25 1.25 0 0 1 16.72 18.48L5.52 7.28A1.25 1.25 0 0 1 7.28 5.52Z"/><path data-part="arm-2" data-pivot="12 12" fill="currentColor" d="M18.48 7.28L7.28 18.48A1.25 1.25 0 0 1 5.52 16.72L16.72 5.52A1.25 1.25 0 0 1 18.48 7.28Z"/>`,
       duotone: `<circle cx="12" cy="12" r="8.5" ${D}/><line data-part="arm-1" data-pivot="12 12" x1="8" y1="8" x2="16" y2="16" ${DK}/><line data-part="arm-2" data-pivot="12 12" x1="16" y1="8" x2="8" y2="16" ${DK}/>`,
       glass: glassCompose(
-        `<circle cx="12" cy="12" r="8.5" ${GB}/><g fill="none" stroke="url(#g-back)" stroke-width="2.8" stroke-linecap="round" opacity="0.55"><line x1="5.8" y1="5.8" x2="18.2" y2="18.2"/><line x1="18.2" y1="5.8" x2="5.8" y2="18.2"/></g>`,
-        `<circle cx="12" cy="12" r="8.5"/>`,
-        `<circle cx="12" cy="12" r="8.5" ${GF}/><circle cx="12" cy="12" r="7.1" fill="none" stroke="url(#g-rim)" stroke-width="0.7" opacity="0.7"/><g fill="none" stroke="url(#g-back)" stroke-width="2.6" stroke-linecap="round"><line data-part="arm-1" data-pivot="12 12" x1="8.1" y1="8.1" x2="15.9" y2="15.9"/><line data-part="arm-2" data-pivot="12 12" x1="15.9" y1="8.1" x2="8.1" y2="15.9"/></g><circle cx="12" cy="5.4" r="1.5" ${GH} opacity="0.8"/>`
+        `<path data-part="arm-2" data-pivot="12 12" d="M18.55 7.42L7.42 18.55A1.4 1.4 0 0 1 5.45 16.58L16.58 5.45A1.4 1.4 0 0 1 18.55 7.42Z" ${GB}/>`,
+        `<path data-part="arm-1" data-pivot="12 12" d="M7.42 5.45L18.55 16.58A1.4 1.4 0 0 1 16.58 18.55L5.45 7.42A1.4 1.4 0 0 1 7.42 5.45Z"/>`,
+        `<path data-part="arm-1" data-pivot="12 12" d="M7.42 5.45L18.55 16.58A1.4 1.4 0 0 1 16.58 18.55L5.45 7.42A1.4 1.4 0 0 1 7.42 5.45Z" ${GF}/><line data-part="arm-1" data-pivot="12 12" x1="7.2" y1="7.2" x2="16.8" y2="16.8" ${GH}/>`
       ),
-      stencil: `<g fill="currentColor"><g data-part="arm-1" data-pivot="12 12"><rect x="10.8" y="4" width="2.4" height="6.2" rx="1.2" transform="rotate(-45 12 12)"/><rect x="10.8" y="13.8" width="2.4" height="6.2" rx="1.2" transform="rotate(-45 12 12)"/></g><g data-part="arm-2" data-pivot="12 12"><rect x="10.8" y="4" width="2.4" height="6.2" rx="1.2" transform="rotate(45 12 12)"/><rect x="10.8" y="13.8" width="2.4" height="6.2" rx="1.2" transform="rotate(45 12 12)"/></g><circle cx="12" cy="12" r="1.4"/></g>`,
+      stencil: `<g fill="currentColor"><g data-part="arm-1" data-pivot="12 12"><path d="M6.8 5.2L10.6 9L9 10.6L5.2 6.8A1.13 1.13 0 0 1 6.8 5.2Z"/><path d="M15 13.4L18.8 17.2A1.13 1.13 0 0 1 17.2 18.8L13.4 15Z"/></g><g data-part="arm-2" data-pivot="12 12"><path d="M18.8 6.8L15 10.6L13.4 9L17.2 5.2A1.13 1.13 0 0 1 18.8 6.8Z"/><path d="M10.6 15L6.8 18.8A1.13 1.13 0 0 1 5.2 17.2L9 13.4Z"/></g><circle cx="12" cy="12" r="1.45"/></g>`,
       hardware: `<circle cx="12" cy="12" r="9" ${HD}/><circle cx="12" cy="12" r="6.8" ${HM}/><line data-part="arm-1" data-pivot="12 12" x1="8.8" y1="8.8" x2="15.2" y2="15.2" stroke="#ff6b35" stroke-width="2" stroke-linecap="round"/><line data-part="arm-2" data-pivot="12 12" x1="15.2" y1="8.8" x2="8.8" y2="15.2" stroke="#ff6b35" stroke-width="2" stroke-linecap="round"/>`,
       relief: `<g transform="translate(1.3,1.3)"><line data-part="arm-1" data-pivot="12 12" x1="6.5" y1="6.5" x2="17.5" y2="17.5" ${RS_LINE}/><line data-part="arm-2" data-pivot="12 12" x1="17.5" y1="6.5" x2="6.5" y2="17.5" ${RS_LINE}/></g><line data-part="arm-1" data-pivot="12 12" x1="6.5" y1="6.5" x2="17.5" y2="17.5" ${RF_LINE}/><line data-part="arm-2" data-pivot="12 12" x1="17.5" y1="6.5" x2="6.5" y2="17.5" ${RF_LINE}/>`,
     },
@@ -132,7 +132,7 @@ export const CORE2_ICONS: IconDef[] = [
     soundSummary: "Harmonic 3-node network broadcast arpeggio",
     svgs: {
       outline: `<line x1="8.4" y1="10.7" x2="15.2" y2="7"/><line x1="8.4" y1="13.3" x2="15.2" y2="17"/><path d="M8.4 10.7L15.2 7M8.4 13.3L15.2 17" ${K}/><circle data-part="hub" cx="6" cy="12" r="2.7" ${K}/><circle data-part="node-top" cx="17.5" cy="5.8" r="2.7" ${K}/><circle data-part="node-bot" cx="17.5" cy="18.2" r="2.7" ${K}/>`,
-      solid: `<path d="M8 10.9L15.6 6.8M8 13.1L15.6 17.2" stroke="currentColor" stroke-width="1.9" stroke-linecap="round"/><circle data-part="hub" cx="6" cy="12" r="3" fill="currentColor"/><circle data-part="node-top" cx="17.6" cy="5.8" r="3" fill="currentColor"/><circle data-part="node-bot" cx="17.6" cy="18.2" r="3" fill="currentColor"/>`,
+      solid: `<g fill="currentColor"><polygon points="7.6 10.1 15.2 6 16 7.5 8.4 11.6"/><polygon points="8.4 12.4 16 16.5 15.2 18 7.6 13.9"/><circle data-part="hub" cx="6" cy="12" r="3"/><circle data-part="node-top" cx="17.6" cy="5.8" r="3"/><circle data-part="node-bot" cx="17.6" cy="18.2" r="3"/></g>`,
       duotone: `<path d="M8.4 10.7L15.2 7M8.4 13.3L15.2 17" ${DK}/><circle data-part="hub" cx="6" cy="12" r="2.7" ${D}/><circle data-part="node-top" cx="17.5" cy="5.8" r="2.7" ${D}/><circle data-part="node-bot" cx="17.5" cy="18.2" r="2.7" ${D}/>`,
       glass: glassCompose(
         `<path d="M8 10.9L15.6 6.8M8 13.1L15.6 17.2" ${GBS}/><circle data-part="node-top" cx="17.5" cy="5.8" r="2.8" ${GB}/><circle data-part="node-bot" cx="17.5" cy="18.2" r="2.8" ${GB}/>`,

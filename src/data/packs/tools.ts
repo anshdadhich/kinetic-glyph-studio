@@ -59,7 +59,7 @@ export const TOOLS_ICONS: IconDef[] = [
           ${triSpokes(18.2, 16, 2.8, 'stroke="currentColor" stroke-width="0.7" stroke-linecap="round"')}
           <circle cx="18.2" cy="16" r="0.8"/>
         </g>
-        <g data-part="frame" ${K}>
+        <g data-part="frame" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round">
           <path d="M5.8 16L9.4 10.4H15L11.2 16Z"/>
           <path d="M18.2 16L15 8H17.4"/>
           <line x1="8" y1="8" x2="11" y2="8"/>
@@ -202,7 +202,7 @@ export const TOOLS_ICONS: IconDef[] = [
       solid: `<path data-part="wrench" data-pivot="16.5 7.5" fill="currentColor" d="M14.6 5.8A4.8 4.8 0 0 0 10.7 11.7L4.8 17.6A2 2 0 0 0 7.6 20.4L13.5 14.5A4.8 4.8 0 0 0 19.4 10.6L16.4 13.5L13.6 10.7L16.5 7.7A4.8 4.8 0 0 0 14.6 5.8Z"/>`,
       duotone: `<path data-part="wrench" data-pivot="16.5 7.5" d="M14.7 6.3A4.5 4.5 0 0 0 11 11.8L5.2 17.6A1.7 1.7 0 0 0 7.6 20L13.4 14.2A4.5 4.5 0 0 0 18.9 10.5L16.3 13.1L13.9 10.7L16.5 8.1A4.5 4.5 0 0 0 14.7 6.3Z" ${D}/>`,
       glass: glassCompose(
-        `<path data-part="wrench" data-pivot="16.5 7.5" transform="translate(-1.6,-1.2)" d="M14.7 6.3A4.5 4.5 0 0 0 11 11.8L5.2 17.6A1.7 1.7 0 0 0 7.6 20L13.4 14.2A4.5 4.5 0 0 0 18.9 10.5L16.3 13.1L13.9 10.7L16.5 8.1A4.5 4.5 0 0 0 14.7 6.3Z" ${GB}/>`,
+        `<g data-part="wrench" data-pivot="16.5 7.5"><path transform="translate(-1.6,-1.2)" d="M14.7 6.3A4.5 4.5 0 0 0 11 11.8L5.2 17.6A1.7 1.7 0 0 0 7.6 20L13.4 14.2A4.5 4.5 0 0 0 18.9 10.5L16.3 13.1L13.9 10.7L16.5 8.1A4.5 4.5 0 0 0 14.7 6.3Z" ${GB}/></g>`,
         `<path data-part="wrench" data-pivot="16.5 7.5" d="M14.7 6.3A4.5 4.5 0 0 0 11 11.8L5.2 17.6A1.7 1.7 0 0 0 7.6 20L13.4 14.2A4.5 4.5 0 0 0 18.9 10.5L16.3 13.1L13.9 10.7L16.5 8.1A4.5 4.5 0 0 0 14.7 6.3Z"/>`
       ),
       stencil: `<g data-part="wrench" data-pivot="16.5 7.5" fill="currentColor"><path d="M14.6 5.8A4.8 4.8 0 0 0 11 11.4L13.7 14.1A4.8 4.8 0 0 0 19.4 10.6L16.4 13.5L13.6 10.7L16.5 7.7A4.8 4.8 0 0 0 14.6 5.8Z"/><path d="M10.1 12.6L4.8 17.6A2 2 0 0 0 7.6 20.4L12.6 15.1Z"/></g>`,
@@ -259,10 +259,10 @@ export const TOOLS_ICONS: IconDef[] = [
     soundSummary: "Crisp nib scratch across textured paper",
     svgs: {
       outline: `<g data-part="pen" data-pivot="5 19" ${K}><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/><line x1="14" y1="6.5" x2="17.5" y2="10"/></g><line x1="4.5" y1="21" x2="19.5" y2="21" ${K_THIN} opacity="0.45"/>`,
-      solid: `<g data-part="pen" data-pivot="5 19" fill="currentColor"><path d="M16.5 3.6L20.4 7.5L9.2 18.7H4.8V14.3Z"/></g><rect x="4.5" y="20" width="15" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>`,
+      solid: `<defs><mask id="__GID__-m1" maskUnits="userSpaceOnUse" x="0" y="0" width="24" height="24"><rect width="24" height="24" fill="#fff"/><line x1="13.8" y1="6.1" x2="17.9" y2="10.2" stroke="#000" stroke-width="1.4"/></mask></defs><g data-part="pen" data-pivot="5 19" fill="currentColor" mask="url(#__GID__-m1)"><path d="M16.5 3.6L20.4 7.5L9.2 18.7H4.8V14.3Z"/></g><rect x="4.5" y="20" width="15" height="1.5" rx="0.75" fill="currentColor" opacity="0.45"/>`,
       duotone: `<g data-part="pen" data-pivot="5 19"><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${D}/><line x1="14" y1="6.5" x2="17.5" y2="10" ${DK}/></g>`,
       glass: glassCompose(
-        `<path data-part="pen" data-pivot="5 19" transform="translate(-1.5,-1.1)" d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${GB}/>`,
+        `<g data-part="pen" data-pivot="5 19"><path transform="translate(-1.5,-1.1)" d="M16.5 4L20 7.5L8.5 19H5V15.5Z" ${GB}/></g>`,
         `<path data-part="pen" data-pivot="5 19" d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/>`,
         `<g data-part="pen" data-pivot="5 19" ${GF}><path d="M16.5 4L20 7.5L8.5 19H5V15.5Z"/></g><polygon data-part="pen" data-pivot="5 19" points="5 15.5 8.5 19 5 19" ${GB}/>`
       ),
@@ -279,17 +279,16 @@ export const TOOLS_ICONS: IconDef[] = [
     motionSummary: "Three console fader caps glide to staggered levels",
     soundSummary: "Console fader track glide + detent click",
     svgs: {
-      outline: `<g ${K}><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g fill="none" stroke="currentColor" stroke-width="3.2" stroke-linecap="round"><line data-part="knob-1" x1="9" y1="4.6" x2="9" y2="9.4"/><line data-part="knob-2" x1="15" y1="9.6" x2="15" y2="14.4"/><line data-part="knob-3" x1="10" y1="14.6" x2="10" y2="19.4"/></g>`,
-      solid: `<g fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round"><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><line data-part="knob-1" x1="9" y1="4.6" x2="9" y2="9.4"/><line data-part="knob-2" x1="15" y1="9.6" x2="15" y2="14.4"/><line data-part="knob-3" x1="10" y1="14.6" x2="10" y2="19.4"/></g>`,
-      duotone: `<g ${DK}><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g fill="none" stroke="currentColor" stroke-width="3.4" stroke-linecap="round"><line data-part="knob-1" x1="9" y1="4.6" x2="9" y2="9.4"/><line data-part="knob-2" x1="15" y1="9.6" x2="15" y2="14.4"/><line data-part="knob-3" x1="10" y1="14.6" x2="10" y2="19.4"/></g>`,
+      outline: `<defs><mask id="__GID__-m1"><rect x="0" y="0" width="24" height="24" fill="#fff"/><circle data-part="knob-1" cx="9" cy="7" r="1.9" fill="#000"/><circle data-part="knob-2" cx="15" cy="12" r="1.9" fill="#000"/><circle data-part="knob-3" cx="10" cy="17" r="1.9" fill="#000"/></mask></defs><g mask="url(#__GID__-m1)" ${K}><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g><g ${K}><circle data-part="knob-1" cx="9" cy="7" r="1.9"/><circle data-part="knob-2" cx="15" cy="12" r="1.9"/><circle data-part="knob-3" cx="10" cy="17" r="1.9"/></g>`,
+      solid: `<g fill="currentColor"><rect x="3.5" y="6.2" width="17" height="1.6" rx="0.8"/><rect x="3.5" y="11.2" width="17" height="1.6" rx="0.8"/><rect x="3.5" y="16.2" width="17" height="1.6" rx="0.8"/><circle data-part="knob-1" cx="9" cy="7" r="2.2"/><circle data-part="knob-2" cx="15" cy="12" r="2.2"/><circle data-part="knob-3" cx="10" cy="17" r="2.2"/></g>`,
+      duotone: `<defs><mask id="__GID__-m1"><rect x="0" y="0" width="24" height="24" fill="#fff"/><circle data-part="knob-1" cx="9" cy="7" r="2" fill="#000"/><circle data-part="knob-2" cx="15" cy="12" r="2" fill="#000"/><circle data-part="knob-3" cx="10" cy="17" r="2" fill="#000"/></mask></defs><g mask="url(#__GID__-m1)" ${DK}><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g><circle data-part="knob-1" cx="9" cy="7" r="2" ${D}/><circle data-part="knob-2" cx="15" cy="12" r="2" ${D}/><circle data-part="knob-3" cx="10" cy="17" r="2" ${D}/>`,
       glass: glassCompose(
-        `<g fill="none" stroke="url(#g-back)" stroke-width="5" stroke-linecap="round"><line x1="9" y1="4.6" x2="9" y2="9.4"/><line x1="15" y1="9.6" x2="15" y2="14.4"/><line x1="10" y1="14.6" x2="10" y2="19.4"/></g>`,
-        ``,
-        `<g ${GBS}><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g fill="none" stroke="url(#g-back)" stroke-width="3.4" stroke-linecap="round"><line data-part="knob-1" x1="9" y1="4.6" x2="9" y2="9.4"/><line data-part="knob-2" x1="15" y1="9.6" x2="15" y2="14.4"/><line data-part="knob-3" x1="10" y1="14.6" x2="10" y2="19.4"/></g>`
+        `<g ${GBS}><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g>`,
+        `<circle data-part="knob-1" data-pivot="9 7" cx="9" cy="7" r="2.4"/><circle data-part="knob-2" data-pivot="15 12" cx="15" cy="12" r="2.4"/><circle data-part="knob-3" data-pivot="10 17" cx="10" cy="17" r="2.4"/>`
       ),
-      stencil: `<g fill="none" stroke="currentColor" stroke-width="2.1" stroke-linecap="round" stroke-dasharray="4.4 1.8"><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g fill="none" stroke="currentColor" stroke-width="3.6" stroke-linecap="round"><line data-part="knob-1" x1="9" y1="4.6" x2="9" y2="9.4"/><line data-part="knob-2" x1="15" y1="9.6" x2="15" y2="14.4"/><line data-part="knob-3" x1="10" y1="14.6" x2="10" y2="19.4"/></g>`,
-      hardware: `<g stroke="#52525b" stroke-width="1.8" stroke-linecap="round"><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><rect data-part="knob-1" x="7.3" y="4.7" width="3.4" height="4.6" rx="0.9" ${HL}/><rect data-part="knob-2" x="13.3" y="9.7" width="3.4" height="4.6" rx="0.9" ${HA}/><rect data-part="knob-3" x="8.3" y="14.7" width="3.4" height="4.6" rx="0.9" ${HL}/>`,
-      relief: `<g transform="translate(1.4,1.4)" ${RS_LINE}><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g ${RF_LINE}><line x1="3.6" y1="7" x2="20.4" y2="7"/><line x1="3.6" y1="12" x2="20.4" y2="12"/><line x1="3.6" y1="17" x2="20.4" y2="17"/></g><g data-part="knob-1"><line transform="translate(1.4,1.4)" x1="9" y1="4.6" x2="9" y2="9.4" stroke="var(--rel-shadow)" stroke-width="3.2" stroke-linecap="round"/><line x1="9" y1="4.6" x2="9" y2="9.4" stroke="var(--rel-stroke)" stroke-width="3.2" stroke-linecap="round"/></g><g data-part="knob-2"><line transform="translate(1.4,1.4)" x1="15" y1="9.6" x2="15" y2="14.4" stroke="var(--rel-shadow)" stroke-width="3.2" stroke-linecap="round"/><line x1="15" y1="9.6" x2="15" y2="14.4" stroke="var(--rel-stroke)" stroke-width="3.2" stroke-linecap="round"/></g><g data-part="knob-3"><line transform="translate(1.4,1.4)" x1="10" y1="14.6" x2="10" y2="19.4" stroke="var(--rel-shadow)" stroke-width="3.2" stroke-linecap="round"/><line x1="10" y1="14.6" x2="10" y2="19.4" stroke="var(--rel-stroke)" stroke-width="3.2" stroke-linecap="round"/></g>`,
+      stencil: `<g fill="currentColor"><rect x="3.8" y="6.3" width="3" height="1.4" rx="0.6"/><rect x="11.4" y="6.3" width="8.8" height="1.4" rx="0.6"/><circle data-part="knob-1" cx="9" cy="7" r="1.8"/><rect x="3.8" y="11.3" width="8.8" height="1.4" rx="0.6"/><rect x="17.4" y="11.3" width="2.8" height="1.4" rx="0.6"/><circle data-part="knob-2" cx="15" cy="12" r="1.8"/><rect x="3.8" y="16.3" width="4" height="1.4" rx="0.6"/><rect x="12.4" y="16.3" width="7.8" height="1.4" rx="0.6"/><circle data-part="knob-3" cx="10" cy="17" r="1.8"/></g>`,
+      hardware: `<g stroke="#52525b" stroke-width="1.6" stroke-linecap="round"><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g><rect data-part="knob-1" x="7.4" y="4.8" width="3.2" height="4.4" rx="0.8" ${HL}/><rect data-part="knob-2" x="13.4" y="9.8" width="3.2" height="4.4" rx="0.8" ${HA}/><rect data-part="knob-3" x="8.4" y="14.8" width="3.2" height="4.4" rx="0.8" ${HL}/>`,
+      relief: `<g transform="translate(1.5,1.5)" ${RS_LINE}><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g><g ${RF_LINE}><line x1="4" y1="7" x2="20" y2="7"/><line x1="4" y1="12" x2="20" y2="12"/><line x1="4" y1="17" x2="20" y2="17"/></g><circle data-part="knob-1" cx="9" cy="7" r="2" ${RF}/><circle data-part="knob-2" cx="15" cy="12" r="2" ${RF}/><circle data-part="knob-3" cx="10" cy="17" r="2" ${RF}/>`,
     },
   },
   // 38. LINK
@@ -324,7 +323,7 @@ export const TOOLS_ICONS: IconDef[] = [
       solid: `<defs><mask id="__GID__-m1"><rect x="0" y="0" width="24" height="24" fill="#fff"/><circle data-part="pupil" data-pivot="12 12" cx="12" cy="12" r="4.1" fill="#000"/></mask></defs><path data-part="lid" data-pivot="12 12" mask="url(#__GID__-m1)" fill="currentColor" d="M2.3 12A10.4 10.4 0 0 1 21.7 12A10.4 10.4 0 0 1 2.3 12Z"/><circle data-part="pupil" data-pivot="12 12" cx="12" cy="12" r="2.2" fill="currentColor"/>`,
       duotone: `<path data-part="lid" data-pivot="12 12" d="M2.75 12A9.83 9.83 0 0 1 21.25 12A9.83 9.83 0 0 1 2.75 12Z" ${D}/><circle data-part="pupil" data-pivot="12 12" cx="12" cy="12" r="3.2" fill="currentColor"/>`,
       glass: glassCompose(
-        `<path data-part="lid" data-pivot="12 12" transform="translate(-1.4,-1)" d="M2.75 12A9.83 9.83 0 0 1 21.25 12A9.83 9.83 0 0 1 2.75 12Z" ${GB}/>`,
+        `<g data-part="lid" data-pivot="12 12"><path transform="translate(-1.4,-1)" d="M2.75 12A9.83 9.83 0 0 1 21.25 12A9.83 9.83 0 0 1 2.75 12Z" ${GB}/></g>`,
         `<path data-part="lid" data-pivot="12 12" d="M2.4 12A10.2 10.2 0 0 1 21.6 12A10.2 10.2 0 0 1 2.4 12Z"/>`,
         `<g data-part="lid" data-pivot="12 12" ${GF}><path d="M2.4 12A10.2 10.2 0 0 1 21.6 12A10.2 10.2 0 0 1 2.4 12Z"/></g><g data-part="pupil" data-pivot="12 12"><circle cx="12" cy="12" r="3.8" ${GB}/><circle cx="13.2" cy="10.8" r="0.9" ${GH}/></g>`
       ),
@@ -345,7 +344,7 @@ export const TOOLS_ICONS: IconDef[] = [
       solid: `<ellipse data-part="shadow" cx="12" cy="20.8" rx="4.1" ry="0.9" fill="currentColor" opacity="0.25"/><path data-part="pin" data-pivot="12 11.5" fill="currentColor" fill-rule="evenodd" d="M12 19.8C12 19.8 18.2 14.2 18.2 9.4A6.2 6.2 0 0 0 5.8 9.4C5.8 14.2 12 19.8 12 19.8ZM12 7.1A2.3 2.3 0 1 0 12 11.7A2.3 2.3 0 1 0 12 7.1Z"/>`,
       duotone: `<ellipse data-part="shadow" cx="12" cy="20.6" rx="4.1" ry="1" fill="currentColor" opacity="0.22"/><g data-part="pin" data-pivot="12 11.5"><path d="M12 19.6C12 19.6 18 14.1 18 9.4A6 6 0 0 0 6 9.4C6 14.1 12 19.6 12 19.6Z" ${D}/><circle cx="12" cy="9.4" r="2.2" fill="currentColor"/></g>`,
       glass: glassCompose(
-        `<ellipse data-part="shadow" data-pivot="12 20.8" cx="12" cy="20.8" rx="4.2" ry="1" ${GB} opacity="0.55"/><path data-part="pin" data-pivot="12 11.5" transform="translate(-1.5,-1.1)" d="M12 19.6C12 19.6 18 14.1 18 9.4A6 6 0 0 0 6 9.4C6 14.1 12 19.6 12 19.6Z" ${GB}/>`,
+        `<ellipse data-part="shadow" data-pivot="12 20.8" cx="12" cy="20.8" rx="4.2" ry="1" ${GB} opacity="0.55"/><g data-part="pin" data-pivot="12 11.5"><path transform="translate(-1.5,-1.1)" d="M12 19.6C12 19.6 18 14.1 18 9.4A6 6 0 0 0 6 9.4C6 14.1 12 19.6 12 19.6Z" ${GB}/></g>`,
         `<path data-part="pin" data-pivot="12 11.5" d="M12 19.6C12 19.6 18 14.1 18 9.4A6 6 0 0 0 6 9.4C6 14.1 12 19.6 12 19.6Z"/>`,
         `<g data-part="pin" data-pivot="12 11.5" ${GF}><path d="M12 19.6C12 19.6 18 14.1 18 9.4A6 6 0 0 0 6 9.4C6 14.1 12 19.6 12 19.6Z"/></g><circle data-part="pin" data-pivot="12 11.5" cx="12" cy="9.4" r="2.3" ${GB}/>`
       ),
