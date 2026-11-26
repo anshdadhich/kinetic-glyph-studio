@@ -294,11 +294,9 @@ function SponsorWall() {
 /* ------------------------------------------------------------------ */
 
 const FAQ = [
-  ["Is this a subscription?", "No. Browse the library for free, and a sponsor slot is a one-time $30 placement."],
-  ["What do I get as a sponsor?", "Your name, link and one-line note live on this page in a permanent 10-slot wall."],
-  ["Can I change my details later?", "Yes. Clear the demo wall with Reset demo and claim the same slot again with new details."],
-  ["How many icons are there?", "240 icons, each in seven styles: outline, solid, duotone, glass, stencil, hardware and relief."],
-  ["Do the icons really make sound?", "Every icon has its own procedural Web Audio foley, generated in the browser. No sample files."],
+  ["How many icons are there?", "240 icons in eight styles: outline, solid, duotone, glass, stencil, hardware, relief and blueprint."],
+  ["Do the icons really make sound?", "Every icon has its own synth foley, generated in the browser. No sample files."],
+  ["Can I copy an SVG?", "Yes. Click any icon in the library or this page to copy its standalone SVG."],
   ["Does reduced motion work?", "Yes. All choreography respects prefers-reduced-motion."],
 ];
 
@@ -445,37 +443,6 @@ export default function LandingPage() {
                 <p className="wig-panel-name">{style.label}</p>
               </div>
             ))}
-          </div>
-        </section>
-
-        <section className="wig-section wig-pricing" id="pricing" aria-labelledby="pricing-title">
-          <h2 id="pricing-title">One wall, ten places.</h2>
-          <p className="wig-section-lead">A one-time placement. No subscription, no renewal, no fine print.</p>
-          <div className="wig-plans">
-            <div className="wig-plan">
-              <p className="wig-plan-name">Just looking</p>
-              <p className="wig-plan-who">Free, forever</p>
-              <div className="wig-plan-price"><span className="wig-plan-now">$0</span></div>
-              <ul className="wig-included">
-                <li><Icon name="check" size={20} animate sound bare /><span>All 240 icons in every style</span></li>
-                <li><Icon name="check" size={20} animate sound bare /><span>Every animation and sound</span></li>
-                <li><Icon name="check" size={20} animate sound bare /><span>Copy any SVG you like</span></li>
-              </ul>
-              <a className="wig-capsule wig-capsule-quiet" href="/icons" style={{ marginTop: 20 }}>Open the library</a>
-            </div>
-            <div className="wig-plan wig-plan-featured">
-              <p className="wig-plan-name">Sponsor slot</p>
-              <p className="wig-plan-who">One block on the wall</p>
-              <div className="wig-plan-price"><span className="wig-plan-now">$30</span><span className="wig-plan-terms">one time</span></div>
-              <ul className="wig-included">
-                <li><Icon name="check" size={20} animate sound bare /><span>Your name and link on this page</span></li>
-                <li><Icon name="check" size={20} animate sound bare /><span>One-line note for your product</span></li>
-                <li><Icon name="check" size={20} animate sound bare /><span>Yours for life, no renewal</span></li>
-              </ul>
-              <a className="wig-capsule wig-capsule-buy" href="#sponsors" style={{ marginTop: 20 }}>
-                <span>Claim a slot</span><span className="wig-capsule-price">$30</span>
-              </a>
-            </div>
           </div>
         </section>
 

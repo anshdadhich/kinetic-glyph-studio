@@ -226,7 +226,7 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
         <nav className="lib-legal" aria-label="More">
           <a href="#top">Home</a>
           <a href="#sponsors">Sponsors</a>
-          <a href="#pricing">Pricing</a>
+          <a href="/icons">All icons</a>
         </nav>
       </aside>
 

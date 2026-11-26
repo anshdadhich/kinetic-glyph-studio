@@ -184,6 +184,18 @@ a.wig-sponsor:hover { background: #efeff2; }
   100% { transform: scale(1); }
 }
 .wig-faq-mark svg.faq-pop { animation: wig-faq-pop 360ms cubic-bezier(.3,.7,.4,1); }
+.wig-faq-item { interpolate-size: allow-keywords; }
+.wig-faq-item::details-content {
+  block-size: 0;
+  overflow: hidden;
+  opacity: 0;
+  transition: block-size .3s cubic-bezier(.3,.7,.4,1), opacity .2s ease, content-visibility .3s allow-discrete;
+}
+.wig-faq-item[open]::details-content { block-size: auto; opacity: 1; }
+@media (prefers-reduced-motion: reduce) {
+  .wig-faq-mark svg.faq-pop { animation: none; }
+  .wig-faq-item::details-content { transition: none; }
+}
 .wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
 
 /* Footer */

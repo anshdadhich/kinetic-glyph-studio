@@ -114,7 +114,7 @@ const RAIL: Array<{ label: string; href: string; open?: boolean; pages: Array<[s
       ["Icon props", "/docs/variants"],
     ],
   },
-  { label: "Community", href: "/", pages: [["Sponsor wall", "/#sponsors"], ["Pricing", "/#pricing"]] },
+  { label: "Community", href: "/", pages: [["Sponsor wall", "/#sponsors"], ["Icon library", "/icons"]] },
 ];
 
 export default function DocsVariants() {
