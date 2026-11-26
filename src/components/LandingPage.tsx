@@ -257,7 +257,7 @@ function SponsorWall() {
               }}
               onClick={() => setSlot(i)}
             >
-              <span className="wig-sponsor-plus" aria-hidden="true"><Icon name="plus" size={18} animate sound bare /></span>
+              <span className="wig-sponsor-plus" aria-hidden="true"><Icon name="plus" size={18} /></span>
               <span className="wig-sponsor-slot">Slot {i + 1}</span>
               <span className="wig-sponsor-price">${PRICE}</span>
             </button>
@@ -379,8 +379,15 @@ export default function LandingPage() {
           <a className="wig-capsule wig-capsule-buy" href="/icons">
             <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
           </a>
-          <a className="wig-capsule wig-capsule-quiet" href="#sponsors">
-            Become a sponsor <Icon name="forward" size={16} animate sound bare />
+          <a
+            className="wig-capsule wig-capsule-quiet"
+            href="#sponsors"
+            onPointerEnter={() => {
+              initAudio();
+              triggerSound("forward", null);
+            }}
+          >
+            Become a sponsor <Icon name="forward" size={16} className="wig-cta-arrow" />
           </a>
         </div>
         <section id="sponsors" className="wig-sponsor-strip" aria-labelledby="sponsor-title">

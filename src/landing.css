@@ -88,6 +88,12 @@
 .wig-capsule-price { color: #fff; background: #2e2e2e; border-radius: 999px; padding: 6px 13px; font-variant-numeric: tabular-nums; }
 .wig-capsule-quiet { background: #0000000f; padding: 0 20px; }
 .wig-capsule-quiet:hover { background: #00000017; }
+@keyframes wig-cta-nudge {
+  0% { transform: translateX(0); }
+  40% { transform: translateX(4px); }
+  100% { transform: translateX(0); }
+}
+.wig-capsule-quiet:hover .wig-cta-arrow { animation: wig-cta-nudge 420ms cubic-bezier(.3,.7,.4,1); }
 .wig-guarantee { color: var(--muted); margin-top: 12px; font-size: 13px; }
 
 /* Sponsor wall placed directly under the hero */
@@ -232,5 +238,5 @@ a.wig-sponsor:hover { background: #efeff2; }
   .wig-sponsor-strip .wig-sponsors { grid-template-columns: minmax(0, 1fr); }
 }
 @media (prefers-reduced-motion: reduce) {
-  .wig-capsule, .wig-capsule:active, .wig-spinner { transition: none; animation: none; }
+  .wig-capsule, .wig-capsule:active, .wig-spinner, .wig-capsule-quiet:hover .wig-cta-arrow { transition: none; animation: none; }
 }
