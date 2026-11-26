@@ -168,10 +168,8 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-faq-item { background: var(--tile); border-radius: 18px; }
 .wig-faq-item summary { cursor: pointer; justify-content: space-between; align-items: center; gap: 16px; padding: 16px 20px; font-weight: 500; list-style: none; display: flex; }
 .wig-faq-item summary::-webkit-details-marker { display: none; }
-.wig-faq-mark { width: 12px; height: 12px; color: var(--muted); flex: none; position: relative; }
-.wig-faq-mark::before, .wig-faq-mark::after { content: ""; background: currentColor; border-radius: 1px; width: 12px; height: 1.5px; margin-top: -.75px; transition: transform .24s; position: absolute; top: 50%; left: 0; }
-.wig-faq-mark::after { transform: rotate(90deg); }
-.wig-faq-item[open] .wig-faq-mark::after { transform: rotate(0); }
+.wig-faq-mark { width: 14px; height: 14px; color: var(--muted); flex: none; display: grid; place-items: center; transition: transform .24s; }
+.wig-faq-item[open] .wig-faq-mark { transform: rotate(45deg); }
 .wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
 
 /* Footer */
@@ -183,7 +181,7 @@ a.wig-sponsor:hover { background: #efeff2; }
 .wig-footer-groups { grid-template-columns: repeat(3, auto); justify-content: space-between; gap: 28px 24px; display: grid; }
 .wig-footer-title { color: var(--ink); margin: 0 0 10px; font-weight: 600; }
 .wig-footer-group ul { gap: 6px; margin: 0; padding: 0; list-style: none; display: grid; }
-.wig-footer-bottom { color: var(--faint); flex-wrap: wrap; justify-content: space-between; gap: 6px 24px; margin-top: 40px; display: flex; }
+.wig-footer-bottom { color: var(--faint); flex-wrap: wrap; justify-content: center; gap: 6px 24px; margin-top: 40px; display: flex; }
 
 /* Demo checkout sheet */
 .wig-sheet-backdrop { z-index: 50; position: fixed; inset: 0; background: #00000038; }

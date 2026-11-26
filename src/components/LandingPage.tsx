@@ -380,7 +380,7 @@ export default function LandingPage() {
             <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
           </a>
           <a className="wig-capsule wig-capsule-quiet" href="#sponsors">
-            Become a sponsor <span aria-hidden="true">→</span>
+            Become a sponsor <Icon name="forward" size={16} animate sound bare />
           </a>
         </div>
         <section id="sponsors" className="wig-sponsor-strip" aria-labelledby="sponsor-title">
@@ -395,7 +395,7 @@ export default function LandingPage() {
             <h2>Icons</h2>
             <span className="wig-sampler-meta">
               <span className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</span>
-              <a href="/icons">View all {ICONS.length} →</a>
+              <a href="/icons">View all {ICONS.length} <Icon name="forward" size={14} animate sound bare /></a>
             </span>
           </div>
           <div className="wig-panels">
@@ -450,7 +450,7 @@ export default function LandingPage() {
           <div className="wig-faq" style={{ marginTop: 24 }}>
             {FAQ.map(([q, a]) => (
               <details className="wig-faq-item" key={q}>
-                <summary>{q}<span className="wig-faq-mark" aria-hidden="true" /></summary>
+                <summary>{q}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} animate sound bare /></span></summary>
                 <p>{a}</p>
               </details>
             ))}
