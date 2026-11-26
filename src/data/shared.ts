@@ -5,7 +5,8 @@ export type StyleId =
   | "glass"
   | "stencil"
   | "hardware"
-  | "relief";
+  | "relief"
+  | "blueprint";
 
 export type IconCategory =
   | "Core UI"
@@ -33,7 +34,7 @@ export interface IconDef {
   category: IconCategory;
   motionSummary: string;
   soundSummary: string;
-  svgs: Record<StyleId, string>;
+  svgs: Partial<Record<StyleId, string>> & { outline: string };
 }
 
 export const STYLES: StyleDef[] = [
@@ -71,6 +72,11 @@ export const STYLES: StyleDef[] = [
     id: "relief",
     label: "3D Relief",
     rule: "Crisp foreground face + offset architectural shadow extrusion",
+  },
+  {
+    id: "blueprint",
+    label: "Blueprint",
+    rule: "Dashed drafting lines on a dot grid with corner registration marks",
   },
 ];
 
@@ -184,4 +190,24 @@ export function fanBlades(cx: number, cy: number, attrs: string): string {
         `<path d="M${cx} ${cy}C${cx + 1.1} ${cy - 2.6} ${cx + 3.8} ${cy - 4.8} ${cx + 2.1} ${cy - 6.1}C${cx + 0.6} ${cy - 7} ${cx - 1.2} ${cy - 4.4} ${cx} ${cy}Z" transform="rotate(${deg} ${cx} ${cy})" ${attrs}/>`
     )
     .join("");
+}
+
+/** Build the drafting-table variant from an icon's outline geometry. */
+export function blueprintFromOutline(outline: string): string {
+  const inner = outline
+    .replace(/\sfill="[^"]*"/g, "")
+    .replace(/\sfill-opacity="[^"]*"/g, "")
+    .replace(/\sstroke="[^"]*"/g, "")
+    .replace(/\sstroke-width="[^"]*"/g, "")
+    .replace(/\sstroke-dasharray="[^"]*"/g, "")
+    .replace(/\sopacity="[^"]*"/g, "");
+  return `<defs><pattern id="__GID__-bp" width="4" height="4" patternUnits="userSpaceOnUse"><circle cx="1" cy="1" r="0.36" fill="currentColor" opacity="0.3"/></pattern></defs><rect x="0.8" y="0.8" width="22.4" height="22.4" rx="2" fill="url(#__GID__-bp)" opacity="0.55"/><g fill="none" stroke="currentColor" stroke-width="0.95" stroke-dasharray="2.1 1.5" stroke-linecap="round" stroke-linejoin="round">${inner}</g><path d="M2.8 5V2.8H5M19 2.8H21.2V5M21.2 19V21.2H19M5 21.2H2.8V19" fill="none" stroke="currentColor" stroke-width="0.8" opacity="0.65"/>`;
+}
+
+/** Resolve a variant, generating Blueprint on the fly when an icon has no stored copy. */
+export function getSvg(icon: IconDef, style: StyleId): string {
+  const stored = icon.svgs[style];
+  if (stored) return stored;
+  if (style === "blueprint") return blueprintFromOutline(icon.svgs.outline);
+  return icon.svgs.outline;
 }

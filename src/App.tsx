@@ -7,6 +7,7 @@ import {
   IconDef,
   StyleDef,
   StyleId,
+  getSvg,
 } from "./data/icons";
 import { SvgDefs, getMasterDefsInner } from "./components/SvgDefs";
 import { SpotlightStage } from "./components/SpotlightStage";
@@ -57,7 +58,7 @@ const IconTile = memo(function IconTile({
   const svgRef = useRef<SVGSVGElement | null>(null);
   const gid = useId().replace(/:/g, "");
   const svgMarkup = useMemo(
-    () => icon.svgs[styleDef.id].replace(/__GID__/g, gid),
+    () => getSvg(icon, styleDef.id).replace(/__GID__/g, gid),
     [icon.svgs, styleDef.id, gid]
   );
 
@@ -123,6 +124,7 @@ const SHORT_STYLE_LABELS: Record<StyleId, string> = {
   stencil: "Stencil",
   hardware: "Hardware",
   relief: "3D Relief",
+  blueprint: "Blueprint",
 };
 
 export default function App() {

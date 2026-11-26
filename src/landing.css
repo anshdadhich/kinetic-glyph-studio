@@ -72,14 +72,14 @@
 .wig-hint span { display: inline-flex; align-items: center; gap: 7px; }
 
 /* Copy + actions */
-.wig-copy { color: var(--muted); margin-top: 20px; max-width: 512px; line-height: 1.625; }
+.wig-copy { color: var(--muted); margin-top: 28px; max-width: 512px; line-height: 1.625; }
 .wig-copy p + p { margin-top: 14px; }
 .wig-lead { color: var(--ink); font-weight: 500; }
 .wig-copy a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 2px; }
 .wig-copy a:hover { text-decoration-color: var(--ink); }
 .wig-offer { background: var(--tile); border-radius: 7px; padding: 0 7px; text-decoration: none !important; }
 .wig-offer:hover { background: #e9e9ec; }
-.wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 24px; display: flex; }
+.wig-actions { flex-wrap: wrap; gap: 10px; margin-top: 28px; display: flex; }
 .wig-capsule { letter-spacing: -.02em; white-space: nowrap; border-radius: 999px; align-items: center; gap: 12px; min-height: 44px; font-weight: 500; text-decoration: none; display: inline-flex; transition: background-color .16s, transform .16s cubic-bezier(.3,.7,.4,1); }
 .wig-capsule:active { transform: scale(.97); }
 .wig-capsule-buy { color: #fff; background: #111; padding: 6px 6px 6px 20px; }

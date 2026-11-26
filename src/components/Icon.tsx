@@ -1,5 +1,5 @@
 import { useCallback, useId, useMemo, useRef, type CSSProperties } from "react";
-import { ICONS, STYLES, StyleId, IconDef } from "../data/icons";
+import { ICONS, STYLES, StyleId, IconDef, getSvg } from "../data/icons";
 import { getMasterDefsInner } from "./SvgDefs";
 import { initAudio, triggerSound } from "../audio/foley";
 import { triggerChoreography } from "../physics/spring";
@@ -32,7 +32,7 @@ export function Icon({
     [name]
   );
   const markup = useMemo(
-    () => icon.svgs[variant].replace(/__GID__/g, gid),
+    () => getSvg(icon, variant).replace(/__GID__/g, gid),
     [icon, variant, gid]
   );
   const needsDefs = variant === "glass" || variant === "hardware";

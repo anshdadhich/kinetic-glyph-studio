@@ -1,6 +1,6 @@
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { Check, Volume2, VolumeX } from "lucide-react";
-import { ICONS, STYLES, IconDef, StyleId } from "../data/icons";
+import { ICONS, STYLES, IconDef, StyleId, getSvg } from "../data/icons";
+import { Icon } from "./Icon";
 import {
   AudioStatus,
   getAudioStatus,
@@ -19,7 +19,7 @@ import "../landing.css";
 function useGlyph(icon: IconDef, style: StyleId) {
   const gid = useId().replace(/:/g, "");
   return useMemo(
-    () => icon.svgs[style].replace(/__GID__/g, gid),
+    () => getSvg(icon, style).replace(/__GID__/g, gid),
     [icon, style, gid]
   );
 }
@@ -145,12 +145,12 @@ function SponsorCheckout({
       <div className="wig-sheet-backdrop" onMouseDown={onClose} />
       <div className="wig-sheet" role="dialog" aria-modal="true" aria-label={`Claim sponsor slot ${slot + 1}`}>
         <button type="button" className="wig-sheet-close" onClick={onClose} aria-label="Close checkout">
-          <span aria-hidden="true">✕</span>
+          <Icon name="close" size={14} />
         </button>
         {phase === "done" ? (
           <div style={{ textAlign: "center", padding: "24px 0" }}>
             <div className="wig-sponsor-icon" style={{ margin: "0 auto 16px", background: "#111", color: "#fff" }}>
-              <Check size={20} />
+              <Icon name="check" size={20} />
             </div>
             <h2 style={{ fontWeight: 600 }}>You’re on the wall.</h2>
             <p style={{ color: "var(--muted)", marginTop: 8 }}>Slot {slot + 1} is yours. Thanks for supporting Wiggle Icons.</p>
@@ -248,7 +248,7 @@ function SponsorWall() {
             )
           ) : (
             <button key={i} type="button" className="wig-sponsor wig-sponsor-empty" onClick={() => setSlot(i)}>
-              <span className="wig-sponsor-plus" aria-hidden="true">+</span>
+              <span className="wig-sponsor-plus" aria-hidden="true"><Icon name="plus" size={18} /></span>
               <span className="wig-sponsor-slot">Slot {i + 1}</span>
               <span className="wig-sponsor-price">${PRICE}</span>
             </button>
@@ -335,7 +335,7 @@ export default function LandingPage() {
           <nav className="wig-nav" aria-label="Site">
             <a className="wig-nav-link" href="/icons">Library</a>
             <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
-              {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
+              <Icon name="volume" size={16} />
               {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
             </button>
           </nav>
@@ -354,20 +354,15 @@ export default function LandingPage() {
 
         <div className="wig-copy">
           <p>
-            <strong className="wig-lead">Make your app feel alive. 240 animated SVG icons in seven styles.</strong>{" "}
-            Each one moves and sounds like the thing it shows. A bell swings and its clapper lags
-            behind, a heart thumps twice, a gift lid pops and lands. Every motion runs on spring
-            physics, and every sound is generated in the browser.
+            <strong className="wig-lead">240 icons, 8 styles. Each one moves and sounds like the thing it shows.</strong>{" "}
+            A bell swings, a heart thumps twice, a gift lid pops. Spring motion and synth sound, made in the browser.
           </p>
           <p>
-            <strong className="wig-lead">Built for tinkerers.</strong> Clean inline SVGs with named
-            moving parts, so you can copy any icon and wire up your own interaction. React-ready,
-            no dependencies on the icons themselves.
+            <strong className="wig-lead">Clean inline SVGs with named parts.</strong> Copy an icon and wire up your own interaction. React-ready.
           </p>
           <p>
-            Try all 240 free in the <a href="/icons">library</a>, or{" "}
-            <a className="wig-offer" href="#sponsors"><strong>claim a sponsor slot</strong> $30</a>{" "}
-            to put your name on the wall.
+            Browse the <a href="/icons">library</a> free, or{" "}
+            <a className="wig-offer" href="#sponsors"><strong>claim a $30 sponsor slot</strong></a>.
           </p>
         </div>
 
@@ -379,8 +374,6 @@ export default function LandingPage() {
             Become a sponsor <span aria-hidden="true">→</span>
           </a>
         </div>
-        <p className="wig-guarantee">No account. No install. Every sound is generated live in the browser.</p>
-
         <section id="sponsors" className="wig-sponsor-strip" aria-labelledby="sponsor-title">
           <div className="wig-sponsor-strip-head">
             <h2 id="sponsor-title">Sponsors</h2>
@@ -421,9 +414,9 @@ export default function LandingPage() {
               <p className="wig-plan-who">Free, forever</p>
               <div className="wig-plan-price"><span className="wig-plan-now">$0</span></div>
               <ul className="wig-included">
-                <li><Check size={20} /><span>All 240 icons in every style</span></li>
-                <li><Check size={20} /><span>Every animation and sound</span></li>
-                <li><Check size={20} /><span>Copy any SVG you like</span></li>
+                <li><Icon name="check" size={20} /><span>All 240 icons in every style</span></li>
+                <li><Icon name="check" size={20} /><span>Every animation and sound</span></li>
+                <li><Icon name="check" size={20} /><span>Copy any SVG you like</span></li>
               </ul>
               <a className="wig-capsule wig-capsule-quiet" href="/icons" style={{ marginTop: 20 }}>Open the library</a>
             </div>
@@ -432,9 +425,9 @@ export default function LandingPage() {
               <p className="wig-plan-who">One block on the wall</p>
               <div className="wig-plan-price"><span className="wig-plan-now">$30</span><span className="wig-plan-terms">one time</span></div>
               <ul className="wig-included">
-                <li><Check size={20} /><span>Your name and link on this page</span></li>
-                <li><Check size={20} /><span>One-line note for your product</span></li>
-                <li><Check size={20} /><span>Yours for life, no renewal</span></li>
+                <li><Icon name="check" size={20} /><span>Your name and link on this page</span></li>
+                <li><Icon name="check" size={20} /><span>One-line note for your product</span></li>
+                <li><Icon name="check" size={20} /><span>Yours for life, no renewal</span></li>
               </ul>
               <a className="wig-capsule wig-capsule-buy" href="#sponsors" style={{ marginTop: 20 }}>
                 <span>Claim a slot</span><span className="wig-capsule-price">$30</span>

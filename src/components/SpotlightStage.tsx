@@ -1,6 +1,6 @@
 import { useId, useMemo, useRef } from "react";
 import { Play, Copy, Volume2 } from "lucide-react";
-import { IconDef, StyleDef } from "../data/icons";
+import { IconDef, StyleDef, getSvg } from "../data/icons";
 import { triggerChoreography } from "../physics/spring";
 import { initAudio, triggerSound } from "../audio/foley";
 
@@ -15,7 +15,7 @@ export function SpotlightStage({ icon, styleDef, onCopySvg }: SpotlightStageProp
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const gid = useId().replace(/:/g, "");
   const svgMarkup = useMemo(
-    () => icon.svgs[styleDef.id].replace(/__GID__/g, gid),
+    () => getSvg(icon, styleDef.id).replace(/__GID__/g, gid),
     [icon.svgs, styleDef.id, gid]
   );
 

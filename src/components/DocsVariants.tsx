@@ -1,5 +1,5 @@
 import { memo, useCallback, useEffect, useId, useMemo, useRef, useState } from "react";
-import { ICONS, STYLES, IconDef, StyleId } from "../data/icons";
+import { ICONS, STYLES, IconDef, StyleId, getSvg } from "../data/icons";
 import { copyText } from "../clipboard";
 import { standaloneSvg } from "./LibraryUI";
 import { Heart } from "./Icon";
@@ -15,6 +15,7 @@ const LOOKS: Record<StyleId, string> = {
   stencil: "Flat laser-cut shapes with bridges",
   hardware: "Brushed metal and matte ABS with an orange accent",
   relief: "A raised face with an offset architectural shadow",
+  blueprint: "Dashed drafting lines on a dot grid with corner marks",
 };
 
 const DEMO_NAMES = ["camera", "home", "rocket", "umbrella"];
@@ -30,7 +31,7 @@ const DemoGlyph = memo(function DemoGlyph({ icon, variant, onCopied }: DemoGlyph
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const gid = useId().replace(/:/g, "");
   const markup = useMemo(
-    () => icon.svgs[variant].replace(/__GID__/g, gid),
+    () => getSvg(icon, variant).replace(/__GID__/g, gid),
     [icon, variant, gid]
   );
 
@@ -86,7 +87,8 @@ const RAIL: Array<{ label: string; href: string; open?: boolean; pages: Array<[s
     href: "/docs/variants",
     open: true,
     pages: [
-      ["All seven styles", "/docs/variants", true],
+      ["All eight styles", "/docs/variants", true],
+      ["Blueprint", "/docs/variants"],
       ["Glass", "/docs/variants"],
       ["Hardware", "/docs/variants"],
       ["Relief", "/docs/variants"],
@@ -182,8 +184,8 @@ export default function DocsVariants() {
 
         <main className="docs-main" id="content">
           <article>
-            <h1 className="doc-title">Seven styles</h1>
-            <p className="doc-lead">Every one of our 240 icons is drawn seven ways. Hover to play its motion and sound. Click to copy its SVG.</p>
+            <h1 className="doc-title">Eight styles</h1>
+            <p className="doc-lead">Every one of our 240 icons is drawn eight ways. Hover to play its motion and sound. Click to copy its SVG.</p>
             <p className="doc-lead" style={{ marginTop: 16 }}>
               <strong style={{ color: "var(--ink)" }}>{ICONS.length} icons</strong> times{" "}
               <strong style={{ color: "var(--ink)" }}>{STYLES.length} styles</strong> equals{" "}

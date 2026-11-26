@@ -8,9 +8,9 @@ import {
   useState,
   type CSSProperties,
 } from "react";
-import { Volume2, VolumeX } from "lucide-react";
-import { ICONS, ICON_CATEGORIES, STYLES, IconDef, StyleId } from "../data/icons";
+import { ICONS, ICON_CATEGORIES, STYLES, IconDef, StyleId, getSvg } from "../data/icons";
 import { getMasterDefsInner } from "./SvgDefs";
+import { Icon } from "./Icon";
 import {
   getAudioStatus,
   initAudio,
@@ -23,7 +23,7 @@ import { copyText } from "../clipboard";
 import "../library.css";
 
 export function standaloneSvg(icon: IconDef, style: StyleId): string {
-  let inner = icon.svgs[style].replace(/__GID__/g, "kg");
+  let inner = getSvg(icon, style).replace(/__GID__/g, "kg");
   inner = inner
     .replace(/(id="|url\(#)([^"-]+)-(out|in|m\d+)/g, "$1kg-$3")
     .replace(/var\(--rel-shadow\)/g, "#1e293b")
@@ -48,7 +48,7 @@ const LibTile = memo(function LibTile({ icon, style, onCopied }: TileProps) {
   const btnRef = useRef<HTMLButtonElement | null>(null);
   const gid = useId().replace(/:/g, "");
   const markup = useMemo(
-    () => icon.svgs[style].replace(/__GID__/g, gid),
+    () => getSvg(icon, style).replace(/__GID__/g, gid),
     [icon, style, gid]
   );
 
@@ -168,7 +168,7 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
             onClick={toggleSound}
             aria-pressed={audioStatus === "ready"}
           >
-            {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
+            <Icon name="volume" size={15} />
             {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
           </button>
         </div>
