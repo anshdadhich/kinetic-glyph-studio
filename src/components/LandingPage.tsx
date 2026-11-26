@@ -356,7 +356,7 @@ export default function LandingPage() {
             <a className="wig-nav-link" href="/icons">Library</a>
             <button type="button" className="wig-sound" onClick={toggleSound} aria-pressed={audioStatus === "ready"}>
               {audioStatus === "muted" ? <VolumeX /> : <Volume2 />}
-              Sound {audioStatus === "muted" ? "off" : "on"}
+              {audioStatus === "idle" ? "Enable sound" : audioStatus === "muted" ? "Sound off" : "Sound on"}
             </button>
           </nav>
         </header>
