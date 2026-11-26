@@ -11,6 +11,7 @@ import {
 import { SvgDefs, getMasterDefsInner } from "./components/SvgDefs";
 import { SpotlightStage } from "./components/SpotlightStage";
 import LandingPage from "./components/LandingPage";
+import LibraryUI from "./components/LibraryUI";
 import {
   AudioStatus,
   getAudioStatus,
@@ -344,7 +345,12 @@ export default function App() {
 
       <LandingPage />
 
-      <main id="library" className="mx-auto max-w-[1200px] px-6 py-8 space-y-6">
+      <div id="library">
+        <LibraryUI />
+      </div>
+
+      {false && (
+      <main className="mx-auto max-w-[1200px] px-6 py-8 space-y-6">
         {/* Editorial Intro + Workspace Controls */}
         <section className="flex flex-col lg:flex-row lg:items-end justify-between gap-6">
           <div className="space-y-2 max-w-2xl">
@@ -585,6 +591,7 @@ export default function App() {
           )}
         </section>
       </main>
+      )}
 
       {/* Clipboard Toast */}
       <div

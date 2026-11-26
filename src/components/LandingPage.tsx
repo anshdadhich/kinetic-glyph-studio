@@ -401,8 +401,11 @@ export default function LandingPage() {
 
         <section className="wig-sampler" id="sampler" aria-label="Sampler">
           <div className="wig-sampler-head">
-            <h2>Sampler</h2>
-            <p className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</p>
+            <h2>Icons</h2>
+            <span className="wig-sampler-meta">
+              <span className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</span>
+              <a href="#library">View all {ICONS.length} →</a>
+            </span>
           </div>
           <div className="wig-panels">
             {styles.map((style) => (
@@ -532,7 +535,7 @@ export default function LandingPage() {
               <div className="wig-footer-group">
                 <p className="wig-footer-title">Explore</p>
                 <ul>
-                  <li><a href="#sampler">Sampler</a></li>
+                  <li><a href="#sampler">Icons</a></li>
                   <li><a href="#library">Library</a></li>
                   <li><a href="#sponsors">Sponsors</a></li>
                 </ul>

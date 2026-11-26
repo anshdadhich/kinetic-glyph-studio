@@ -22,12 +22,13 @@
 
 /* Fixed top bar + strip */
 .wig-launch {
-  z-index: 11; color: #ffffffb8; background: #161617; text-decoration: none;
+  z-index: 11; color: #fff; background: #161617; text-decoration: none;
   height: 44px; padding: 0 16px; display: flex; justify-content: center; align-items: center;
   position: fixed; inset: 0 0 auto; white-space: nowrap; font-size: 13px;
 }
 .wig-launch strong { color: #fff; font-weight: 600; }
-.wig-launch-dot { color: #ffffff59; margin: 0 10px; }
+.wig-launch-full { color: #fff; font-weight: 500; }
+.wig-launch-dot { color: #ffffffa8; margin: 0 10px; }
 .wig-launch-go { margin-left: 10px; }
 .wig-launch-go span { display: inline-block; margin-left: 5px; transition: transform .16s; }
 .wig-launch:hover .wig-launch-go span { transform: translate(3px); }
@@ -67,7 +68,7 @@
 .wig-icon .wig-glyph { pointer-events: none; width: 22px; height: 22px; display: block; overflow: visible; }
 .wig-hero-icons .wig-icon { height: 40px; }
 .wig-hero-icons .wig-icon .wig-glyph { width: 26px; height: 26px; }
-.wig-hint { color: var(--faint); margin-top: 6px; display: grid; font-size: 13px; }
+.wig-hint { color: var(--faint); margin-top: 2px; display: grid; font-size: 11px; opacity: 0.75; }
 .wig-hint span { display: inline-flex; align-items: center; gap: 7px; }
 
 /* Copy + actions */
@@ -93,6 +94,9 @@
 .wig-sampler-head { justify-content: space-between; align-items: baseline; gap: 16px; margin-bottom: 10px; display: flex; }
 .wig-sampler-head h2 { font-weight: 600; }
 .wig-now { color: var(--faint); white-space: nowrap; }
+.wig-sampler-meta { display: inline-flex; align-items: baseline; gap: 16px; }
+.wig-sampler-meta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; white-space: nowrap; font-size: 13px; }
+.wig-sampler-meta a:hover { text-decoration-color: var(--ink); }
 .wig-panels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; display: grid; }
 .wig-panel { min-width: 0; }
 .wig-panel-grid { grid-template-columns: repeat(10, minmax(0, 1fr)); margin: 0; padding: 0; list-style: none; display: grid; }
