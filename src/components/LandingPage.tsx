@@ -402,7 +402,7 @@ export default function LandingPage() {
             <h2>Icons</h2>
             <span className="wig-sampler-meta">
               <span className="wig-now">{sampleIcons.length} of {ICONS.length} · {STYLES.length} styles</span>
-              <a href="/icons">View all {ICONS.length} <Icon name="forward" size={14} animate sound bare /></a>
+              <a href="/icons">View all {ICONS.length} <Icon name="forward" size={12} animate sound bare /></a>
             </span>
           </div>
           <div className="wig-panels">

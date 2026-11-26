@@ -109,7 +109,7 @@
 .wig-sampler-head h2 { font-weight: 600; }
 .wig-now { color: var(--faint); white-space: nowrap; }
 .wig-sampler-meta { display: inline-flex; align-items: baseline; gap: 16px; }
-.wig-sampler-meta a { color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; white-space: nowrap; font-size: 13px; }
+.wig-sampler-meta a { display: inline-flex; align-items: center; gap: 5px; color: var(--ink); text-decoration: underline; text-decoration-color: var(--rule); text-underline-offset: 3px; white-space: nowrap; font-size: 13px; }
 .wig-sampler-meta a:hover { text-decoration-color: var(--ink); }
 .wig-panels { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 40px; display: grid; }
 .wig-panel { min-width: 0; }
