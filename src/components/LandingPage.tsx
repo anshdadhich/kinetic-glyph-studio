@@ -462,7 +462,7 @@ export default function LandingPage() {
                     }
                   }}
                 >
-                  {faq.lead}<strong>{faq.bold}</strong>{faq.tail}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
+                  <span className="wig-faq-q">{faq.lead}<strong>{faq.bold}</strong>{faq.tail}</span><span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
                 </summary>
                 <p>{faq.answer}</p>
               </details>
