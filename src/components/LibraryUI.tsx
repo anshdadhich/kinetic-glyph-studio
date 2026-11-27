@@ -164,7 +164,7 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
     <div className="lib-root">
       <aside className="lib-side" aria-label="Library settings">
         <div className="lib-side-head">
-          <a href="#top" className="lib-brand">
+          <a href="/" className="lib-brand">
             <span className="lib-brand-mark" aria-hidden="true">w</span>
             wiggle icons
           </a>
@@ -224,8 +224,8 @@ export default function LibraryUI({ showFooter = false }: { showFooter?: boolean
         </div>
 
         <nav className="lib-legal" aria-label="More">
-          <a href="#top">Home</a>
-          <a href="#sponsors">Sponsors</a>
+          <a href="/">Home</a>
+          <a href="/#sponsors">Sponsors</a>
           <a href="/icons">All icons</a>
         </nav>
       </aside>

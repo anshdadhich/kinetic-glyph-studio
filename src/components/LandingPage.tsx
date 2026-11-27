@@ -446,7 +446,7 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="wig-section" aria-labelledby="faq-title">
+        <section className="wig-section wig-faq-section" aria-labelledby="faq-title">
           <h2 id="faq-title">Questions</h2>
           <div className="wig-faq" style={{ marginTop: 24 }}>
             {FAQ.map(([q, a]) => (

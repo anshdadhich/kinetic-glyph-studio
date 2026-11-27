@@ -198,6 +198,22 @@ a.wig-sponsor:hover { background: #efeff2; }
 }
 .wig-faq-item p { color: var(--muted); margin: 0; padding: 0 20px 18px; line-height: 1.6; }
 
+/* Four square question cards, aligned with the other wide sections */
+.wig-faq-section { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); }
+.wig-faq-section .wig-faq { grid-template-columns: repeat(4, minmax(0, 1fr)); gap: 12px; align-items: start; }
+.wig-faq-section .wig-faq-item { aspect-ratio: 1; min-height: 200px; display: flex; flex-direction: column; }
+.wig-faq-section .wig-faq-item[open] { aspect-ratio: auto; }
+.wig-faq-section .wig-faq-item summary { flex: 1; align-items: stretch; padding: 20px; font-size: 15px; }
+.wig-faq-section .wig-faq-mark { margin-left: auto; align-self: flex-end; }
+.wig-faq-section .wig-faq-item p { padding: 0 20px 20px; font-size: 13px; }
+@media (max-width: 900px) {
+  .wig-faq-section .wig-faq { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 560px) {
+  .wig-faq-section .wig-faq { grid-template-columns: 1fr; }
+  .wig-faq-section .wig-faq-item { aspect-ratio: auto; min-height: 0; }
+}
+
 /* Footer */
 .wig-footer { --wide: min(90vw, 1200px); width: var(--wide); margin-left: calc(50% - var(--wide) / 2); color: var(--muted); margin-top: 32px; min-height: 0; padding: 16px 0; display: flex; align-items: center; justify-content: center; }
 .wig-footer a { color: var(--ink); text-decoration: none; }
