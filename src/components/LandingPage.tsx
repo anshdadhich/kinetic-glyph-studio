@@ -294,11 +294,11 @@ function SponsorWall() {
 /* ------------------------------------------------------------------ */
 
 const FAQ = [
-  { lead: "How many ", bold: "icons", tail: " are there?", answer: "240 icons in eight styles: outline, solid, duotone, glass, stencil, hardware, relief and blueprint." },
-  { lead: "Do the icons really make ", bold: "sound", tail: "?", answer: "Every icon has its own synth foley, generated in the browser. No sample files." },
-  { lead: "Can I copy an ", bold: "SVG", tail: "?", answer: "Yes. Click any icon in the library or this page to copy its standalone SVG." },
-  { lead: "Does ", bold: "reduced motion", tail: " work?", answer: "Yes. All choreography respects prefers-reduced-motion." },
-];
+  { icon: "grid", bold: "240 icons", text: " across eight styles. Each one is a clean inline SVG with named parts." },
+  { icon: "volume", bold: "Synth sound", text: " on every icon, generated in the browser. No sample files." },
+  { icon: "copy", bold: "Click to copy", text: " a standalone SVG from the library or this page." },
+  { icon: "wind", bold: "Reduced motion", text: " is respected in every spring animation." },
+] as const;
 
 export default function LandingPage() {
   const [armed, setArmed] = useState(false);
@@ -446,26 +446,15 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="wig-section wig-faq-section" aria-label="Questions">
+        <section className="wig-section wig-faq-section" aria-label="What you get">
           <div className="wig-faq">
             {FAQ.map((faq) => (
-              <details className="wig-faq-item" key={faq.bold}>
-                <summary
-                  onClick={(e) => {
-                    initAudio();
-                    triggerSound("plus", null);
-                    const svg = e.currentTarget.querySelector(".wig-faq-mark svg");
-                    if (svg) {
-                      svg.classList.remove("faq-pop");
-                      void (svg as SVGElement).getBoundingClientRect();
-                      svg.classList.add("faq-pop");
-                    }
-                  }}
-                >
-                  <span className="wig-faq-q">{faq.lead}<strong>{faq.bold}</strong>{faq.tail}</span><span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
-                </summary>
-                <p>{faq.answer}</p>
-              </details>
+              <div className="wig-faq-item" key={faq.bold}>
+                <p className="wig-faq-q">
+                  <Icon name={faq.icon} size={20} animate sound bare />
+                  <span><strong>{faq.bold}</strong>{faq.text}</span>
+                </p>
+              </div>
             ))}
           </div>
         </section>
