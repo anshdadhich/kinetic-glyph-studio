@@ -43,8 +43,8 @@
 .lib-sound svg { width: 15px; height: 15px; }
 .lib-group { margin-top: 32px; }
 .lib-label { color: var(--faint); margin-bottom: 8px; font-weight: 500; }
-.lib-options { background: var(--tile); border-radius: 11px; gap: 2px; padding: 3px; display: flex; flex-wrap: wrap; }
-.lib-options button { color: var(--muted); white-space: nowrap; border-radius: 8px; flex: 1 1 auto; padding: 6px 8px; font-size: 13px; transition: color .14s, background-color .14s; }
+.lib-options { background: var(--tile); border-radius: 11px; gap: 4px; padding: 10px; display: flex; flex-wrap: wrap; }
+.lib-options button { color: var(--muted); white-space: nowrap; border-radius: 8px; flex: 1 1 auto; padding: 8px 10px; font-size: 13px; transition: color .14s, background-color .14s; }
 .lib-options button:hover { color: var(--ink); }
 .lib-options button[aria-pressed="true"] { color: var(--ink); background: var(--page); box-shadow: 0 1px 2px #0000000d; }
 .lib-list { display: grid; gap: 1px; margin-inline: -10px; }
