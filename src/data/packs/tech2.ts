@@ -183,8 +183,8 @@ export const TECH2_ICONS: IconDef[] = [
       duotone: `<g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
       glass: glassCompose(
         `<circle cx="12" cy="12" r="9.2" ${GB}/>`,
-        `<g stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
-        `<g fill="none" stroke-linecap="round"><g stroke="url(#g-rim)" stroke-width="2.2">${fpPlain('fill="none"')}</g><g stroke="#fff" stroke-width="1.5">${fpPlain('fill="none"')}</g></g>`
+        `<g transform="translate(1.92 1.92) scale(0.84)" stroke="#fff" stroke-width="2.2" fill="none" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
+        `<g transform="translate(1.92 1.92) scale(0.84)" fill="none" stroke-linecap="round"><g stroke="url(#g-rim)" stroke-width="2.2">${fpPlain('fill="none"')}</g><g stroke="#fff" stroke-width="1.5">${fpPlain('fill="none"')}</g></g>`
       ),
       stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><g stroke-dasharray="6.5 2.4">${fpUnder("0.3")}</g>${fpDrawn()}</g>`,
       hardware: `<g fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round">${fpUnder("0.28")}${fpDrawn("", 4)}</g>`,
