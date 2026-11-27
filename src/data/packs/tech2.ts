@@ -182,9 +182,9 @@ export const TECH2_ICONS: IconDef[] = [
       solid: `<g fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round">${fpUnder("0.34")}${fpDrawn()}</g>`,
       duotone: `<g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
       glass: glassCompose(
-        `<g transform="translate(1.2 1.2) scale(0.9)" fill="none" stroke="url(#g-back)" stroke-width="2.9" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
+        `<g transform="translate(1.2 1.2) scale(0.9)" fill="none" stroke="url(#g-back)" stroke-width="2.4" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
         `<rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4"/>`,
-        `<g ${GF}><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4"/></g><g transform="translate(1.2 1.2) scale(0.9)" fill="none" stroke="#fff" stroke-width="1.2" stroke-linecap="round">${fpPlain('fill="none"')}</g>`
+        `<g><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4" ${GF}/><g transform="translate(1.2 1.2) scale(0.9)" fill="none" stroke="url(#g-back)" stroke-width="1.75" stroke-linecap="round">${fpPlain('fill="none"')}</g></g>`
       ),
       stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><g stroke-dasharray="6.5 2.4">${fpUnder("0.3")}</g>${fpDrawn()}</g>`,
       hardware: `<g fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round">${fpUnder("0.28")}${fpDrawn("", 4)}</g>`,
