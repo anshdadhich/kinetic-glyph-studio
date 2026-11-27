@@ -182,7 +182,7 @@ export const TECH2_ICONS: IconDef[] = [
       solid: `<g fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round">${fpUnder("0.34")}${fpDrawn()}</g>`,
       duotone: `<g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
       glass: glassCompose(
-        `<circle cx="12" cy="12" r="10.2" ${GB}/>`,
+        `<rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4" ${GB}/><rect x="2.2" y="2.2" width="19.6" height="19.6" rx="5.4" fill="none" stroke="url(#g-rim)" stroke-width="0.7"/>`,
         `<g transform="translate(1.2 1.2) scale(0.9)" stroke="#fff" stroke-width="2" fill="none" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
         `<g transform="translate(1.2 1.2) scale(0.9)" fill="none" stroke-linecap="round"><g stroke="url(#g-rim)" stroke-width="1.5">${fpPlain('fill="none"')}</g><g stroke="#fff" stroke-width="1.8">${fpPlain('fill="none"')}</g></g>`
       ),
