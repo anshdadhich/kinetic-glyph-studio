@@ -20,6 +20,31 @@ import {
   RF_LINE,
 } from "../shared";
 
+// Fingerprint ridges, shared by every style. Each ridge has a faint static
+// underlay and a full-strength overlay that draws in from the core on hover.
+const FP_RIDGES = [
+  "M12 10a2 2 0 0 0-2 2c0 1.02-.1 2.51-.26 4",
+  "M14 13.12c0 2.38 0 6.38-1 8.88",
+  "M17.29 21.02c.12-.6.43-2.3.5-3.02",
+  "M2 12a10 10 0 0 1 18-6",
+  "M2 16h.01",
+  "M21.8 16c.2-2 .131-5.354 0-6",
+  "M5 19.5C5.5 18 6 15 6 12a6 6 0 0 1 .34-2",
+  "M8.65 22c.21-.66.45-1.32.57-2",
+  "M9 6.8a6 6 0 0 1 9 5.2v2",
+];
+
+const fpUnder = (opacity: string) =>
+  FP_RIDGES.map((d) => `<path d="${d}" opacity="${opacity}"/>`).join("");
+const fpPlain = () => FP_RIDGES.map((d) => `<path d="${d}"/>`).join("");
+const fpDrawn = (attrs = "", accent?: number) =>
+  FP_RIDGES.map(
+    (d, i) =>
+      `<path data-part="ridge-${i + 1}" data-pivot="12 12" d="${d}"${
+        i === accent ? ' stroke="#ff6b35"' : ""
+      } ${attrs}/>`
+  ).join("");
+
 export const TECH2_ICONS: IconDef[] = [
   // 191. KEYBOARD
   {
@@ -149,20 +174,20 @@ export const TECH2_ICONS: IconDef[] = [
     name: "fingerprint",
     label: "Fingerprint",
     category: "Tech & Controls",
-    motionSummary: "Centered concentric dermal ridges pulse and verify smoothly from core outward",
+    motionSummary: "Layered dermal ridges draw in from the core in a staggered biometric scan",
     soundSummary: "Soft optical biometric scan verify chime",
     svgs: {
-      outline: `<g data-part="ring-1" data-pivot="12 12" ${K}><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><g data-part="ring-2" data-pivot="12 12" ${K}><path d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4"/></g><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4" ${K}/>`,
-      solid: `<g fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round"><g data-part="ring-1" data-pivot="12 12"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4"/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4"/></g>`,
-      duotone: `<circle cx="12" cy="12" r="8.4" ${D}/><g ${DK}><g data-part="ring-1" data-pivot="12 12"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4"/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4"/></g>`,
+      outline: `<g ${K}>${fpUnder("0.34")}${fpDrawn()}</g>`,
+      solid: `<g fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round">${fpUnder("0.34")}${fpDrawn()}</g>`,
+      duotone: `<circle cx="12" cy="12" r="8.4" ${D}/><g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
       glass: glassCompose(
-        `<path data-part="ring-2" data-pivot="12 12" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4" ${GBS}/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4" ${GBS}/>`,
-        `<g data-part="ring-1" data-pivot="12 12" stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g>`,
-        `<g data-part="ring-1" data-pivot="12 12" stroke="url(#g-rim)" stroke-width="2" fill="none" stroke-linecap="round"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g>`
+        fpDrawn(GBS),
+        `<g stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round">${fpPlain()}</g>`,
+        `<g stroke="url(#g-rim)" stroke-width="2" fill="none" stroke-linecap="round">${fpPlain()}</g>`
       ),
-      stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><g data-part="ring-1" data-pivot="12 12" stroke-dasharray="6.5 2.4"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" stroke-dasharray="5.5 2.2" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4"/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4"/></g>`,
-      hardware: `<circle cx="12" cy="12" r="8.8" ${HD}/><g data-part="ring-1" data-pivot="12 12" fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round"><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" d="M7.8 17.2A4.6 4.6 0 0 1 8 10.4A4.5 4.5 0 0 1 16.2 11.2V16" fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round"/><path data-part="core" data-pivot="12 12" d="M10.5 18.6C10.2 16.5 10.2 13.8 10.5 12A1.6 1.6 0 0 1 13.6 12.4C13.6 14.3 13.4 16.8 13.1 18.8" fill="none" stroke="#ff6b35" stroke-width="1.8" stroke-linecap="round"/>`,
-      relief: `<g transform="translate(1.2,1.2)"><g data-part="ring-1" data-pivot="12 12" ${RS_LINE}><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4" ${RS_LINE}/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4" ${RS_LINE}/></g><g data-part="ring-1" data-pivot="12 12" ${RF_LINE}><path d="M5.2 11.4A7.6 7.6 0 0 1 18.8 11.4"/><path d="M4.6 15.6C4.4 13.8 4.6 12 5.2 10.6"/><path d="M18.8 10.6C19.4 12.2 19.6 14.5 19.1 17.2"/></g><path data-part="ring-2" data-pivot="12 12" d="M7.6 17.6A5 5 0 0 1 7.8 10.2A4.8 4.8 0 0 1 16.4 11.2V16.4" ${RF_LINE}/><path data-part="core" data-pivot="12 12" d="M10.4 19.2C10 16.8 10 13.8 10.4 11.8A1.8 1.8 0 0 1 13.8 12.2C13.8 14.4 13.6 17.2 13.2 19.4" ${RF_LINE}/>`,
+      stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><g stroke-dasharray="6.5 2.4">${fpUnder("0.3")}</g>${fpDrawn()}</g>`,
+      hardware: `<circle cx="12" cy="12" r="8.8" ${HD}/><g fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round">${fpUnder("0.28")}${fpDrawn("", 4)}</g>`,
+      relief: `<g transform="translate(1.2,1.2)" ${RS_LINE}>${fpPlain()}</g><g ${RF_LINE}>${fpUnder("0.3")}${fpDrawn()}</g>`,
     },
   },
   // 198. SD CARD

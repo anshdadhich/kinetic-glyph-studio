@@ -205,6 +205,72 @@ function streamStroke(target: PartTarget, delayMs = 0, durationMs = 520, gapRati
   });
 }
 
+/** Reveals each ridge once, from zero length to full, staggered by index. */
+function drawStroke(target: PartTarget, durationMs = 900, staggerMs = 80): void {
+  const els = toEls(target);
+  if (els.length === 0) return;
+  if (
+    typeof window !== "undefined" &&
+    window.matchMedia?.("(prefers-reduced-motion: reduce)").matches
+  ) {
+    return;
+  }
+
+  const shapes: SVGGeometryElement[] = [];
+  els.forEach((el) => {
+    if (el.closest("mask")) return;
+    if ("getTotalLength" in el && typeof (el as SVGGeometryElement).getTotalLength === "function") {
+      shapes.push(el as SVGGeometryElement);
+    } else {
+      el.querySelectorAll<SVGGeometryElement>("path, line, polyline, circle, rect").forEach((child) => {
+        if (!child.closest("mask")) shapes.push(child);
+      });
+    }
+  });
+
+  shapes.forEach((shape, i) => {
+    let len = 0;
+    try {
+      len = shape.getTotalLength();
+    } catch {
+      len = 0;
+    }
+    if (!len || !Number.isFinite(len)) return;
+
+    const prevAnim = strokeAnims.get(shape);
+    if (prevAnim) prevAnim.cancel();
+
+    const dash = `${len.toFixed(2)} ${len.toFixed(2)}`;
+    shape.style.strokeDasharray = dash;
+    shape.style.strokeDashoffset = len.toFixed(2);
+
+    if (typeof shape.animate === "function") {
+      const anim = shape.animate(
+        [
+          { strokeDasharray: dash, strokeDashoffset: len.toFixed(2), opacity: 0.15 },
+          { strokeDasharray: dash, strokeDashoffset: "0", opacity: 1 },
+        ],
+        {
+          duration: durationMs,
+          delay: i * staggerMs,
+          easing: "cubic-bezier(0.22, 0.72, 0.24, 1)",
+          fill: "both",
+        }
+      );
+      strokeAnims.set(shape, anim);
+      const cleanup = () => {
+        if (strokeAnims.get(shape) === anim) {
+          shape.style.strokeDasharray = "";
+          shape.style.strokeDashoffset = "";
+          strokeAnims.delete(shape);
+        }
+      };
+      anim.onfinish = cleanup;
+      anim.oncancel = cleanup;
+    }
+  });
+}
+
 function stepSprings(now: number) {
   const dt = Math.min(0.032, (now - prevTime) / 1000 || 0.016);
   prevTime = now;
@@ -1265,15 +1331,11 @@ export const CHOREO: Record<string, (svg: SVGSVGElement) => void> = {
     animatePart(q(svg, "body"), { ty: -1.2 }, { stiffness: 440, damping: 14, holdMs: 110 });
   },
   fingerprint(svg) {
-    const r1 = q(svg, "ring-1");
-    const r2 = q(svg, "ring-2");
-    const c = q(svg, "core");
-    streamStroke(r1, 0, 440, 0.4);
-    streamStroke(r2, 45, 440, 0.4);
-    streamStroke(c, 90, 420, 0.4);
-    animatePart(c, { sx: 1.24, sy: 1.24 }, { stiffness: 440, damping: 13, holdMs: 120 });
-    schedulePart(r2, 40, { sx: 1.12, sy: 1.12 }, { stiffness: 400, damping: 13, holdMs: 120 });
-    schedulePart(r1, 80, { sx: 1.08, sy: 1.08 }, { stiffness: 380, damping: 13, holdMs: 120 });
+    drawStroke(
+      Array.from(svg.querySelectorAll<SVGElement>('[data-part^="ridge-"]')),
+      900,
+      80
+    );
   },
   "sd-card"(svg) {
     animatePart(q(svg, "card"), { ty: 2.6, sx: 0.95 }, { stiffness: 440, damping: 14, holdMs: 115 });
