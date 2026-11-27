@@ -294,10 +294,10 @@ function SponsorWall() {
 /* ------------------------------------------------------------------ */
 
 const FAQ = [
-  ["How many icons are there?", "240 icons in eight styles: outline, solid, duotone, glass, stencil, hardware, relief and blueprint."],
-  ["Do the icons really make sound?", "Every icon has its own synth foley, generated in the browser. No sample files."],
-  ["Can I copy an SVG?", "Yes. Click any icon in the library or this page to copy its standalone SVG."],
-  ["Does reduced motion work?", "Yes. All choreography respects prefers-reduced-motion."],
+  { lead: "How many ", bold: "icons", tail: " are there?", answer: "240 icons in eight styles: outline, solid, duotone, glass, stencil, hardware, relief and blueprint." },
+  { lead: "Do the icons really make ", bold: "sound", tail: "?", answer: "Every icon has its own synth foley, generated in the browser. No sample files." },
+  { lead: "Can I copy an ", bold: "SVG", tail: "?", answer: "Yes. Click any icon in the library or this page to copy its standalone SVG." },
+  { lead: "Does ", bold: "reduced motion", tail: " work?", answer: "Yes. All choreography respects prefers-reduced-motion." },
 ];
 
 export default function LandingPage() {
@@ -446,11 +446,10 @@ export default function LandingPage() {
           </div>
         </section>
 
-        <section className="wig-section wig-faq-section" aria-labelledby="faq-title">
-          <h2 id="faq-title">Questions</h2>
-          <div className="wig-faq" style={{ marginTop: 24 }}>
-            {FAQ.map(([q, a]) => (
-              <details className="wig-faq-item" key={q}>
+        <section className="wig-section wig-faq-section" aria-label="Questions">
+          <div className="wig-faq">
+            {FAQ.map((faq) => (
+              <details className="wig-faq-item" key={faq.bold}>
                 <summary
                   onClick={(e) => {
                     initAudio();
@@ -463,9 +462,9 @@ export default function LandingPage() {
                     }
                   }}
                 >
-                  {q}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
+                  {faq.lead}<strong>{faq.bold}</strong>{faq.tail}<span className="wig-faq-mark" aria-hidden="true"><Icon name="plus" size={12} /></span>
                 </summary>
-                <p>{a}</p>
+                <p>{faq.answer}</p>
               </details>
             ))}
           </div>
