@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Meh Circle - wiggle icon</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #111; font: 14px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 16px; }
+  svg { width: 96px; height: 96px; display: block; cursor: pointer; overflow: visible; }
+  p { color: #737373; margin: 0; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Meh Circle">
+<g><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75ZM1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12ZM8.25 16C8.25 15.5858 8.58579 15.25 9 15.25H15C15.4142 15.25 15.75 15.5858 15.75 16C15.75 16.4142 15.4142 16.75 15 16.75H9C8.58579 16.75 8.25 16.4142 8.25 16Z" fill="currentColor" data-part="part-1" data-pivot="12 12"/><path d="M16 10.5C16 11.3284 15.5523 12 15 12C14.4477 12 14 11.3284 14 10.5C14 9.67157 14.4477 9 15 9C15.5523 9 16 9.67157 16 10.5Z" fill="currentColor" data-part="part-2" data-pivot="12 12"/><path d="M10 10.5C10 11.3284 9.55229 12 9 12C8.44772 12 8 11.3284 8 10.5C8 9.67157 8.44772 9 9 9C9.55229 9 10 9.67157 10 10.5Z" fill="currentColor" data-part="part-3" data-pivot="12 12"/></g>
+  </svg>
+  <p>Hover or click to play. First gesture unlocks sound.</p>
+</main>
+<script>
+// Meh Circle: Facial parts blink and the expression tightens briefly, then relaxes. Motion: express-and-blink.
+const MOTION = {"kind":"express-and-blink","transform":"scaleY","rotate":0,"scale":1.1,"fade":0.65,"duration":600,"stagger":50};
+// Sound: A quiet pop with a soft voiced tone.
+const SOUND = {"wave":"triangle","base":318,"end":429,"noise":0.01,"decay":0.16};
+const svg = document.querySelector('svg');
+const parts = Array.from(svg.querySelectorAll('[data-part]'));
+let ctx;
+
+function unlock() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+
+function playSound() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = SOUND.wave;
+  osc.frequency.setValueAtTime(SOUND.base, t);
+  osc.frequency.exponentialRampToValueAtTime(SOUND.end, t + SOUND.decay);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.12, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + SOUND.decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + SOUND.decay + 0.03);
+  if (SOUND.noise > 0) {
+    const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.06), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * SOUND.noise;
+    const src = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const ng = ctx.createGain();
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.frequency.value = SOUND.base * 2;
+    ng.gain.setValueAtTime(1, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+    src.connect(filter).connect(ng).connect(ctx.destination);
+    src.start(t);
+  }
+}
+
+function keyframes(i) {
+  const far = i % 2 === 0 ? 1 : -1;
+  if (MOTION.transform === 'rotate') return [
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 },
+    { transform: 'rotate(' + (MOTION.rotate * far) + 'deg) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.45 },
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translateY') return [
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(' + (3 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'translateY(0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translate') return [
+    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+    { transform: 'translate(' + (2.4 * far) + 'px,' + (-1.4 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'translate(0,0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'scaleY') return [
+    { transform: 'scaleY(1)', opacity: 1 },
+    { transform: 'scaleY(' + (2 - MOTION.scale) + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'scaleY(1)', opacity: 1 }
+  ];
+  return [
+    { transform: 'scale(1)', opacity: 1 },
+    { transform: 'scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'scale(1)', opacity: 1 }
+  ];
+}
+
+function animate() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  parts.forEach((part, i) => {
+    part.animate(keyframes(i), {
+      duration: MOTION.duration,
+      delay: i * MOTION.stagger,
+      easing: 'cubic-bezier(0.2, 1.25, 0.3, 1)',
+      fill: 'both'
+    });
+  });
+}
+
+function play() { unlock(); playSound(); animate(); }
+svg.addEventListener('mouseenter', play);
+svg.addEventListener('click', play);
+</script>
+</body>
+</html>

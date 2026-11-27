@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Arrow Right - wiggle icon</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #111; font: 14px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 16px; }
+  svg { width: 96px; height: 96px; display: block; cursor: pointer; overflow: visible; }
+  p { color: #737373; margin: 0; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Arrow Right">
+<g><path fill-rule="evenodd" clip-rule="evenodd" d="M13.4697 5.46967C13.7626 5.17678 14.2374 5.17678 14.5303 5.46967L20.5303 11.4697C20.8232 11.7626 20.8232 12.2374 20.5303 12.5303L14.5303 18.5303C14.2374 18.8232 13.7626 18.8232 13.4697 18.5303C13.1768 18.2374 13.1768 17.7626 13.4697 17.4697L18.1893 12.75H4C3.58579 12.75 3.25 12.4142 3.25 12C3.25 11.5858 3.58579 11.25 4 11.25H18.1893L13.4697 6.53033C13.1768 6.23744 13.1768 5.76256 13.4697 5.46967Z" fill="currentColor" data-part="part-1" data-pivot="12 12"/></g>
+  </svg>
+  <p>Hover or click to play. First gesture unlocks sound.</p>
+</main>
+<script>
+// Arrow Right: Arrow and branch heads travel along their intended direction, then settle with a small overshoot. Motion: directional-slide.
+const MOTION = {"kind":"directional-slide","transform":"translate","rotate":0,"scale":1.08,"fade":0.55,"duration":620,"stagger":45};
+// Sound: A short airy sweep followed by a soft mechanical seat.
+const SOUND = {"wave":"triangle","base":460,"end":740,"noise":0.03,"decay":0.12};
+const svg = document.querySelector('svg');
+const parts = Array.from(svg.querySelectorAll('[data-part]'));
+let ctx;
+
+function unlock() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+
+function playSound() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = SOUND.wave;
+  osc.frequency.setValueAtTime(SOUND.base, t);
+  osc.frequency.exponentialRampToValueAtTime(SOUND.end, t + SOUND.decay);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.12, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + SOUND.decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + SOUND.decay + 0.03);
+  if (SOUND.noise > 0) {
+    const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.06), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * SOUND.noise;
+    const src = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const ng = ctx.createGain();
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.frequency.value = SOUND.base * 2;
+    ng.gain.setValueAtTime(1, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+    src.connect(filter).connect(ng).connect(ctx.destination);
+    src.start(t);
+  }
+}
+
+function keyframes(i) {
+  const far = i % 2 === 0 ? 1 : -1;
+  if (MOTION.transform === 'rotate') return [
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 },
+    { transform: 'rotate(' + (MOTION.rotate * far) + 'deg) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.45 },
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translateY') return [
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(' + (3 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'translateY(0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translate') return [
+    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+    { transform: 'translate(' + (2.4 * far) + 'px,' + (-1.4 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'translate(0,0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'scaleY') return [
+    { transform: 'scaleY(1)', opacity: 1 },
+    { transform: 'scaleY(' + (2 - MOTION.scale) + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'scaleY(1)', opacity: 1 }
+  ];
+  return [
+    { transform: 'scale(1)', opacity: 1 },
+    { transform: 'scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'scale(1)', opacity: 1 }
+  ];
+}
+
+function animate() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  parts.forEach((part, i) => {
+    part.animate(keyframes(i), {
+      duration: MOTION.duration,
+      delay: i * MOTION.stagger,
+      easing: 'cubic-bezier(0.2, 1.25, 0.3, 1)',
+      fill: 'both'
+    });
+  });
+}
+
+function play() { unlock(); playSound(); animate(); }
+svg.addEventListener('mouseenter', play);
+svg.addEventListener('click', play);
+</script>
+</body>
+</html>

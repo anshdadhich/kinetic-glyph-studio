@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Emoji Circle - wiggle icon</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #111; font: 14px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 16px; }
+  svg { width: 96px; height: 96px; display: block; cursor: pointer; overflow: visible; }
+  p { color: #737373; margin: 0; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Emoji Circle">
+<g><path d="M15.4754 9.51572C15.6898 10.3159 15.4311 11.0805 14.8977 11.2234C14.3642 11.3664 13.7579 10.8336 13.5435 10.0334C13.3291 9.23316 13.5877 8.4686 14.1212 8.32565C14.6547 8.18271 15.2609 8.71552 15.4754 9.51572Z" fill="currentColor" data-part="part-1" data-pivot="12 12"/><path d="M9.67994 11.0687C9.89436 11.8689 9.63571 12.6335 9.10225 12.7764C8.56878 12.9194 7.9625 12.3865 7.74809 11.5863C7.53368 10.7861 7.79232 10.0216 8.32579 9.87863C8.85925 9.73569 9.46553 10.2685 9.67994 11.0687Z" fill="currentColor" data-part="part-2" data-pivot="12 12"/><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75ZM1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12ZM17.1789 13.3409C17.467 13.6385 17.4593 14.1133 17.1617 14.4014C16.9917 14.566 16.8128 14.7246 16.6256 14.8766L16.8441 15.3216C17.3971 16.4482 16.9214 17.8094 15.787 18.3464C14.6752 18.8728 13.3468 18.4085 12.8047 17.3043L12.5315 16.7477C11.2117 16.998 9.90919 16.9561 8.73026 16.6606C8.32847 16.5599 8.0844 16.1526 8.1851 15.7508C8.2858 15.349 8.69315 15.1049 9.09494 15.2056C10.2252 15.4889 11.5232 15.4924 12.841 15.1393C14.1588 14.7862 15.2811 14.1342 16.1183 13.3237C16.4159 13.0356 16.8908 13.0433 17.1789 13.3409ZM14.0048 16.345L14.1513 16.6433C14.3319 17.0114 14.7747 17.1661 15.1452 16.9907C15.5233 16.8117 15.6818 16.358 15.4975 15.9825L15.3707 15.7241C14.9417 15.9631 14.4851 16.1716 14.0048 16.345Z" fill="currentColor" data-part="part-3" data-pivot="12 12"/></g>
+  </svg>
+  <p>Hover or click to play. First gesture unlocks sound.</p>
+</main>
+<script>
+// Emoji Circle: Facial parts blink and the expression tightens briefly, then relaxes. Motion: express-and-blink.
+const MOTION = {"kind":"express-and-blink","transform":"scaleY","rotate":0,"scale":1.1,"fade":0.65,"duration":600,"stagger":50};
+// Sound: A quiet pop with a soft voiced tone.
+const SOUND = {"wave":"triangle","base":362,"end":451,"noise":0.01,"decay":0.16};
+const svg = document.querySelector('svg');
+const parts = Array.from(svg.querySelectorAll('[data-part]'));
+let ctx;
+
+function unlock() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+
+function playSound() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = SOUND.wave;
+  osc.frequency.setValueAtTime(SOUND.base, t);
+  osc.frequency.exponentialRampToValueAtTime(SOUND.end, t + SOUND.decay);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.12, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + SOUND.decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + SOUND.decay + 0.03);
+  if (SOUND.noise > 0) {
+    const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.06), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * SOUND.noise;
+    const src = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const ng = ctx.createGain();
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.frequency.value = SOUND.base * 2;
+    ng.gain.setValueAtTime(1, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+    src.connect(filter).connect(ng).connect(ctx.destination);
+    src.start(t);
+  }
+}
+
+function keyframes(i) {
+  const far = i % 2 === 0 ? 1 : -1;
+  if (MOTION.transform === 'rotate') return [
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 },
+    { transform: 'rotate(' + (MOTION.rotate * far) + 'deg) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.45 },
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translateY') return [
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(' + (3 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'translateY(0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translate') return [
+    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+    { transform: 'translate(' + (2.4 * far) + 'px,' + (-1.4 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'translate(0,0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'scaleY') return [
+    { transform: 'scaleY(1)', opacity: 1 },
+    { transform: 'scaleY(' + (2 - MOTION.scale) + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'scaleY(1)', opacity: 1 }
+  ];
+  return [
+    { transform: 'scale(1)', opacity: 1 },
+    { transform: 'scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'scale(1)', opacity: 1 }
+  ];
+}
+
+function animate() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  parts.forEach((part, i) => {
+    part.animate(keyframes(i), {
+      duration: MOTION.duration,
+      delay: i * MOTION.stagger,
+      easing: 'cubic-bezier(0.2, 1.25, 0.3, 1)',
+      fill: 'both'
+    });
+  });
+}
+
+function play() { unlock(); playSound(); animate(); }
+svg.addEventListener('mouseenter', play);
+svg.addEventListener('click', play);
+</script>
+</body>
+</html>

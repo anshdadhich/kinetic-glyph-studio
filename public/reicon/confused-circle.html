@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Confused Circle - wiggle icon</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #111; font: 14px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 16px; }
+  svg { width: 96px; height: 96px; display: block; cursor: pointer; overflow: visible; }
+  p { color: #737373; margin: 0; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Confused Circle">
+<g><path fill-rule="evenodd" clip-rule="evenodd" d="M12 2.75C6.89137 2.75 2.75 6.89137 2.75 12C2.75 17.1086 6.89137 21.25 12 21.25C17.1086 21.25 21.25 17.1086 21.25 12C21.25 6.89137 17.1086 2.75 12 2.75ZM1.25 12C1.25 6.06294 6.06294 1.25 12 1.25C17.9371 1.25 22.75 6.06294 22.75 12C22.75 17.9371 17.9371 22.75 12 22.75C6.06294 22.75 1.25 17.9371 1.25 12Z" fill="currentColor" data-part="part-1" data-pivot="12 12"/><path fill-rule="evenodd" clip-rule="evenodd" d="M7.4 8.55C7.64853 8.21863 8.11863 8.15147 8.45 8.4L10.45 9.9C10.6389 10.0416 10.75 10.2639 10.75 10.5C10.75 10.7361 10.6389 10.9584 10.45 11.1L8.45 12.6C8.11863 12.8485 7.64853 12.7814 7.4 12.45C7.15147 12.1186 7.21863 11.6485 7.55 11.4L8.75 10.5L7.55 9.6C7.21863 9.35147 7.15147 8.88137 7.4 8.55Z" fill="currentColor" data-part="part-2" data-pivot="12 12"/><path fill-rule="evenodd" clip-rule="evenodd" d="M16.6 8.55C16.3515 8.21863 15.8814 8.15147 15.55 8.4L13.55 9.9C13.3611 10.0416 13.25 10.2639 13.25 10.5C13.25 10.7361 13.3611 10.9584 13.55 11.1L15.55 12.6C15.8814 12.8485 16.3515 12.7814 16.6 12.45C16.8485 12.1186 16.7814 11.6485 16.45 11.4L15.25 10.5L16.45 9.6C16.7814 9.35147 16.8485 8.88137 16.6 8.55Z" fill="currentColor" data-part="part-3" data-pivot="12 12"/><path fill-rule="evenodd" clip-rule="evenodd" d="M15.5303 16.5303C15.2374 16.8232 14.7626 16.8232 14.4697 16.5303L14 16.0607L13.5303 16.5303C13.3897 16.671 13.1989 16.75 13 16.75C12.8011 16.75 12.6103 16.671 12.4697 16.5303L12 16.0607L11.5303 16.5303C11.3897 16.671 11.1989 16.75 11 16.75C10.8011 16.75 10.6103 16.671 10.4697 16.5303L10 16.0607L9.53033 16.5303C9.23744 16.8232 8.76256 16.8232 8.46967 16.5303C8.17678 16.2374 8.17678 15.7626 8.46967 15.4697L9.46967 14.4697C9.61032 14.329 9.80109 14.25 10 14.25C10.1989 14.25 10.3897 14.329 10.5303 14.4697L11 14.9393L11.4697 14.4697C11.6103 14.329 11.8011 14.25 12 14.25C12.1989 14.25 12.3897 14.329 12.5303 14.4697L13 14.9393L13.4697 14.4697C13.6103 14.329 13.8011 14.25 14 14.25C14.1989 14.25 14.3897 14.329 14.5303 14.4697L15.5303 15.4697C15.8232 15.7626 15.8232 16.2374 15.5303 16.5303Z" fill="currentColor" data-part="part-4" data-pivot="12 12"/></g>
+  </svg>
+  <p>Hover or click to play. First gesture unlocks sound.</p>
+</main>
+<script>
+// Confused Circle: Facial parts blink and the expression tightens briefly, then relaxes. Motion: express-and-blink.
+const MOTION = {"kind":"express-and-blink","transform":"scaleY","rotate":0,"scale":1.1,"fade":0.65,"duration":600,"stagger":50};
+// Sound: A quiet pop with a soft voiced tone.
+const SOUND = {"wave":"triangle","base":476,"end":508,"noise":0.01,"decay":0.16};
+const svg = document.querySelector('svg');
+const parts = Array.from(svg.querySelectorAll('[data-part]'));
+let ctx;
+
+function unlock() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+
+function playSound() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = SOUND.wave;
+  osc.frequency.setValueAtTime(SOUND.base, t);
+  osc.frequency.exponentialRampToValueAtTime(SOUND.end, t + SOUND.decay);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.12, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + SOUND.decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + SOUND.decay + 0.03);
+  if (SOUND.noise > 0) {
+    const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.06), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * SOUND.noise;
+    const src = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const ng = ctx.createGain();
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.frequency.value = SOUND.base * 2;
+    ng.gain.setValueAtTime(1, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+    src.connect(filter).connect(ng).connect(ctx.destination);
+    src.start(t);
+  }
+}
+
+function keyframes(i) {
+  const far = i % 2 === 0 ? 1 : -1;
+  if (MOTION.transform === 'rotate') return [
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 },
+    { transform: 'rotate(' + (MOTION.rotate * far) + 'deg) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.45 },
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translateY') return [
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(' + (3 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'translateY(0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translate') return [
+    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+    { transform: 'translate(' + (2.4 * far) + 'px,' + (-1.4 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'translate(0,0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'scaleY') return [
+    { transform: 'scaleY(1)', opacity: 1 },
+    { transform: 'scaleY(' + (2 - MOTION.scale) + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'scaleY(1)', opacity: 1 }
+  ];
+  return [
+    { transform: 'scale(1)', opacity: 1 },
+    { transform: 'scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'scale(1)', opacity: 1 }
+  ];
+}
+
+function animate() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  parts.forEach((part, i) => {
+    part.animate(keyframes(i), {
+      duration: MOTION.duration,
+      delay: i * MOTION.stagger,
+      easing: 'cubic-bezier(0.2, 1.25, 0.3, 1)',
+      fill: 'both'
+    });
+  });
+}
+
+function play() { unlock(); playSound(); animate(); }
+svg.addEventListener('mouseenter', play);
+svg.addEventListener('click', play);
+</script>
+</body>
+</html>

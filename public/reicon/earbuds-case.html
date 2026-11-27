@@ -1,0 +1,112 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Earbuds Case - wiggle icon</title>
+<style>
+  body { margin: 0; min-height: 100vh; display: grid; place-items: center; background: #fff; color: #111; font: 14px system-ui, sans-serif; }
+  main { display: grid; justify-items: center; gap: 16px; }
+  svg { width: 96px; height: 96px; display: block; cursor: pointer; overflow: visible; }
+  p { color: #737373; margin: 0; font-size: 12px; }
+</style>
+</head>
+<body>
+<main>
+  <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round" stroke-linejoin="round" role="img" aria-label="Earbuds Case">
+<g><path fill-rule="evenodd" clip-rule="evenodd" d="M11.9548 1.25H12.0452C13.8818 1.24999 15.3214 1.24999 16.4635 1.37373C17.6291 1.50001 18.5734 1.76232 19.3798 2.34815C19.8679 2.70281 20.2972 3.13209 20.6518 3.62024C21.2377 4.42656 21.5 5.37094 21.6263 6.53648C21.75 7.67861 21.75 9.1182 21.75 10.9547V13.0453C21.75 14.8818 21.75 16.3214 21.6263 17.4635C21.5 18.6291 21.2377 19.5734 20.6518 20.3798C20.2972 20.8679 19.8679 21.2972 19.3798 21.6518C18.5734 22.2377 17.6291 22.5 16.4635 22.6263C15.3214 22.75 13.8818 22.75 12.0453 22.75H11.9547C10.1182 22.75 8.67861 22.75 7.53648 22.6263C6.37094 22.5 5.42656 22.2377 4.62024 21.6518C4.13209 21.2972 3.70281 20.8679 3.34815 20.3798C2.76232 19.5734 2.50001 18.6291 2.37373 17.4635C2.24999 16.3214 2.24999 14.8818 2.25 13.0452V10.9548C2.24999 9.11821 2.24999 7.67861 2.37373 6.53648C2.50001 5.37094 2.76232 4.42656 3.34815 3.62024C3.70281 3.13209 4.13209 2.70281 4.62024 2.34815C5.42656 1.76232 6.37094 1.50001 7.53648 1.37373C8.67861 1.24999 10.1182 1.24999 11.9548 1.25ZM7.69805 2.865C6.66013 2.97745 6.00992 3.19259 5.50191 3.56168C5.14111 3.82382 4.82382 4.14111 4.56168 4.50191C4.19259 5.00992 3.97745 5.66013 3.865 6.69805C3.8158 7.15217 3.78765 7.66341 3.77154 8.25H6.35352C6.67998 7.09575 7.74122 6.25 9 6.25H15C16.2588 6.25 17.32 7.09575 17.6465 8.25H20.2285C20.2124 7.66341 20.1842 7.15217 20.135 6.69805C20.0225 5.66013 19.8074 5.00992 19.4383 4.50191C19.1762 4.14111 18.8589 3.82382 18.4981 3.56168C17.9901 3.19259 17.3399 2.97745 16.302 2.865C15.25 2.75103 13.8916 2.75 12 2.75C10.1084 2.75 8.74999 2.75103 7.69805 2.865ZM20.2484 9.75H17.6465C17.32 10.9043 16.2588 11.75 15 11.75H9C7.74122 11.75 6.67998 10.9043 6.35352 9.75H3.75163C3.75006 10.1391 3.75 10.5548 3.75 11V13C3.75 14.8916 3.75103 16.25 3.865 17.302C3.97745 18.3399 4.19259 18.9901 4.56168 19.4981C4.82382 19.8589 5.14111 20.1762 5.50191 20.4383C6.00992 20.8074 6.66013 21.0225 7.69805 21.135C8.74999 21.249 10.1084 21.25 12 21.25C13.8916 21.25 15.25 21.249 16.302 21.135C17.3399 21.0225 17.9901 20.8074 18.4981 20.4383C18.8589 20.1762 19.1762 19.8589 19.4383 19.4981C19.8074 18.9901 20.0225 18.3399 20.135 17.302C20.249 16.25 20.25 14.8916 20.25 13V11C20.25 10.5548 20.2499 10.1391 20.2484 9.75ZM9 7.75C8.30964 7.75 7.75 8.30964 7.75 9C7.75 9.69036 8.30964 10.25 9 10.25H15C15.6904 10.25 16.25 9.69036 16.25 9C16.25 8.30964 15.6904 7.75 15 7.75H9Z" fill="currentColor" data-part="part-1" data-pivot="12 12"/></g>
+  </svg>
+  <p>Hover or click to play. First gesture unlocks sound.</p>
+</main>
+<script>
+// Earbuds Case: The buds bob in their case and pulse like a tiny driver starting up. Motion: bob-and-pulse.
+const MOTION = {"kind":"bob-and-pulse","transform":"translateY","rotate":0,"scale":1.12,"fade":0.6,"duration":680,"stagger":60};
+// Sound: A clean tick pair with a small chime.
+const SOUND = {"wave":"sine","base":790,"end":1025,"noise":0.015,"decay":0.14};
+const svg = document.querySelector('svg');
+const parts = Array.from(svg.querySelectorAll('[data-part]'));
+let ctx;
+
+function unlock() {
+  if (!ctx) ctx = new (window.AudioContext || window.webkitAudioContext)();
+  if (ctx.state === 'suspended') ctx.resume();
+}
+
+function playSound() {
+  if (!ctx) return;
+  const t = ctx.currentTime;
+  const osc = ctx.createOscillator();
+  const gain = ctx.createGain();
+  osc.type = SOUND.wave;
+  osc.frequency.setValueAtTime(SOUND.base, t);
+  osc.frequency.exponentialRampToValueAtTime(SOUND.end, t + SOUND.decay);
+  gain.gain.setValueAtTime(0.0001, t);
+  gain.gain.linearRampToValueAtTime(0.12, t + 0.004);
+  gain.gain.exponentialRampToValueAtTime(0.0001, t + SOUND.decay);
+  osc.connect(gain).connect(ctx.destination);
+  osc.start(t);
+  osc.stop(t + SOUND.decay + 0.03);
+  if (SOUND.noise > 0) {
+    const buf = ctx.createBuffer(1, Math.ceil(ctx.sampleRate * 0.06), ctx.sampleRate);
+    const data = buf.getChannelData(0);
+    for (let i = 0; i < data.length; i++) data[i] = (Math.random() * 2 - 1) * SOUND.noise;
+    const src = ctx.createBufferSource();
+    const filter = ctx.createBiquadFilter();
+    const ng = ctx.createGain();
+    src.buffer = buf;
+    filter.type = 'bandpass';
+    filter.frequency.value = SOUND.base * 2;
+    ng.gain.setValueAtTime(1, t);
+    ng.gain.exponentialRampToValueAtTime(0.0001, t + 0.06);
+    src.connect(filter).connect(ng).connect(ctx.destination);
+    src.start(t);
+  }
+}
+
+function keyframes(i) {
+  const far = i % 2 === 0 ? 1 : -1;
+  if (MOTION.transform === 'rotate') return [
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 },
+    { transform: 'rotate(' + (MOTION.rotate * far) + 'deg) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.45 },
+    { transform: 'rotate(0deg) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translateY') return [
+    { transform: 'translateY(0) scale(1)', opacity: 1 },
+    { transform: 'translateY(' + (3 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'translateY(0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'translate') return [
+    { transform: 'translate(0,0) scale(1)', opacity: 1 },
+    { transform: 'translate(' + (2.4 * far) + 'px,' + (-1.4 * far) + 'px) scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'translate(0,0) scale(1)', opacity: 1 }
+  ];
+  if (MOTION.transform === 'scaleY') return [
+    { transform: 'scaleY(1)', opacity: 1 },
+    { transform: 'scaleY(' + (2 - MOTION.scale) + ')', opacity: MOTION.fade, offset: 0.4 },
+    { transform: 'scaleY(1)', opacity: 1 }
+  ];
+  return [
+    { transform: 'scale(1)', opacity: 1 },
+    { transform: 'scale(' + MOTION.scale + ')', opacity: MOTION.fade, offset: 0.42 },
+    { transform: 'scale(1)', opacity: 1 }
+  ];
+}
+
+function animate() {
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+  parts.forEach((part, i) => {
+    part.animate(keyframes(i), {
+      duration: MOTION.duration,
+      delay: i * MOTION.stagger,
+      easing: 'cubic-bezier(0.2, 1.25, 0.3, 1)',
+      fill: 'both'
+    });
+  });
+}
+
+function play() { unlock(); playSound(); animate(); }
+svg.addEventListener('mouseenter', play);
+svg.addEventListener('click', play);
+</script>
+</body>
+</html>
