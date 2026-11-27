@@ -36,7 +36,8 @@ const FP_RIDGES = [
 
 const fpUnder = (opacity: string) =>
   FP_RIDGES.map((d) => `<path d="${d}" opacity="${opacity}"/>`).join("");
-const fpPlain = () => FP_RIDGES.map((d) => `<path d="${d}"/>`).join("");
+const fpPlain = (attrs = "") =>
+  FP_RIDGES.map((d) => `<path d="${d}" ${attrs}/>`).join("");
 const fpDrawn = (attrs = "", accent?: number) =>
   FP_RIDGES.map(
     (d, i) =>
@@ -179,14 +180,14 @@ export const TECH2_ICONS: IconDef[] = [
     svgs: {
       outline: `<g ${K}>${fpUnder("0.34")}${fpDrawn()}</g>`,
       solid: `<g fill="none" stroke="currentColor" stroke-width="1.95" stroke-linecap="round" stroke-linejoin="round">${fpUnder("0.34")}${fpDrawn()}</g>`,
-      duotone: `<circle cx="12" cy="12" r="8.4" ${D}/><g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
+      duotone: `<g ${DK}>${fpUnder("0.3")}${fpDrawn()}</g>`,
       glass: glassCompose(
         fpDrawn(GBS),
-        `<g stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round">${fpPlain()}</g>`,
-        `<g stroke="url(#g-rim)" stroke-width="2" fill="none" stroke-linecap="round">${fpPlain()}</g>`
+        `<g stroke="#fff" stroke-width="2.1" fill="none" stroke-linecap="round">${fpPlain('fill="none"')}</g>`,
+        `<g fill="none" stroke-linecap="round"><g stroke="url(#g-back)" stroke-width="2.8">${fpPlain('fill="none"')}</g><g stroke="#fff" stroke-width="1.5">${fpPlain('fill="none"')}</g></g>`
       ),
       stencil: `<g fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><g stroke-dasharray="6.5 2.4">${fpUnder("0.3")}</g>${fpDrawn()}</g>`,
-      hardware: `<circle cx="12" cy="12" r="8.8" ${HD}/><g fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round">${fpUnder("0.28")}${fpDrawn("", 4)}</g>`,
+      hardware: `<g fill="none" stroke="#a1a1aa" stroke-width="1.7" stroke-linecap="round">${fpUnder("0.28")}${fpDrawn("", 4)}</g>`,
       relief: `<g transform="translate(1.2,1.2)" ${RS_LINE}>${fpPlain()}</g><g ${RF_LINE}>${fpUnder("0.3")}${fpDrawn()}</g>`,
     },
   },
