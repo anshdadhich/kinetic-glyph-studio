@@ -77,7 +77,7 @@ const RAIL: Array<{ label: string; href: string; open?: boolean; pages: Array<[s
     label: "Our icons",
     href: "/icons",
     pages: [
-      ["240 icons", "/icons"],
+      [`${ICONS.length} icons`, "/icons"],
       ["12 categories", "/icons"],
       ["Try every icon", "/icons"],
     ],
@@ -185,7 +185,7 @@ export default function DocsVariants() {
         <main className="docs-main" id="content">
           <article>
             <h1 className="doc-title">Eight styles</h1>
-            <p className="doc-lead">Every one of our 240 icons is drawn eight ways. Hover to play its motion and sound. Click to copy its SVG.</p>
+            <p className="doc-lead">Every one of our {ICONS.length} icons is drawn eight ways. Hover to play its motion and sound. Click to copy its SVG.</p>
             <p className="doc-lead" style={{ marginTop: 16 }}>
               <strong style={{ color: "var(--ink)" }}>{ICONS.length} icons</strong> times{" "}
               <strong style={{ color: "var(--ink)" }}>{STYLES.length} styles</strong> equals{" "}

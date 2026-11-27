@@ -294,7 +294,7 @@ function SponsorWall() {
 /* ------------------------------------------------------------------ */
 
 const FAQ = [
-  { icon: "grid", bold: "240 icons", text: " across eight styles. Each one is a clean inline SVG with named parts." },
+  { icon: "grid", bold: `${ICONS.length} icons`, text: " across eight styles. Each one is a clean inline SVG with named parts." },
   { icon: "volume", bold: "Synth sound", text: " on every icon, generated in the browser. No sample files." },
   { icon: "copy", bold: "Click to copy", text: " a standalone SVG from the library or this page." },
   { icon: "wind", bold: "Reduced motion", text: " is respected in every spring animation." },
@@ -388,7 +388,7 @@ export default function LandingPage() {
 
         <div className="wig-copy">
           <p>
-            <strong className="wig-lead">240 icons, 8 styles. Each one moves and sounds like the thing it shows.</strong>{" "}
+            <strong className="wig-lead">{ICONS.length} icons, 8 styles. Each one moves and sounds like the thing it shows.</strong>{" "}
             Spring motion, synth sound.
           </p>
           <p>
@@ -402,7 +402,7 @@ export default function LandingPage() {
 
         <div className="wig-actions">
           <a className="wig-capsule wig-capsule-buy" href="/icons">
-            <span>Explore the library</span><span className="wig-capsule-price">240 icons</span>
+            <span>Explore the library</span><span className="wig-capsule-price">{ICONS.length} icons</span>
           </a>
           <a
             className="wig-capsule wig-capsule-quiet"

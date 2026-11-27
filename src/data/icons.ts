@@ -24,6 +24,7 @@ import { MUSIC_ICONS } from "./packs/music";
 import { MUSIC2_ICONS } from "./packs/music2";
 import { EVERYDAY_ICONS } from "./packs/everyday";
 import { EVERYDAY2_ICONS } from "./packs/everyday2";
+import { REICON_ICONS } from "./packs/reicon100";
 
 export const ICONS: IconDef[] = [
   ...CORE_ICONS,
@@ -50,6 +51,7 @@ export const ICONS: IconDef[] = [
   ...MUSIC2_ICONS,
   ...EVERYDAY_ICONS,
   ...EVERYDAY2_ICONS,
+  ...REICON_ICONS,
 ];
 
 export const ICON_CATEGORIES = [
